@@ -1,36 +1,46 @@
 <div class="remote">
     <div class="row">
-        <div class="action icon-home" ng-tap="xbmc.send('Input.Home')">
+        <div class="action" ng-tap="xbmc.send('Input.Home')">
+            <i class="icon icon-home"></i>
         </div>
-        <div class="action icon-info-sign" ng-tap="xbmc.send('Input.Info')">
+        <div class="action" ng-tap="xbmc.send('Input.Info')">
+            <i class="icon icon-info-sign"></i>
         </div>
-        <div class="action icon-power-off" ng-tap="xbmc.send('System.Shutdown')">
-        </div>
-    </div>
-    <div class="row">
-        <div class="action icon-mail-reply" ng-tap="xbmc.send('Input.Back')">
-        </div>
-        <div class="action direction icon-chevron-up" ng-tap="xbmc.send('Input.Up')">
-        </div>
-        <div class="action icon-volume-off"  ng-tap="setVolume(volume -1)">
-            +
+        <div class="action" ng-tap="xbmc.send('System.Shutdown')">
+            <i class="icon icon-power-off"></i>
         </div>
     </div>
     <div class="row">
-        <div class="action direction icon-chevron-left" ng-tap="xbmc.send('Input.Left')">
+        <div class="action" ng-tap="xbmc.send('Input.Back')">
+            <i class="icon icon-mail-reply"></i>
         </div>
-        <div class="action icon-circle" ng-tap="xbmc.send('Input.Select')">
+        <div class="action direction" ng-tap="xbmc.send('Input.Up')">
+            <i class="icon icon-chevron-up"></i>
         </div>
-        <div class="action direction icon-chevron-right" ng-tap="xbmc.send('Input.Right')">
+        <div class="action"  ng-tap="setVolume(volume -1)">
+            <i class="icon icon-volume-off"><small>+</small></i>
         </div>
     </div>
     <div class="row">
-        <div class="action icon-list-ul" ng-tap="xbmc.send('Input.ContextMenu')">
+        <div class="action direction" ng-tap="xbmc.send('Input.Left')">
+            <i class="icon icon-chevron-left"></i>
         </div>
-        <div class="action direction icon-chevron-down" ng-tap="xbmc.send('Input.Down')">
+        <div class="action" ng-tap="xbmc.send('Input.Select')">
+            <i class="icon icon-circle"></i>
         </div>
-        <div class="action icon-volume-off" ng-tap="setVolume(volume +1)">
-            -
+        <div class="action direction" ng-tap="xbmc.send('Input.Right')">
+            <i class="icon icon-chevron-right"></i>
+        </div>
+    </div>
+    <div class="row">
+        <div class="action" ng-tap="xbmc.send('Input.ContextMenu')">
+            <i class="icon icon-list-ul"></i>
+        </div>
+        <div class="action direction" ng-tap="xbmc.send('Input.Down')">
+            <i class="icon icon-chevron-down"></i>
+        </div>
+        <div class="action" ng-tap="setVolume(volume +1)">
+            <i class="icon icon-volume-off"><small>-</small></i>
         </div>
     </div>
 </div>
