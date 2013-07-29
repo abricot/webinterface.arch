@@ -1,0 +1,23 @@
+<form class="wizard">
+    <h1>
+        <img src="/img/backgrounds/computer-icon.png" width="64" height="64"/>
+        <div>Host wizard</div>
+    </h1>
+
+    <p>
+        <label>Display name:</label>
+        <input type="text" placeholder="Ex : HTPC" required="" ng-model="configuration.host.displayName" tabindex="1">
+        <button type="reset" class="icon-remove"></button>
+    </p>
+    <p>
+        <label>Host IP:</label>
+        <input type="text" placeholder="Ex : 192.16.0.1" required="" ng-model="configuration.host.ip" tabindex="2">
+        <button type="reset" class="icon-remove"></button>
+    </p>
+    <p>
+        <label>Api port</label>
+        <input type="text" value="9090" placeholder="Ex : 9090" required="" ng-model="configuration.host.port" tabindex="3">
+        <button type="reset" class="icon-remove"></button>
+    </p>
+    <button ng-tap="save()">Save</button>
+</form>

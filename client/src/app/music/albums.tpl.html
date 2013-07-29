@@ -1,0 +1,23 @@
+<div ng-switch on="loading" ng-class="{loading : loading}">
+    <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
+    <ul data-type="list" class="view albums" ng-switch-when="false">
+        <li class="row album" ng-repeat="album in albums | filter:library.criteria"
+            ng-tap="go('/music/songs/albumid/' + album.albumid)"
+            ng-class-odd="'odd'">
+            <img class="span3 cover" src="{{album.thumbnail | asset:configuration.host.ip}}"
+                 ng-show="hasCover(album)"/>
+            <img class="span3 cover unknow" src="/img/blank.gif"
+                 ng-hide="hasCover(album)"/>
+
+            <div class="span7">
+                <p>{{album.label}}</p>
+
+                <p>{{album.artist.join(', ')}}</p>
+
+                <p>{{album.year}}</p>
+            </div>
+        </li>
+        <li ng-show="!albums.length" class="empty list">No item here :'(</li>
+    </ul>
+</div>
+

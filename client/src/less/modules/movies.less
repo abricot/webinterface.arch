@@ -1,0 +1,101 @@
+[data-type="list"] .movie {
+  position: relative;
+  height: auto;
+
+  .drop-shadow;
+}
+
+[data-type="list"] .movie p:first-of-type {
+  padding: 0.5rem);
+}
+
+[data-type="list"] .movie h1 {
+  padding: 0;
+  font-size: 2rem;
+}
+
+[data-type="list"] .movie p {
+  color: #e6e6e6;
+}
+
+[data-type="list"] .rating {
+  border-right: 5rem solid #00caf2;
+  border-bottom: 4rem solid transparent;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: top;
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+
+[data-type="list"] li.active .rating {
+  border-right: 5rem solid @regionBgColor;
+}
+
+[data-type="list"] li.odd.active .rating {
+  border-right: 5rem solid @listOddBgColor;
+}
+
+[data-type="list"] .rating em {
+  color: @movieRatingTextColor;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding-top: 0.25rem;
+  position: absolute;
+  right: -4.5rem;
+}
+
+[data-type="list"] .playcount {
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
+  color: white;
+  font-size: 1rem;
+  background: @primaryColor;
+  height: 1rem;
+  width: 1rem;
+  padding: 0.5rem;
+  font-weight: bold;
+}
+
+.movie.detail .poster-wrapper img {
+  height: 20rem;
+  width: auto;
+}
+
+.movie.detail {
+  margin: 0
+}
+
+.movie.detail .properties {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.movie.detail .properties .row {
+  position: relative;
+  top: 2rem;
+}
+
+.movie.detail h1 {
+  text-align: right;
+  margin: 0;
+  padding-top: 1rem;
+  padding-right: 1rem;
+}
+
+.movie.detail .rating {
+  color: @primaryColor;
+  text-align: center;
+  font-size: 1.5rem;
+  padding-top: 1rem;
+}
+
+.movie.detail p {
+  padding : 0 0.5rem;
+  .box-sizing;
+}

@@ -1,0 +1,33 @@
+{"id": 5, "jsonrpc": "2.0", "result": {
+    "limits": {
+        "end": 1,
+        "start": 0,
+        "total": 1
+    },
+    "seasons": [
+        {
+            "art": {
+                "banner": "image://http%3a%2f%2fthetvdb.com%2fbanners%2fgraphical%2f255326-g6.jpg/",
+                "fanart": "image://http%3a%2f%2fthetvdb.com%2fbanners%2ffanart%2foriginal%2f255326-2.jpg/",
+                "poster": "image://http%3a%2f%2fthetvdb.com%2fbanners%2fposters%2f255326-4.jpg/"
+            },
+            "fanart": "image://http%3a%2f%2fthetvdb.com%2fbanners%2ffanart%2foriginal%2f255326-2.jpg/",
+            "label": "Season 1",
+            "season": 1,
+            "showtitle": "Defiance",
+            "thumbnail": "image://http%3a%2f%2fthetvdb.com%2fbanners%2fseasons%2f255326-1.jpg/"
+        }    ,
+        {
+            "art": {
+                "banner": "image://http%3a%2f%2fthetvdb.com%2fbanners%2fgraphical%2f255326-g6.jpg/",
+                "fanart": "image://http%3a%2f%2fthetvdb.com%2fbanners%2ffanart%2foriginal%2f255326-2.jpg/",
+                "poster": "image://http%3a%2f%2fthetvdb.com%2fbanners%2fposters%2f255326-4.jpg/"
+            },
+            "fanart": "image://http%3a%2f%2fthetvdb.com%2fbanners%2ffanart%2foriginal%2f255326-2.jpg/",
+            "label": "Season 2",
+            "season": 1,
+            "showtitle": "Defiance",
+            "thumbnail": "image://http%3a%2f%2fthetvdb.com%2fbanners%2fseasons%2f255326-1.jpg/"
+        }
+    ]
+}}

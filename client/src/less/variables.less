@@ -1,0 +1,55 @@
+@gridColumns:             12;
+@gridColumnWidth:         60px;
+@gridGutterWidth:         20px;
+@gridRowWidth:            (@gridColumns * @gridColumnWidth) + (@gridGutterWidth * (@gridColumns - 1) );
+
+@fluidGridColumnWidth:    percentage(@gridColumnWidth/@gridRowWidth);
+@fluidGridGutterWidth:    percentage(@gridGutterWidth/@gridRowWidth);
+
+@primaryColor : #00caf2;
+@outlineColor : rgb(229, 151, 0);
+@disabledBgColor : #008aaa;
+
+@borderRadius : 0.3rem;
+
+@headerHeight : 8rem;
+@headerTextColor : #fff;
+@headerBgColor : #222B2D;
+@headerTopBgColor : @headerBgColor;
+@headerBottomBgColor : #1C2224;
+@headerBorderColor : #181f1f;
+@headerShadowHeight : 0.3rem;
+@headerSearchBorderColor : #9d4123;
+
+@subHeaderHeight : 3rem;
+@subHeaderColor : #E6E6E6;
+@subHeaderBgColor: #666;
+
+@footerHeight : 5rem;
+@footerTextColor : #fff;
+@footerBgColor : #1C2224;
+@footerTopBgColor : @headerBgColor;
+@footerBottomBgColor : #222B2D;
+
+@regionBgColor : #262626;
+
+@listTextColor : @primaryColor;
+@listBorderColor : #202020;
+@listBgColor : #e6e6e6;
+@listHeight : auto;
+@listOddBgColor : rgba(50,50,50, 0.5);
+
+@subListTextColor : #fff;
+
+@drawerTextColor : #fff;
+@drawerActiveBgColor : #00ABCC;
+@draverBgdColor : #1b1f2a;
+
+@seekbarHeight : 0.6rem;
+@seekbarBgColor : #666;
+
+@dialogBgColor : #3b3b3b;
+@dialogColor : white;
+
+@movieRatingBgColor : #00caf2;
+@movieRatingTextColor : #fff;

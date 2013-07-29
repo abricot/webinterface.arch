@@ -1,0 +1,28 @@
+<div ng-switch on="loading" ng-class="{loading : loading}">
+    <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
+    <div ng-switch-when="false" class="tvshow">
+        <img class="banner" src="{{episodes[0].art['tvshow.banner']  | asset:configuration.host.ip}}" alt="show.title"/>
+        <ul data-type="list" class="view">
+            <li class="row episode" ng-repeat="episode in episodes| filter:library.criteria"
+                ng-tap="go('/tvshow/' + tvshowid + '/'+season+'/'+episode.episodeid, 'none')"
+                ng-class-odd="'odd'">
+                <img class="span4" src="{{episode.thumbnail  | asset:configuration.host.ip}}"/>
+
+                <div class="span7">
+                    <p>
+                        {{episode.title}}
+                    </p>
+
+                    <p>
+                        {{episode.episode | episode:episode.season}}
+                    </p>
+                    <span class="rating"><em>{{episode.rating | number:1}}</em></span>
+                </div>
+            </li>
+            <li ng-show="!episodes.length" class="empty list">No item here :'(</li>
+        </ul>
+    </div>
+
+</div>
+
+

@@ -1,0 +1,17 @@
+<a ng-tap="$parent.toggleDrawer()"><i class="icon icon-reorder"></i></a>
+<h1>
+    <form action="#">
+        <input type="text" required="required" placeholder="Search" ng-model="library.criteria">
+        <button type="reset" class="icon-remove"></button>
+    </form>
+</h1>
+<h2 ng-class="{connected : $parent.isConnected(), disconnected : !$parent.isConnected()}"
+    ng-switch on="$parent.isConnected()">
+    <div ng-switch-when="true">
+        {{configuration.host.displayName}}
+        <span class="pull-right">{{configuration.host.ip}}</span>
+    </div>
+    <div ng-switch-when="false">
+        No connection
+    </div>
+</h2>

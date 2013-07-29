@@ -1,0 +1,1 @@
+angular.module('filters.xbmc', ['filters.xbmc.asset', 'filters.xbmc.episode', 'filters.xbmc.time']);

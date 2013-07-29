@@ -1,0 +1,36 @@
+<div class="remote">
+    <div class="row">
+        <div class="action icon-home" ng-tap="xbmc.send('Input.Home')">
+        </div>
+        <div class="action icon-info-sign" ng-tap="xbmc.send('Input.Info')">
+        </div>
+        <div class="action icon-power-off" ng-tap="xbmc.send('System.Shutdown')">
+        </div>
+    </div>
+    <div class="row">
+        <div class="action icon-mail-reply" ng-tap="xbmc.send('Input.Back')">
+        </div>
+        <div class="action direction icon-chevron-up" ng-tap="xbmc.send('Input.Up')">
+        </div>
+        <div class="action icon-volume-off"  ng-tap="setVolume(volume -1)">
+            +
+        </div>
+    </div>
+    <div class="row">
+        <div class="action direction icon-chevron-left" ng-tap="xbmc.send('Input.Left')">
+        </div>
+        <div class="action icon-circle" ng-tap="xbmc.send('Input.Select')">
+        </div>
+        <div class="action direction icon-chevron-right" ng-tap="xbmc.send('Input.Right')">
+        </div>
+    </div>
+    <div class="row">
+        <div class="action icon-list-ul" ng-tap="xbmc.send('Input.ContextMenu')">
+        </div>
+        <div class="action direction icon-chevron-down" ng-tap="xbmc.send('Input.Down')">
+        </div>
+        <div class="action icon-volume-off" ng-tap="setVolume(volume +1)">
+            -
+        </div>
+    </div>
+</div>

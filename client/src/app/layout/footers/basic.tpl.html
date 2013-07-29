@@ -1,0 +1,22 @@
+<div ng-switch on="player.active">
+    <div ng-switch-when="true" class="row actions">
+        <div class="span3 icon-backward"  ng-tap="">
+        </div>
+        <div class="span3 icon-stop" ng-tap="stop()">
+        </div>
+        <div class="span3 icon-play" ng-hide="player.speed" ng-tap="togglePlay()"></div>
+        <div class="span3 icon-pause" ng-show="player.speed" ng-tap="togglePlay()"></div>
+        <div class="span3 icon-forward" ng-tap="">
+        </div>
+    </div>
+    <div ng-switch-when="false" class="row actions">
+        <div class="span3 icon-film"  ng-tap="goTo('videos','MovieTitles')">
+        </div>
+        <div class="span3 icon-facetime-video" ng-tap="goTo('videos','TVShowTitles')">
+        </div>
+        <div class="span3 icon-music" ng-tap="goTo('music')">
+        </div>
+        <div class="span3 icon-picture" ng-tap="goTo('pictures')">
+        </div>
+    </div>
+</div>

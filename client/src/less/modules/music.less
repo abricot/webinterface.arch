@@ -1,0 +1,113 @@
+.music {
+  padding-top: 10rem;
+  position: relative;
+}
+
+.music:after {
+  background: transparent url(../img/backgrounds/vinyls.jpg) no-repeat center;
+  background-size: 100% auto;
+  opacity: 0.5;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  display: block;
+  height: 10rem;
+  width: 100%;
+}
+
+.music .category h3 {
+  position: absolute;
+  background: black;
+  opacity: 0.75;
+  color: white;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.5rem;
+  .box-sizing;
+}
+
+.music .category .albums,
+.music .category .artists,
+.music .category .songs,
+.music .category .party {
+  margin: 0.5rem;
+  border: 0.2rem solid #d3d3d3;
+  height: 10rem;
+  position: relative;
+  background-size: auto 100%;
+}
+
+.music .category .albums {
+  background: transparent url(../img/backgrounds/albums.jpg) no-repeat center;
+}
+
+.music .category .artists {
+  background: transparent url(../img/backgrounds/artists.jpg) no-repeat left center;
+}
+
+.music .category .songs {
+  background: transparent url(../img/backgrounds/songs.jpg) no-repeat center;
+}
+
+.music .category .party {
+  background: transparent url(../img/backgrounds/party.jpg) no-repeat bottom center;
+}
+
+.album .cover,
+.artist .cover {
+  border: 0;
+  margin: 0;
+}
+
+.album .cover.unknow {
+  background: url(/img/backgrounds/album.png) no-repeat center;
+  background-size: 100% auto;
+}
+
+.artist .cover.unknow {
+  background: url(/img/backgrounds/artist.png) no-repeat center;
+  background-size: 100% auto;
+}
+
+.song.cover {
+  background: transparent no-repeat center top;
+  opacity: 0.1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: -1;
+
+}
+
+.songs .song {
+  padding-left: 1rem;
+  .box-sizing;
+}
+
+h1.album {
+  color : @primaryColor;
+  font-size : 2rem;
+  padding : 1rem 0 0 1rem;
+  margin : 0;
+  .box-sizing;
+}
+
+.album .thumb {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.album .thumb img {
+  height: 8rem;
+}
+
+.album .thumb .cover {
+  position: absolute;
+  left: 0;
+  top: 0;
+}

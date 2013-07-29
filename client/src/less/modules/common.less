@@ -1,0 +1,69 @@
+@font-face {
+  font-family: 'KenyanCoffee';
+  src: url('../font/kenyc.ttf');
+}
+
+@font-face {
+  font-family: 'ffosxbmcRegular';
+  src: url('../font/ffosxbmc.ttf');
+}
+
+section[role="region"] header h2.connected {
+  border-left: 3rem solid limegreen;
+}
+
+section[role="region"] header h2.disconnected {
+  border-left: 3rem solid red;
+}
+
+section[role="region"].minimize {
+  transform: translateX(80%);
+  -webkit-transform: translateX(80%);
+}
+*.active {
+  background-color: @primaryColor;
+}
+
+.loading {
+  font-size: 5rem;
+  color: white;
+  text-align: center;
+  line-height: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.loading .icon-spinner {
+  position: absolute;
+  top: 50%;
+  margin-top: -1.25rem;
+  left: 50%;
+  margin-left: -2.5rem;
+}
+
+.fanart {
+  background: transparent no-repeat center bottom;
+  background-size: auto 100%;
+  opacity: 0.25;
+  top: 0;
+  left: 0;
+  bottom: 0rem;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.poster {
+  border: 0.5rem solid white;
+}
+
+.font-loader {display : none;}
+.font-loader .kenyanCoffee{font-family: KenyanCoffee;}
+.font-loader .ffosxbmc{font-family: ffosxbmcRegular;}
+
+.empty.list {
+  color : white;
+  text-align: center;
+  font-size: 2rem;
+  padding-top : 0.5rem;
+}

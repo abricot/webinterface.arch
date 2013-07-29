@@ -1,0 +1,18 @@
+{"id": 7, "jsonrpc": "2.0", "result": {
+    "episodedetails": {
+        "art": {
+            "banner": "image://http%3a%2f%2fthetvdb.com%2fbanners%2fgraphical%2f255326-g6.jpg/",
+            "fanart": "image://http%3a%2f%2fthetvdb.com%2fbanners%2ffanart%2foriginal%2f255326-2.jpg/",
+            "poster": "image://http%3a%2f%2fthetvdb.com%2fbanners%2fposters%2f255326-4.jpg/"
+        },
+        "episodeid": 60,
+        "file": "/media/freebox/Videos/TV Shows/Defiance/Defiance.S01E01.720p.HDTV.x264-EVOLVE.mkv",
+        "firstaired": "2013-04-15",
+        "label": "Pilot",
+        "plot": "The arrival of the mysterious Nolan and his charge Irisa to the town of Defiance marks a threat to the fragile peace that exists between the residents in the premiere of this futuristic drama, which is set in the year 2046, more than 30 years following a war between humans and aliens that left Earth forever changed.",
+        "rating": 7.6999998092651367188,
+        "runtime": 5136,
+        "thumbnail": "image://http%3a%2f%2fthetvdb.com%2fbanners%2fepisodes%2f255326%2f4325883.jpg/",
+        "title": "Pilot"
+    }
+}}

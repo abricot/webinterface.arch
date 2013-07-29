@@ -1,0 +1,15 @@
+{"id": 4, "jsonrpc": "2.0", "result": {
+    "percentage": 4.2326760292053222656,
+    "time": {
+        "hours": 0,
+        "milliseconds": 784,
+        "minutes": 4,
+        "seconds": 0
+    },
+    "totaltime": {
+        "hours": 1,
+        "milliseconds": 694,
+        "minutes": 34,
+        "seconds": 48
+    }
+}}

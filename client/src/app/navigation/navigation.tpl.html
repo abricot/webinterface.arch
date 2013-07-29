@@ -1,0 +1,41 @@
+<section data-type="sidebar">
+    <header>
+        <h1>Medias</h1>
+    </header>
+    <nav>
+        <ul>
+            <li ng-repeat="item in medias">
+                <a ng-tap="go(item.hash)" ng-class="isCurrent(item.hash)">
+                    <i class="{{item.icon}}"></i>
+                    {{item.label}}
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <header>
+        <h1>Controls</h1>
+    </header>
+    <nav>
+        <ul>
+            <li ng-repeat="item in controls">
+                <a ng-tap="go(item.hash)" ng-class="isCurrent(item.hash)">
+                    <i class="{{item.icon}}"></i>
+                    {{item.label}}
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="now playing" ng-show="player.active">
+        <img class="poster" src="{{getThumb(player.item.art)}}" ng-tap="go('/now/playing','none')"/>
+        <h1>{{getLabel(player.item)}}</h1>
+        <footer>
+            <div class="row actions">
+                <div class="offset4 span4 icon-play" ng-tap="togglePlay()"  ng-show="!player.speed">
+                </div>
+                <div class="offset4 span4 icon-pause" ng-tap="togglePlay()"  ng-show="player.speed">
+                </div>
+                <div class="span3" ng-tap="next()"><i class="icon-fast-forward"></i></div>
+            </div>
+        </footer>
+    </div>
+</section>

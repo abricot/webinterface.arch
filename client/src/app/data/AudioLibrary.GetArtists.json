@@ -1,0 +1,261 @@
+{"id": 2, "jsonrpc": "2.0", "result": {
+    "artists": [
+        {
+            "artist": "AC/DC",
+            "artistid": 2,
+            "fanart": "",
+            "genre": ["Rock"],
+            "label": "AC/DC",
+            "style": [""],
+            "thumbnail": ""
+        },
+        {
+            "artist": "Airbourne",
+            "artistid": 3,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f5365f55c-b1e1-48f9-b09f-078f7a14cb1f%2fartistbackground%2fairbourne-4f842b2299342.jpg/",
+            "genre": ["Hard Rock"],
+            "label": "Airbourne",
+            "style": ["Aussie Rock", "Hard Rock", "Heavy Metal"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f5365f55c-b1e1-48f9-b09f-078f7a14cb1f%2fartistthumb%2fairbourne-506699a7a6800.jpg/"
+        },
+        {
+            "artist": "Audioslave",
+            "artistid": 4,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f020bfbb4-05c3-4c86-b372-17825c262094%2fartistbackground%2faudioslave-4f8427f2d8029.jpg/",
+            "genre": ["Hard Rock"],
+            "label": "Audioslave",
+            "style": ["Alternative Metal", "Post-Grunge", "Heavy Metal", "Hard Rock"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f020bfbb4-05c3-4c86-b372-17825c262094%2fartistthumb%2faudioslave-4ff861ff05ac8.jpg/"
+        },
+        {
+            "artist": "Barton Fink",
+            "artistid": 14,
+            "fanart": "",
+            "genre": [""],
+            "label": "Barton Fink",
+            "style": [""],
+            "thumbnail": ""
+        },
+        {
+            "artist": "Chris Cornell",
+            "artistid": 5,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2fcbf9738d-8f81-4a92-bc64-ede09341652d%2fartistbackground%2fcornell-chris-4f78fc128f762.jpg/",
+            "genre": ["Rock"],
+            "label": "Chris Cornell",
+            "style": [""],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2fcbf9738d-8f81-4a92-bc64-ede09341652d%2fartistthumb%2fcornell-chris-50002bdc9fa00.jpg/"
+        },
+        {
+            "artist": "Daft Punk",
+            "artistid": 7,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f056e4f3e-d505-4dad-8ec1-d04f521cbb56%2fartistbackground%2fdaft-punk-4f4e6b609f76c.jpg/",
+            "genre": ["House"],
+            "label": "Daft Punk",
+            "style": ["Club/Dance", "Electronica", "House", "Progressive House", "Left-Field House"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f056e4f3e-d505-4dad-8ec1-d04f521cbb56%2fartistthumb%2fdaft-punk-4fd06cca50b0d.jpg/"
+        },
+        {
+            "artist": "Dio",
+            "artistid": 8,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2fc55193fb-f5d2-4839-a263-4c044fca1456%2fartistbackground%2fdio-500419f861db3.jpg/",
+            "genre": ["Heavy Metal"],
+            "label": "Dio",
+            "style": [""],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2fc55193fb-f5d2-4839-a263-4c044fca1456%2fartistthumb%2fdio-50041a9daf86f.jpg/"
+        },
+        {
+            "artist": "Dream Theater",
+            "artistid": 9,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f28503ab7-8bf2-4666-a7bd-2644bfc7cb1d%2fartistbackground%2fdream-theater-50dfdc47ba01c.jpg/",
+            "genre": ["Progressive Rock"],
+            "label": "Dream Theater",
+            "style": ["Art Rock", "Hard Rock", "Heavy Metal", "Neo-Prog", "Progressive Metal", "Prog-Rock", "Album Rock"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f28503ab7-8bf2-4666-a7bd-2644bfc7cb1d%2fartistthumb%2fdream-theater-4fe19d20d2967.jpg/"
+        },
+        {
+            "artist": "Drowning Pool",
+            "artistid": 10,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f87a73cf0-ebdf-483d-8b5a-3db1e5e72122%2fartistbackground%2fdrowning-pool-4e4827d3a1698.jpg/",
+            "genre": ["Alternative Metal"],
+            "label": "Drowning Pool",
+            "style": ["Alternative Metal", "Alternative/Indie Rock", "Heavy Metal", "Indie Rock", "Post-Grunge"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f87a73cf0-ebdf-483d-8b5a-3db1e5e72122%2fartistthumb%2fdrowning-pool-50699b5389510.jpg/"
+        },
+        {
+            "artist": "Iron Maiden",
+            "artistid": 12,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2fca891d65-d9b0-4258-89f7-e6ba29d83767%2fartistbackground%2firon-maiden-4ddfd5b31e5d8.jpg/",
+            "genre": ["Heavy Metal"],
+            "label": "Iron Maiden",
+            "style": ["British Metal", "Heavy Metal", "New Wave of British Heavy Metal"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2fca891d65-d9b0-4258-89f7-e6ba29d83767%2fartistthumb%2firon-maiden-4fe31f919196a.jpg/"
+        },
+        {
+            "artist": "Jamiroquai",
+            "artistid": 13,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2ff4857fb9-e255-4dc6-bd01-e4ca7cc68544%2fartistbackground%2fjamiroquai-4e4c0904042ee.jpg/",
+            "genre": ["Funk"],
+            "label": "Jamiroquai",
+            "style": [""],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2ff4857fb9-e255-4dc6-bd01-e4ca7cc68544%2fartistthumb%2fjamiroquai-4fde386ae627b.jpg/"
+        },
+        {
+            "artist": "Justice",
+            "artistid": 15,
+            "fanart": "",
+            "genre": [""],
+            "label": "Justice",
+            "style": [""],
+            "thumbnail": ""
+        },
+        {
+            "artist": "Kiss",
+            "artistid": 16,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2fe1f1e33e-2e4c-4d43-b91b-7064068d3283%2fartistbackground%2fkiss-4de4ac71096bd.jpg/",
+            "genre": ["Classic Rock"],
+            "label": "Kiss",
+            "style": ["Arena Rock", "Hard Rock", "Heavy Metal", "Pop-Metal", "Contemporary Pop/Rock", "Album Rock"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2fe1f1e33e-2e4c-4d43-b91b-7064068d3283%2fartistthumb%2fkiss-4fd516136f7d2.jpg/"
+        },
+        {
+            "artist": "Lacuna Coil",
+            "artistid": 17,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f6fea1339-260c-40fe-bb7a-ace5c8438955%2fartistbackground%2flacuna-coil-4dd62c4b1475d.jpg/",
+            "genre": ["Goth"],
+            "label": "Lacuna Coil",
+            "style": [""],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f6fea1339-260c-40fe-bb7a-ace5c8438955%2fartistthumb%2flacuna-coil-4fba461eb3267.jpg/"
+        },
+        {
+            "artist": "M",
+            "artistid": 18,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f99513c45-6c2d-4a6b-a089-074360591f01%2fartistbackground%2fm-4fd460c961598.jpg/",
+            "genre": [""],
+            "label": "M",
+            "style": [""],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f99513c45-6c2d-4a6b-a089-074360591f01%2fartistthumb%2fm-4fea2629dec62.jpg/"
+        },
+        {
+            "artist": "Marilyn Manson",
+            "artistid": 19,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f5dfdca28-9ddc-4853-933c-8bc97d87beec%2fartistbackground%2fmarilyn-manson-4e4e6760dfd78.jpg/",
+            "genre": ["Alternative Metal"],
+            "label": "Marilyn Manson",
+            "style": ["Alternative Metal", "Heavy Metal", "Industrial Metal"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f5dfdca28-9ddc-4853-933c-8bc97d87beec%2fartistthumb%2fmarilyn-manson-50113a7baa374.jpg/"
+        },
+        {
+            "artist": "Metallica",
+            "artistid": 20,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab%2fartistbackground%2fmetallica-4dceb566a1fef.jpg/",
+            "genre": ["Thrash Metal"],
+            "label": "Metallica",
+            "style": ["Heavy Metal", "Speed/Thrash Metal", "Hard Rock"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f65f4f0c5-ef9e-490c-aee3-909e7ae6b2ab%2fartistthumb%2fmetallica-4fd83b0129f83.jpg/"
+        },
+        {
+            "artist": "Nightwish",
+            "artistid": 21,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f00a9f935-ba93-4fc8-a33a-993abe9c936b%2fartistbackground%2fnightwish-4de3f5abe5808.jpg/",
+            "genre": ["Symphonic Metal"],
+            "label": "Nightwish",
+            "style": ["Goth Metal", "Heavy Metal", "Symphonic Black Metal", "Progressive Metal"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f00a9f935-ba93-4fc8-a33a-993abe9c936b%2fartistthumb%2fnightwish-4fb166406d3a9.jpg/"
+        },
+        {
+            "artist": "The Offspring",
+            "artistid": 22,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f23a03e33-a603-404e-bcbf-2c00159d7067%2fartistbackground%2fthe-offspring-4ea079eec8433.jpg/",
+            "genre": ["Punk Rock"],
+            "label": "The Offspring",
+            "style": ["Alternative Pop/Rock", "Alternative/Indie Rock", "Post-Grunge", "Punk Revival", "Punk-Pop"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f23a03e33-a603-404e-bcbf-2c00159d7067%2fartistthumb%2foffspring-the-4fd645eace27c.jpg/"
+        },
+        {
+            "artist": "Offspring",
+            "artistid": 23,
+            "fanart": "",
+            "genre": [""],
+            "label": "Offspring",
+            "style": [""],
+            "thumbnail": ""
+        },
+        {
+            "artist": "Pantera",
+            "artistid": 24,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f541f16f5-ad7a-428e-af89-9fa1b16d3c9c%2fartistbackground%2fpantera-50b3cc87d4cba.jpg/",
+            "genre": ["Thrash Metal"],
+            "label": "Pantera",
+            "style": ["Heavy Metal", "Speed/Thrash Metal", "Alternative Metal"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f541f16f5-ad7a-428e-af89-9fa1b16d3c9c%2fartistthumb%2fpantera-4ffc39dd99d37.jpg/"
+        },
+        {
+            "artist": "Rage Against The Machine",
+            "artistid": 25,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f3798b104-01cb-484c…dc6399b80%2fartistbackground%2frage-against-the-machine-4defad0039279.jpg/",
+            "genre": ["Rap Metal"],
+            "label": "Rage Against The Machine",
+            "style": ["Alternative Metal", "Alternative Pop/Rock", "Alternative/Indie Rock", "Heavy Metal", "Rap-Metal"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f3798b104-01cb-484c…0-56adc6399b80%2fartistthumb%2frage-against-the-machine-4fc2a97b06b98.jpg/"
+        },
+        {
+            "artist": "Soundgarden",
+            "artistid": 26,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f153c9281-268f-4cf3-8938-f5a4593e5df4%2fartistbackground%2fsoundgarden-4e3e3c679c956.jpg/",
+            "genre": ["Grunge"],
+            "label": "Soundgarden",
+            "style": ["Alternative Metal", "Alternative Pop/Rock", "Alternative/Indie Rock", "Grunge", "Heavy Metal"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f153c9281-268f-4cf3-8938-f5a4593e5df4%2fartistthumb%2fsoundgarden-4fce8ffed730f.JPG/"
+        },
+        {
+            "artist": "Static-X",
+            "artistid": 27,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f8ac9e35c-e92d-4030-99ef-ba4127b1555c%2fartistbackground%2fstatic-x-4ff6783d923fc.jpg/",
+            "genre": ["Industrial Metal"],
+            "label": "Static-X",
+            "style": [""],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f8ac9e35c-e92d-4030-99ef-ba4127b1555c%2fartistthumb%2fstatic-x-50576fa339f2b.jpeg/"
+        },
+        {
+            "artist": "Stone Sour",
+            "artistid": 28,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f4ca783b7-5bf7-4348-b494-46680660050f%2fartistbackground%2fstone-sour-4f5a2713ab7b0.jpg/",
+            "genre": ["Rock"],
+            "label": "Stone Sour",
+            "style": [""],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f4ca783b7-5bf7-4348-b494-46680660050f%2fartistthumb%2fstone-sour-4ff169b71dfe3.jpg/"
+        },
+        {
+            "artist": "VA",
+            "artistid": 11,
+            "fanart": "",
+            "genre": [""],
+            "label": "VA",
+            "style": [""],
+            "thumbnail": ""
+        },
+        {
+            "artist": "Velvet Revolver",
+            "artistid": 29,
+            "fanart": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f3a528006-1429-47f4-ae9b-2ea95343e16a%2fartistbackground%2f-4f805d44ae31a.jpg/",
+            "genre": ["Hard Rock"],
+            "label": "Velvet Revolver",
+            "style": ["Hard Rock"],
+            "thumbnail": "image://http%3a%2f%2fassets.fanart.tv%2ffanart%2fmusic%2f3a528006-1429-47f4-ae9b-2ea95343e16a%2fartistthumb%2fvelvet-revolver-4fdf7e52e0f1c.jpg/"
+        },
+        {
+            "artist": "©hris ©ornell",
+            "artistid": 6,
+            "fanart": "",
+            "genre": [""],
+            "label": "©hris ©ornell",
+            "style": [""],
+            "thumbnail": ""
+        }
+    ],
+    "limits": {
+        "end": 28,
+        "start": 0,
+        "total": 28
+    }
+}}

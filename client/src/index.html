@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html manifest="manifest.appcache" ng-app="app">
+	<head>
+		<title>XBMCRemote - Firefox OS</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+		<meta charset="UTF-8"/>
+
+		<link rel="stylesheet" type="text/css" href="/css/<%= grunt.config.get('pkg.name') %>.css" />
+        <script type="text/javascript" src="/js/lib/angular.js"></script>
+        <script type="text/javascript" src="/js/lib/angular-ui-router.js"></script>
+        <script type="text/javascript" src="/js/<%= grunt.config.get('pkg.name') %>.js"></script>
+	</head>
+	<body role="application" ng-controller="AppCtrl">
+        <section id="page" role="region">
+            <header  ui-view="header"></header>
+            <div role="main" ui-view="body" ng-class="{'no-footer' : !hasFooter()}"></div>
+            <footer  ui-view="footer" ng-show="hasFooter()"></footer>
+        </section>
+        <div ng-include src="'navigation/navigation.tpl.html'" ng-controller="NavigationCtrl"></div>
+        <div class="font-loader">
+            <div class="kenyanCoffee">Preload kenyc.ttf</div>
+            <div class="ffosxbmc">Preload ffosxbmc.ttf</div>
+        </div>
+	</body>
+</html>

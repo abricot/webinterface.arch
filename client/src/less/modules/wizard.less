@@ -1,0 +1,42 @@
+.wizard {
+  padding: 1rem;
+  .box-sizing;
+}
+
+.wizard h1 {
+  color: @primaryColor;
+  text-align: center;
+  font-size: 2.5rem;
+  position: relative;
+  margin-top: 0;
+}
+
+.wizard label {
+  font-size: 1.5rem;
+  color: #e6e6e6;
+}
+
+.wizard input {
+  color: white;
+  border: 0;
+  border-bottom: 1px solid @primaryColor;
+  background: transparent;
+  .inner-shadow(0, 0, 0, 0);
+}
+
+.wizard input:focus {
+  outline-color: transparent;
+  border-bottom: 1px solid @outlineColor;
+}
+
+.wizard p input:focus + button[type="reset"] {
+  background: transparent;
+  color: white;
+  font-size: 1.5rem;
+  bottom: 0;
+  top: auto;
+}
+
+.wizard p {
+  margin-bottom :  1rem;
+}

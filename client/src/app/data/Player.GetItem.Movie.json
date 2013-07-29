@@ -1,0 +1,149 @@
+{"id": 4, "jsonrpc": "2.0", "result": {
+    "item": {
+        "album": "",
+        "art": {
+            "fanart": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2f22DQWwjaam1LHTAEapxO2Wg7s2H.jpg/",
+            "poster": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2fc2SQMd00CCGTiDxGXVqA2J9lmzF.jpg/"
+        },
+        "artist": [],
+        "cast": [
+            {
+                "name": "Bruce Willis",
+                "role": "John McClane",
+                "thumbnail": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2fszRtf6oUR9cT6whTbRc5sCQGi8a.jpg/"
+            },
+            {
+                "name": "Jai Courtney",
+                "role": "John McClane Jr.",
+                "thumbnail": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2f3HAM5wUGes2BcXpVO6OcO53jTLN.jpg/"
+            },
+            {
+                "name": "Sebastian Koch",
+                "role": "Komorov",
+                "thumbnail": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2f2eaDkuRi8YXwYB1M4LhfKqUgWoN.jpg/"
+            },
+            {
+                "name": "Cole Hauser",
+                "role": "Collins",
+                "thumbnail": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2f6XNHtWrS8o5rPF4W0xZCLGgEv26.jpg/"
+            },
+            {
+                "name": "Amaury Nolasco",
+                "role": "Murphy",
+                "thumbnail": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2fksqBlivLg7K9uRkQoesknfXs3m3.jpg/"
+            },
+            {
+                "name": "Megalyn Echikunwoke",
+                "role": "Reporter",
+                "thumbnail": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2f3WnDdMpycVQRDdSEV6X4KBkadhX.jpg/"
+            },
+            {
+                "name": "Aksel Hennie",
+                "role": "",
+                "thumbnail": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2ffEmgeaFbhzOSBRqe2mO6sa1EaSp.jpg/"
+            },
+            {
+                "name": "Pasha D. Lychnikoff",
+                "role": "Taxi driver",
+                "thumbnail": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2f7vBY7AGXmgk1LG8zkzaPsRusQai.jpg/"
+            },
+            {
+                "name": "Yuliya Snigir",
+                "role": "Irina",
+                "thumbnail": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2fozW9ofRD0nFgzfMQv4w5h0sNRC1.jpg/"
+            },
+            {
+                "name": "Mary Elizabeth Winstead",
+                "role": "Lucy McClane",
+                "thumbnail": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2f7ZFtdP7AA1JnQU0i0OblijXVYuk.jpg/"
+            },
+            {
+                "name": "Attila Árpa",
+                "role": "Russian Mafia Member"
+            },
+            {
+                "name": "Zolee Ganxsta",
+                "role": "Russian Mafia Member"
+            },
+            {
+                "name": "Norbert Növényi",
+                "role": "Russian Mafia Member"
+            },
+            {
+                "name": "Sergey Kolesnikov",
+                "role": "Chagarin"
+            }
+        ],
+        "country": ["United States of America"],
+        "dateadded": "2013-05-23 13:48:12",
+        "director": ["John Moore"],
+        "episode": -1,
+        "episodeguide": "",
+        "fanart": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2f22DQWwjaam1LHTAEapxO2Wg7s2H.jpg/",
+        "file": "/media/freebox/Videos/Movies/A Good Day To Die Hard 2013 1080p/A Good Day To Die Hard 2013 1080p.mkv",
+        "firstaired": "",
+        "genre": ["Action", "Thriller"],
+        "id": 3,
+        "imdbnumber": "tt1606378",
+        "label": "A Good Day to Die Hard",
+        "lastplayed": "",
+        "mpaa": "Rated R",
+        "originaltitle": "A Good Day to Die Hard",
+        "playcount": 0,
+        "plot": "Iconoclastic, take-no-prisoners cop John McClane, for the first time, finds himself on foreign soil after traveling to Moscow to help his wayward son Jack - unaware that Jack is really a highly-trained CIA operative out to stop a nuclear weapons heist. With the Russian underworld in pursuit, and battling a countdown to war, the two McClanes discover that their opposing methods make them unstoppable heroes.",
+        "plotoutline": "",
+        "premiered": "",
+        "productioncode": "",
+        "rating": 5.9999998092651367188,
+        "resume": {
+            "position": 0.0,
+            "total": 0.0
+        },
+        "runtime": 6071,
+        "season": -1,
+        "set": "Die Hard Collection",
+        "setid": 2,
+        "showlink": [],
+        "showtitle": "",
+        "sorttitle": "",
+        "streamdetails": {
+            "audio": [
+                {
+                    "channels": 6,
+                    "codec": "ac3",
+                    "language": "fre"
+                }
+            ],
+            "subtitle": [
+                {
+                    "language": "fre"
+                }
+            ],
+            "video": [
+                {
+                    "aspect": 1.8461539745330810547,
+                    "codec": "h264",
+                    "duration": 6071,
+                    "height": 1040,
+                    "width": 1920
+                }
+            ]
+        },
+        "studio": ["20th Century Fox"],
+        "tag": [],
+        "tagline": "Yippee Ki-Yay Mother Russia",
+        "thumbnail": "image://http%3a%2f%2fcf2.imgobject.com%2ft%2fp%2foriginal%2fc2SQMd00CCGTiDxGXVqA2J9lmzF.jpg/",
+        "title": "A Good Day to Die Hard",
+        "top250": 0,
+        "track": -1,
+        "trailer": "plugin://plugin.video.youtube/?action=play_video&videoid=7EgVRvG2mM0",
+        "tvshowid": -1,
+        "type": "movie",
+        "uniqueid": {
+            "unknown": ""
+        },
+        "votes": "967",
+        "writer": ["Roderick Thorp", "Skip Woods"],
+        "year": 2013
+    }
+}}

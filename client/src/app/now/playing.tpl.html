@@ -1,0 +1,72 @@
+<div ng-switch on="loading" ng-class="{loading : loading, now : !loading}">
+    <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
+    <div ng-switch-when="false">
+        <div ng-switch on="library.item.type" class="playing">
+            <div ng-switch-when="movie">
+                <div ng-include src="'movie/details.tpl.html'"></div>
+            </div>
+
+            <div ng-switch-when="episode">
+                <div ng-include src="'tvshow/details.tpl.html'"></div>
+            </div>
+
+            <div ng-switch-default class="detail">
+                <div class="row">
+                    <img class="offset1 span10" src="{{library.item.thumbnail | asset:configuration.host.ip}}"/>
+                </div>
+                <h1>
+                    {{library.item.label}}
+                </h1>
+            </div>
+        </div>
+        <div class="seek-wrapper">
+            <div class="row times">
+                {{player.seek.time | time | date:'HH:mm:ss'}}/
+                {{player.seek.totaltime | time | date:'HH:mm:ss'}}
+            </div>
+            <div class="row">
+                <div class="span2 action" ng-tap="toggleAudioStreams()" ng-show="isTypeVideo()">
+                    <i class="icon-comments"></i>
+                </div>
+                <div ng-class="{span8 :isTypeVideo(), span10 : !isTypeVideo(), offset1 : !isTypeVideo()}"
+                     role="slider" aria-valuemin="0" aria-valuenow="0" aria-valuemax="100">
+                    <div seekbar seekbar-value="player.seek.percentage" seekbar-max="100"
+                         on-seekbar-changed="onSeekbarChanged(newValue);"></div>
+                </div>
+                <div class="span2 action" ng-tap="toggleSubtitles()" ng-show="isTypeVideo()">
+                    <i class="icon-quote-left"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showAudioSelect">
+    <header>
+        <h1> Audio Streams </h1>
+    </header>
+    <menu>
+        <button ng-repeat="audio in player.audiostreams" ng-tap="select('audio', audio)">
+          {{audio.name}} ( {{audio.language}})
+          <i class="pull-right icon-check" ng-show="isSelected(player.current.audiostream, audio)"></i>
+        </button>
+        <button ng-tap="toggleAudioStreams()"> Cancel </button>
+    </menu>
+</form>
+
+<form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showSubtitleSelect">
+    <header>
+        <h1>Subtitles</h1>
+    </header>
+    <menu>
+        <button ng-tap="select('subtitle', 'off')">
+            None
+            <i class="pull-right icon-check" ng-show="isSelected(player.current.subtitle, 'off')"></i>
+        </button>
+        <button ng-repeat="subtitle in player.subtitles" ng-tap="select('subtitle', subtitle)">
+            {{subtitle.name}} ({{subtitle.language}})
+            <i class="pull-right icon-check" ng-show="isSelected(player.current.subtitle, subtitle)"></i>
+        </button>
+        <button ng-tap="toggleSubtitles()"> Cancel </button>
+    </menu>
+</form>

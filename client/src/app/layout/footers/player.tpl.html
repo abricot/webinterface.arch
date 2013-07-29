@@ -1,0 +1,21 @@
+<div class="row actions">
+    <div class="span2" ng-tap="previous()">
+        <i class="icon-fast-backward"></i>
+    </div>
+    <div class="span2" ng-tap="backward()">
+        <i class="icon-backward"></i>
+    </div>
+    <div class="span2" ng-tap="togglePlay()">
+        <i class="icon-play" ng-show="!player.speed"></i>
+        <i class="icon-pause" ng-show="player.speed"></i>
+    </div>
+    <div class="span2" ng-tap="stop()">
+        <i class="icon-stop"></i>
+    </div>
+    <div class="span2" ng-tap="forward()">
+        <i class="icon-forward"></i>
+    </div>
+    <div class="span2" ng-tap="next()">
+        <i class="icon-fast-forward"></i>
+    </div>
+</div>

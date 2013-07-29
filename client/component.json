@@ -1,0 +1,9 @@
+{
+	"name": "ffos-xbmcremote",
+	"version": "0.0.1",
+	"dependencies": {
+		"angular": "~1.0.6",
+        "angular-ui-router" : "~0.0.1",
+        "font-awesome" : "~3.2.0"
+	}
+}

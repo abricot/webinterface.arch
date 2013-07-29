@@ -1,0 +1,36 @@
+<div ng-switch on="loading" ng-class="{loading : loading}">
+    <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
+    <div data-type="list" ng-switch-when="false">
+        <ul class="view songs">
+            <li class="row album" ng-show="isFiltered()">
+                <div class="span4 thumb">
+                    <img class="vinyl" src="/img/backgrounds/vinyl.png"/>
+                    <img class="cover" src="{{getCover(songs[0])}}"/>
+                </div>
+                <div class="span8">
+                    <p>{{songs[0].album}}</p>
+
+                    <p>{{songs[0].artist.join(', ')}}</p>
+
+                    <p>{{songs[0].year}}</p>
+                </div>
+            </li>
+            <li class="row song" ng-repeat="song in songs| filter:library.criteria"
+                ng-class-odd="'odd'"
+                ng-tap="play({songid : song.songid}, $index)">
+                <div class="span10">
+                    <p>{{song.label}}</p>
+
+                    <p>{{song.artist.join(', ')}}</p>
+
+                </div>
+                <div class="span2">
+                    <p></p>
+
+                    <p>{{song.duration | time | date :'mm:ss'}}</p>
+                </div>
+            </li>
+            <li ng-show="!songs.length" class="empty list">No item here :'(</li>
+        </ul>
+    </div>
+</div>

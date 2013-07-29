@@ -1,0 +1,53 @@
+section[data-type="sidebar"] .icon-remote {
+  font-family: ffosxbmcRegular;
+  font-size: 3rem;
+  position: relative;
+  top: .5rem;
+}
+
+section[data-type="sidebar"] .icon-remote:before {
+  content: "r";
+}
+
+section[data-type="sidebar"] footer img {
+  position: absolute;
+  bottom: 0;
+  left: 1rem;
+  border: 0.5rem solid white;
+}
+
+section[data-type="sidebar"] .now.playing {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  height :10rem;
+}
+
+section[data-type="sidebar"] .now.playing .poster {
+  position: absolute;
+  left: 0;
+  z-index: 11;
+  width :35%;
+  height: auto;
+  bottom : 0;
+  border : 0.5rem solid white;
+  .box-sizing;
+}
+
+section[data-type="sidebar"] .now.playing h1 {
+  position: absolute;
+  bottom: 5rem;
+  right: 2rem;
+  font-size: 1.5rem;
+  color: @primaryColor;
+  width: 50%;
+  text-align: right;
+  display: block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+section[data-type="sidebar"] .now.playing footer {
+  margin: 0;
+}

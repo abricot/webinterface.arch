@@ -1,0 +1,18 @@
+<div ng-switch on="loading" ng-class="{loading : loading}">
+    <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
+    <ul data-type="list" class="view tvshows" ng-switch-when="false">
+        <li class="tvshow" ng-repeat="show in tvshows | filter:library.criteria"
+            ng-tap="go('/tvshow/' + show.tvshowid, 'none')"
+            ng-class-odd="'odd'">
+            <em class="playcount" ng-show="show.playcount">&#10003;</em>
+            <img class="banner" src="{{show.art.banner  | asset:configuration.host.ip}}" alt="show.title"/>
+
+            <div class="rating">
+                <em>{{show.rating | number:1}}</em>
+            </div>
+        </li>
+        <li ng-show="!tvshows.length" class="empty list">No item here :'(</li>
+    </ul>
+</div>
+
+

@@ -1,0 +1,32 @@
+{"id": 4, "jsonrpc": "2.0", "result": {
+    "item": {
+        "album": "Black Ice",
+        "albumartist": ["AC/DC"],
+        "albumid": -1,
+        "art": {
+            "thumb": "image://music@%2fmedia%2ffreebox%2fMusics%2fACDC%2fBlack%20Ice%2f01%20-%20Rock%20N%20Roll%20Train.MP3/"
+        },
+        "artist": ["AC/DC"],
+        "comment": "",
+        "disc": 0,
+        "displayartist": "AC/DC",
+        "duration": 262,
+        "fanart": "",
+        "file": "/media/freebox/Musics/ACDC/Black Ice/01 - Rock N Roll Train.MP3",
+        "genre": ["Rock"],
+        "label": "01. AC/DC - Rock N Roll Train",
+        "lastplayed": "",
+        "lyrics": "",
+        "musicbrainzalbumartistid": "",
+        "musicbrainzalbumid": "",
+        "musicbrainzartistid": "",
+        "musicbrainztrackid": "",
+        "playcount": 0,
+        "rating": 0,
+        "thumbnail": "image://music@%2fmedia%2ffreebox%2fMusics%2fACDC%2fBlack%20Ice%2f01%20-%20Rock%20N%20Roll%20Train.MP3/",
+        "title": "Rock N Roll Train",
+        "track": 1,
+        "type": "unknown",
+        "year": 2008
+    }
+}}
