@@ -14,7 +14,7 @@ module.exports = function (grunt) {
     grunt.registerTask('default', ['jshint','build']);
     grunt.registerTask('build', ['clean','html2js','concat','recess:build','copy']);
     grunt.registerTask('release', ['clean','html2js','uglify', 'concat:index', 'recess:min','copy']);
-    grunt.registerTask('marketplace', ['clean','html2js', 'concat:index', 'recess:min','copy','compress']);
+    grunt.registerTask('marketplace', ['clean','html2js', 'concat', 'recess:min','copy','compress']);
 
     // Print a timestamp (useful for when watching)
     grunt.registerTask('timestamp', function() {
