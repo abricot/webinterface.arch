@@ -17,13 +17,20 @@ angular.module('app')
             var onLoad = function () {
                 $scope.volume = $scope.xbmc.send('Application.GetProperties', {
                     'properties': ['volume']
-                }, true, 'result.volume');
+                }, true, 'result.volume').then(function(volume) {
+                    $scope.volume = volume;
+                });
             }.bind(this);
             if ($scope.xbmc.isConnected()) {
                 onLoad();
             } else {
                 $scope.xbmc.register('Websocket.OnConnected', onLoad);
             }
+
+            var onVolumeChanged = function (result) {
+                $scope.volume = result.params.data.volume;
+            };
+            $scope.xbmc.register('Application.OnVolumeChanged', onVolumeChanged);
 
             $scope.setVolume = function (volume) {
                 volume = Math.max(0, Math.min(volume, 100));
