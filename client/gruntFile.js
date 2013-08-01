@@ -1,9 +1,6 @@
 module.exports = function (grunt) {
 
-    /*
-     * Dynamically load the npm tasks
-     */
-    require( 'matchdep' ).filterDev('grunt-*').forEach( grunt.loadNpmTasks );
+    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
     // Default task.
     grunt.registerTask('default', ['jshint','build']);

@@ -4,12 +4,12 @@
   "description": "Yet another XBMC remote for firefox os",
   "launch_path": "/index.html",
   "icons": {
-    "30": "/img/icons/foxmote-30.png",
-    "32": "/img/icons/foxmote-32.png",
-    "60": "/img/icons/foxmote-60.png",
-    "64": "/img/icons/foxmote-64.png",
-    "128": "/img/icons/foxmote-128.png",
-    "256": "/img/icons/foxmote-256.png"
+    "30": "img/icons/foxmote-30.png",
+    "32": "img/icons/foxmote-32.png",
+    "60": "img/icons/foxmote-60.png",
+    "64": "img/icons/foxmote-64.png",
+    "128": "img/icons/foxmote-128.png",
+    "256": "img/icons/foxmote-256.png"
   },
   "developer": {
     "name": "Nicolas ABRIC",

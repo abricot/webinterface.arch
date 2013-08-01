@@ -78,7 +78,7 @@ angular.module('app')
             if (hasCover) {
                 return assetFilter(song.thumbnail, $scope.configuration.host.ip);
             } else {
-                return '/img/backgrounds/album.png';
+                return 'img/backgrounds/album.png';
             }
         }
 

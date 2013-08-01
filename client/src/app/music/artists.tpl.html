@@ -6,7 +6,7 @@
             ng-class-odd="'odd'">
             <img class="span3 cover" src="{{artist.thumbnail | asset:configuration.host.ip}}"
                  ng-show="hasCover(artist)"/>
-            <img class="span3 cover unknow" src="/img/blank.gif" ng-hide="hasCover(artist)"/>
+            <img class="span3 cover unknow" src="img/blank.gif" ng-hide="hasCover(artist)"/>
 
             <div class="span7">
                 <p>{{artist.label}}</p>
