@@ -1,34 +1,34 @@
 CACHE MANIFEST
 # v0.1
 index.html
-/css/ffos-xbmcremote.css
+css/ffos-xbmcremote.css
 
-/js/lib/angular.js
-/js/lib/angular-ui-router.js
-/js/ffos-xbmcremote.js
+js/lib/angular.js
+js/lib/angular-ui-router.js
+js/ffos-xbmcremote.js
 
-/font/ffosxbmc.ttf
-/font/fontawesome-webfont.eot
-/font/fontawesome-webfont.svg
-/font/fontawesome-webfont.ttf
-/font/fontawesome-webfont.woff
-/font/kenyc.ttf
+font/ffosxbmc.ttf
+font/fontawesome-webfont.eot
+font/fontawesome-webfont.svg
+font/fontawesome-webfont.ttf
+font/fontawesome-webfont.woff
+font/kenyc.ttf
 
 # Images you might use (remove the #)
-/img/blank.gif
-/img/backgrounds/album.png
-/img/backgrounds/albums.jpg
-/img/backgrounds/artist.png
-/img/backgrounds/artists.jpg
-/img/backgrounds/computer-icon.png
-/img/backgrounds/party.jpg
-/img/backgrounds/songs.jpg
-/img/backgrounds/vinyl.png
-/img/backgrounds/vinyls.jpg
+img/blank.gif
+img/backgrounds/album.png
+img/backgrounds/albums.jpg
+img/backgrounds/artist.png
+img/backgrounds/artists.jpg
+img/backgrounds/computer-icon.png
+img/backgrounds/party.jpg
+img/backgrounds/songs.jpg
+img/backgrounds/vinyl.png
+img/backgrounds/vinyls.jpg
 
-/img/ui/handler.png
-/img/ui/pattern.png
-/img/ui/separator-large.png
+img/ui/handler.png
+img/ui/pattern.png
+img/ui/separator-large.png
 
 NETWORK:
 *

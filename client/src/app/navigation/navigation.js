@@ -47,7 +47,7 @@ angular.module('app')
                     }
 
                 }
-                return '/img/blank.gif';
+                return 'img/blank.gif';
             };
 
             $scope.getLabel = function (item) {
