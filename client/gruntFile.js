@@ -1,21 +1,14 @@
 module.exports = function (grunt) {
 
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-recess');
-    grunt.loadNpmTasks('grunt-html2js');
-    grunt.loadNpmTasks('grunt-contrib-compress');
+    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
     // Default task.
     grunt.registerTask('default', ['jshint','build']);
     grunt.registerTask('build', ['clean','html2js','concat','recess:build','copy']);
     grunt.registerTask('release', ['clean','html2js','uglify', 'concat:index', 'recess:min','copy']);
     grunt.registerTask('marketplace', ['clean','html2js', 'concat', 'recess:min','copy','compress']);
-
+	grunt.registerTask('ghpages', ['clean','html2js', 'concat', 'recess:min','copy', 'build_gh_pages:gh_pages']);
+ 
     // Print a timestamp (useful for when watching)
     grunt.registerTask('timestamp', function() {
         grunt.log.subhead(Date());
@@ -25,7 +18,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         distdir: 'dist',
         wwwdir: 'dist/www',
-        pkg: grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON('package.json'), 
         banner:
             '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
                 '<%= pkg.homepage ? " * " + pkg.homepage + "\\n" : "" %>' +
@@ -141,6 +134,11 @@ module.exports = function (grunt) {
                 ]
             }
         },
+		 build_gh_pages: {
+			gh_pages: {
+			  // Leave empty if you just want to run the defaults
+			}
+		},
         jshint:{
             files:['gruntFile.js', '<%= src.js %>'],
             options:{
