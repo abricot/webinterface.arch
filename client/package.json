@@ -6,8 +6,8 @@
     "contributors": [
         {
             "name": "Nicolas ABRIC",
-            "email": "nicolas.abric@gmail.com" 
-        } 
+            "email": "nicolas.abric@gmail.com"
+        }
     ],
     "repository": {
         "type": "git",
@@ -37,7 +37,6 @@
         "grunt-html2js": "~0.1.0",
         "grunt-contrib-watch": "~0.3.1",
         "grunt-contrib-compress" : "~0.5",
-		"grunt-build-gh-pages" : "~0.0.1",
 		"matchdep": "~0.1.2"
     },
     "scripts": {
