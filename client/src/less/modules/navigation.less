@@ -34,6 +34,9 @@ section[data-type="sidebar"] .now.playing .poster {
   border : 0.5rem solid white;
   .box-sizing;
 }
+section[data-type="sidebar"] .now.playing .poster.unknown{
+  background: #333 url(../img/icons/low-contrast-64.png) no-repeat center;
+}
 
 section[data-type="sidebar"] .now.playing h1 {
   position: absolute;
@@ -46,6 +49,7 @@ section[data-type="sidebar"] .now.playing h1 {
   display: block;
   text-overflow: ellipsis;
   white-space: nowrap;
+  overflow: hidden;
 }
 
 section[data-type="sidebar"] .now.playing footer {

@@ -5,7 +5,7 @@ angular.module('filters.xbmc.asset', [])
                 port = port || 8080;
                 return 'http://' + host + ':' + port + '/image/' + encodeURIComponent(input);
             } else {
-                return 'img/blank.gif';
+                return 'img/icons/low-contrast-256.png';
             }
         };
     });

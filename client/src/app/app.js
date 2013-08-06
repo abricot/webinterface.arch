@@ -70,13 +70,6 @@ angular.module('app')
                 }
             });
 
-            var updateSeek = function () {
-                $scope.$apply(function () {
-                    $scope.player.seek.time++;
-                    $scope.player.seek.percentage = $scope.player.seek.time / $scope.player.seek.totaltime * 100;
-                });
-            };
-
             var getItem = function (player) {
                 $scope.player.id = player.playerid;
                 $scope.player.active = true;
@@ -95,35 +88,39 @@ angular.module('app')
                         'channeltype', 'hidden', 'locked', 'channelnumber', 'starttime', 'endtime'],
                     'playerid': $scope.player.id
                 }, true, 'result.item').then(function (item) {
-                        xbmc.send('Player.GetProperties', {
-                            'properties': ['percentage', 'time', 'totaltime',
-                                'speed', 'playlistid',
-                                'currentsubtitle', 'subtitles',
-                                'audiostreams', 'currentaudiostream', 'type'],
-                            'playerid': $scope.player.id
-                        }, true, 'result').then(function (properties) {
-                                var timeFilter = $filter('time');
-                                $scope.player.audiostreams = properties.audiostreams;
-                                $scope.player.current = {
-                                    audiostream: properties.currentaudiostream,
-                                    subtitle: properties.currentsubtitle
-                                };
-                                $scope.player.seek = {
-                                    time: timeFilter(properties.time),
-                                    totaltime: timeFilter(properties.totaltime),
-                                    percentage: properties.percentage
-                                };
-                                $scope.player.speed = properties.speed;
-                                $scope.player.subtitles = properties.subtitles;
-                                $scope.player.type = properties.type;
-
-                                $scope.playlist = properties.playlistid;
-                                if (properties.speed === 1) {
-                                    window.clearInterval($scope.player.intervalId);
-                                    $scope.player.intervalId = window.setInterval(updateSeek, 1000);
-                                }
-                            });
+                        getProperties();
                         return item;
+                    });
+            };
+
+            var getProperties = function() {
+                xbmc.send('Player.GetProperties', {
+                    'properties': ['percentage', 'time', 'totaltime',
+                        'speed', 'playlistid',
+                        'currentsubtitle', 'subtitles',
+                        'audiostreams', 'currentaudiostream', 'type'],
+                    'playerid': $scope.player.id
+                }, true, 'result').then(function (properties) {
+                        var timeFilter = $filter('time');
+                        $scope.player.audiostreams = properties.audiostreams;
+                        $scope.player.current = {
+                            audiostream: properties.currentaudiostream,
+                            subtitle: properties.currentsubtitle
+                        };
+                        $scope.player.seek = {
+                            time: timeFilter(properties.time),
+                            totaltime: timeFilter(properties.totaltime),
+                            percentage: properties.percentage
+                        };
+                        $scope.player.speed = properties.speed;
+                        $scope.player.subtitles = properties.subtitles;
+                        $scope.player.type = properties.type;
+
+                        $scope.playlist = properties.playlistid;
+                        if (properties.speed === 1) {
+                            window.clearInterval($scope.player.intervalId);
+                            $scope.player.intervalId = window.setInterval(getProperties, 1000);
+                        }
                     });
             };
 

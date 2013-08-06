@@ -47,7 +47,6 @@ angular.module('app')
                     }
 
                 }
-                return 'img/blank.gif';
             };
 
             $scope.getLabel = function (item) {
@@ -60,6 +59,17 @@ angular.module('app')
             $scope.go = function (path) {
                 $location.path(path);
                 $scope.toggleDrawer();
+            };
+
+            $scope.hasPoster = function (art) {
+                var result = false;
+                if (art) {
+                    if (art['album.thumb'] || art['tvshow.poster'] ||
+                        art.poster || art.thumb) {
+                        result =  true;
+                    }
+                }
+                return result;
             };
 
             $scope.isCurrent = function (hash) {

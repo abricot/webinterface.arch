@@ -26,7 +26,10 @@
         </ul>
     </nav>
     <div class="now playing" ng-show="player.active">
-        <img class="poster" src="{{getThumb(player.item.art)}}" ng-tap="go('/now/playing','none')"/>
+        <img class="poster" src="{{getThumb(player.item.art)}}" ng-tap="go('/now/playing','none')"
+             ng-show="hasPoster(player.item.art)"/>
+        <img class="poster unknown" src="img/blank.gif" ng-tap="go('/now/playing','none')"
+             ng-hide="hasPoster(player.item.art)"/>
         <h1>{{getLabel(player.item)}}</h1>
         <footer>
             <div class="row actions">
