@@ -15,7 +15,7 @@ angular.module('app')
     .controller('RemoteCtrl', ['$scope', '$location',
         function RemoteCtrl($scope, $location) {
             var onLoad = function () {
-                $scope.volume = $scope.xbmc.send('Application.GetProperties', {
+                $scope.xbmc.send('Application.GetProperties', {
                     'properties': ['volume']
                 }, true, 'result.volume').then(function(volume) {
                     $scope.volume = volume;
@@ -27,13 +27,8 @@ angular.module('app')
                 $scope.xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
             }
 
-            var onVolumeChanged = function (result) {
-                $scope.volume = result.params.data.volume;
-            };
-            $scope.xbmc.register('Application.OnVolumeChanged', { fn : onVolumeChanged, scope : this});
-
             $scope.setVolume = function (volume) {
-                volume = Math.max(0, Math.min(volume, 100));
-                $scope.xbmc.send('Application.SetVolume', {'volume': volume});
+                $scope.volume = Math.max(0, Math.min(volume, 100));
+                $scope.xbmc.send('Application.SetVolume', {'volume': $scope.volume});
             }
         }]);

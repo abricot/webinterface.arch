@@ -42,6 +42,7 @@ angular.module('services.websocket', [])
 
         factory.send = function (request) {
             if (isWSConnected) {
+                console.log(JSON.stringify(request));
                 ws.send(JSON.stringify(request));
             }
         };
