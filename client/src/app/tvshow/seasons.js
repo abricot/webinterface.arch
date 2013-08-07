@@ -34,10 +34,10 @@ angular.module('app')
                         $scope.go('/tvshow/' + $scope.tvshowid + '/' + seasons[0].season);
                     }
                 });
-        }.bind(this);
+        };
         if ($scope.xbmc.isConnected()) {
             onLoad();
         } else {
-            $scope.xbmc.register('Websocket.OnConnected', onLoad);
+            $scope.xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
         }
     }])

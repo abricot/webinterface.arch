@@ -20,17 +20,17 @@ angular.module('app')
                 }, true, 'result.volume').then(function(volume) {
                     $scope.volume = volume;
                 });
-            }.bind(this);
+            };
             if ($scope.xbmc.isConnected()) {
                 onLoad();
             } else {
-                $scope.xbmc.register('Websocket.OnConnected', onLoad);
+                $scope.xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
             }
 
             var onVolumeChanged = function (result) {
                 $scope.volume = result.params.data.volume;
             };
-            $scope.xbmc.register('Application.OnVolumeChanged', onVolumeChanged);
+            $scope.xbmc.register('Application.OnVolumeChanged', { fn : onVolumeChanged, scope : this});
 
             $scope.setVolume = function (volume) {
                 volume = Math.max(0, Math.min(volume, 100));

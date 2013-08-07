@@ -27,10 +27,10 @@ angular.module('app')
                         $scope.loading = false;
                         return tvshows;
                     });
-            }.bind(this);
+            };
             if ($scope.xbmc.isConnected()) {
                 onLoad();
             } else {
-                $scope.xbmc.register('Websocket.OnConnected', onLoad);
+                $scope.xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
             }
         }]);

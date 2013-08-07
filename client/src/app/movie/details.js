@@ -27,11 +27,11 @@ angular.module('app')
                         return item;
                     });
 
-            }.bind(this);
+            };
             if ($scope.xbmc.isConnected()) {
                 onLoad();
             } else {
-                $scope.xbmc.register('Websocket.OnConnected', onLoad);
+                $scope.xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
             }
         }
     ]);

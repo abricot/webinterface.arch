@@ -29,11 +29,11 @@ angular.module('app')
                         $scope.loading = false;
                         return artists;
                     });
-            }.bind(this);
+            };
             if ($scope.xbmc.isConnected()) {
                 onLoad();
             } else {
-                $scope.xbmc.register('Websocket.OnConnected', onLoad);
+                $scope.xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
             }
 
             $scope.hasCover = function (artist) {

@@ -70,6 +70,19 @@ angular.module('app')
                 }
             });
 
+            var updateSeek = function () {
+                $scope.$apply(function () {
+                    $scope.player.seek.time++;
+                    $scope.player.seek.percentage = $scope.player.seek.time / $scope.player.seek.totaltime * 100;
+                    var now = Date.now();
+                    if (now - $scope.player.seek.lastUpdate > 5000) {
+                        getProperties();
+                    } else {
+                        $scope.player.seek.lastUpdate = now;
+                    }
+                });
+            };
+
             var getItem = function (player) {
                 $scope.player.id = player.playerid;
                 $scope.player.active = true;
@@ -93,7 +106,7 @@ angular.module('app')
                     });
             };
 
-            var getProperties = function() {
+            var getProperties = function () {
                 xbmc.send('Player.GetProperties', {
                     'properties': ['percentage', 'time', 'totaltime',
                         'speed', 'playlistid',
@@ -119,7 +132,7 @@ angular.module('app')
                         $scope.playlist = properties.playlistid;
                         if (properties.speed === 1) {
                             window.clearInterval($scope.player.intervalId);
-                            $scope.player.intervalId = window.setInterval(getProperties, 1000);
+                            $scope.player.intervalId = window.setInterval(updateSeek, 1000);
                         }
                     });
             };
@@ -164,35 +177,33 @@ angular.module('app')
                 $scope.playlist = -1;
             };
 
-            xbmc.register('Player.OnPause', onPlayerPause.bind(this));
-            xbmc.register('Player.OnPlay', onPlayerPlay.bind(this));
-            xbmc.register('Player.OnPropertyChanged', onPlayerPropertyChanged.bind(this));
-            xbmc.register('Player.OnStop', onPlayerStop.bind(this));
-            xbmc.register('Player.OnSeek', onPlayerSeek.bind(this));
-            xbmc.register('Playlist.OnClear', onPlaylistClear.bind(this));
+            xbmc.register('Player.OnPause', { fn : onPlayerPause, scope : this});
+            xbmc.register('Player.OnPlay', { fn : onPlayerPlay, scope : this});
+            xbmc.register('Player.OnPropertyChanged', { fn : onPlayerPropertyChanged, scope : this});
+            xbmc.register('Player.OnStop',{ fn : onPlayerStop, scope : this});
+            xbmc.register('Player.OnSeek', { fn : onPlayerSeek, scope : this});
+            xbmc.register('Playlist.OnClear', { fn : onPlaylistClear, scope : this});
 
 
             var xbmchost = localStorage.getItem('xbmchost');
-            if (xbmchost !== null) {
-                $scope.configuration = JSON.parse(xbmchost);
-                $scope.xbmc.connect($scope.configuration.host.ip, $scope.configuration.host.port);
-            } else {
+            if (xbmchost === null) {
                 $scope.go('/settings');
-            }
-            var onLoad = function () {
-                xbmc.send('Player.GetActivePlayers', null, true, 'result').then(function (players) {
-                    if (players.length > 0) {
-                        getItem(players[0]);
-                    }
-                });
-
-            }.bind(this);
-            if (xbmc.isConnected()) {
-                onLoad();
             } else {
-                xbmc.register('Websocket.OnConnected', onLoad);
+                $scope.configuration = JSON.parse(xbmchost);
+                var onLoad = function () {
+                    xbmc.send('Player.GetActivePlayers', null, true, 'result').then(function (players) {
+                        if (players.length > 0) {
+                            getItem(players[0]);
+                        }
+                    });
+                }
+                if (xbmc.isConnected()) {
+                    onLoad();
+                } else {
+                    xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
+                    $scope.xbmc.connect($scope.configuration.host.ip, $scope.configuration.host.port);
+                }
             }
-
             var main = document.querySelector('div[role="main"]');
             var gestureDetector = new GestureDetector(main);
             gestureDetector.startDetecting();

@@ -1,11 +1,11 @@
 CACHE MANIFEST
 # v0.1
 index.html
-css/ffos-xbmcremote.css
+css/foxmote.css
 
 js/lib/angular.js
 js/lib/angular-ui-router.js
-js/ffos-xbmcremote.js
+js/foxmote.js
 
 font/ffosxbmc.ttf
 font/fontawesome-webfont.eot
@@ -25,6 +25,10 @@ img/backgrounds/party.jpg
 img/backgrounds/songs.jpg
 img/backgrounds/vinyl.png
 img/backgrounds/vinyls.jpg
+
+img/icons/foxmote-128.png
+img/icons/low-contrast-64.png
+img/icons/low-contrast-256.png
 
 img/ui/handler.png
 img/ui/pattern.png

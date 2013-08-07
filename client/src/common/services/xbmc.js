@@ -1,4 +1,3 @@
-
 angular.module('services.xbmc', ['services.websocket'])
     .factory('xbmc', ['$rootScope', '$q', '$parse', 'websocket',
         function ($rootScope, $q, $parse, websocket) {
@@ -33,7 +32,8 @@ angular.module('services.xbmc', ['services.websocket'])
                 websocket.subscribe(onMessage.bind(this));
                 var onConnectedCallbacks = notifications['Websocket.OnConnected'] || [];
                 for (var i = 0; i < onConnectedCallbacks.length; i++) {
-                    onConnectedCallbacks[i]();
+                    var cb = onConnectedCallbacks[i];
+                    cb.fn.call(cb.scope);
                 }
             };
 
@@ -52,7 +52,8 @@ angular.module('services.xbmc', ['services.websocket'])
                         delete callbacks[data.id];
                     } else if (notifications[data.method] && notifications[data.method].length > 0) {
                         for (var i = 0; i < notifications[data.method].length; i++) {
-                            $rootScope.$apply(notifications[data.method][i](data));
+                            var cb = notifications[data.method][i];
+                            cb.fn.call(cb.scope, data);
                         }
                     }
                 }

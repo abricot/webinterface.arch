@@ -47,7 +47,7 @@ angular.module('app')
                 $scope.songs = songs;
             });
 
-        }.bind(this);
+        };
 
         var playlistAdd = function () {
             if ($scope.queue.length > 0) {
@@ -69,7 +69,7 @@ angular.module('app')
         if ($scope.xbmc.isConnected()) {
             onLoad();
         } else {
-            $scope.xbmc.register('Websocket.OnConnected', onLoad);
+            $scope.xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
         }
 
         $scope.getCover = function (song) {

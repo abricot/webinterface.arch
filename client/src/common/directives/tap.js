@@ -5,17 +5,28 @@ angular.module('directives.tap', [])
         return function (scope, elm, attrs) {
             // if there is no touch available, we'll fall back to click
             if (isTouch) {
-                var tapping = false;
-                elm.bind('touchstart', function () {
-                    tapping = true;
+                var THRESHOLD = 5;
+                var start;
+                var  coordinates = function (t) {
+                    return Object.freeze({
+                        screenX: t.screenX,
+                        screenY: t.screenY,
+                        clientX: t.clientX,
+                        clientY: t.clientY
+                    });
+                }
+                elm.bind('touchstart', function (evt) {
+                    start = coordinates(evt.touches[0]);
                     elm.addClass('active');
                 });
-                // prevent firing when someone is f.e. dragging
-                elm.bind('touchmove', function () {
-                    tapping = false;
-                });
-                elm.bind('touchend', function () {
-                    tapping && scope.$apply(attrs.ngTap);
+
+                elm.bind('touchend', function (evt) {
+                    var end = coordinates(evt.changedTouches[0]);
+                    var tapping  = Math.abs(end.screenX - start.screenX)  < THRESHOLD &&
+                                   Math.abs(end.screenY - start.screenY)  < THRESHOLD;
+                    if(tapping) {
+                        scope.$apply(attrs.ngTap);
+                    }
                     elm.removeClass('active');
                 });
             }
