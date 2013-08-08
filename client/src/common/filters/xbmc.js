@@ -1,1 +1,1 @@
-angular.module('filters.xbmc', ['filters.xbmc.asset', 'filters.xbmc.episode', 'filters.xbmc.time']);
+angular.module('filters.xbmc', ['filters.xbmc.asset', 'filters.xbmc.episode', 'filters.xbmc.fallback', 'filters.xbmc.time']);

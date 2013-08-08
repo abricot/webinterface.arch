@@ -24,6 +24,7 @@ angular.module('app')
         function ($scope, $rootScope, $state, $location, $filter, xbmc) {
             $scope.$state = $state;
             var init = function () {
+                $scope.connected = false;
                 $scope.player = {
                     id: -1,
                     active: false,
@@ -149,7 +150,6 @@ angular.module('app')
 
             var onPlayerPropertyChanged = function (obj) {
                 var data = obj.params.data;
-                console.log(data);
             };
 
             var onPlayerStop = function (obj) {
@@ -169,8 +169,6 @@ angular.module('app')
 
             var onPlayerSpeedChanged = function (obj) {
                 var data = obj.params.data;
-                console.log(data);
-
             };
 
             var onPlaylistClear = function () {
@@ -191,16 +189,21 @@ angular.module('app')
             } else {
                 $scope.configuration = JSON.parse(xbmchost);
                 var onLoad = function () {
+                    $scope.connected = true;
                     xbmc.send('Player.GetActivePlayers', null, true, 'result').then(function (players) {
                         if (players.length > 0) {
                             getItem(players[0]);
                         }
                     });
                 }
+                var onDisconnect = function () {
+                    $scope.connected = false;
+                };
                 if (xbmc.isConnected()) {
                     onLoad();
                 } else {
                     xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
+                    xbmc.register('Websocket.OnDisconnected', { fn : onDisconnect, scope : this});
                     $scope.xbmc.connect($scope.configuration.host.ip, $scope.configuration.host.port);
                 }
             }

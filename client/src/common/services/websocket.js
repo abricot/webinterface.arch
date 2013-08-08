@@ -10,28 +10,27 @@ angular.module('services.websocket', [])
             return isWSConnected;
         }
 
-        factory.connect = function (url, callback) {
+        factory.connect = function (url, connectCallback, disconnectCallback) {
             ws = new WebSocket(url);
             ws.onopen = function () {
                 isWSConnected = true;
-                if (callback) {
-                    callback();
+                if (connectCallback) {
+                    connectCallback();
                 }
             };
 
             ws.onclose = function () {
                 isWSConnected = false;
-                console.log('Lost connection retry in 10 sec')
+                disconnectCallback();
                 window.setTimeout(function () {
-                    factory.connect(url, callback)
+                    factory.connect(url, connectCallback)
                 }.bind(this), 10000);
             };
 
             ws.onerror = function () {
                 isWSConnected = false;
-                console.log('Can t connect retry in 10 sec');
                 window.setTimeout(function () {
-                    factory.connect(url, callback)
+                    factory.connect(url, connectCallback)
                 }.bind(this), 10000);
             };
         };
@@ -42,7 +41,6 @@ angular.module('services.websocket', [])
 
         factory.send = function (request) {
             if (isWSConnected) {
-                console.log(JSON.stringify(request));
                 ws.send(JSON.stringify(request));
             }
         };

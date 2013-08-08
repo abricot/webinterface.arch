@@ -37,9 +37,16 @@ angular.module('services.xbmc', ['services.websocket'])
                 }
             };
 
+            function onDiconnected() {
+                var onDiscConnectedCallbacks = notifications['Websocket.OnDisconnected'] || [];
+                for (var i = 0; i < onDiscConnectedCallbacks.length; i++) {
+                    var cb = onDiscConnectedCallbacks[i];
+                    cb.fn.call(cb.scope);
+                }
+            };
+
             function onMessage(event) {
                 if (event.data !== '') {
-                    console.log(event.data);
                     var data = JSON.parse(event.data);
                     if (callbacks.hasOwnProperty(data.id)) {
                         var cb = callbacks[data.id];
@@ -95,8 +102,9 @@ angular.module('services.xbmc', ['services.websocket'])
             }
 
             factory.connect = function (url, port) {
-                websocket.connect('ws://' + url + ':' + port + '/jsonrpc', onConnected);
+                websocket.connect('ws://' + url + ':' + port + '/jsonrpc', onConnected, onDiconnected);
             }
+
 
             return factory;
         }

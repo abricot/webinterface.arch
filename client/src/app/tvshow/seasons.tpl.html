@@ -2,7 +2,7 @@
     <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
     <div ng-switch-when="false">
         <ul data-type="list" class="view">
-            <li class="row season" ng-repeat="season in seasons | filter:library.criteria"
+            <li class="row season" ng-repeat="season in seasons | filter:library.criteria:/"
                 ng-tap="go('/tvshow/' + tvshowid + '/' + season.season)">
                 <img class="span4 poster" src="{{season.thumbnail  | asset:configuration.host.ip}}"/>
 

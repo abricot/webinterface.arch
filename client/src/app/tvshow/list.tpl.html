@@ -5,7 +5,7 @@
             ng-tap="go('/tvshow/' + show.tvshowid, 'none')"
             ng-class-odd="'odd'">
             <em class="playcount" ng-show="show.playcount">&#10003;</em>
-            <img class="banner" src="{{show.art.banner  | asset:configuration.host.ip}}" alt="show.title"/>
+            <img class="banner" src="{{show.art.banner  | asset:configuration.host.ip | fallback:'img/backgrounds/banner.png'}}" alt="show.title"/>
 
             <div class="rating">
                 <em>{{show.rating | number:1}}</em>

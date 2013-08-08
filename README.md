@@ -21,7 +21,6 @@ Build system focused on AngularJS apps and tightly integrated with other tools c
 * build supporting JS, CSS and AngularJS templates minification
 
 ## Installation
-
 ### Platform & tools
 
 You need to install Node.js and then the development tools. Node.js comes with a package manager called [npm](http://npmjs.org) for installing NodeJS applications and libraries.
@@ -32,7 +31,7 @@ You need to install Node.js and then the development tools. Node.js comes with a
     npm install -g grunt-cli
     ```
 
-### App Server
+### Application Server
 
 When testing with your browser (Chrome, Firefox) you will need to use our backend application server (using nodejs).  Please follow the below steps :
 
@@ -44,7 +43,7 @@ When testing with your browser (Chrome, Firefox) you will need to use our backen
     cd ..
     ```
 
-### Client App
+### Client Application
 
 Our client application is a straight HTML/Javascript application but our development process uses a Node.js build tool
 [Grunt.js](gruntjs.com) and [Bower](https://github.com/bower/bower) to retrieve 3rd party dependencies. Grunt relies upon some 3rd party libraries that we need to install as local dependencies using npm.
@@ -59,31 +58,29 @@ Our client application is a straight HTML/Javascript application but our develop
 
 ## Building
 
-### Build the client app
-The app made up of a number of javascript, css and html files that need to be merged into a final distribution for running.  We use the Grunt build tool to do this.
-* Build client application:
+The application made up of a number of javascript, css and html files that need to be merged into a final distribution for running.  We use the Grunt build tool to do this.
+Build client application with:
 
     ```
     cd client
     grunt build
     ```
 
-*Note : It is important to build again if you change files in under client directory.*
-*Note2 : You can avoid this painful process by using continious building see dedicated section*
+*Note : It is important to build again if you change files in under client directory.
+ You can avoid this painful process by using continuous building see dedicated section.*
 
 ## Running
 ### Start the Server
-* Run the server
+Run the server with :
 
     ```
     cd server
     node server.js
     ```
-* Your browser should automatically open at the following URL [http://localhost:8082] letting you use the application.
-  Of course you can manually navigate to this URL at any time.*
+
+Your browser should automatically open at the following URL [http://localhost:8082] letting you use the application. Of course you can manually navigate to this URL at any time.*
 
 ## Development
-
 ### Folders structure
 At the top level, the repository is split into a client folder and a server folder.  The client folder contains all the client-side AngularJS application.  The server folder contains a very basic webserver that delivers and supports the application while using a desktop browse (not needed when app is added to the firefox os emulator).
 Within the client folder you have the following structure:

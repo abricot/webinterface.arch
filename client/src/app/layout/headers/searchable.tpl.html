@@ -5,8 +5,8 @@
         <button type="reset" class="icon-remove"></button>
     </form>
 </h1>
-<h2 ng-class="{connected : $parent.isConnected(), disconnected : !$parent.isConnected()}"
-    ng-switch on="$parent.isConnected()">
+<h2 ng-class="{connected : connected, disconnected : !connected}"
+    ng-switch on="connected">
     <div ng-switch-when="true">
         {{configuration.host.displayName}}
         <span class="pull-right">{{configuration.host.ip}}</span>
