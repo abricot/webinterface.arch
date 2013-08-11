@@ -1,3 +1,17 @@
+section[data-type="sidebar"] .active-player,
+section[data-type="sidebar"] .inactive-player {
+  position: absolute;
+  top: 6rem;
+  bottom: 0;
+  overflow: hidden;
+  oveflow-y: auto;
+  width : 100%;
+}
+
+section[data-type="sidebar"] .inactive-player {
+  bottom: 9rem;
+}
+
 section[data-type="sidebar"] .icon-remote {
   font-family: ffosxbmcRegular;
   font-size: 3rem;
@@ -21,20 +35,23 @@ section[data-type="sidebar"] .now.playing {
   bottom: 0;
   width: 100%;
   z-index: 10;
-  height :10rem;
+  height: 9rem;
+  background: lighten(@regionBgColor, 25);
+  border-top : 0.25rem solid black;
 }
 
 section[data-type="sidebar"] .now.playing .poster {
   position: absolute;
   left: 0;
   z-index: 11;
-  width :35%;
-  height: auto;
-  bottom : 0;
-  border : 0.5rem solid white;
+  width: auto;
+  height: 100%;
+  bottom: 0;
+  border: 0;
   .box-sizing;
 }
-section[data-type="sidebar"] .now.playing .poster.unknown{
+
+section[data-type="sidebar"] .now.playing .poster.unknown {
   background: #333 url(../img/backgrounds/low-contrast-64.png) no-repeat center;
 }
 
@@ -50,6 +67,7 @@ section[data-type="sidebar"] .now.playing h1 {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  margin-top : 0;
 }
 
 section[data-type="sidebar"] .now.playing footer {

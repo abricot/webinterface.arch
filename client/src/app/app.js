@@ -87,7 +87,7 @@ angular.module('app')
             var getItem = function (player) {
                 $scope.player.id = player.playerid;
                 $scope.player.active = true;
-                $scope.player.item = xbmc.send('Player.GetItem', {
+                xbmc.send('Player.GetItem', {
                     'properties': ['title', 'artist', 'albumartist', 'genre',
                         'year', 'rating', 'album', 'track', 'duration', 'comment', 'lyrics',
                         'musicbrainztrackid', 'musicbrainzartistid', 'musicbrainzalbumid',
@@ -102,8 +102,8 @@ angular.module('app')
                         'channeltype', 'hidden', 'locked', 'channelnumber', 'starttime', 'endtime'],
                     'playerid': $scope.player.id
                 }, true, 'result.item').then(function (item) {
+                        $scope.player.item = item;
                         getProperties();
-                        return item;
                     });
             };
 
@@ -115,25 +115,27 @@ angular.module('app')
                         'audiostreams', 'currentaudiostream', 'type'],
                     'playerid': $scope.player.id
                 }, true, 'result').then(function (properties) {
-                        var timeFilter = $filter('time');
-                        $scope.player.audiostreams = properties.audiostreams;
-                        $scope.player.current = {
-                            audiostream: properties.currentaudiostream,
-                            subtitle: properties.currentsubtitle
-                        };
-                        $scope.player.seek = {
-                            time: timeFilter(properties.time),
-                            totaltime: timeFilter(properties.totaltime),
-                            percentage: properties.percentage
-                        };
-                        $scope.player.speed = properties.speed;
-                        $scope.player.subtitles = properties.subtitles;
-                        $scope.player.type = properties.type;
+                        if (properties) {
+                            var timeFilter = $filter('time');
+                            $scope.player.audiostreams = properties.audiostreams;
+                            $scope.player.current = {
+                                audiostream: properties.currentaudiostream,
+                                subtitle: properties.currentsubtitle
+                            };
+                            $scope.player.seek = {
+                                time: timeFilter(properties.time),
+                                totaltime: timeFilter(properties.totaltime),
+                                percentage: properties.percentage
+                            };
+                            $scope.player.speed = properties.speed;
+                            $scope.player.subtitles = properties.subtitles;
+                            $scope.player.type = properties.type;
 
-                        $scope.playlist = properties.playlistid;
-                        if (properties.speed === 1) {
-                            window.clearInterval($scope.player.intervalId);
-                            $scope.player.intervalId = window.setInterval(updateSeek, 1000);
+                            $scope.playlist = properties.playlistid;
+                            if (properties.speed === 1) {
+                                window.clearInterval($scope.player.intervalId);
+                                $scope.player.intervalId = window.setInterval(updateSeek, 1000);
+                            }
                         }
                     });
             };
@@ -175,12 +177,12 @@ angular.module('app')
                 $scope.playlist = -1;
             };
 
-            xbmc.register('Player.OnPause', { fn : onPlayerPause, scope : this});
-            xbmc.register('Player.OnPlay', { fn : onPlayerPlay, scope : this});
-            xbmc.register('Player.OnPropertyChanged', { fn : onPlayerPropertyChanged, scope : this});
-            xbmc.register('Player.OnStop',{ fn : onPlayerStop, scope : this});
-            xbmc.register('Player.OnSeek', { fn : onPlayerSeek, scope : this});
-            xbmc.register('Playlist.OnClear', { fn : onPlaylistClear, scope : this});
+            xbmc.register('Player.OnPause', { fn: onPlayerPause, scope: this});
+            xbmc.register('Player.OnPlay', { fn: onPlayerPlay, scope: this});
+            xbmc.register('Player.OnPropertyChanged', { fn: onPlayerPropertyChanged, scope: this});
+            xbmc.register('Player.OnStop', { fn: onPlayerStop, scope: this});
+            xbmc.register('Player.OnSeek', { fn: onPlayerSeek, scope: this});
+            xbmc.register('Playlist.OnClear', { fn: onPlaylistClear, scope: this});
 
 
             var xbmchost = localStorage.getItem('xbmchost');
@@ -202,8 +204,8 @@ angular.module('app')
                 if (xbmc.isConnected()) {
                     onLoad();
                 } else {
-                    xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
-                    xbmc.register('Websocket.OnDisconnected', { fn : onDisconnect, scope : this});
+                    xbmc.register('Websocket.OnConnected', { fn: onLoad, scope: this});
+                    xbmc.register('Websocket.OnDisconnected', { fn: onDisconnect, scope: this});
                     $scope.xbmc.connect($scope.configuration.host.ip, $scope.configuration.host.port);
                 }
             }

@@ -1,8 +1,8 @@
 <section data-type="sidebar">
     <header>
-        <h1>Medias</h1>
+        <h1>Library</h1>
     </header>
-    <nav>
+    <nav ng-class="{'active-player' : player.active, 'inactive-player': player.active}">
         <ul>
             <li ng-repeat="item in medias">
                 <a ng-tap="go(item.hash)" ng-class="isCurrent(item.hash)">
@@ -10,13 +10,18 @@
                     {{item.label}}
                 </a>
             </li>
-        </ul>
-    </nav>
-    <header>
-        <h1>Controls</h1>
-    </header>
-    <nav>
-        <ul>
+            <li  ng-show="player.active">
+                <a  ng-tap="go('/now/playing')" ng-class="isCurrent('/now/playing')">
+                    <i class="icon-youtube-play"></i>
+                    Now playing
+                </a>
+            </li>
+            <li  ng-show="player.active">
+                <a  ng-tap="go('/now/playlist')" ng-class="isCurrent('/now/playlist')">
+                    <i class="icon-glass"></i>
+                    Queue
+                </a>
+            </li>
             <li ng-repeat="item in controls">
                 <a ng-tap="go(item.hash)" ng-class="isCurrent(item.hash)">
                     <i class="{{item.icon}}"></i>
@@ -26,9 +31,9 @@
         </ul>
     </nav>
     <div class="now playing" ng-show="player.active">
-        <img class="poster" src="{{getThumb(player.item.art)}}" ng-tap="go('/now/playing','none')"
+        <img class="poster" src="{{player.item.art | thumb | asset:configuration.host.ip}}" ng-tap="go('/now/playing','none')"
              ng-show="hasPoster(player.item.art)"/>
-        <img class="poster unknown" src="img/blank.gif" ng-tap="go('/now/playing','none')"
+        <img class="poster unknown" src="img/blank.gif" ng-tap="go('/now/playing')"
              ng-hide="hasPoster(player.item.art)"/>
         <h1>{{getLabel(player.item)}}</h1>
         <footer>

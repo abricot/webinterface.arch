@@ -1,0 +1,20 @@
+<div ng-switch on="loading" ng-class="{loading : loading}">
+    <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
+    <div data-type="list" ng-switch-when="false">
+        <ul class="view songs">
+            <li class="row " ng-repeat="item in items"
+                ng-class-odd="'odd'"
+                ng-tap="next($index)">
+                    <img class="span4 poster"
+                         src="{{item.art | thumb | asset:configuration.host.ip | fallback:'img/backgrounds/low-contrast-128.png'}}"/>
+                <div class="span8">
+                    <p>{{item.label}}</p>
+                    <p ng-show="item.duration">{{item.duration | time | date :'mm:ss'}}</p>
+                    <p ng-show="item.runtime">{{item.runtime| time | date :'hh:mm:ss'}}</p>
+                    <img class="equalizer" src="img/backgrounds/equalizer.gif" ng-show="isPlaying(item.id)"/>
+                </div>
+            </li>
+            <li ng-show="!items.length" class="empty list">No item here :'(</li>
+        </ul>
+    </div>
+</div>

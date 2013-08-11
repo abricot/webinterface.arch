@@ -30,24 +30,6 @@ angular.module('app')
                     label: 'Settings'
                 }
             ];
-            $scope.getThumb = function (art) {
-                var asset = $filter('asset');
-                if (art) {
-                    if (art['album.thumb']) {
-                        return  asset(art['album.thumb'], $scope.configuration.host);
-                    }
-                    if (art['tvshow.poster']) {
-                        return  asset(art['tvshow.poster'], $scope.configuration.host);
-                    }
-                    if (art.poster) {
-                        return  asset(art.poster, $scope.configuration.host.ip);
-                    }
-                    if (art.thumb) {
-                        return asset(art.thumb, $scope.configuration.host.ip);
-                    }
-
-                }
-            };
 
             $scope.getLabel = function (item) {
                 if (item) {
