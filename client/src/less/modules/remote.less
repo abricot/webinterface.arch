@@ -1,20 +1,80 @@
 section[role="region"] .remote {
   height: 100%;
+  font-size : 3rem;
+}
+
+section[role="region"] .remote .shortcuts,
+section[role="region"] .remote .sound {
+  margin : 1rem;
+  position: relative;
+  padding-bottom : 1rem;
+  .box-sizing;
+}
+section[role="region"] .remote .sound:after,
+section[role="region"] .remote .shortcuts:after {
+  content : "";
+  background: rgba(0,0,0,0); /* Old browsers */
+  background: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, #666 40%, #666 60%, rgba(0,0,0,0) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0)), color-stop(40%,#666), color-stop(60%,#666), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left,  rgba(0,0,0,0) 0%,#666 40%,#666 60%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left,  rgba(0,0,0,0) 0%,#666 40%,#666 60%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left,  rgba(0,0,0,0) 0%,#666 40%,#666 60%,rgba(0,0,0,0) 100%); /* IE10+ */
+  background: linear-gradient(to right,  rgba(0,0,0,0) 0%,#666 40%,#666 60%,rgba(0,0,0,0) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(0,0,0,0)', endColorstr='rgba(0,0,0,0)',GradientType=1 ); /* IE6-9 */
+
+  display : block;
+  height : 1px;
+  position : absolute;
+  bottom : 0;
+  left : 0;
+  width:100%
+}
+
+section[role="region"] .remote .action{
+  width : 100/3%;
+}
+section[role="region"] .remote .shortcuts .action {
+  width : 100/4%;
+}
+
+section[role="region"] .remote .sound{
+  padding : 0  3rem 1rem 3rem;
+  .box-sizing
+}
+section[role="region"] .remote .sound .row{
+  background: #363636;
+  border-radius: .25rem;
+  border: .1rem solid #444;
 }
 
 section[role="region"] .remote .action {
   text-align: center;
-  font-size: 3rem;
   color: white;
   height: 100%;
-  width: 100/3%;
   float: left;
   position: relative;
-  border: 1px solid #333;
   .box-sizing;
 }
 
-section[role="region"] .remote .action .icon {
+section[role="region"] .remote .action.offseted {
+  margin-left : 100/3%;
+}
+
+section[role="region"] .remote .row {
+  display: inline-table;
+}
+
+section[role="region"] .remote .navigation {
+  height : calc(100/5*4% - 1rem);
+  margin : 0 3rem;
+  
+} 
+section[role="region"] .remote .navigation .row {
+  display : block;
+  height : 100/4%;
+}
+
+section[role="region"] .remote .navigation .action .icon {
   position: absolute;
   top : 50%;
   left : 50%;
@@ -22,18 +82,6 @@ section[role="region"] .remote .action .icon {
   margin-left : -1.5rem;
 }
 
-section[role="region"] .remote .action .icon small {
-  padding-left: 0.5rem;
-  font-size: 2rem;
-  position: relative;
-  top: -0.5rem;
-}
-
-section[role="region"] .remote .row {
-  height: 100/4%;
-  display: block;
-}
-
-section[role="region"] .remote .direction {
-  background: #333;
+section[role="region"] .remote .navigation .direction {
+  background : #333;
 }

@@ -18,7 +18,7 @@ angular.module('app')
                 $scope.xbmc.send('Application.GetProperties', {
                     'properties': ['volume']
                 }, true, 'result.volume').then(function(volume) {
-                    $scope.volume = volume;
+                    $scope.volume = result.volume;
                 });
             };
             if ($scope.xbmc.isConnected()) {
@@ -30,5 +30,9 @@ angular.module('app')
             $scope.setVolume = function (volume) {
                 $scope.volume = Math.max(0, Math.min(volume, 100));
                 $scope.xbmc.send('Application.SetVolume', {'volume': $scope.volume});
+            }
+
+            $scope.toggleMute = function () {
+                $scope.xbmc.send('Application.SetMute', {'mute': 'toggle'});
             }
         }]);
