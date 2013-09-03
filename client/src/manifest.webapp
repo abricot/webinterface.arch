@@ -13,7 +13,7 @@
   },
   "developer": {
     "name": "Nicolas ABRIC",
-    "url": "https://github.com/foxmote/foxmote"
+    "url": "https://github.com/abricot/foxmote"
   },
   "installs_allowed_from": ["*"],
   "default_locale": "en",
