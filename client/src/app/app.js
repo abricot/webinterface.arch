@@ -23,28 +23,26 @@ angular.module('app')
     .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter', 'xbmc',
         function ($scope, $rootScope, $state, $location, $filter, xbmc) {
             $scope.$state = $state;
-            var init = function () {
-                $scope.connected = false;
-                $scope.player = {
-                    id: -1,
-                    active: false,
-                    audiostreams: [],
-                    current: {},
-                    intervalId: -1,
-                    item: {},
-                    seek: {},
-                    speed: 0,
-                    subtitles: [],
-                    type: ''
-                };
-                $scope.playlist = -1;
-                $scope.library = {
-                    item: {},
-                    criteria: ''
-                };
+            $scope.connected = false;
+           
+            $scope.player = {
+                id: -1,
+                active: false,
+                audiostreams: [],
+                current: {},
+                intervalId: -1,
+                item: {},
+                seek: {},
+                speed: 0,
+                subtitles: [],
+                type: ''
             };
-
-            init();
+            $scope.playlist = -1;
+            $scope.library = {
+                item: {},
+                criteria: ''
+            };
+        
             $scope.configuration = {host: {ip: '', port: '', displayName: ''}};
             $scope.xbmc = xbmc;
 
@@ -156,8 +154,10 @@ angular.module('app')
 
             var onPlayerStop = function (obj) {
                 window.clearInterval($scope.player.intervalId);
-                init();
-                $scope.go('/');
+                $scope.player.seek.time = $scope.player.seek.totaltime;
+                $scope.player.seek.percentage = 100;
+                $scope.player.seek.lastUpdate = Date.now();
+                $scope.player.active = false;
             };
 
             var onPlayerSeek = function (obj) {

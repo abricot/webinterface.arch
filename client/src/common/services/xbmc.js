@@ -47,6 +47,7 @@ angular.module('services.xbmc', ['services.websocket'])
 
             function onMessage(event) {
                 if (event.data !== '') {
+                    console.log(event.data);
                     var data = JSON.parse(event.data);
                     if (callbacks.hasOwnProperty(data.id)) {
                         var cb = callbacks[data.id];
@@ -60,7 +61,7 @@ angular.module('services.xbmc', ['services.websocket'])
                     } else if (notifications[data.method] && notifications[data.method].length > 0) {
                         for (var i = 0; i < notifications[data.method].length; i++) {
                             var cb = notifications[data.method][i];
-                            cb.fn.call(cb.scope, data);
+                            $rootScope.$apply(cb.fn.call(cb.scope, data));
                         }
                     }
                 }

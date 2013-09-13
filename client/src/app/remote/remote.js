@@ -18,7 +18,7 @@ angular.module('app')
                 $scope.xbmc.send('Application.GetProperties', {
                     'properties': ['volume']
                 }, true, 'result.volume').then(function(volume) {
-                    $scope.volume = result.volume;
+                    $scope.volume = volume;
                 });
             };
             if ($scope.xbmc.isConnected()) {

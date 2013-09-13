@@ -50,7 +50,7 @@ angular.module('app')
         };
 
         var playlistAdd = function () {
-            if ($scope.queue.length > 0) {
+            if ($scope.isFiltered() && $scope.queue.length > 0) {
                 $scope.xbmc.send('Playlist.Add', {
                     'playlistid': $scope.playlist,
                     'item': {songid: $scope.queue[0].songid}
