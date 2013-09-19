@@ -51,7 +51,7 @@ section[role="region"]:target > header:first-child > a:last-of-type {
 section[data-type="sidebar"] {
   position: absolute;
   width: 80%;
-  background: #33363d;
+  background: @draverBgColor;
   height: 100%;
   top: 0;
   left: 0;
@@ -66,7 +66,7 @@ section[data-type="sidebar"] > footer {
   height: 5rem;
   color: @headerTextColor;
   .drop-shadow(0, 0.2rem, 0.3rem, 0.5);
-  background: @draverBgdColor;
+  background: @draverHeaderBgColor;
   width: 100%;
 }
 
@@ -192,7 +192,7 @@ section[data-type="sidebar"] > nav > ul > li > a {
   color: @drawerTextColor;
   font-size: 1.5rem;
   line-height: 4rem;
-  border-bottom: 0.1rem solid #596068;
+  border-bottom: 0.1rem solid lighten(@draverBgColor, 15%);
   text-indent: 1rem;
   padding-right: 0.8rem;
   width: 100%;
