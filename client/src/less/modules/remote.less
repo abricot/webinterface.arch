@@ -5,21 +5,21 @@ section[role="region"] .remote {
 
 section[role="region"] .remote .shortcuts,
 section[role="region"] .remote .sound {
-  margin : 1rem 0;
+  margin : .5rem 0;
   position: relative;
-  padding-bottom : 1rem;
+  padding-bottom : .5rem;
   .box-sizing;
 }
-section[role="region"] .remote .sound:after,
+
 section[role="region"] .remote .shortcuts:after {
   content : "";
   background: rgba(0,0,0,0); /* Old browsers */
-  background: -moz-linear-gradient(left,  rgba(0,0,0,0) 0%, #666 40%, #666 60%, rgba(0,0,0,0) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0)), color-stop(40%,#666), color-stop(60%,#666), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left,  rgba(0,0,0,0) 0%,#666 40%,#666 60%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left,  rgba(0,0,0,0) 0%,#666 40%,#666 60%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(left,  rgba(0,0,0,0) 0%,#666 40%,#666 60%,rgba(0,0,0,0) 100%); /* IE10+ */
-  background: linear-gradient(to right,  rgba(0,0,0,0) 0%,#666 40%,#666 60%,rgba(0,0,0,0) 100%); /* W3C */
+  background: -moz-linear-gradient(left,  @regionBgColor 0%, #666 40%, #666 60%, @regionBgColor 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,@regionBgColor), color-stop(40%,#666), color-stop(60%,#666), color-stop(100%,@regionBgColor)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left,  @regionBgColor 0%,#666 40%,#666 60%,@regionBgColor 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left,  @regionBgColor 0%,#666 40%,#666 60%,@regionBgColor 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left,  @regionBgColor 0%,#666 40%,#666 60%,@regionBgColor 100%); /* IE10+ */
+  background: linear-gradient(to right,  @regionBgColor 0%,#666 40%,#666 60%,@regionBgColor 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(0,0,0,0)', endColorstr='rgba(0,0,0,0)',GradientType=1 ); /* IE6-9 */
 
   display : block;
@@ -44,7 +44,7 @@ section[role="region"] .remote .sound{
 section[role="region"] .remote .sound .row{
   background: lighten(@regionBgColor, 5%);;
   border-radius: .25rem;
-  border: .1rem solid #444;
+  border: .1rem solid #969696;
 }
 
 section[role="region"] .remote .action {
@@ -84,4 +84,8 @@ section[role="region"] .remote .navigation .action .icon {
 
 section[role="region"] .remote .navigation .direction {
   background : lighten(@regionBgColor, 5%);
+  border: 0.1rem solid #969696;
+}
+section[role="region"] .remote .navigation .direction.active {
+  background-color: @primaryColor;
 }

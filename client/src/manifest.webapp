@@ -1,5 +1,5 @@
 {
-  "version": "0.8",
+  "version": "1.0",
   "name": "Foxmote",
   "description": "Yet another XBMC remote for firefox os, compatible frodo and above.",
   "launch_path": "/index.html",
@@ -18,6 +18,5 @@
   "installs_allowed_from": ["*"],
   "default_locale": "en",
   "orientation": ["portrait"],
-  "fullscreen": "true",
-  "csp" : "default-src *; script-src 'self'; object-src 'none'; style-src 'self'"
+  "fullscreen": "true"
 }
