@@ -212,3 +212,46 @@ section[data-type="sidebar"] > nav > ul > li > a i {
   padding-right: 1rem;
   font-size: 2.5rem;
 }
+
+
+
+/* ----------------------------------
+ * Responsive: default
+ * ---------------------------------- */
+@media (max-width: 800px) {
+  section[role="region"].minimize {
+    transform: translateX(80%);
+    -webkit-transform: translateX(80%);
+    border-left: 0.1rem solid @borderColor;
+  }
+
+  section[data-type="sidebar"] {
+    width: 80%;
+  }
+}
+
+@media (min-width: 800px) {
+  section[data-type="sidebar"] {
+    width: 30%;
+  }
+
+  section[role="region"] {
+    left : 30%;
+    width  :70%;
+    box-sizing : border-box;
+    border-left: 0.2rem solid #222222;
+  }
+
+  section[role="region"] div[role="main"] {
+    left: 0;
+    right: 0;
+  }
+
+  section[role="region"] > header:first-child > a:last-of-type {
+    display : none;
+  }
+
+  section[role="region"] > header:first-child h1 {
+    margin-left: 1rem;
+  }
+}

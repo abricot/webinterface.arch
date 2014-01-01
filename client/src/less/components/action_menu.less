@@ -6,7 +6,7 @@
 form[role="dialog"][data-type="action"],
 form[role="dialog"][data-type="object"] {
   background:  @dialogBgColor;
-overflow: hidden;
+  overflow: hidden;
   position: fixed;
   z-index: 100;
   top: 0;
@@ -165,4 +165,11 @@ form[role="dialog"][data-type="object"] > menu > button[disabled] {
   text-shadow: none;
   border: none;
   pointer-events: none;
+}
+
+@media (min-width: 800px) {
+  form[role="dialog"][data-type="action"],
+  form[role="dialog"][data-type="object"] {
+    left : 30%;
+  }
 }
