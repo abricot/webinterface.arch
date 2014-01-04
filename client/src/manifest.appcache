@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# v1.0.1
+# v1.0.2
 index.html
 css/foxmote.css
 
@@ -15,6 +15,7 @@ font/fontawesome-webfont.woff
 font/kenyc.ttf
 
 # Images you might use (remove the #)
+img/favicon.ico
 img/blank.gif
 img/backgrounds/album.png
 img/backgrounds/albums.jpg
