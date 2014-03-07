@@ -1,0 +1,102 @@
+{
+   "id":6,
+   "jsonrpc":"2.0",
+   "result":{
+      "item":{
+         "album":"",
+         "art":{
+            "thumb":"image://video@smb%3a%2f%2fFREEBOX%2fDisque%20dur%2fT%c3%a9l%c3%a9chargement…Space.Pirate.Captain.Harlock.2013.FANSUB.VOSTFR.1080p.BluRay.DTS.x264.mkv/"
+         },
+         "artist":[
+
+         ],
+         "cast":[
+
+         ],
+         "country":[
+
+         ],
+         "dateadded":"",
+         "director":[
+
+         ],
+         "episode":-1,
+         "episodeguide":"",
+         "fanart":"",
+         "file":"smb://FREEBOX/Disque dur/Téléchargements/Space.Pirate.Captain.Harlock.2013.FANSUB.VOSTFR.1080p.BluRay.DTS.x264.mkv",
+         "firstaired":"",
+         "genre":[
+
+         ],
+         "imdbnumber":"",
+         "label":"Space.Pirate.Captain.Harlock.2013.FANSUB.VOSTFR.1080p.BluRay.DTS.x264.mkv",
+         "lastplayed":"2014-03-04 19:41:13",
+         "mpaa":"",
+         "originaltitle":"",
+         "playcount":1,
+         "plot":"",
+         "plotoutline":"",
+         "premiered":"",
+         "productioncode":"",
+         "rating":0.0,
+         "resume":{
+            "position":0.0,
+            "total":0.0
+         },
+         "runtime":6906,
+         "season":-1,
+         "set":"",
+         "setid":-1,
+         "showlink":[
+
+         ],
+         "showtitle":"",
+         "sorttitle":"",
+         "streamdetails":{
+            "audio":[
+               {
+                  "channels":6,
+                  "codec":"dca",
+                  "language":"jpn"
+               }
+            ],
+            "subtitle":[
+               {
+                  "language":"fre"
+               }
+            ],
+            "video":[
+               {
+                  "aspect":2.3868157863616943359,
+                  "codec":"h264",
+                  "duration":6906,
+                  "height":804,
+                  "width":1920
+               }
+            ]
+         },
+         "studio":[
+
+         ],
+         "tag":[
+
+         ],
+         "tagline":"",
+         "thumbnail":"image://video@smb%3a%2f%2fFREEBOX%2fDisque%20dur%2fT%c3%a9l%c3%a9chargement…Space.Pirate.Captain.Harlock.2013.FANSUB.VOSTFR.1080p.BluRay.DTS.x264.mkv/",
+         "title":"",
+         "top250":0,
+         "track":-1,
+         "trailer":"",
+         "tvshowid":-1,
+         "type":"unknown",
+         "uniqueid":{
+            "unknown":""
+         },
+         "votes":"",
+         "writer":[
+
+         ],
+         "year":0
+      }
+   }
+}
