@@ -12,14 +12,21 @@ angular.module('app')
             }
         });
     }])
-    .controller('NowPlayingCtrl', ['$scope',
-        function NowPlayingCtrl($scope) {
+    .controller('NowPlayingCtrl', ['$scope', '$filter',
+        function NowPlayingCtrl($scope, $filter) {
             $scope.loading = true;
             $scope.showAudioSelect = false;
             $scope.showSubtitleSelect = false;
+            $scope.showTimePicker = false;
+
+            var timeFilter = $filter('time');
+            $scope.seekTime = timeFilter($scope.player.seek.time);
+
             var onLoad = function () {
                 $scope.xbmc.send('Player.GetActivePlayers', null, true, 'result').then(function (players) {
                         if (players.length > 0) {
+                            var player = players[0];
+                            $scope.player.type = player.type;
                             $scope.library.item = $scope.xbmc.send('Player.GetItem', {
                                 'properties': ['title', 'artist', 'albumartist', 'genre',
                                     'year', 'rating', 'album', 'track', 'duration', 'comment', 'lyrics',
@@ -66,9 +73,7 @@ angular.module('app')
             };
 
             $scope.onSeekbarChanged = function (newValue) {
-                $scope.xbmc.send('Player.Seek', {
-                    'playerid': $scope.player.id,
-                    'value': newValue});
+               $scope.updateSeek(newValue);
             };
 
             $scope.select = function (type, obj) {
@@ -98,10 +103,22 @@ angular.module('app')
                 $scope.showSubtitleSelect = !$scope.showSubtitleSelect;
             };
 
+            $scope.toggleTimePicker = function () {
+                $scope.showTimePicker = !$scope.showTimePicker;
+            };
+
+            $scope.updateSeek = function (newValue) {
+              $scope.xbmc.send('Player.Seek', {
+                'playerid': $scope.player.id,
+                'value': newValue});
+            },
 
             $scope.$watch('player.item', function () {
                 $scope.library.item = $scope.player.item;
             }, true);
 
+            $scope.$watch('player.seek.time', function (newVal, oldVal) {
+              $scope.seekTime = timeFilter(newVal);
+            });
         }
     ])

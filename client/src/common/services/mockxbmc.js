@@ -15,7 +15,7 @@ angular.module('services.xbmc.mock', [])
 
             factory.send = function (method, params, shouldDefer, pathExpr) {
                 var defer = $q.defer();
-                $http.get('/app/data/' + method + '.json').success(function (data) {
+                $http.get('/js/data/' + method + '.json').success(function (data) {
                     var obj = data;
                     if (pathExpr) {
                         var getter = $parse(pathExpr);
@@ -27,7 +27,7 @@ angular.module('services.xbmc.mock', [])
                         $rootScope.$apply(function () {
                             defer.resolve(obj);
                         });
-                    }, Math.round(Math.random() * 5000))
+                    }, Math.round(Math.random() * 1000))
                 });
                 return defer.promise;
             }

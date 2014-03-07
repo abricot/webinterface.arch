@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="seek-wrapper">
-            <div class="row times">
+            <div class="row times" ng-tap="toggleTimePicker()">
                 {{player.seek.time | time | date:'HH:mm:ss'}}/
                 {{player.seek.totaltime | time | date:'HH:mm:ss'}}
                 [-{{(player.seek.totaltime - player.seek.time)  | time | date:'HH:mm:ss'}}]
@@ -69,5 +69,22 @@
             <i class="pull-right icon-check" ng-show="isSelected(player.current.subtitle, subtitle)"></i>
         </button>
         <button ng-tap="toggleSubtitles()"> Cancel </button>
+    </menu>
+</form>
+
+<form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showTimePicker">
+    <header>
+        <h1> Select time </h1>
+    </header>
+    <div class="time">
+        <div ng-model="seekTime" class="picker">
+          <timepicker hour-step="1" minute-step="1" show-meridian="false"></timepicker>
+        </div>
+    </div>
+    <menu>
+        <div class="row">
+            <button class="span5 offset1" ng-tap="toggleTimePicker()"> Cancel </button>
+            <button class="span5 recommend"   ng-tap="updateSeek(seekTime)"> Ok </button>
+        </div>
     </menu>
 </form>

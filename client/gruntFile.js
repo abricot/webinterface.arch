@@ -28,7 +28,7 @@ module.exports = function (grunt) {
             html: ['src/index.html'],
             manifests : ['src/manifest.*'],
             tpl: {
-                app: ['src/app/**/*.tpl.html']
+                app: ['src/app/**/*.html']
             },
             less: ['src/less/app.less'], // recess:build doesn't accept ** in its file patterns
             lessWatch: ['src/less/**/*.less']
@@ -38,6 +38,9 @@ module.exports = function (grunt) {
             assets: {
                 files: [{ dest: '<%= wwwdir %>', src : '**', expand: true, cwd: 'src/assets/' },
                         { dest: '<%= wwwdir %>/font', src : '**', expand: true, cwd: 'vendor/font-awesome/font/' }]
+            },
+            data : {
+                files: [{ dest : '<%= wwwdir %>/js/data', src : '**', expand: true, cwd: 'src/app/data/' }]
             },
             manifests : {
               files: [{ dest: '<%= wwwdir %>', src : 'manifest.*', expand: true, cwd: 'src'}]
@@ -72,6 +75,10 @@ module.exports = function (grunt) {
                 src:['vendor/angular/angular.js'],
                 dest: '<%= wwwdir %>/js/lib/angular.js'
             },
+            angularbootstrap : {
+                src:['vendor/angular-bootstrap/ui-bootstrap-tpls.js'],
+                dest: '<%= wwwdir %>/js/lib/angular-ui-bootstrap.js'
+            },
             angularuirouter: {
                 src:['vendor/angular-ui-router/release/angular-ui-router.js'],
                 dest: '<%= wwwdir %>/js/lib/angular-ui-router.js'
@@ -88,6 +95,10 @@ module.exports = function (grunt) {
             angular: {
                 src:['<%= concat.angular.src %>'],
                 dest: '<%= wwwdir %>/js/lib/angular.js'
+            },
+            angularbootstrap: {
+                src:['<%= concat.angularbootstrap.src %>'],
+                dest: '<%= wwwdir %>/js/lib/angular-ui-bootstrap.js'
             },
             angularuirouter: {
                 src:['<%= concat.angularuirouter.src %>'],

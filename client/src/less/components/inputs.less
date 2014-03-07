@@ -93,7 +93,7 @@ a[role="button"],
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  .gradient(#fafafa, #fafafa, #ccc);
+  .gradient(#ccc, #ccc, #fafafa) ;
   border: 0.1rem solid #a6a6a6;
   border-radius: 0.2rem;
   font-weight: 500;
@@ -106,6 +106,13 @@ a[role="button"],
   outline: none;
 }
 
+
+button.recommend,
+a[role="button"].recommend,
+.button.recommend {
+  .gradient(#00aacc, #00aacc, #00caf2);
+}
+
 /* Press (default & recommend) */
 button:active,
 a[role="button"]:active,
@@ -114,5 +121,5 @@ a.recommend[role="button"]:active  {
   border-color: #008aaa;
   background: #008aaa;
   background-size: auto 100%;
-  color: #333;
+  color: #fff;
 }

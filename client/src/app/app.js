@@ -1,11 +1,12 @@
 "use strict";
 angular.module('app', [
     'ui.state',
+    'ui.bootstrap',
     'directives.rating',
     'directives.seekbar',
     'directives.tap',
     'filters.xbmc',
-    'services.xbmc',
+    'services.xbmc.mock',
     'templates.app']);
 
 // this is where our app definition is
