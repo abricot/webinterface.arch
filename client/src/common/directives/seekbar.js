@@ -1,6 +1,6 @@
 "use strict";
 angular.module('directives.seekbar', [])
-    .directive('seekbar', function () {
+    .directive('seekbar', function ($document) {
         return {
             restrict: 'A',
             template: '<progress max="{{seekbarMax}}"></progress>' +
@@ -13,6 +13,7 @@ angular.module('directives.seekbar', [])
             link: function (scope, elem, attrs) {
                 var thumb = elem.find('button');
                 var progress = elem.find('progress');
+                var body = angular.element(document).find('body');
                 var moving = false;
                 var newValue = -1;
 
@@ -37,17 +38,16 @@ angular.module('directives.seekbar', [])
                     return {left: offsetLeft, top: offsetTop};
                 }
 
-                var offsetLeft = offset(progress).left;
-
                 var update = function (value) {
                     thumb.css('left', value + '%');
                     progress.attr('value', Math.round(value));
                 }
 
-                progress.bind('touchstart', function (evt) {
+                progress.bind('click touchstart', function (evt) {
                     evt.stopPropagation();
-                    var x = evt.touches[0].clientX;
-                    var percent = (x - offsetLeft) / progress.prop('offsetWidth');
+                    var target = evt.touches ? evt.touches[0] : evt;
+                    var x = target.clientX;
+                    var percent = (x - offset(progress).left) / progress.prop('offsetWidth');
                     if (percent < 0)
                         percent = 0;
                     if (percent > 1)
@@ -56,28 +56,36 @@ angular.module('directives.seekbar', [])
                     scope.onSeekbarChanged({newValue: parseInt(progress.attr('value'))});
                 });
 
-                thumb.bind('touchstart', function (evt) {
+                thumb.bind('mousedown touchstart', function (evt) {
                     evt.stopPropagation();
                     thumb.addClass('active');
                     moving = true;
                 });
-                thumb.bind('touchmove', function (evt) {
+                var onMove = function (evt) {
                     evt.stopPropagation();
                     if (moving) {
-                        var x = evt.touches[0].clientX;
-                        var percent = (x - offsetLeft) / progress.prop('offsetWidth');
+                        var target = evt.touches ? evt.touches[0] : evt;
+                        var x = target.clientX;
+                        var percent = (x - offset(progress).left) / progress.prop('offsetWidth');
                         if (percent < 0)
                             percent = 0;
                         if (percent > 1)
                             percent = 1;
                         update(scope.seekbarMax * percent);
                     }
-                });
-                thumb.bind('touchend', function () {
-                    scope.onSeekbarChanged({newValue: parseInt(progress.attr('value'))});
-                    moving = false;
-                    thumb.removeClass('active');
-                });
+                };
+                thumb.bind('touchmove', onMove);
+                body.bind('mousemove', onMove);
+
+                var onMoveEnd = function () {
+                    if(moving) {
+                        scope.onSeekbarChanged({newValue: parseInt(progress.attr('value'))});
+                        moving = false;
+                        thumb.removeClass('active');
+                    }
+                }
+                thumb.bind('touchend', onMoveEnd);
+                body.bind('mouseup', onMoveEnd);
                 scope.$watch('seekbarValue', function (newVal, oldVal) {
                     if (newVal && !moving) {
                         scope.seekbarValue = newVal;

@@ -1,0 +1,16 @@
+
+{
+  "manifest_version": 2,
+  "name": "Foxmote",
+  "description": "Yet another XBMC remote for firefox os, compatible frodo and above.",
+  "version": "1.0.2",
+  "browser_action": {
+    "default_icon": "img/icons/foxmote.png",
+    "default_popup": "index.html"
+  },
+  "icons": {
+    "32": "img/icons/foxmote-32.png",
+    "64": "img/icons/foxmote-64.png",
+    "128": "img/icons/foxmote-128.png"
+  }
+}

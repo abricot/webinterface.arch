@@ -23,6 +23,7 @@
             <div class="row times">
                 {{player.seek.time | time | date:'HH:mm:ss'}}/
                 {{player.seek.totaltime | time | date:'HH:mm:ss'}}
+                [-{{(player.seek.totaltime - player.seek.time)  | time | date:'HH:mm:ss'}}]
             </div>
             <div class="row">
                 <div class="span2 action" ng-tap="toggleAudioStreams()" ng-show="isTypeVideo()">

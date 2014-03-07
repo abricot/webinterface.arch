@@ -24,7 +24,7 @@ angular.module('services.websocket', [])
                 disconnectCallback();
                 window.setTimeout(function () {
                     factory.connect(url, connectCallback)
-                }.bind(this), 10000);
+                }.bind(this), 1000);
             };
 
             ws.onerror = function () {
