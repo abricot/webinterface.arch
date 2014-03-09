@@ -1,6 +1,6 @@
 "use strict";
 angular.module('directives.seekbar', [])
-    .directive('seekbar', function ($document) {
+    .directive('seekbar', function () {
         return {
             restrict: 'A',
             template: '<progress max="{{seekbarMax}}"></progress>' +

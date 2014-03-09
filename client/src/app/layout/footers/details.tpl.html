@@ -1,24 +1,24 @@
 <div ng-switch on="library.item.type">
     <div ng-switch-when="movie"  class="row actions" >
-        <div class="span3" ng-tap="play({'movieid': library.item.movieid})">
+        <div class="span3" ng-tap="xbmc.open({'movieid': library.item.movieid})">
             <i class="icon-play"></i>
         </div>
         <div class="span3" ng-tap="imdb(library.item.imdbnumber)">
             <span class="imdb">IMDb</span>
         </div>
-        <div class="span3" ng-tap="play({'file': library.item.trailer})">
+        <div class="span3" ng-tap="xbmc.open({'file': library.item.trailer})">
             <i class="icon-film"></i>
         </div>
-        <div class="span3" ng-tap="add({'movieid': library.item.movieid})">
+        <div class="span3" ng-tap="xbmc.queue({'movieid': library.item.movieid})">
             <i class="icon-plus"></i>
         </div>
     </div>
 
     <div ng-switch-when="episode"  class="row actions" >
-        <div class="span3" ng-tap="play({'episodeid': library.item.episodeid})">
+        <div class="span3" ng-tap="xbmc.open({'episodeid': library.item.episodeid})">
             <i class="icon-play"></i>
         </div>
-        <div class="span3" ng-tap="add({'episodeid': library.item.episodeid})">
+        <div class="span3" ng-tap="xbmc.queue({'episodeid': library.item.episodeid})">
             <i class="icon-plus"></i>
         </div>
     </div>

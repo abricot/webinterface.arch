@@ -16,12 +16,10 @@ angular.module('app')
             $scope.loading = true;
 
             var getItems = function () {
-                $scope.xbmc.send('Playlist.GetItems', {
-                    'playlistid': $scope.playlist,
-                    'properties': ['title', 'art', 'duration', 'runtime', 'thumbnail']}, true, 'result.items').then(function (items) {
-                        $scope.items = items;
-                        $scope.loading = false;
-                    });
+                $scope.xbmc.getPlaylistItems(function (items) {
+                    $scope.items = items;
+                    $scope.loading = false;
+                });
             }
 
             var onLoad = function () {
@@ -59,13 +57,6 @@ angular.module('app')
 
             $scope.isPlaying = function (id) {
                 return  $scope.player.item.id === id;
-            }
-
-            $scope.next = function (index) {
-                $scope.xbmc.send('Player.GoTo', {
-                    'playerid': $scope.player.id,
-                    'to': index
-                });
             }
         }
 

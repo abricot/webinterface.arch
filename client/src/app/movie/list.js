@@ -11,22 +11,12 @@ angular.module('app')
     .controller('MovieListCtrl', ['$scope',
         function MovieListCtrl($scope) {
             $scope.loading = true;
+            function onMoviesRetrieved (movies) {
+                $scope.loading = false;
+                $scope.movies = movies;
+            };
             var onLoad = function () {
-                $scope.movies = $scope.xbmc.send('VideoLibrary.GetMovies', {
-                    'limits': {
-                        'start': 0,
-                        'end': 75
-                    },
-                    'properties': ['title', 'genre', 'rating', 'thumbnail', 'runtime', 'playcount', 'streamdetails'],
-                    'sort': {
-                        'order': 'ascending',
-                        'method': 'label',
-                        'ignorearticle': true
-                    }
-                }, true, 'result.movies').then(function (movies) {
-                        $scope.loading = false;
-                        return movies;
-                    });
+                 $scope.xbmc.getMovies(onMoviesRetrieved);
             };
             if ($scope.xbmc.isConnected()) {
                 onLoad();

@@ -38,11 +38,11 @@
         <h1>{{getLabel(player.item)}}</h1>
         <footer>
             <div class="row actions">
-                <div class="offset4 span4 icon-play" ng-tap="togglePlay()"  ng-show="!player.speed">
+                <div class="offset4 span4 icon-play" ng-tap="xbmc.togglePlay()"  ng-show="!player.speed">
                 </div>
-                <div class="offset4 span4 icon-pause" ng-tap="togglePlay()"  ng-show="player.speed">
+                <div class="offset4 span4 icon-pause" ng-tap="xbmc.togglePlay()"  ng-show="player.speed">
                 </div>
-                <div class="span3" ng-tap="next()"><i class="icon-fast-forward"></i></div>
+                <div class="span3" ng-tap="xbmc.next()"><i class="icon-fast-forward"></i></div>
             </div>
         </footer>
     </div>

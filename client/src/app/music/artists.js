@@ -12,23 +12,13 @@ angular.module('app')
     }])
     .controller('MusicArtistsCtrl', ['$scope',
         function MusicAlbumsCtrl($scope, $stateParams) {
+            function onArtistsRetrieve (artists) {
+                $scope.loading = false;
+                $scope.artists = artists;
+            };
             var onLoad = function () {
                 $scope.loading = true;
-                $scope.artists = $scope.xbmc.send('AudioLibrary.GetArtists', {
-                    'limits': {
-                        'start': 0,
-                        'end': 100
-                    },
-                    'properties': ['genre', 'thumbnail'],
-                    'sort': {
-                        'order': 'ascending',
-                        'method': 'label',
-                        'ignorearticle': true
-                    }
-                }, true, 'result.artists').then(function (artists) {
-                        $scope.loading = false;
-                        return artists;
-                    });
+                $scope.xbmc.getArtists(onArtistsRetrieve);
             };
             if ($scope.xbmc.isConnected()) {
                 onLoad();

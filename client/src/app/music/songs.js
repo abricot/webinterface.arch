@@ -23,38 +23,21 @@ angular.module('app')
         $scope.loading = true;
         $scope.filter = $stateParams.filter;
         $scope.queue = [];
-        var params = {
-            'limits': {
-                'start': 0,
-                'end': 500
-            },
-            'properties': ['title', 'artist', 'album', 'albumid', 'thumbnail', 'duration', 'track', 'year'],
-            'sort': {
-                'order': 'ascending',
-                'method': 'label',
-                'ignorearticle': true
-            }
-        };
+        var filter = null;
         if ($scope.filter) {
-            $scope.filterId = parseInt($stateParams.filterId);
-            params['filter'] = {};
-            params['filter'][$scope.filter] = $scope.filterId;
-            params.sort.method = 'track';
+            filter = {key : $scope.filter, value : parseInt($stateParams.filterId)}
         }
+        function onSongsRetrieved (songs) {
+            $scope.loading = false;
+            $scope.songs = songs;
+        };
         var onLoad = function () {
-            $scope.xbmc.send('AudioLibrary.GetSongs', params, true, 'result.songs').then(function (songs) {
-                $scope.loading = false;
-                $scope.songs = songs;
-            });
-
+            $scope.xbmc.getSongs(filter, onSongsRetrieved);
         };
 
         var playlistAdd = function () {
             if ($scope.isFiltered() && $scope.queue.length > 0) {
-                $scope.xbmc.send('Playlist.Add', {
-                    'playlistid': $scope.playlist,
-                    'item': {songid: $scope.queue[0].songid}
-                });
+                $scope.xbmc.queue({songid: $scope.queue[0].songid});
                 $scope.queue = $scope.queue.slice(1);
                 if ($scope.queue.length > 0) {
                     window.setTimeout(playlistAdd.bind(this), 500);
@@ -87,9 +70,7 @@ angular.module('app')
         }
 
         $scope.play = function (item, index) {
-            $scope.xbmc.send('Player.Open', {
-                'item': item
-            });
+            $scope.xbmc.open(item);
             if (index + 1 < $scope.songs.length) {
                 $scope.queue = $scope.songs.slice(index + 1);
             }

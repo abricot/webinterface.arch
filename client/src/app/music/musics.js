@@ -5,16 +5,8 @@ angular.module('app')
             views: {
                 header: {templateUrl: 'layout/headers/basic.tpl.html'},
                 body: {
-                    templateUrl: 'music/musics.tpl.html', controller : 'MusicsCtrl'
+                    templateUrl: 'music/musics.tpl.html'
                 }
             }
         })
-    }]).controller('MusicsCtrl', ['$scope',
-        function MusicsCtrl($scope) {
-            $scope.party = function() {
-                $scope.xbmc.send('Player.Open', {
-                    'item': {'file' : undefined}
-                });
-            }
-        }
-    ]);
+    }]);

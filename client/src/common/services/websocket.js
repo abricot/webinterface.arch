@@ -21,7 +21,10 @@ angular.module('services.websocket', [])
 
             ws.onclose = function () {
                 isWSConnected = false;
-                disconnectCallback();
+                if(disconnectCallback) {
+                    disconnectCallback();
+                }
+                
                 window.setTimeout(function () {
                     factory.connect(url, connectCallback)
                 }.bind(this), 1000);

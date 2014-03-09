@@ -31,6 +31,12 @@ angular.module('directives.tap', [])
                 });
             }
             else {
+                elm.bind('mousedown', function () {
+                    elm.addClass('active');
+                });
+                elm.bind('mouseup', function () {
+                    elm.removeClass('active');
+                });
                 elm.bind('click', function () {
                     scope.$apply(attrs.ngTap);
                 });

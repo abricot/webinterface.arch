@@ -32,7 +32,7 @@
                 <div ng-class="{span8 :isTypeVideo(), span10 : !isTypeVideo(), offset1 : !isTypeVideo()}"
                      role="slider" aria-valuemin="0" aria-valuenow="0" aria-valuemax="100">
                     <div seekbar seekbar-value="player.seek.percentage" seekbar-max="100"
-                         on-seekbar-changed="onSeekbarChanged(newValue);"></div>
+                         on-seekbar-changed="onSeekbarChanged(newValue)"></div>
                 </div>
                 <div class="span2 action" ng-tap="toggleSubtitles()" ng-show="isTypeVideo()">
                     <i class="icon-quote-left"></i>
@@ -47,7 +47,7 @@
         <h1> Audio Streams </h1>
     </header>
     <menu>
-        <button ng-repeat="audio in player.audiostreams" ng-tap="select('audio', audio)">
+        <button ng-repeat="audio in player.audiostreams" ng-tap="setAudioStream(audio)">
           {{audio.name}} ( {{audio.language}})
           <i class="pull-right icon-check" ng-show="isSelected(player.current.audiostream, audio)"></i>
         </button>
@@ -60,11 +60,11 @@
         <h1>Subtitles</h1>
     </header>
     <menu>
-        <button ng-tap="select('subtitle', 'off')">
+        <button ng-tap="setSubtitle('off')">
             None
             <i class="pull-right icon-check" ng-show="isSelected(player.current.subtitle, 'off')"></i>
         </button>
-        <button ng-repeat="subtitle in player.subtitles" ng-tap="select('subtitle', subtitle)">
+        <button ng-repeat="subtitle in player.subtitles" ng-tap="setSubtitle(subtitle)">
             {{subtitle.name}} ({{subtitle.language}})
             <i class="pull-right icon-check" ng-show="isSelected(player.current.subtitle, subtitle)"></i>
         </button>
@@ -76,15 +76,15 @@
     <header>
         <h1> Select time </h1>
     </header>
-    <div class="time">
-        <div ng-model="seekTime" class="picker">
-          <timepicker hour-step="1" minute-step="1" show-meridian="false"></timepicker>
-        </div>
-    </div>
     <menu>
+        <div class="time">
+            <div ng-model="seekTime" class="picker">
+              <timepicker hour-step="1" minute-step="1" show-meridian="false"></timepicker>
+            </div>
+        </div>
         <div class="row">
             <button class="span5 offset1" ng-tap="toggleTimePicker()"> Cancel </button>
-            <button class="span5 recommend"   ng-tap="updateSeek(seekTime)"> Ok </button>
+            <button class="span5 recommend"   ng-tap="onValidateSeekTime()"> Ok </button>
         </div>
     </menu>
 </form>

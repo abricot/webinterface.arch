@@ -57,15 +57,4 @@ angular.module('app')
             $scope.isCurrent = function (hash) {
                 return hash === $location.path() ? 'selected' : '';
             };
-            $scope.togglePlay = function () {
-                $scope.xbmc.send('Player.PlayPause', {
-                    'playerid': $scope.player.id
-                });
-            };
-            $scope.next = function () {
-                $scope.xbmc.send('Player.GoTo', {
-                    'playerid': $scope.player.id,
-                    'to': 'next'
-                });
-            }
         }]);

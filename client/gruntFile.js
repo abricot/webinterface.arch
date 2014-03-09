@@ -39,6 +39,9 @@ module.exports = function (grunt) {
                 files: [{ dest: '<%= wwwdir %>', src : '**', expand: true, cwd: 'src/assets/' },
                         { dest: '<%= wwwdir %>/font', src : '**', expand: true, cwd: 'vendor/font-awesome/font/' }]
             },
+            csp : {
+                files: [{ dest : '<%= wwwdir %>/css', src : '*csp.css', expand: true, cwd: 'vendor/angular/' }]
+            },
             data : {
                 files: [{ dest : '<%= wwwdir %>/js/data', src : '**', expand: true, cwd: 'src/app/data/' }]
             },
@@ -57,7 +60,7 @@ module.exports = function (grunt) {
             }
         },
         concat:{
-            dist:{
+             dist:{
                 options: {
                     banner: "<%= banner %>"
                 },
@@ -72,16 +75,16 @@ module.exports = function (grunt) {
                 }
             },
             angular: {
-                src:['vendor/angular/angular.js'],
+                src:[
+                    'vendor/angular/angular.js', 
+                    'src/assets/js/ui-bootstrap-custom-0.10.0.js', 
+                    'vendor/angular-ui-router/release/angular-ui-router.js'
+                ],
                 dest: '<%= wwwdir %>/js/lib/angular.js'
             },
-            angularbootstrap : {
-                src:['vendor/angular-bootstrap/ui-bootstrap-tpls.js'],
-                dest: '<%= wwwdir %>/js/lib/angular-ui-bootstrap.js'
-            },
-            angularuirouter: {
-                src:['vendor/angular-ui-router/release/angular-ui-router.js'],
-                dest: '<%= wwwdir %>/js/lib/angular-ui-router.js'
+            mousetrap: {
+                src:['vendor/mousetrap/mousetrap.js'],
+                dest: '<%= wwwdir %>/js/lib/mousetrap.js'
             }
         },
         uglify: {
@@ -93,16 +96,16 @@ module.exports = function (grunt) {
                 dest:'<%= wwwdir %>/js/<%= pkg.name %>.js'
             },
             angular: {
-                src:['<%= concat.angular.src %>'],
+                src:[
+                    'vendor/angular/angular.js', 
+                    'src/assets/js/ui-bootstrap-custom-0.10.0.js', 
+                    'vendor/angular-ui-router/release/angular-ui-router.js'
+                ],
                 dest: '<%= wwwdir %>/js/lib/angular.js'
             },
-            angularbootstrap: {
-                src:['<%= concat.angularbootstrap.src %>'],
-                dest: '<%= wwwdir %>/js/lib/angular-ui-bootstrap.js'
-            },
-            angularuirouter: {
-                src:['<%= concat.angularuirouter.src %>'],
-                dest: '<%= wwwdir %>/js/lib/angular-ui-router.js'
+            mousetrap: {
+                src:['vendor/mousetrap/mousetrap.js'],
+                dest: '<%= wwwdir %>/js/lib/mousetrap.js'
             }
         },
         recess: {

@@ -2,9 +2,10 @@
 	"name": "foxmote",
 	"version": "0.5",
 	"dependencies": {
-		"angular": "~1.0.8",
+	"angular": "~1.2.14",
     "angular-bootstrap": "~0.10.0",
     "angular-ui-router" : "~0.0.1",
-    "font-awesome" : "~3.2.0"
+    "font-awesome" : "~3.2.0",
+    "mousetrap" : "~1.2.0"
 	}
 }

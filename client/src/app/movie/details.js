@@ -16,17 +16,13 @@ angular.module('app')
         function MovieDetailsCtrl($scope, $stateParams, $location, utilities) {
             $scope.movieid = parseInt($stateParams.movieid);
             $scope.loading = true;
+            function onMovieRetrieved (item) {
+                $scope.loading = false;
+                item.type = 'movie';
+                $scope.library.item = item;
+            };
             var onLoad = function () {
-                $scope.library.item = $scope.xbmc.send('VideoLibrary.GetMovieDetails', {
-                    'movieid': $scope.movieid,
-                    'properties': ['title', 'genre', 'rating', 'thumbnail', 'plot',
-                        'studio', 'director', 'fanart', 'runtime', 'trailer', 'imdbnumber']
-                }, true, 'result.moviedetails').then(function (item) {
-                        $scope.loading = false;
-                        item.type = 'movie';
-                        return item;
-                    });
-
+                $scope.xbmc.getMovieDetails($scope.movieid, onMovieRetrieved);
             };
             if ($scope.xbmc.isConnected()) {
                 onLoad();
