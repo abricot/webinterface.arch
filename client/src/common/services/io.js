@@ -2,6 +2,7 @@
 angular.module('services.io', ['services.websocket'])
     .factory('io', ['$rootScope', '$q', '$parse', '$interval', 'websocket',
         function($rootScope, $q, $parse, $interval, websocket) {
+            var factory = {};
             var callbacks = {};
             var currentCallbackId = 0;
             var notifications = {};
@@ -67,7 +68,7 @@ angular.module('services.io', ['services.websocket'])
                 }
             };
 
-            function send(method, params, shouldDefer, pathExpr) {
+            factory.send = function (method, params, shouldDefer, pathExpr) {
                 shouldDefer = shouldDefer || false;
                 pathExpr = pathExpr || 'result';
 
