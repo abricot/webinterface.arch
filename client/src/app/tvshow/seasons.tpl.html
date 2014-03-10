@@ -4,7 +4,7 @@
         <ul data-type="list" class="view">
             <li class="row season" ng-repeat="season in seasons | filter:library.criteria"
                 ng-tap="go('/tvshow/' + tvshowid + '/' + season.season)">
-                <img class="span4 poster" src="{{season.thumbnail  | asset:configuration.host.ip}}"/>
+                <img class="span4 poster" source="{{season.thumbnail  | asset:configuration.host.ip}}"/>
 
                 <div class="span8">
                     <p>

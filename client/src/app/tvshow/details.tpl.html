@@ -2,7 +2,7 @@
     <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
     <div ng-switch-when="false" class="tvshow">
         <img class="banner"
-             src="{{library.item.art['tvshow.banner']  | asset:configuration.host.ip | fallback:'img/backgrounds/low-contrast-256.png'}}"
+             source="{{library.item.art['tvshow.banner']  | asset:configuration.host.ip | fallback:'img/backgrounds/low-contrast-256.png'}}"
              />
 
         <div class="episode detail">

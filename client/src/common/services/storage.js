@@ -1,13 +1,13 @@
 angular.module('services.storage', [])
     .provider('storage', function () {
-        var runInChrome = false;
+        var asChromeApp = false;
         try {
-            runInChrome = typeof window.localStorage === 'undefined';
+            asChromeApp = typeof window.localStorage === 'undefined';
         } catch (e) {
-            runInChrome = true;
+            asChromeApp = true;
         }
         this.getItem = function (key, cb) {
-            if(!runInChrome) {
+            if(!asChromeApp) {
                 cb(window.localStorage.getItem(key));
             } else {
                 chrome.storage.local.get(key, function(items){
@@ -17,7 +17,7 @@ angular.module('services.storage', [])
         }
 
         this.setItem = function (key, value) {
-             if(!runInChrome) {
+             if(!asChromeApp) {
                 window.localStorage.setItem(key, value);
             } else {
                 var items = {};

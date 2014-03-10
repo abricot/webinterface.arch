@@ -1,7 +1,10 @@
 "use strict";
+RAL.FileManifest.reset();
+
 angular.module('app', [
     'ui.state',
     'ui.bootstrap',
+    'directives.image',
     'directives.keybinding',
     'directives.rating',
     'directives.seekbar',
@@ -23,10 +26,11 @@ angular.module('app')
                     $urlRouterProvider.otherwise("/");
                 }
             });
-        }
+        } 
     ])
     .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter', 'xbmc', 'storage',
         function($scope, $rootScope, $state, $location, $filter, xbmc, storage) {
+            
             $scope.$state = $state;
             $scope.connected = false;
             $scope.initialized = false;
@@ -141,11 +145,14 @@ angular.module('app')
             };
 
             var onPlayerPlay = function(obj) {
-                var player = obj.params.data.player;
-                $scope.player.id = player.playerid;
-                $scope.player.active = true;
-                xbmc.setActivePlayer(player.playerid);
-                xbmc.getPlayerItem(onPlayerItemRetrieved);
+                $scope.$apply(function(){
+                    var player = obj.params.data.player;
+                    $scope.player.id = player.playerid;
+                    $scope.player.active = true;
+                    xbmc.setActivePlayer(player.playerid);
+
+                    xbmc.getPlayerItem(onPlayerItemRetrieved);
+                });
             };
 
             var onPlayerStop = function(obj) {

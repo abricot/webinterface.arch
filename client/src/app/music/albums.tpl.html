@@ -4,7 +4,7 @@
         <li class="row album" ng-repeat="album in albums | filter:library.criteria"
             ng-tap="go('/music/songs/albumid/' + album.albumid)"
             ng-class-odd="'odd'">
-            <img class="span3 cover" src="{{album.thumbnail | asset:configuration.host.ip}}"
+            <img class="span3 cover" source="{{album.thumbnail | asset:configuration.host.ip}}"
                  ng-show="hasCover(album)"/>
             <img class="span3 cover unknow" src="img/blank.gif"
                  ng-hide="hasCover(album)"/>

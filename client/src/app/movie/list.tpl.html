@@ -4,7 +4,7 @@
         <li class="row movie" ng-repeat="movie in movies | filter:library.criteria"
             ng-tap="go('/movie/' + movie.movieid, 'none')"
             ng-class-odd="'odd'">
-            <img class="span4 poster" src="{{movie.thumbnail | asset:configuration.host.ip}}"/>
+            <img class="span4 poster" source="{{movie.thumbnail | asset:configuration.host.ip}}"/>
             <em class="playcount" ng-show="movie.playcount">&#10003;</em>
 
             <div class="span7">

@@ -31,7 +31,7 @@
         </ul>
     </nav>
     <div class="now playing" ng-show="player.active">
-        <img class="poster" src="{{player.item.art | thumb | asset:configuration.host.ip}}" ng-tap="go('/now/playing','none')"
+        <img class="poster" source="{{player.item.art | thumb | asset:configuration.host.ip}}" ng-tap="go('/now/playing','none')"
              ng-show="hasPoster(player.item.art)"/>
         <img class="poster unknown" src="img/blank.gif" ng-tap="go('/now/playing')"
              ng-hide="hasPoster(player.item.art)"/>
