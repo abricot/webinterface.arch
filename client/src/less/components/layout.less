@@ -1,10 +1,7 @@
 /* ----------------------------------
  * HEADERS: default
  * ---------------------------------- */
- body {
-  min-width: 320px;
-  min-height: 480px;
- }
+
 section[role="region"] > header:first-child {
   position: relative;
   z-index: 10;
@@ -243,7 +240,8 @@ section[role="region"] {
   background: @regionBgColor;
 }
 
-section[role="region"] div[role="main"] {
+section[role="region"] div[role="main"],
+section[role="region"] div[role="splash"] {
   overflow: hidden;
   overflow-y: auto;
   position: absolute;
@@ -259,6 +257,14 @@ section[role="region"] div[role="main"].no-footer {
 
 section[role="region"] div[role="main"]:last-child {
   bottom: 0;
+}
+
+section[role="region"] div[role="splash"] img{
+  position : absolute;
+  left : 50%;
+  top : 50%;
+  margin-left : -64px;
+  margin-top : -64px;
 }
 
 /* ----------------------------------

@@ -24,7 +24,7 @@ module.exports = function (grunt) {
                 ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>;\n' +
                 ' * Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %>\n */\n',
         src: {
-            js: ['src/**/*.js', '<%= wwwdir %>/js/templates/**/*.js'],
+            js: [ 'src/assets/**/*.js', 'src/common/**/*.js', 'src/app/**/*.js', '<%= wwwdir %>/js/templates/**/*.js'],
             html: ['src/index.html'],
             manifests : ['src/manifest.*'],
             tpl: {
@@ -41,6 +41,9 @@ module.exports = function (grunt) {
             },
             csp : {
                 files: [{ dest : '<%= wwwdir %>/css', src : '*csp.css', expand: true, cwd: 'vendor/angular/' }]
+            },
+            chrome : {
+                files: [{ dest : '<%= wwwdir %>/js', src : 'chrome.js', expand: true, cwd: 'src/' }]
             },
             data : {
                 files: [{ dest : '<%= wwwdir %>/js/data', src : '**', expand: true, cwd: 'src/app/data/' }]

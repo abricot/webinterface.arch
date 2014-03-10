@@ -4,11 +4,14 @@
   "name": "Foxmote",
   "description": "Yet another XBMC remote, compatible frodo and above.",
   "version": "1.0.2",
-  "browser_action": {
-    "default_icon": "img/icons/foxmote.png",
-    "default_popup": "index.html"
+  "app": {
+    "background": {
+      "scripts": ["js/chrome.js"]
+    }
   },
+  "permissions": ["storage"],
   "icons": {
+    "16": "img/icons/foxmote.png",
     "32": "img/icons/foxmote-32.png",
     "64": "img/icons/foxmote-64.png",
     "128": "img/icons/foxmote-128.png"

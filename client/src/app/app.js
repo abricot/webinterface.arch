@@ -8,27 +8,28 @@ angular.module('app', [
     'directives.tap',
     'filters.xbmc',
     'services.xbmc',
+    'services.storage',
     'templates.app'
 ]);
 
 // this is where our app definition is
 angular.module('app')
-    .config(['$stateProvider', '$urlRouterProvider',
-        function($stateProvider, $urlRouterProvider) {
-            var xbmchost = localStorage.getItem('xbmchost');
-            if (xbmchost === null) {
-                $urlRouterProvider.otherwise("/settings");
-            } else {
-                $urlRouterProvider.otherwise("/");
-            }
-
+    .config(['$stateProvider', '$urlRouterProvider', 'storageProvider',
+        function($stateProvider, $urlRouterProvider, storageProvider) {
+            var xbmchost = storageProvider.getItem('xbmchost', function(value) {
+                if (value === null) {
+                    $urlRouterProvider.otherwise("/settings");
+                } else {
+                    $urlRouterProvider.otherwise("/");
+                }
+            });
         }
     ])
-    .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter', 'xbmc',
-        function($scope, $rootScope, $state, $location, $filter, xbmc) {
+    .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter', 'xbmc', 'storage',
+        function($scope, $rootScope, $state, $location, $filter, xbmc, storage) {
             $scope.$state = $state;
             $scope.connected = false;
-
+            $scope.initialized = false;
             $scope.player = {
                 id: -1,
                 active: false,
@@ -190,33 +191,38 @@ angular.module('app')
                 scope: this
             });
 
-            var xbmchost = localStorage.getItem('xbmchost');
-            if (xbmchost === null) {
-                $scope.go('/settings');
+            
+            var onLoad = function() {
+                $scope.$apply(function() {
+                    $scope.connected = true;
+                });
+                xbmc.getActivePlayers(onPlayersRetrieved);
+            }
+            var onDisconnect = function() {
+                $scope.connected = false;
+                $scope.initialized = true;
+            };
+            if (xbmc.isConnected()) {
+                onLoad();
             } else {
-                $scope.configuration = JSON.parse(xbmchost);
-                var onLoad = function() {
-                    $scope.$apply(function() {
-                        $scope.connected = true;
-                    });
-                    xbmc.getActivePlayers(onPlayersRetrieved);
-                }
-                var onDisconnect = function() {
-                    $scope.connected = false;
-                };
-                if (xbmc.isConnected()) {
-                    onLoad();
-                } else {
-                    xbmc.register('Websocket.OnConnected', {
-                        fn: onLoad,
-                        scope: this
-                    });
-                    xbmc.register('Websocket.OnDisconnected', {
-                        fn: onDisconnect,
-                        scope: this
-                    });
-                    $scope.xbmc.connect($scope.configuration.host.ip, $scope.configuration.host.port);
-                }
+                xbmc.register('Websocket.OnConnected', {
+                    fn: onLoad,
+                    scope: this
+                });
+                xbmc.register('Websocket.OnDisconnected', {
+                    fn: onDisconnect,
+                    scope: this
+                });
+                storage.getItem('xbmchost', function (value) {
+                    $scope.initialized = true;
+                    if(value!==null) {
+                        $scope.configuration = JSON.parse(value);
+                        $scope.xbmc.connect($scope.configuration.host.ip, $scope.configuration.host.port);
+                         $scope.go('/');
+                    } else {
+                        $scope.go('/settings');
+                    }
+                })
             }
 
             var main = document.querySelector('div[role="main"]');

@@ -8,10 +8,10 @@ angular.module('app')
             }
         });
     }])
-    .controller('WizardCtrl', ['$scope',
-        function WizardCtrl($scope) {
+    .controller('WizardCtrl', ['$scope', 'storage',
+        function WizardCtrl($scope, storage) {
             $scope.save = function () {
-                localStorage.setItem('xbmchost', JSON.stringify($scope.configuration));
+                storage.setItem('xbmchost', JSON.stringify($scope.configuration));
                 $scope.xbmc.connect($scope.configuration.host.ip, $scope.configuration.host.port);
                 $scope.go('/');
             }
