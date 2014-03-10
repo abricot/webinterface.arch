@@ -1,167 +1,64 @@
-angular.module('services.xbmc', ['services.websocket'])
-    .factory('xbmc', ['$rootScope', '$q', '$parse', '$interval', 'websocket',
-        function($rootScope, $q, $parse, $interval, websocket) {
+angular.module('services.xbmc', ['services.io'])
+    .factory('xbmc', ['$rootScope', '$q', '$parse', '$interval', 'io',
+        function($rootScope, $q, $parse, $interval, io) {
             // We return this object to anything injecting our service
             var factory = {};
-            var resolved = false;
-            var callbacks = {};
-            var currentCallbackId = 0;
-            var notifications = {};
-
             var activePlayer = -1;
             var activePlaylist = -1;
             var volume = 0;
 
-            var timeout = 60000;
-
-            // This creates a new callback ID for a request
-            function getCallbackId() {
-                currentCallbackId += 1;
-                if (currentCallbackId > 10000) {
-                    currentCallbackId = 0;
-                }
-                return currentCallbackId;
+            factory.connect = function(url, port) {
+                return io.connect(url, port);
             }
-
-            function getDefer(id, method, pathExpr) {
-                var defer = $q.defer();
-                callbacks[id] = {
-                    timestamp: Date.now(),
-                    cb: defer,
-                    parseExpr: pathExpr,
-                    method: method
-                };
-                return defer;
-            }
-
-            function onConnected() {
-                websocket.subscribe(onMessage.bind(this));
-                var onConnectedCallbacks = notifications['Websocket.OnConnected'] || [];
-                for (var i = 0; i < onConnectedCallbacks.length; i++) {
-                    var cb = onConnectedCallbacks[i];
-                    cb.fn.call(cb.scope);
-                }
-            };
-
-            function onDiconnected() {
-                var onDiscConnectedCallbacks = notifications['Websocket.OnDisconnected'] || [];
-                for (var i = 0; i < onDiscConnectedCallbacks.length; i++) {
-                    var cb = onDiscConnectedCallbacks[i];
-                    cb.fn.call(cb.scope);
-                }
-            };
-
-            function onMessage(event) {
-                if (event.data !== '') {
-                    console.log(event.data);
-                    var data = JSON.parse(event.data);
-                    if (callbacks.hasOwnProperty(data.id)) {
-                        var cb = callbacks[data.id];
-                        var obj = data;
-                        if (cb.hasOwnProperty('parseExpr')) {
-                            var getter = $parse(cb.parseExpr);
-                            obj = getter(data);
-                        }
-                        $rootScope.$apply(callbacks[data.id].cb.resolve(obj));
-                        delete callbacks[data.id];
-                    } else if (notifications[data.method] && notifications[data.method].length > 0) {
-                        for (var i = 0; i < notifications[data.method].length; i++) {
-                            var cb = notifications[data.method][i];
-                            $rootScope.$apply(cb.fn.call(cb.scope, data));
-                        }
-                    }
-                }
-            };
-
-            function send(method, params, shouldDefer, pathExpr) {
-                shouldDefer = shouldDefer || false;
-                pathExpr = pathExpr || 'result';
-
-                var request = {
-                    'jsonrpc': '2.0',
-                    'method': method
-                };
-                if (params) {
-                    request.params = params;
-                }
-                if (shouldDefer) {
-                    request.id = getCallbackId();
-                    var defer = getDefer(request.id, method, pathExpr);
-                }
-                websocket.send(request);
-                return shouldDefer ? defer.promise : 0;
-            };
-
 
             factory.isConnected = function() {
-                return websocket.isConnected();
+                return io.isConnected();
             }
 
             factory.register = function(method, callback) {
-                notifications[method] = notifications[method] || [];
-                notifications[method].push(callback);
+                io.register(method, callback);
             }
 
             factory.unregister = function(method, callback) {
-                notifications[method] = notifications[method] || [];
-                var indexOf = notifications[method].indexOf(callback);
-                if (indexOf > -1) {
-                    notifications[method] = notifications[method].splice(indexOf, 1);
-                }
+                io.unregister(method, callback);
             }
-
-            factory.connect = function(url, port) {
-                websocket.connect('ws://' + url + ':' + port + '/jsonrpc', onConnected, onDiconnected);
-            }
-
-            var canceljob = function() {
-                angular.forEach(callbacks, function(callback, key) {
-                    var now = Date.now();
-                    if (now - callback.timestamp > timeout) {
-                        callback.cb.reject();
-                        delete callbacks[key];
-                    }
-                });
-            };
-
-            $interval(canceljob, 1000)
 
             factory.up = function() {
-                send('Input.Up');
+                io.send('Input.Up');
             };
             factory.down = function() {
-                send('Input.Down');
+                io.send('Input.Down');
             };
             factory.left = function() {
-                send('Input.Left');
+                io.send('Input.Left');
             };
             factory.right = function() {
-                send('Input.Right');
+                io.send('Input.Right');
             };
             factory.select = function() {
-                send('Input.Select');
+                io.send('Input.Select');
             };
             factory.back = function() {
-                send('Input.Back');
+                io.send('Input.Back');
             };
             factory.contextmenu = function() {
-                send('Input.ContextMenu');
+                io.send('Input.ContextMenu');
             };
             factory.info = function() {
-                send('Input.Info');
+                io.send('Input.Info');
             };
             factory.home = function() {
-                send('Input.Home');
+                io.send('Input.Home');
             };
             factory.sendText = function (textToSend) {
-                send('Input.SendText', {'text' : textToSend});
+                io.send('Input.io.sendText', {'text' : textToSend});
             }
             factory.showOSD = function () {
-                send('Input.ShowOSD');
+                io.send('Input.ShowOSD');
             };
 
             factory.getActivePlayers = function(cb) {
-                send('Player.GetActivePlayers', null, true, 'result').then(cb);
+                io.send('Player.GetActivePlayers', null, true, 'result').then(cb);
             };
 
             factory.setActivePlayer = function(playerId) {
@@ -174,7 +71,7 @@ angular.module('services.xbmc', ['services.websocket'])
 
             factory.getPlayerItem = function(cb, playerId) {
                 playerId = playerId || activePlayer;
-                send('Player.GetItem', {
+                io.send('Player.GetItem', {
                     'properties': ['title', 'artist', 'albumartist', 'genre',
                         'year', 'rating', 'album', 'track', 'duration', 'comment', 'lyrics',
                         'musicbrainztrackid', 'musicbrainzartistid', 'musicbrainzalbumid',
@@ -193,7 +90,7 @@ angular.module('services.xbmc', ['services.websocket'])
             };
 
             factory.getPlayerProperties = function(cb) {
-                send('Player.GetProperties', {
+                io.send('Player.GetProperties', {
                     'properties': ['percentage', 'time', 'totaltime',
                         'speed', 'playlistid',
                         'currentsubtitle', 'subtitles',
@@ -204,54 +101,54 @@ angular.module('services.xbmc', ['services.websocket'])
             };
 
             factory.goTo = function(index) {
-                send('Player.GoTo', {
+                io.send('Player.GoTo', {
                     'playerid': activePlayer,
                     'to': index
                 });
             };
 
             factory.next = function() {
-                send('Player.GoTo', {
+                io.send('Player.GoTo', {
                     'playerid': activePlayer,
                     'to': 'next'
                 });
             };
 
             factory.open = function(item) {
-                send('Player.Open', {
+                io.send('Player.Open', {
                     'item': item
                 });
             };
 
             factory.previous = function() {
-                send('Player.GoTo', {
+                io.send('Player.GoTo', {
                     'playerid': activePlayer,
                     'to': 'previous'
                 });
             };
 
             factory.togglePlay = function() {
-                send('Player.PlayPause', {
+                io.send('Player.PlayPause', {
                     'playerid': activePlayer
                 });
             };
 
             factory.seek = function(newValue) {
-                send('Player.Seek', {
+                io.send('Player.Seek', {
                     'playerid': activePlayer,
                     'value': newValue
                 });
             };
 
             factory.setAudioStream = function(audioStream) {
-                send('Player.SetAudioStream', {
+                io.send('Player.SetAudioStream', {
                     'playerid': activePlayer,
                     'stream': audioStream
                 });
             };
 
             factory.setSubtitle = function(subtitle) {
-                send('Player.SetSubtitle', {
+                io.send('Player.SetSubtitle', {
                     'playerid': activePlayer,
                     'subtitle': subtitle,
                     'enable': true
@@ -259,20 +156,20 @@ angular.module('services.xbmc', ['services.websocket'])
             };
 
             factory.setSpeed = function(speed) {
-                send('Player.SetSpeed', {
+                io.send('Player.SetSpeed', {
                     'playerid': activePlayer,
                     'speed': speed
                 });
             };
 
             factory.stop = function() {
-                send('Player.Stop', {
+                io.send('Player.Stop', {
                     'playerid': activePlayer
                 });
             };
 
             (function getVolume(cb) {
-                send('Application.GetProperties', {
+                io.send('Application.GetProperties', {
                     'properties': ['volume']
                 }, true, 'result.volume').then(function(value) {
                     volume = value;
@@ -281,32 +178,32 @@ angular.module('services.xbmc', ['services.websocket'])
 
             factory.increaseVolume = function() {
                 volume = Math.min(volume + 1, 100);
-                send('Application.SetVolume', {
+                io.send('Application.SetVolume', {
                     'volume': volume
                 });
             };
             factory.decreaseVolume = function() {
                 volume = Math.max(volume - 1, 0);
-                send('Application.SetVolume', {
+                io.send('Application.SetVolume', {
                     'volume':volume
                 });
             };
             factory.mute = function() {
-                send('Application.SetMute', {
+                io.send('Application.SetMute', {
                     'mute': 'toggle'
                 });
             };
 
             factory.shutdown = function() {
-                send('System.Shutdown');
+                io.send('System.Shutdown');
             };
 
             factory.activateWindow = function(params) {
-                send('GUI.ActivateWindow', params);
+                io.send('GUI.ActivateWindow', params);
             };
 
             factory.getPlaylistItems = function(cb) {
-                send('Playlist.GetItems', {
+                io.send('Playlist.GetItems', {
                     'playlistid': activePlaylist,
                     'properties': ['title', 'art', 'duration', 'runtime', 'thumbnail']
                 }, true, 'result.items').then(cb);
@@ -314,7 +211,7 @@ angular.module('services.xbmc', ['services.websocket'])
 
             factory.queue = function(item) {
                 if (activePlaylist > -1) {
-                    send('Playlist.Add', {
+                    io.send('Playlist.Add', {
                         'playlistid': activePlaylist,
                         'item': item
                     });
@@ -322,7 +219,7 @@ angular.module('services.xbmc', ['services.websocket'])
             };
 
             factory.getMovies = function(cb) {
-                send('VideoLibrary.GetMovies', {
+                io.send('VideoLibrary.GetMovies', {
                     'limits': {
                         'start': 0,
                         'end': 75
@@ -337,7 +234,7 @@ angular.module('services.xbmc', ['services.websocket'])
             };
 
             factory.getMovieDetails = function(movieId, cb) {
-                send('VideoLibrary.GetMovieDetails', {
+                io.send('VideoLibrary.GetMovieDetails', {
                     'properties': ['title', 'genre', 'rating', 'thumbnail', 'plot',
                         'studio', 'director', 'fanart', 'runtime', 'trailer', 'imdbnumber'
                     ],
@@ -363,11 +260,11 @@ angular.module('services.xbmc', ['services.websocket'])
                     params.filter = {};
                     params.filter[filter.key] = filter.value;
                 }
-                send('AudioLibrary.GetAlbums', params, true, 'result.albums').then(cb);
+                io.send('AudioLibrary.GetAlbums', params, true, 'result.albums').then(cb);
             };
 
             factory.getArtists = function(cb) {
-                send('AudioLibrary.GetArtists', {
+                io.send('AudioLibrary.GetArtists', {
                     'limits': {
                         'start': 0,
                         'end': 100
@@ -400,11 +297,11 @@ angular.module('services.xbmc', ['services.websocket'])
                     params.filter[filter.key] = filter.value;
                     params.sort.method = 'track';
                 }
-                send('AudioLibrary.GetSongs', params, true, 'result.songs').then(cb);
+                io.send('AudioLibrary.GetSongs', params, true, 'result.songs').then(cb);
             };
 
             factory.getTVShows = function(cb) {
-                send('VideoLibrary.GetTVShows', {
+                io.send('VideoLibrary.GetTVShows', {
                     'limits': {
                         'start': 0,
                         'end': 75
@@ -417,7 +314,7 @@ angular.module('services.xbmc', ['services.websocket'])
                 }, true, 'result.tvshows').then(cb);
             };
             factory.getSeasons = function(tvShowId, cb) {
-                send('VideoLibrary.GetSeasons', {
+                io.send('VideoLibrary.GetSeasons', {
                     'tvshowid': tvShowId,
                     'properties': ['season', 'showtitle', 'fanart', 'thumbnail'],
                     'limits': {
@@ -431,7 +328,7 @@ angular.module('services.xbmc', ['services.websocket'])
                 }, true, 'result.seasons').then(cb);
             };
             factory.getEpisodes = function(tvShowId, season, cb) {
-                send('VideoLibrary.GetEpisodes', {
+                io.send('VideoLibrary.GetEpisodes', {
                     'tvshowid': tvShowId,
                     'season': season,
                     'properties': ['title', 'rating', 'firstaired', 'runtime', 'season', 'episode', 'thumbnail', 'art'],
@@ -446,7 +343,7 @@ angular.module('services.xbmc', ['services.websocket'])
                 }, true, 'result.episodes').then(cb);
             };
             factory.getEpisodeDetails = function(episodeId, cb) {
-                send('VideoLibrary.GetEpisodeDetails', {
+                io.send('VideoLibrary.GetEpisodeDetails', {
                     'episodeid': episodeId,
                     'properties': ['title', 'plot', 'rating', 'firstaired', 'runtime', 'thumbnail', 'art']
                 }, true, 'result.episodedetails').then(cb);

@@ -1,6 +1,6 @@
 "use strict";
-angular.module('services.xbmc.mock', [])
-    .factory('xbmc', ['$rootScope', '$q', '$http', '$parse',
+angular.module('services.io.mock', [])
+    .factory('io', ['$rootScope', '$q', '$http', '$parse',
         function ($rootScope, $q, $http, $parse) {
             // We return this object to anything injecting our service
             var factory = {};
