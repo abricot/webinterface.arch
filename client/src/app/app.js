@@ -55,7 +55,7 @@ angular.module('app')
             $scope.configuration = {
                 host: {
                     ip: '',
-                    port: '',
+                    port: '9090',
                     displayName: ''
                 }
             };
