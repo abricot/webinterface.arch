@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "Foxmote",
   "description": "Yet another XBMC remote, compatible frodo and above.",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "app": {
     "background": {
       "scripts": ["js/chrome.js"]
