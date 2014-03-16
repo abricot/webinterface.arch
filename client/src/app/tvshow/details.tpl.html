@@ -6,13 +6,14 @@
              />
 
         <div class="episode detail">
-
             <h1>
-                <div rating rating-value="library.item.rating" rating-max="10"></div>
                 {{library.item.title}}
             </h1>
             <div class="row">
                 <img class="offset1 span10" source="{{library.item.thumbnail  | asset:configuration.host.ip}}"/>
+            </div>
+            <div class="row">
+                 <div class="rating" rating rating-value="library.item.rating" rating-max="10"></div>
             </div>
             <p>
                 {{library.item.plot}}
