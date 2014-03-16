@@ -27,8 +27,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="fanart"
-                 style="background-image: url({{library.item.fanart | asset:configuration.host.ip}});"></div>
+            <div class="fanart" source="{{library.item.fanart | asset:configuration.host.ip}}"></div>
         </div>
         <div>
             <div class="rating" rating rating-value="library.item.rating" rating-max="10"></div>

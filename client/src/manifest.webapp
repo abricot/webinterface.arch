@@ -1,5 +1,5 @@
 {
-  "version": "1.0.2",
+  "version": "1.1.2",
   "name": "Foxmote",
   "description": "Yet another XBMC remote for firefox os, compatible frodo and above.",
   "launch_path": "/index.html",
