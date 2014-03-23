@@ -31,10 +31,14 @@
         </ul>
     </nav>
     <div class="now playing" ng-show="player.active">
-        <img class="poster" source="{{player.item.art | thumb | asset:configuration.host.ip}}" ng-tap="go('/now/playing','none')"
-             ng-show="hasPoster(player.item.art)"/>
-        <img class="poster unknown" src="img/blank.gif" ng-tap="go('/now/playing')"
-             ng-hide="hasPoster(player.item.art)"/>
+        <div ng-switch on="hasPoster(player.item.art)">
+            <div ng-switch-when="true" ng-tap="go('/now/playing','none')">
+                <img class="poster" source="{{player.item.art | thumb | asset:configuration.host}}" />
+            </div>
+            <div ng-switch-when="false" ng-tap="go('/now/playing')">
+                <img class="poster unknown" src="img/blank.gif" ng-hide="hasPoster(player.item.art)"/>
+            </div>
+        </div>
         <h1>{{getLabel(player.item)}}</h1>
         <footer>
             <div class="row actions">

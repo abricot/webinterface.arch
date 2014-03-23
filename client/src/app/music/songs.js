@@ -3,7 +3,7 @@ angular.module('app')
         $stateProvider.state('filteredSongs', {
             url: '/music/songs/:filter/:filterId',
             views: {
-                header: {templateUrl: 'layout/headers/searchable.tpl.html'},
+                header: {templateUrl: 'layout/headers/backable.tpl.html'},
                 body: {
                     templateUrl: 'music/songs.tpl.html', controller: 'MusicSongsCtrl'
                 }
@@ -59,7 +59,7 @@ angular.module('app')
             var assetFilter = $filter('asset');
             var hasCover = typeof $scope.filter !== 'undefined' && song && song.thumbnail !== '';
             if (hasCover) {
-                return assetFilter(song.thumbnail, $scope.configuration.host.ip);
+                return assetFilter(song.thumbnail, $scope.configuration.host);
             } else {
                 return 'img/backgrounds/album.png';
             }
@@ -71,7 +71,7 @@ angular.module('app')
 
         $scope.play = function (item, index) {
             $scope.xbmc.open(item);
-            if (index + 1 < $scope.songs.length) {
+            if ($scope.filter && index + 1 < $scope.songs.length) {
                 $scope.queue = $scope.songs.slice(index + 1);
             }
         };

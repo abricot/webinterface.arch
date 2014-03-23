@@ -2,7 +2,7 @@
     <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
     <div ng-switch-when="false" class="tvshow">
         <img class="banner"
-             source="{{library.item.art['tvshow.banner']  | asset:configuration.host.ip | fallback:'img/backgrounds/low-contrast-256.png'}}"
+             source="{{library.item.art['tvshow.banner']  | asset:configuration.host | fallback:'img/backgrounds/low-contrast-256.png'}}"
              />
 
         <div class="episode detail">
@@ -10,7 +10,7 @@
                 {{library.item.title}}
             </h1>
             <div class="row">
-                <img class="offset1 span10" source="{{library.item.thumbnail  | asset:configuration.host.ip}}"/>
+                <img class="offset1 span10" source="{{library.item.thumbnail  | asset:configuration.host}}"/>
             </div>
             <div class="row">
                  <div class="rating" rating rating-value="library.item.rating" rating-max="10"></div>

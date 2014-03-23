@@ -3,7 +3,7 @@ angular.module('app')
         $stateProvider.state('moviedetails', {
             url: '/movie/:movieid',
             views: {
-                header: {templateUrl: 'layout/headers/basic.tpl.html'},
+                header: {templateUrl: 'layout/headers/backable.tpl.html'},
                 body: {
                     templateUrl: 'movie/details.tpl.html',
                     controller: 'MovieDetailsCtrl'

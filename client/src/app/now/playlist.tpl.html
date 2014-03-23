@@ -6,7 +6,7 @@
                 ng-class-odd="'odd'"
                 ng-tap="xbmc.goTo($index)">
                     <img class="span4 poster"
-                         source="{{item.art | thumb | asset:configuration.host.ip | fallback:'img/backgrounds/low-contrast-128.png'}}"/>
+                         source="{{item.art | thumb | asset:configuration.host | fallback:'img/backgrounds/low-contrast-128.png'}}"/>
                 <div class="span8">
                     <p>{{item.label}}</p>
                     <p ng-show="item.duration">{{item.duration | time | date :'mm:ss'}}</p>

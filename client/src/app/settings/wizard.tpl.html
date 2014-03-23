@@ -19,10 +19,17 @@
             Host IP must be a vild IP address
         </label>
     </p>
-    <p>
-        <label>Api port</label>
-        <input type="text" placeholder="Ex : 9090" required="" ng-model="configuration.host.port" tabindex="3">
-        <button type="reset" class="icon-remove"></button>
-    </p>
+    <div class="row">
+        <p class="span6">
+            <label>Webserver port</label>
+            <input type="text" placeholder="Ex : 8080" required="" ng-model="configuration.host.httpPort" tabindex="3">
+            <button type="reset" class="icon-remove"></button>
+        </p>
+        <p class="span6">
+            <label>Api port</label>
+            <input type="text" placeholder="Ex : 9090" required="" ng-model="configuration.host.port" tabindex="3">
+            <button type="reset" class="icon-remove"></button>
+        </p>
+    </div>
     <button  class="recommend" ng-tap="save()">Save</button>
 </form>

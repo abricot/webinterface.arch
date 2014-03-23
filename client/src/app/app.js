@@ -56,10 +56,15 @@ angular.module('app')
                 host: {
                     ip: '',
                     port: '9090',
+                    httpPort : '8080',
                     displayName: ''
                 }
             };
             $scope.xbmc = xbmc;
+
+            $scope.back = function() {
+                $scope.go($scope.previousHash);
+            };
 
             $scope.go = function(path) {
                 $location.path(path);
@@ -224,6 +229,7 @@ angular.module('app')
                     $scope.initialized = true;
                     if(value!==null) {
                         $scope.configuration = JSON.parse(value);
+                        $scope.configuration.host.httpPort = $scope.configuration.host.httpPort || '8080';
                         $scope.xbmc.connect($scope.configuration.host.ip, $scope.configuration.host.port);
                          $scope.go('/');
                     } else {
@@ -247,5 +253,14 @@ angular.module('app')
             };
 
             main.addEventListener('swipe', onSwipe.bind(this));
+
+            $scope.previousState = null;
+            $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
+                var hash = fromState.url;
+                angular.forEach(fromParams, function(value, key){
+                    hash = hash.replace(':'+key, value);
+                });
+                $scope.previousHash = hash;
+            });
         }
     ]);

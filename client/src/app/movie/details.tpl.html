@@ -7,7 +7,7 @@
             </h1>
 
             <div class="row">
-                <img class="offset1 span5 poster" source="{{library.item.thumbnail | asset:configuration.host.ip | fallback:'img/backgrounds/low-contrast-256.png'}}"/>
+                <img class="offset1 span5 poster" source="{{library.item.thumbnail | asset:configuration.host | fallback:'img/backgrounds/low-contrast-256.png'}}"/>
 
                 <div class="span6">
                     <ul>
@@ -27,7 +27,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="fanart" source="{{library.item.fanart | asset:configuration.host.ip}}"></div>
+            <div class="fanart" source="{{library.item.fanart | asset:configuration.host}}"></div>
         </div>
         <div>
             <div class="rating" rating rating-value="library.item.rating" rating-max="10"></div>

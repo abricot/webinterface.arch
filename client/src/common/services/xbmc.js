@@ -147,6 +147,19 @@ angular.module('services.xbmc', ['services.io'])
                 });
             };
 
+            var subtitleState = null;
+            factory.toggleSubtitles = function () {
+                if(subtitleState === null) {
+                    factory.setSubtitle('off');
+                    subtitleState = 'off';
+                } else {
+                    factory.setSubtitle(1);
+                    subtitleState = null;
+                }
+                
+                factory.setSubtitle(1);
+            },
+
             factory.setSubtitle = function(subtitle) {
                 io.send('Player.SetSubtitle', {
                     'playerid': activePlayer,
