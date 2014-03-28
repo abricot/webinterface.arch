@@ -48,7 +48,6 @@ angular.module('services.io', ['services.websocket'])
 
             function onMessage(event) {
                 if (event.data !== '') {
-                    console.log(event.data);
                     var data = JSON.parse(event.data);
                     if (callbacks.hasOwnProperty(data.id)) {
                         var cb = callbacks[data.id];
