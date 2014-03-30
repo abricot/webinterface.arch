@@ -231,7 +231,9 @@ angular.module('app')
                         $scope.configuration = JSON.parse(value);
                         $scope.configuration.host.httpPort = $scope.configuration.host.httpPort || '8080';
                         $scope.xbmc.connect($scope.configuration.host.ip, $scope.configuration.host.port);
-                         $scope.go('/');
+                        var hash = window.location.hash;
+                        var path = hash.replace('#', '');
+                        $scope.go(path === '' ? '/' : path);
                     } else {
                         $scope.go('/settings');
                     }

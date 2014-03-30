@@ -344,7 +344,7 @@ angular.module('services.xbmc', ['services.io'])
                 io.send('VideoLibrary.GetEpisodes', {
                     'tvshowid': tvShowId,
                     'season': season,
-                    'properties': ['title', 'rating', 'firstaired', 'runtime', 'season', 'episode', 'thumbnail', 'art'],
+                    'properties': ['title', 'rating', 'firstaired', 'runtime', 'season', 'episode', 'thumbnail', 'art', 'playcount'],
                     'limits': {
                         'start': 0,
                         'end': 75
@@ -358,7 +358,7 @@ angular.module('services.xbmc', ['services.io'])
             factory.getEpisodeDetails = function(episodeId, cb) {
                 io.send('VideoLibrary.GetEpisodeDetails', {
                     'episodeid': episodeId,
-                    'properties': ['title', 'plot', 'rating', 'firstaired', 'runtime', 'thumbnail', 'art']
+                    'properties': ['title', 'plot', 'rating', 'firstaired', 'runtime', 'thumbnail', 'art', 'playcount']
                 }, true, 'result.episodedetails').then(cb);
             };
 

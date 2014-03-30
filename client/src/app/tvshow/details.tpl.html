@@ -10,7 +10,10 @@
                 {{library.item.title}}
             </h1>
             <div class="row">
-                <img class="offset1 span10" source="{{library.item.thumbnail  | asset:configuration.host}}"/>
+                <div class="offset1 span10 thumbnail">
+                    <em class="playcount" ng-show="library.item.playcount">&#10003;</em>
+                    <img source="{{library.item.thumbnail  | asset:configuration.host}}"/>
+                </div>
             </div>
             <div class="row">
                  <div class="rating" rating rating-value="library.item.rating" rating-max="10"></div>

@@ -7,7 +7,7 @@
                 ng-tap="go('/tvshow/' + tvshowid + '/'+season+'/'+episode.episodeid, 'none')"
                 ng-class-odd="'odd'">
                 <img class="span4" source="{{episode.thumbnail  | asset:configuration.host}}"/>
-
+                <em class="playcount" ng-show="episode.playcount">&#10003;</em>
                 <div class="span7">
                     <p>
                         {{episode.title}}
