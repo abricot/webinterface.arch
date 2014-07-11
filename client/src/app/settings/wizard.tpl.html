@@ -10,14 +10,8 @@
     </p>
     <p>
         <label>Host IP:</label>
-        <input name="ip" type="text" placeholder="Ex : 192.16.0.1" required="" ng-pattern="validIpAddressRegex" ng-model="configuration.host.ip" tabindex="2">
+        <input name="ip" type="text" placeholder="Ex : 192.16.0.1, hostname" required="" ng-model="configuration.host.ip" tabindex="2">
         <button type="reset" class="icon-remove"></button>
-        
-    </p>
-    <p ng-show="wizard.ip.$error.pattern" class="message">
-        <label>
-            Host IP must be a vild IP address
-        </label>
     </p>
     <div class="row">
         <p class="span6">

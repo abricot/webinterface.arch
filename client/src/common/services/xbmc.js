@@ -51,7 +51,7 @@ angular.module('services.xbmc', ['services.io'])
                 io.send('Input.Home');
             };
             factory.sendText = function (textToSend) {
-                io.send('Input.io.sendText', {'text' : textToSend});
+                io.send('Input.sendText', {'text' : textToSend});
             }
             factory.showOSD = function () {
                 io.send('Input.ShowOSD');
