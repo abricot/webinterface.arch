@@ -1,0 +1,15 @@
+<div class="music">
+    <div class="arts">
+        <div class="banner"></div>
+        <div class="md-action md-action-primary"
+             ng-tap="xbmc.open({'file' : undefined})">
+            <i class="icon-glass"></i>
+        </div>
+    </div>
+    <div class="tabs row">
+        <a class="span4 tab" ng-tap="go('/musics/albums')" ng-class="{selected : isSelected('music.albums')}">Albums</a>
+        <a class="span4 tab" ng-tap="go('/musics/artists')" ng-class="{selected : isSelected('music.artists')}">Artists</a>
+        <a class="span4 tab" ng-tap="go('/musics/songs')" ng-class="{selected : isSelected('music.songs')}">Songs</a>
+    </div>
+    <div ui-view class="content"></div>
+</div>

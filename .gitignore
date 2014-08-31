@@ -220,4 +220,3 @@ node_modules/
 vendor/
 dist/
 .idea/
-client/src/app/music/musics.tpl.html
