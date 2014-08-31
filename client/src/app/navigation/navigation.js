@@ -13,7 +13,7 @@ angular.module('app')
                     label: 'TV Shows'
                 },
                 {
-                    hash: '/musics',
+                    hash: '/musics/artists',
                     icon: 'icon-music',
                     label: 'Musics'
                 }
@@ -55,6 +55,6 @@ angular.module('app')
             };
 
             $scope.isCurrent = function (hash) {
-                return hash === $location.path() ? 'selected' : '';
+                return hash === $location.path();
             };
         }]);

@@ -3,7 +3,7 @@ angular.module('app')
         $stateProvider.state('movies', {
             url: '/movies',
             views: {
-                header: {templateUrl: 'layout/headers/searchable.tpl.html'},
+                header: {templateUrl: 'layout/headers/basic.tpl.html'},
                 body: {templateUrl: 'movie/list.tpl.html', controller: 'MovieListCtrl'}
             }
         })
@@ -14,6 +14,8 @@ angular.module('app')
             function onMoviesRetrieved (movies) {
                 $scope.loading = false;
                 $scope.movies = movies;
+                var randomIndex = Math.floor(Math.random()*movies.length);
+                $scope.randomMovie = movies[randomIndex];
             };
             var onLoad = function () {
                  $scope.xbmc.getMovies(onMoviesRetrieved);
@@ -22,6 +24,11 @@ angular.module('app')
                 onLoad();
             } else {
                 $scope.xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
+            }
+
+            $scope.getRandomIndex = function () {
+                
+                return randomIndex;
             }
         }
     ]);

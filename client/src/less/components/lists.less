@@ -33,7 +33,7 @@
 /* List items */
 [data-type="list"] li {
   width: 100%;
-  height: @listHeight;
+  min-height: @listMinHeight;
   .box-sizing(border-box);
   transition: transform 0.3s ease, padding 0.3s ease;
   border-bottom: solid 0.1rem @listBorderColor;
@@ -43,29 +43,19 @@
   position: relative;
   z-index: 1;
   overflow: hidden;
+  cursor : pointer;
 }
 
-[data-type="list"] li.odd {
-  background: @listOddBgColor;
-}
-
-[data-type="list"] li.odd.active {
+[data-type="list"] li:hover,
+[data-type="list"] li.active {
   background: @primaryColor;
+  color: @listBgColor;
 }
 [data-type="list"] li:last-child {
   border: none;
 }
 
 /* Pressed State */
-[data-type="list"] li > a {
-  text-decoration: none;
-  color: @listTextColor;
-  display: block;
-  height: @listHeight;
-  position: relative;
-  border: none;
-  outline: none;
-}
 
 [data-type="list"] li > a:after {
   content: "";
@@ -132,16 +122,6 @@
   overflow: hidden;
 }
 
-[data-type="list"] aside img {
-  width: @listHeight;
-  height: @listHeight;
-  display: block;
-  overflow: hidden;
-  background: transparent center center;
-  position: relative;
-  z-index: 1;
-}
-
 /* Text content */
 [data-type="list"] li p {
   white-space: nowrap;
@@ -159,9 +139,12 @@
   font-size: 1.8rem;
   line-height: 2.2rem;
   color: @listTextColor;
-  padding: 1rem 0 0;
 }
 
+[data-type="list"] li:hover p:first-of-type,
+[data-type="list"] li.active p:first-of-type{
+  color : @listBgColor;
+}
 [data-type="list"] li p:only-child,
 [data-type="list"] li p:first-of-type:last-of-type {
   line-height: 4rem;

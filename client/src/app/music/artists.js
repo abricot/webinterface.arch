@@ -1,15 +1,4 @@
 angular.module('app')
-    .config(['$stateProvider', function ($stateProvider) {
-        $stateProvider.state('artists', {
-            url: '/music/artists',
-            views: {
-                header: {templateUrl: 'layout/headers/searchable.tpl.html'},
-                body: {
-                    templateUrl: 'music/artists.tpl.html', controller: 'MusicArtistsCtrl'
-                }
-            }
-        });
-    }])
     .controller('MusicArtistsCtrl', ['$scope',
         function MusicAlbumsCtrl($scope, $stateParams) {
             function onArtistsRetrieve (artists) {

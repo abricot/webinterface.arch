@@ -50,7 +50,8 @@ angular.module('directives.tap', [])
                             $interval.cancel(promise);
                         }
                     });
-                    elm.bind('click', function () {
+                    elm.bind('click', function (evt) {
+                        evt.stopPropagation();
                         scope.ngTap();
                     });
                 }

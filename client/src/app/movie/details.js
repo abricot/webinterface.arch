@@ -7,8 +7,7 @@ angular.module('app')
                 body: {
                     templateUrl: 'movie/details.tpl.html',
                     controller: 'MovieDetailsCtrl'
-                },
-                footer: {templateUrl: 'layout/footers/details.tpl.html', controller: 'FooterCtrl'}
+                }
             }
         });
     }])

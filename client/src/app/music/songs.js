@@ -8,15 +8,7 @@ angular.module('app')
                     templateUrl: 'music/songs.tpl.html', controller: 'MusicSongsCtrl'
                 }
             }
-        }).state('songs', {
-                url: '/music/songs',
-                views: {
-                    header: {templateUrl: 'layout/headers/searchable.tpl.html'},
-                    body: {
-                        templateUrl: 'music/songs.tpl.html', controller: 'MusicSongsCtrl'
-                    }
-                }
-            });
+        });
     }])
     .controller('MusicSongsCtrl', ['$scope', '$rootScope', '$stateParams', '$filter',
     function MusicSongsCtrl($scope, $rootScope, $stateParams, $filter) {

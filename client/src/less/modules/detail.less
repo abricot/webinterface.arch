@@ -1,11 +1,53 @@
-.detail {
-  margin: 0 1rem 1rem 1rem;
+.detail .arts {
+  position: relative;
+  margin-bottom: 5rem;
+}
+
+.detail .poster-wrapper {
+  left : 1rem;
+  position: absolute;
+  right : 1rem;
+  bottom: -4.5rem;
+  width : 40%;
 }
 
 .detail .poster {
-  position: relative;
-  left: -1rem;
   .box-sizing;
+  width  :100%;
+  background-size: 100%;
+  height : 20rem;
+  border: 0.25rem solid white;
+}
+
+.detail .preview {
+  z-index: 2;
+  width: 5rem;
+  height: 5rem;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.258824);
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #000!important;
+  color: #f1f1f1!important;
+  opacity : 0.5;
+  position: absolute;
+  top : 50%;
+  left : 50%;
+  margin-top : -2rem;
+  margin-left : -2rem;
+  -webkit-transform: rotate(30deg); /* Chrome, Safari, Opera */
+  transform: rotate(30deg);
+  cursor: pointer;
+}
+
+.detail .preview:hover {
+  opacity: 0.75;
+}
+
+.detail .preview i {
+  font-size : 2rem;
+  line-height: 5rem;
+  text-align: center;
+  display: block;
 }
 
 .detail ul {
@@ -27,20 +69,76 @@
 .detail h1 {
   color: @primaryColor;
   font-size: 2rem;
-  text-align: center;
+  text-align: right;
   text-overflow: ellipsis;
   display: block;
   overflow: hidden;
   white-space: nowrap;
+  padding : 0 1rem;
+  margin-bottom: 0;
 }
 
 .detail p {
-  color: white;
+  color: @regionColor;
   font-size: 1.5rem;
   text-align: justify;
+  margin: 1rem 0.5rem 0.5rem 0.5rem;
+  padding : 0.5rem;
+  border-top : 1px solid #eee;
+  .box-sizing;
 }
 
-.detail .rating i {
-  padding-left: 0.5rem;
+.detail .properties {
+  text-align: center;
+  padding-top: 0.5rem;
+}
+
+.detail .rating,
+.detail .movie.genre,
+.detail .clock,
+.detail .cast {
+  padding : 0;
+  width : 5rem;
+  height : 5rem;
+  z-index: 2;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.258824);
+  border-radius: 50%;
+  overflow: hidden;
+  color: #f1f1f1!important;
+  position: relative;
+  display: inline-block;
+}
+
+.detail .movie.genre {
+  background-color: #ff5722!important;
+  border-color: #ff5722!important;
+}
+
+.detail .clock {
+  background-color: #00bcd4!important;
+  border-color: #00bcd4!important;
+}
+.detail .cast {
+  background-color: #8bc34a!important;
+  border : 0.25rem solid #8bc34a!important;
+  background-size: 100%;
+}
+
+.detail .movie.genre i,
+.detail .clock i,
+.rating .value,{
+  text-align: center;
+  display: block;
+  font-style: normal;
+}
+
+.detail .movie.genre i,
+.detail .clock i {
+  font-size: 3.5rem;
+  line-height: 5rem;
+}
+
+.detail .clock i {
+  font-size: 2rem;
 }
 

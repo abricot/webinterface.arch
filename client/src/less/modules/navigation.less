@@ -1,7 +1,7 @@
 section[data-type="sidebar"] .active-player,
 section[data-type="sidebar"] .inactive-player {
   position: absolute;
-  top: 6rem;
+  top: 10rem;
   bottom: 0;
   overflow: hidden;
   oveflow-y: auto;
@@ -35,40 +35,49 @@ section[data-type="sidebar"] .now.playing {
   bottom: 0;
   width: 100%;
   z-index: 10;
-  height: 9rem;
+  height: 7rem;
   background: lighten(@regionBgColor, 25);
-  border-top : 0.25rem solid black;
+  border-top : 0.2rem solid @listBorderColor;
+}
+
+section[data-type="sidebar"] .now.playing div[role="slider"] {height : auto;}
+section[data-type="sidebar"] .now.playing div[role="slider"] progress {
+  margin-top : 0;
+}
+
+
+/* Chrome */
+section[data-type="sidebar"] .now.playing progress::-webkit-progress-bar {
+    background: @regionBgColor;
+}
+section[data-type="sidebar"] .now.playing progress::-webkit-progress-value {
+    background: #03a9f4;
 }
 
 section[data-type="sidebar"] .now.playing .poster {
   position: absolute;
-  left: 0;
-  z-index: 11;
-  width: 9rem;
-  bottom: 0;
-  border: 0;
-  .box-sizing;
+  left: 50%;
+  top : 50%;
+  margin-top : -2.5rem;
+  margin-left: -2.5rem;
+  background-size: 100%;
 }
 
-section[data-type="sidebar"] .now.playing .poster.unknown {
-  background: #333 url(../img/backgrounds/low-contrast-64.png) no-repeat center;
-}
-
-section[data-type="sidebar"] .now.playing h1 {
-  position: absolute;
-  bottom: 5rem;
-  right: 2rem;
-  font-size: 1.5rem;
-  color: @primaryColor;
-  width: 50%;
-  text-align: right;
-  display: block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+section[data-type="sidebar"] .now.playing .title{
+  padding-top: 1rem;
+  font-size: 1.25rem;
   overflow: hidden;
-  margin-top : 0;
+  text-overflow: ellipsis;
+}
+section[data-type="sidebar"] .now.playing .actions{
+  font-size: 2rem;
+  padding-top: 1.5rem;
+  opacity : 0.75;
+  cursor : pointer;
+}
+section[data-type="sidebar"] .now.playing .actions:hover{
+  opacity : 1;
 }
 
-section[data-type="sidebar"] .now.playing footer {
-  margin: 0;
-}
+
+

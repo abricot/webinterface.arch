@@ -8,6 +8,16 @@
   src: url('../font/ffosxbmc.ttf');
 }
 
+@font-face {
+  font-family: 'moviegenre';
+  src: url('../font/moviegenre.ttf');
+}
+
+@font-face {
+  font-family: 'digi';
+  src: url('../font/DS-DIGII.TTF');
+}
+
 section[role="region"] header .logo {
   position: absolute;
   top: 0;
@@ -43,12 +53,12 @@ section[role="region"] header h2.disconnected {
 }
 
 *.active {
-  background-color: @primaryColor;
+  
 }
 
 .loading {
   font-size: 5rem;
-  color: white;
+  color: @primaryColor;
   text-align: center;
   line-height: 100%;
   height: 100%;
@@ -63,25 +73,33 @@ section[role="region"] header h2.disconnected {
   margin-left: -2.5rem;
 }
 
+.arts,
+.banner,
 .fanart {
-  background: transparent no-repeat center bottom;
-  background-size: auto 100%;
-  opacity: 0.25;
-  top: 0;
-  left: 0;
-  bottom: 0rem;
-  right: 0;
-  position: absolute;
-  z-index: -1;
+ background-size : auto 100%;
+ position : relative;
 }
 
+.banner { height : 10rem ; background-size : 100% auto;}
+.arts {.drop-shadow;}
+.arts .md-action {bottom: -1.75rem;}
+
+.fanart {height : 20rem;}
+
 .poster {
-  border: 0.5rem solid white;
+  border: 0.25rem solid white;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+}
+
+.clock {
+  font-family: 'digi';
 }
 
 .font-loader {display : none;}
 .font-loader .kenyanCoffee{font-family: KenyanCoffee;}
 .font-loader .ffosxbmc{font-family: ffosxbmcRegular;}
+.font-loader .movieGenre{font-family: moviegenre;}
+.font-loader .digi{font-family: digi;}
 
 .empty.list {
   color : white;
@@ -97,3 +115,121 @@ section[role="region"] header h2.disconnected {
   width : 3rem;
   height : 4rem;
 }
+
+.md-action,
+.md-circle {
+  padding : 0;
+  width : 5rem;
+  height : 5rem;
+  z-index: 2;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.258824);
+  border-radius: 50%;
+  color: #f1f1f1!important;
+  position: relative;
+  display: inline-block;
+}
+
+.md-circle i {
+  display: block;
+  text-align: center;
+  line-height: 5rem;
+  font-size : 3rem;
+}
+
+.md-action { 
+  position: absolute;
+  cursor: pointer;
+  right: 1rem;
+}
+
+.md-action.md-action-primary { background-color: #7e57c2 !important;}
+
+.md-action i {
+  display: block;
+  text-align: center;
+  font-size: 2rem;
+  line-height: 5rem;
+  opacity : 0.75;
+}
+
+.md-action:hover i {
+  opacity : 1;
+}
+
+
+.rating {
+  background-color: #03a9f4!important;
+  border-color: #03a9f4!important;
+  
+}
+
+.rating .value{
+  font-size: 2rem;
+  line-height: 4rem;
+}
+
+.rating .star {
+  position: absolute;
+  bottom: 1rem;
+  line-height: 1rem;
+  font-size: 1rem;
+}
+
+.rating .star.left { left : 0.5rem;}
+.rating .star.right { right : 0.5rem;}
+.rating .star.middle {
+  bottom: 0.5rem;
+  left: 50%;
+  margin-left: -.7rem;
+  font-size: 1.5rem;
+}
+
+/* entire container, keeps perspective */
+.flip-container {
+  perspective: 1000;
+  text-align: center;
+}
+  /* flip the pane when hovered */
+.row:hover .flip-container .flipper {
+  transform: rotateY(180deg);
+}
+
+/* flip speed goes here */
+.flipper {
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  position: relative;
+  min-height: 0.1rem;
+}
+
+/* hide back of pane during swap */
+.front, .back {
+  backface-visibility: hidden;
+  position: relative;
+}
+
+/* front pane, placed above back */
+.front {
+  z-index: 2;
+}
+
+/* back, initially hidden pane */
+.back {
+  transform: rotateY(180deg);
+}
+
+[data-type="list"]  .poster,
+[data-type="list"]  .rating {
+  background-size: 100%;
+  display: inline-block;
+  position: absolute;
+  top : 50%;
+  left : 50%;
+  margin-top : - 2.5rem;
+  margin-left : -2.5rem;
+}
+
+[data-type="list"] .poster {
+  border : 0.25rem solid #7e57c2!important;
+}
+

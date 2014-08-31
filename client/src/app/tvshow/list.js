@@ -5,7 +5,7 @@ angular.module('app')
                 url: '/tvshows',
                 views: {
                     header: {
-                        templateUrl: 'layout/headers/searchable.tpl.html'
+                        templateUrl: 'layout/headers/basic.tpl.html'
                     },
                     body: {
                         templateUrl: 'tvshow/list.tpl.html',
@@ -20,6 +20,8 @@ angular.module('app')
             function onTvShowsRetrieved(tvshows) {
                 $scope.loading = false;
                 $scope.tvshows = tvshows;
+                var randomIndex = Math.floor(Math.random()*tvshows.length);
+                $scope.randomShow = tvshows[randomIndex];
             };
             var onLoad = function() {
                 $scope.loading = true;

@@ -1,26 +1,15 @@
 <div class="music">
-    <div class="row">
-        <div class="span6 category">
-            <div class="songs" ng-tap="go('/music/songs')">
-                <h3>Songs</h3>
-            </div>
-        </div>
-        <div class="span6 category">
-            <div class="albums" ng-tap="go('/music/albums')">
-                <h3>Albums</h3>
-            </div>
+    <div class="arts">
+        <div class="banner"></div>
+        <div class="md-action md-action-primary"
+             ng-tap="xbmc.open({'file' : undefined})">
+            <i class="icon-glass"></i>
         </div>
     </div>
-    <div class="row">
-        <div class="span6 category">
-            <div class="artists" ng-tap="go('/music/artists')">
-                <h3>Artits</h3>
-            </div>
-        </div>
-        <div class="span6 category">
-            <div class="party" ng-tap="xbmc.open({'file' : undefined})">
-                <h3>Party Mode</h3>
-            </div>
-        </div>
+    <div class="tabs row">
+        <a class="span4 tab" ng-tap="go('/musics/albums')" ng-class="{selected : isSelected('music.albums')}">Albums</a>
+        <a class="span4 tab" ng-tap="go('/musics/artists')" ng-class="{selected : isSelected('music.artists')}">Artits</a>
+        <a class="span4 tab" ng-tap="go('/musics/songs')" ng-class="{selected : isSelected('music.songs')}">Songs</a>
     </div>
+    <div ui-view class="content"></div>
 </div>

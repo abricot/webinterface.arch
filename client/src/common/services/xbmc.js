@@ -237,7 +237,7 @@ angular.module('services.xbmc', ['services.io'])
                         'start': 0,
                         'end': 75
                     },
-                    'properties': ['title', 'genre', 'rating', 'thumbnail', 'runtime', 'playcount', 'streamdetails'],
+                    'properties': ['title', 'genre', 'rating', 'thumbnail', 'runtime', 'playcount', 'streamdetails', 'fanart'],
                     'sort': {
                         'order': 'ascending',
                         'method': 'label',
@@ -249,7 +249,7 @@ angular.module('services.xbmc', ['services.io'])
             factory.getMovieDetails = function(movieId, cb) {
                 io.send('VideoLibrary.GetMovieDetails', {
                     'properties': ['title', 'genre', 'rating', 'thumbnail', 'plot',
-                        'studio', 'director', 'fanart', 'runtime', 'trailer', 'imdbnumber'
+                        'studio', 'director', 'fanart', 'runtime', 'trailer', 'imdbnumber','mpaa','cast'
                     ],
                     'movieid': movieId
                 }, true, 'result.moviedetails').then(cb);
@@ -262,7 +262,7 @@ angular.module('services.xbmc', ['services.io'])
                         'start': 0,
                         'end': 100
                     },
-                    'properties': ['title', 'artist', 'thumbnail', 'year', 'genre'],
+                    'properties': ['title', 'artist', 'thumbnail', 'year', 'genre', 'artistid'],
                     'sort': {
                         'order': 'ascending',
                         'method': 'label',
@@ -282,13 +282,21 @@ angular.module('services.xbmc', ['services.io'])
                         'start': 0,
                         'end': 100
                     },
-                    'properties': ['genre', 'thumbnail'],
+                    'properties': ['genre', 'thumbnail', 'fanart'],
                     'sort': {
                         'order': 'ascending',
                         'method': 'label',
                         'ignorearticle': true
                     }
                 }, true, 'result.artists').then(cb);
+
+            };
+            
+            factory.getArtistDetails = function(artistid, cb) {
+                io.send('AudioLibrary.GetArtistDetails', {
+                    'artistid' : artistid,
+                    'properties': ['genre', 'thumbnail', 'fanart']
+                }, true, 'result.artistdetails').then(cb);
 
             };
 
@@ -319,13 +327,20 @@ angular.module('services.xbmc', ['services.io'])
                         'start': 0,
                         'end': 75
                     },
-                    'properties': ['genre', 'title', 'rating', 'art', 'playcount'],
+                    'properties': ['genre', 'title', 'rating', 'art', 'playcount', 'thumbnail', 'watchedepisodes', 'episode'],
                     'sort': {
                         'order': 'ascending',
                         'method': 'label'
                     }
                 }, true, 'result.tvshows').then(cb);
             };
+            factory.getTVShowDetails = function(tvShowId, cb) {
+                io.send('VideoLibrary.GetTVShowDetails', {
+                    'tvshowid': tvShowId,
+                    'properties': ['genre'],
+                }, true, 'result.tvshowdetails').then(cb);
+            };
+            
             factory.getSeasons = function(tvShowId, cb) {
                 io.send('VideoLibrary.GetSeasons', {
                     'tvshowid': tvShowId,
@@ -358,10 +373,13 @@ angular.module('services.xbmc', ['services.io'])
             factory.getEpisodeDetails = function(episodeId, cb) {
                 io.send('VideoLibrary.GetEpisodeDetails', {
                     'episodeid': episodeId,
-                    'properties': ['title', 'plot', 'rating', 'firstaired', 'runtime', 'thumbnail', 'art', 'playcount']
+                    'properties': ['title', 'plot', 'rating', 'runtime', 'thumbnail', 'art', 'playcount', 'cast', 'season', 'tvshowid']
                 }, true, 'result.episodedetails').then(cb);
             };
 
+            factory.scan = function (library) {
+                io.send(library+'.scan');
+            };
             return factory;
         }
     ])

@@ -1,26 +1,41 @@
 <div ng-switch on="loading" ng-class="{loading : loading}">
     <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
-    <div ng-switch-when="false" class="tvshow">
-        <img class="banner"
-             source="{{library.item.art['tvshow.banner']  | asset:configuration.host | fallback:'img/backgrounds/low-contrast-256.png'}}"
-             />
+    <div ng-switch-when="false" class="tvshow detail">
+        <div class="arts">
+            <div class="fanart" source="{{library.item.thumbnail | asset:configuration.host}}"></div>
 
-        <div class="episode detail">
-            <h1>
-                {{library.item.title}}
-            </h1>
-            <div class="row">
-                <div class="offset1 span10 thumbnail">
-                    <em class="playcount" ng-show="library.item.playcount">&#10003;</em>
-                    <img source="{{library.item.thumbnail  | asset:configuration.host}}"/>
+            <div class="md-action md-action-primary"
+                 ng-tap="xbmc.open({'episodeid': library.item.episodeid})">
+                <i ng-class="{'icon-play' : !player.active, 'icon-plus': player.active}"></i>
+            </div>
+            <div class="poster-wrapper">
+                <img class=" poster" source="{{library.item.art['tvshow.poster'] | asset:configuration.host | fallback:'img/backgrounds/low-contrast-256.png'}}"/>
+            </div>
+        </div>
+        <h1>
+            {{library.item.title}}
+        </h1>
+        <div>
+            <div class="row properties">
+                <div class="span3">
+                    <div class="md-circle clock">
+                        <i>{{library.item.runtime | time | date:'HH:mm'}}</i>
+                    </div>
+                </div>
+                <div class="span3">
+                    <div rating rating-value="library.item.rating" rating-max="10"></div>
+                </div>
+                <div class="span3">
+                    <div class="md-circle movie genre">
+                        <i class="genre-{{library.item.genre.join(' genre-').toLowerCase()}}"></i>
+                    </div>
+                </div>
+                <div class="span3">
+                    <div class="md-circle cast" source="{{library.item.cast[0].thumbnail | asset:configuration.host}}">
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                 <div class="rating" rating rating-value="library.item.rating" rating-max="10"></div>
-            </div>
-            <p>
-                {{library.item.plot}}
-            </p>
+            <p>{{library.item.plot}}</p>
         </div>
     </div>
 </div>

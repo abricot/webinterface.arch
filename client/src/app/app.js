@@ -72,16 +72,24 @@ angular.module('app')
 
             $scope.hasFooter = function() {
                 return $scope.$state.current.views && $scope.$state.current.views.footer;
-            }
+            };
 
             $scope.isConnected = function() {
                 return xbmc.isConnected()
             }
 
             $scope.toggleDrawer = function() {
-                var page = angular.element(document.querySelector('#page'));
-                page.toggleClass('minimize');
+                var drawer = angular.element(document.querySelector('#drawer'));
+                drawer.toggleClass('maximize');
             }
+
+            $scope.hideDrawer = function() {
+                var drawer = angular.element(document.querySelector('#drawer'));
+                if(drawer.hasClass('maximize')) {
+                    drawer.removeClass('maximize');
+                }
+            }
+
 
             $rootScope.$on("$stateChangeStart", function(event, next, current) {
                 if ($scope.configuration.host.ip === '') {

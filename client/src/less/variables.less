@@ -6,7 +6,7 @@
 @fluidGridColumnWidth:    percentage(@gridColumnWidth/@gridRowWidth);
 @fluidGridGutterWidth:    percentage(@gridGutterWidth/@gridRowWidth);
 
-@primaryColor : #00caf2;
+@primaryColor : #aaa;
 @outlineColor : rgb(229, 151, 0);
 @disabledBgColor : #008aaa;
 
@@ -15,9 +15,9 @@
 
 @headerHeight : 8rem;
 @headerTextColor : #fff;
-@headerBgColor : #434a5d;
+@headerBgColor : #9c27b0;
 @headerTopBgColor : @headerBgColor;
-@headerBottomBgColor : #434a5d;
+@headerBottomBgColor : #9c27b0;
 @headerShadowHeight : 0.1rem;
 @headerSearchBorderColor : #555a6d;
 
@@ -31,22 +31,23 @@
 @footerTopBgColor : @headerBgColor;
 @footerBottomBgColor : #434a5d;
 
-@regionBgColor : #2e3641;
+@regionBgColor : #fff;
+@regionColor : #666;
 
 @listTextColor : @primaryColor;
-@listBorderColor : transparent;
+@listBorderColor : #eee;
 @listBgColor : @regionBgColor;
-@listHeight : auto;
+@listMinHeight : 6rem;
 @listOddBgColor : lighten(@regionBgColor, 5);
 
-@subListTextColor : #fff;
+@subListTextColor : #e6e6e6;
 
-@drawerTextColor : #fff;
+@drawerTextColor : #aaa;
 @drawerActiveBgColor : #00ABCC;
 @draverHeaderBgColor : lighten(@headerBgColor, 15);
-@draverBgColor : lighten(@headerBgColor, 10);
+@draverBgColor : @regionBgColor;
 
-@seekbarHeight : 0.6rem;
+@seekbarHeight : 0.5rem;
 @seekbarBgColor : #666;
 
 @dialogBgColor : #3b3b3b;

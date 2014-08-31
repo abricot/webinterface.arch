@@ -1,53 +1,85 @@
-<section data-type="sidebar">
+<section data-type="sidebar" id="drawer">
     <header>
-        <h1>Library</h1>
+        <div class="art">
+            <div class="row">
+                <div class="span3" style="text-align : center;">
+                    <div class="md-circle status" ng-class="{connected : connected, disconnected : !connected}">
+                        <i ng-class="{'icon-ok' : connected, 'icon-remove' : !connected}"></i> 
+                    </div>
+                </div>
+                <h1 class="span9" ng-switch on="connected">
+                    <div ng-switch-when="true">
+                        {{configuration.host.displayName}}
+                    </div>
+                    <div ng-switch-when="false">
+                        No connection
+                    </div>
+                </h1>
+            </div>
+        </div>
     </header>
     <nav ng-class="{'active-player' : player.active, 'inactive-player': player.active}">
         <ul>
-            <li ng-repeat="item in medias">
-                <a ng-tap="go(item.hash)" ng-class="isCurrent(item.hash)">
+            <li ng-repeat="item in medias" class="row" 
+                ng-tap="go(item.hash)" ng-class="{selected : isCurrent(item.hash)}">
+                <div class="span2">
                     <i class="{{item.icon}}"></i>
+                </div>
+                <div class="span9">
                     {{item.label}}
-                </a>
+                </div>
             </li>
-            <li  ng-show="player.active">
-                <a  ng-tap="go('/now/playing')" ng-class="isCurrent('/now/playing')">
+            <li  ng-show="player.active" class="row" 
+                 ng-tap="go('/now/playing')" ng-class="{selected :isCurrent('/now/playing')}">
+                <div class="span2">
                     <i class="icon-youtube-play"></i>
+                </div>
+                <div class="span9">
                     Now playing
-                </a>
+                </div>
             </li>
-            <li  ng-show="player.active">
-                <a  ng-tap="go('/now/playlist')" ng-class="isCurrent('/now/playlist')">
+            <li ng-show="player.active" class="row" 
+                ng-tap="go('/now/playlist')" ng-class="{selected :isCurrent('/now/playlist')}">
+                <div class="span2">
                     <i class="icon-glass"></i>
+                </div>
+                <div class="span9">
                     Queue
-                </a>
+                </div>
             </li>
-            <li ng-repeat="item in controls">
-                <a ng-tap="go(item.hash)" ng-class="isCurrent(item.hash)">
+            <li ng-repeat="item in controls" class="row" 
+                ng-tap="go(item.hash)" ng-class="{selected :isCurrent(item.hash)}">
+                <div class="span2">
                     <i class="{{item.icon}}"></i>
+                </div>
+                <div class="span9">
                     {{item.label}}
-                </a>
+                </div>
             </li>
         </ul>
     </nav>
     <div class="now playing" ng-show="player.active">
-        <div ng-switch on="hasPoster(player.item.art)">
-            <div ng-switch-when="true" ng-tap="go('/now/playing','none')">
-                <img class="poster" source="{{player.item.art | thumb | asset:configuration.host}}" />
+        <div role="slider" seekbar seekbar-value="player.seek.percentage" seekbar-max="100" seekbar-read-only="true"></div>
+        <div class="row">
+            <div ng-switch on="hasPoster(player.item.art)">
+                <div ng-switch-when="true" ng-tap="go('/now/playing','none')">
+                    <div class="span3 flip-container" >
+                        <div class="flipper">
+                            <div class="md-circle poster front" source="{{player.item.art | thumb  | asset:configuration.host}}"></div>
+                            <div class="back" rating rating-value="player.item.rating" rating-max="10"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div ng-switch-when="false" ng-tap="go('/now/playing')">
-                <img class="poster unknown" src="img/blank.gif" ng-hide="hasPoster(player.item.art)"/>
+            <div class="title" ng-class="{span7 : hasPoster(player.item.art), span9 : !hasPoster(player.item.art)}">
+                {{getLabel(player.item)}}
             </div>
-        </div>
-        <h1>{{getLabel(player.item)}}</h1>
-        <footer>
-            <div class="row actions">
+            <div class="span2 actions">
                 <div class="offset4 span4 icon-play" ng-tap="xbmc.togglePlay()"  ng-show="!player.speed">
                 </div>
                 <div class="offset4 span4 icon-pause" ng-tap="xbmc.togglePlay()"  ng-show="player.speed">
                 </div>
-                <div class="span3" ng-tap="xbmc.next()"><i class="icon-fast-forward"></i></div>
             </div>
-        </footer>
+        </div>
     </div>
 </section>

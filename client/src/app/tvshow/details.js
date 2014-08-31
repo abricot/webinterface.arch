@@ -10,10 +10,6 @@ angular.module('app')
                     body: {
                         templateUrl: 'tvshow/details.tpl.html',
                         controller: 'EpisodeDetailsCtrl'
-                    },
-                    footer: {
-                        templateUrl: 'layout/footers/details.tpl.html',
-                        controller: 'FooterCtrl'
                     }
                 }
             });
@@ -22,11 +18,17 @@ angular.module('app')
     .controller('EpisodeDetailsCtrl', ['$scope', '$stateParams', '$location',
         function EpisodeDetailsCtrl($scope, $stateParams, $location) {
             $scope.episodeid = parseInt($stateParams.episodeid);
+            var episode = null;
+            function onTvShowDetailsRetrieved(details) {
+                episode.genre = details.genre;
+                $scope.library.item = episode;
+                $scope.loading = false;
+            };
 
             function onEpisodeDetailsRetrieved(item) {
-                $scope.loading = false;
-                item.type = 'episode';
-                $scope.library.item = item
+                                item.type = 'episode';
+                episode = item;
+                $scope.xbmc.getTVShowDetails(episode.tvshowid, onTvShowDetailsRetrieved);
             };
 
             var onLoad = function() {

@@ -30,9 +30,9 @@
         <keybinding on="home" invoke="xbmc.home()"></keybinding>
         <keybinding on="end" invoke="xbmc.stop()"></keybinding>
  
-        <section id="page" role="region" ng-show="initialized">
+        <section id="page" role="region" ng-show="initialized" ng-tap="hideDrawer()">
             <header  ui-view="header"></header>
-            <div role="main" ui-view="body" ng-class="{'no-footer' : !hasFooter()}"></div>
+            <div role="main" ui-view="body" ng-class="{'no-footer' : !hasFooter(), 'no-header' : !hasHeader()}"></div>
             <footer  ui-view="footer" ng-show="hasFooter()"></footer>
         </section>
 
@@ -46,6 +46,8 @@
         <div class="font-loader"> 
             <div class="kenyanCoffee">Preload kenyc.ttf</div>
             <div class="ffosxbmc">Preload ffosxbmc.ttf</div>
+            <div class="movieGenre">Preload moviegenre.ttf</div>
+            <div class="digi">Preload digi.ttf</div>
         </div>
   </body>
 </html>

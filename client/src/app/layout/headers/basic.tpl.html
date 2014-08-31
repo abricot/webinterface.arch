@@ -1,17 +1,1 @@
 <a ng-tap="$parent.toggleDrawer()"><i class="icon icon-reorder"></i></a>
-<h1>
-    Foxmote
-    <div class="logo" >
-        <i class="foxmote"></i>
-    </div>
-</h1>
-<h2 ng-class="{connected : connected, disconnected : !connected}"
-    ng-switch on="connected">
-    <div ng-switch-when="true">
-        {{configuration.host.displayName}}
-        <span class="pull-right">{{configuration.host.ip}}</span>
-    </div>
-    <div ng-switch-when="false">
-      No connection
-    </div>
-</h2>

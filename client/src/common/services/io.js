@@ -56,6 +56,7 @@ angular.module('services.io', ['services.websocket'])
                             var getter = $parse(cb.parseExpr);
                             obj = getter(data);
                         }
+                        console.log(data);
                         $rootScope.$apply(callbacks[data.id].cb.resolve(obj));
                         delete callbacks[data.id];
                     } else if (notifications[data.method] && notifications[data.method].length > 0) {

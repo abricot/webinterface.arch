@@ -5,21 +5,10 @@ angular.module('app')
                 url: '/music/albums/:filter/:filterId',
                 views: {
                     header: {
-                        templateUrl: 'layout/headers/searchable.tpl.html'
+                        templateUrl: 'layout/headers/basic.tpl.html'
                     },
                     body: {
-                        templateUrl: 'music/albums.tpl.html',
-                        controller: 'MusicAlbumsCtrl'
-                    }
-                }
-            }).state('albums', {
-                url: '/music/albums',
-                views: {
-                    header: {
-                        templateUrl: 'layout/headers/searchable.tpl.html'
-                    },
-                    body: {
-                        templateUrl: 'music/albums.tpl.html',
+                        templateUrl: 'music/artist.albums.tpl.html',
                         controller: 'MusicAlbumsCtrl'
                     }
                 }
@@ -39,10 +28,14 @@ angular.module('app')
                     value: $scope.filterId
                 };
             }
-
-            function onAlbumsRetrieved(albums) {
+            function onArtistRetrieved (artist) {
+                $scope.artist = artist;
                 $scope.loading = false;
+
+            };
+            function onAlbumsRetrieved(albums) {
                 $scope.albums = albums;
+                $scope.xbmc.getArtistDetails(albums[0].artistid[0], onArtistRetrieved);
             };
             var onLoad = function() {
                 $scope.xbmc.getAlbums(filter, onAlbumsRetrieved);
