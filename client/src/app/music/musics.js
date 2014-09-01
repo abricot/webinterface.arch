@@ -19,7 +19,7 @@ angular.module('app')
             controller: 'MusicArtistsCtrl'
         }).state('music.songs', {
             url : '/songs',
-            templateUrl: 'music/artists.tpl.html',
+            templateUrl: 'music/songs.tpl.html',
             controller: 'MusicSongsCtrl'
         });
     }])

@@ -306,7 +306,7 @@ angular.module('services.xbmc', ['services.io'])
                         'start': 0,
                         'end': 500
                     },
-                    'properties': ['title', 'artist', 'album', 'albumid', 'thumbnail', 'duration', 'track', 'year'],
+                    'properties': ['title', 'artist', 'album', 'albumid', 'thumbnail', 'duration', 'track', 'year', 'albumartistid'],
                     'sort': {
                         'order': 'ascending',
                         'method': 'label',

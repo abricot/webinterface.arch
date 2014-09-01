@@ -72,6 +72,15 @@
 
 }
 
+.album .songs {
+  position: absolute;
+  top : 14rem;
+  bottom: 0;
+  left : 0;
+  right : 0;
+  overflow: scroll;
+}
+
 .songs .song {
   padding-left: 1rem;
   .box-sizing;
@@ -86,9 +95,11 @@ h1.album {
 }
 
 .album .thumb {
-  position: relative;
+  position: absolute;
   display: inline-block;
   vertical-align: middle;
+  bottom : -4rem;
+  left : 1rem;
 }
 
 .album .thumb img {

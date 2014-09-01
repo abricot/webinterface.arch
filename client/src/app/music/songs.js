@@ -5,7 +5,7 @@ angular.module('app')
             views: {
                 header: {templateUrl: 'layout/headers/backable.tpl.html'},
                 body: {
-                    templateUrl: 'music/songs.tpl.html', controller: 'MusicSongsCtrl'
+                    templateUrl: 'music/album.songs.tpl.html', controller: 'MusicSongsCtrl'
                 }
             }
         });
@@ -15,14 +15,25 @@ angular.module('app')
         $scope.loading = true;
         $scope.filter = $stateParams.filter;
         $scope.queue = [];
+        $scope.artist = null;
         var filter = null;
         if ($scope.filter) {
             filter = {key : $scope.filter, value : parseInt($stateParams.filterId)}
         }
         function onSongsRetrieved (songs) {
-            $scope.loading = false;
             $scope.songs = songs;
+            if(filter !== null) {
+                $scope.xbmc.getArtistDetails(songs[0].albumartistid[0], onArtistRetrieved);
+            } else {
+                $scope.loading = false;
+            }
         };
+
+        function onArtistRetrieved (artist) {
+            $scope.artist = artist;
+            $scope.loading = false;
+        }
+
         var onLoad = function () {
             $scope.xbmc.getSongs(filter, onSongsRetrieved);
         };
@@ -61,11 +72,13 @@ angular.module('app')
             return typeof $scope.filter !== 'undefined';
         }
 
-        $scope.play = function (item, index) {
+        $scope.play = function (item) {
             $scope.xbmc.open(item);
-            if ($scope.filter && index + 1 < $scope.songs.length) {
-                $scope.queue = $scope.songs.slice(index + 1);
-            }
         };
+
+        $scope.addAlbumToQueue = function () {
+            $scope.queue = $scope.songs.slice(1);
+            $scope.play({songid : $scope.songs[0].songid})
+        }
     }
 ])

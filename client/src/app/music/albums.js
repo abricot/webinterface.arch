@@ -5,7 +5,7 @@ angular.module('app')
                 url: '/music/albums/:filter/:filterId',
                 views: {
                     header: {
-                        templateUrl: 'layout/headers/basic.tpl.html'
+                        templateUrl: 'layout/headers/backable.tpl.html'
                     },
                     body: {
                         templateUrl: 'music/artist.albums.tpl.html',
