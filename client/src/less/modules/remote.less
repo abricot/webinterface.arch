@@ -1,6 +1,7 @@
 section[role="region"] .remote {
   height: 100%;
   font-size : 3rem;
+  padding-top: 3rem;
 }
 section[role="region"] .remote .category {text-align: center;}
 section[role="region"] .remote .md-action{
@@ -8,48 +9,8 @@ section[role="region"] .remote .md-action{
   right: 0;
 }
 
-section[role="region"] .remote .shortcuts,
-section[role="region"] .remote .sound {
-  margin : .5rem 0;
-  position: relative;
-  padding-bottom : .5rem;
-  .box-sizing;
-}
-
-section[role="region"] .remote .shortcuts:after {
-  content : "";
-  background: rgba(0,0,0,0); /* Old browsers */
-  background: -moz-linear-gradient(left,  @regionBgColor 0%, #666 40%, #666 60%, @regionBgColor 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%,@regionBgColor), color-stop(40%,#666), color-stop(60%,#666), color-stop(100%,@regionBgColor)); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left,  @regionBgColor 0%,#666 40%,#666 60%,@regionBgColor 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(left,  @regionBgColor 0%,#666 40%,#666 60%,@regionBgColor 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(left,  @regionBgColor 0%,#666 40%,#666 60%,@regionBgColor 100%); /* IE10+ */
-  background: linear-gradient(to right,  @regionBgColor 0%,#666 40%,#666 60%,@regionBgColor 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(0,0,0,0)', endColorstr='rgba(0,0,0,0)',GradientType=1 ); /* IE6-9 */
-
-  display : block;
-  height : 1px;
-  position : absolute;
-  bottom : 0;
-  left : 0;
-  width:100%
-}
-
 section[role="region"] .remote .action{
   width : 100/3%;
-}
-section[role="region"] .remote .shortcuts .action {
-  width : 100/5%;
-}
-
-section[role="region"] .remote .sound{
-  padding : 0  3rem 1rem 3rem;
-  .box-sizing
-}
-section[role="region"] .remote .sound .row{
-  background: lighten(@regionBgColor, 5%);;
-  border-radius: .25rem;
-  border: .1rem solid #969696;
 }
 
 section[role="region"] .remote .action {
@@ -61,36 +22,17 @@ section[role="region"] .remote .action {
   .box-sizing;
 }
 
-section[role="region"] .remote .action.offseted {
-  margin-left : 100/3%;
-}
 
 section[role="region"] .remote .row {
   display: inline-table;
 }
 
 section[role="region"] .remote .navigation {
-  height : calc(100/5*3% - 1rem);
+  height : calc(100/5*3% - 3rem);
   padding : 0 3rem;
   .box-sizing;
 } 
 section[role="region"] .remote .navigation .row {
   display : block;
   height : 100/3%;
-}
-
-section[role="region"] .remote .navigation .action .icon {
-  position: absolute;
-  top : 50%;
-  left : 50%;
-  margin-top : -1.5rem;
-  margin-left : -1.5rem;
-}
-
-section[role="region"] .remote .navigation .direction {
-  background : lighten(@regionBgColor, 5%);
-  border: 0.1rem solid #969696;
-}
-section[role="region"] .remote .navigation .direction.active {
-  background-color: @primaryColor;
 }

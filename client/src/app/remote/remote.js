@@ -10,10 +10,6 @@ angular.module('app')
                     body: {
                         templateUrl: 'remote/remote.tpl.html',
                         controller: 'RemoteCtrl'
-                    },
-                    footer: {
-                        templateUrl: 'layout/footers/player.tpl.html',
-                        controller: 'FooterCtrl'
                     }
                 }
             });
