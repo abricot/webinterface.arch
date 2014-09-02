@@ -1,15 +1,44 @@
+.now .playing {
+  margin-bottom: 2rem;
+}
+
 .now {
   position: relative;
   height: 100%;
+  overflow: hidden;
 }
 
-.now .playing {
-  position : absolute;
-  bottom : 7.5rem;
-  top : 0;
-  overlow : hidden;
-  overflow-y : auto;
-  width: 100%;
+.now .playing .plot,
+.now .playing .md-action-primary {
+  display : none;
+}
+.now .player {
+  position: absolute;
+  bottom:  0;
+  right: 0;
+  left : 0;
+}
+.now .controls {
+  font-size : 2rem;
+  text-align: center;
+  background : #01579b;
+  height : 5rem;
+  line-height : 5rem;
+  color : #f1f1f1;
+  
+}
+.now .controls i {
+  cursor: pointer;
+  opacity: 0.75;
+}
+.now .controls i:hover {
+  opacity: 1;
+  text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
+}
+.now .times {
+  font-size: 1.4rem;
+  line-height: 1.4rem;
+  padding-top: 1.5rem;
 }
 
 .now .seek-wrapper {

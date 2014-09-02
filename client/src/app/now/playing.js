@@ -5,15 +5,11 @@ angular.module('app')
                 url: '/now/playing',
                 views: {
                     header: {
-                        templateUrl: 'layout/headers/basic.tpl.html'
+                        templateUrl: 'layout/headers/backable.tpl.html'
                     },
                     body: {
                         templateUrl: 'now/playing.tpl.html',
                         controller: 'NowPlayingCtrl'
-                    },
-                    footer: {
-                        templateUrl: 'layout/footers/player.tpl.html',
-                        controller: 'FooterCtrl'
                     }
                 }
             });

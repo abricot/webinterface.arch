@@ -65,7 +65,7 @@
                 <div ng-switch-when="true" ng-tap="go('/now/playing','none')">
                     <div class="span3 flip-container" >
                         <div class="flipper">
-                            <div class="md-circle poster front" source="{{player.item.art | thumb  | asset:configuration.host}}"></div>
+                            <div class="md-circle poster front" image image-source="player.item.art | thumb  | asset:configuration.host"></div>
                             <div class="back" rating rating-value="player.item.rating" rating-max="10"></div>
                         </div>
                     </div>

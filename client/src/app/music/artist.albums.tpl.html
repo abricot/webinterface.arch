@@ -2,7 +2,7 @@
     <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
     <div class="artist" ng-switch-when="false">
       <div class="arts">
-          <div class="banner" source="{{artist.fanart | asset:configuration.host}}"></div>
+          <div class="banner" image image-source="artist.fanart | asset:configuration.host"></div>
           <div class="md-action md-action-primary">
               <i class="icon-plus"></i>
           </div>

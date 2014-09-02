@@ -2,7 +2,7 @@
     <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
     <div ng-switch-when="false" class="tvshow">
         <div class="arts">
-            <div class="banner" source="{{episodes[0].art['tvshow.banner'] | asset:configuration.host}}"></div>
+            <div class="banner" image image-source="episodes[0].art['tvshow.banner'] | asset:configuration.host"></div>
             <div class="md-action md-action-primary">
                 <i class="icon-plus"></i>
             </div>
@@ -12,7 +12,7 @@
                 ng-tap="go('/tvshow/' + tvshowid + '/'+season+'/'+episode.episodeid, 'none')">
                 <div class="span3 flip-container">
                     <div class="flipper">
-                        <div class="md-circle poster front" source="{{episode.thumbnail | asset:configuration.host}}">
+                        <div class="md-circle poster front" image image-source="episode.thumbnail | asset:configuration.host">
                             <em class="playcount" ng-show="episode.playcount">&#10003;</em>
                         </div>
                         <div class="back" rating rating-value="episode.rating" rating-max="10"></div>
