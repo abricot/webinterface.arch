@@ -1,9 +1,12 @@
-<form class="wizard" name="wizard">
-    <h1>
-        <img src="img/backgrounds/computer-icon.png" width="64" height="64"/>
-        <div>Host wizard</div>
-    </h1>
-    <p>
+
+<form class="wizard" name="wizard" >
+    <div class="arts" style="background:#a5d4e8;">
+        <div class="banner"></div>
+        <button class="md-action md-action-primary" ng-tap="save()">
+            <i class="icon-save"></i>
+        </button>
+    </div>
+    <p> 
         <label>Display name:</label>
         <input type="text" placeholder="Ex : HTPC" required="" ng-model="configuration.host.displayName" tabindex="1">
         <button type="reset" class="icon-remove"></button>
@@ -25,5 +28,4 @@
             <button type="reset" class="icon-remove"></button>
         </p>
     </div>
-    <button  class="recommend" ng-tap="save()">Save</button>
 </form>

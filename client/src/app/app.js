@@ -54,10 +54,10 @@ angular.module('app')
 
             $scope.configuration = {
                 host: {
-                    ip: '',
+                    ip: '127.0.0.1',
                     port: '9090',
-                    httpPort : '8080',
-                    displayName: ''
+                    httpPort : '80',
+                    displayName: 'NCED1265'
                 }
             };
             $scope.xbmc = xbmc;

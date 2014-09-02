@@ -18,6 +18,12 @@
   src: url('../font/DS-DIGII.TTF');
 }
 
+@font-face {
+  font-family: ' Roboto';
+  src: url('../font/Roboto-Thin.TTF');
+ 
+}
+
 section[role="region"] header .logo {
   position: absolute;
   top: 0;
@@ -119,6 +125,7 @@ section[role="region"] header h2.disconnected {
 .md-action,
 .md-circle {
   padding : 0;
+  margin : 0;
   width : 5rem;
   height : 5rem;
   z-index: 2;
@@ -127,7 +134,10 @@ section[role="region"] header h2.disconnected {
   color: #f1f1f1!important;
   position: relative;
   display: inline-block;
+  overflow: hidden;
+  text-shadow : none;
 }
+
 
 .md-circle i {
   display: block;
@@ -142,11 +152,12 @@ section[role="region"] header h2.disconnected {
   right: 1rem;
 }
 
-.md-action.md-action-primary { background-color: #7e57c2 !important;}
+.md-action.md-action-primary { background: #7e57c2 !important;}
 
 .md-action i {
   display: block;
   text-align: center;
+  font-style: normal;
   font-size: 2rem;
   line-height: 5rem;
   opacity : 0.75;

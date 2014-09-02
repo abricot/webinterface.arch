@@ -3,7 +3,7 @@ angular.module('app')
         $stateProvider.state('settings', {
             url: '/settings',
             views: {
-                header: {templateUrl: 'layout/headers/basic.tpl.html'},
+                header: { templateUrl: 'layout/headers/basic.tpl.html'},
                 body: {templateUrl: 'settings/wizard.tpl.html', controller: 'WizardCtrl'}
             }
         });

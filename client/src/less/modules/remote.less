@@ -1,15 +1,63 @@
+.arts .aphelion {
+  position: absolute;
+  top : 0.5rem;
+  bottom : 0;
+  left : 3rem;
+  width : 10rem;
+  height : 10rem;
+  background: transparent url(../img/icons/aphelion-512.png) no-repeat center;
+  background-size: 100%;
+
+}
+
 section[role="region"] .remote {
-  height: 100%;
   font-size : 3rem;
-  padding-top: 3rem;
-  background: #4c4c4c;
+  position: absolute;
+  right : 0;
+  top : 10rem;
+  bottom : 0;
+  left : 0;
+  padding-top : 4rem;
+
 }
 section[role="region"] .remote .md-action{
   position: relative;
   right: 0;
   box-shadow: none;
+  transition: all 0.25s ease;
+  color : #9a9a9a !important;
+  background: #e0f2f1;
 }
-section[role="region"] .remote .md-action i { font-size: 3rem;}
+
+section[role="region"] .remote .md-action:hover {
+  background-color : #009688;
+  color : #f1f1f1 !important;
+}
+
+section[role="region"] .remote .md-action i { 
+  font-size: 2.5rem; text-shadow:none;
+}
+
+section[role="region"] .remote .direction{
+  background: #80deea;  
+  color : #f1f1f1 !important;
+  text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
+}
+section[role="region"] .remote .direction:hover{
+  background : #00bcd4;
+}
+
+section[role="region"] .remote .select{
+  background: #ffab91;
+  color : #f1f1f1 !important;
+  text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
+}
+section[role="region"] .remote .select:hover{
+  background: #ff5722;
+}
+section[role="region"] .remote .md-action:hover i { 
+  text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
+}
 section[role="region"] .remote .action{
   width : 100/3%;
 }
@@ -28,11 +76,7 @@ section[role="region"] .remote .row {
   display: inline-table;
 }
 
-section[role="region"] .remote .navigation {
-  height : calc(100/5*3% - 1rem);
-  .box-sizing;
-} 
-section[role="region"] .remote .navigation .row {
+section[role="region"] .remote .row {
   display : block;
-  height : 100/3%;
+  height : 100/4%;
 }
