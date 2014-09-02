@@ -523,9 +523,17 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 265.0,
+		"height": 127.0,
 		"selected_items":
 		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
 			[
 				"loca",
 				"Local History: Open"
@@ -561,10 +569,6 @@
 			[
 				"compare",
 				"Local History: Compare"
-			],
-			[
-				"install",
-				"Package Control: Install Package"
 			],
 			[
 				"instl",
@@ -647,7 +651,7 @@
 				"Package Control: Install Package"
 			]
 		],
-		"width": 416.0
+		"width": 512.0
 	},
 	"console":
 	{
@@ -668,6 +672,37 @@
 	},
 	"file_history":
 	[
+		"/G/java/workspace/foxmote/client/src/less/modules/detail.less",
+		"/G/java/workspace/foxmote/client/src/app/movie/details.js",
+		"/G/java/workspace/foxmote/client/node_modules/grunt-recess/node_modules/recess/node_modules/less/node_modules/ycssmin/tests/files/dataurl-base64-eof.css",
+		"/G/java/workspace/foxmote/client/src/app/remote/remote.tpl.html",
+		"/G/java/workspace/foxmote/client/src/app/settings/wizard.tpl.html",
+		"/G/java/workspace/foxmote/client/src/app/settings/wizard.js",
+		"/G/java/workspace/foxmote/client/src/less/modules/remote.less",
+		"/G/java/workspace/foxmote/client/src/less/modules/common.less",
+		"/G/java/workspace/foxmote/client/src/less/reset.less",
+		"/G/java/workspace/foxmote/client/src/less/modules/music.less",
+		"/G/java/workspace/foxmote/client/src/less/variables.less",
+		"/G/java/workspace/foxmote/client/src/common/directives/tap.js",
+		"/G/java/workspace/foxmote/client/src/index.html",
+		"/G/java/workspace/foxmote/client/src/app/data/Player.GetProperties.json",
+		"/G/java/workspace/foxmote/client/src/app/data/Player.GetItem.json",
+		"/G/java/workspace/foxmote/.gitattributes",
+		"/G/java/workspace/foxmote/client/component.json",
+		"/G/java/workspace/foxmote/client/node_modules/grunt-contrib-clean/docs/clean-options.md",
+		"/G/java/workspace/foxmote/client/src/app/app.js",
+		"/G/java/workspace/foxmote/client/src/less/modules/wizard.less",
+		"/G/java/workspace/foxmote/client/src/app/remote/remote.js",
+		"/G/java/workspace/foxmote/client/node_modules/bower/node_modules/colors/ReadMe.md",
+		"/G/java/workspace/foxmote/README.md",
+		"/G/java/workspace/foxmote/client/node_modules/grunt-recess/node_modules/recess/node_modules/less/test/less/errors/import-no-semi.less",
+		"/G/java/workspace/foxmote/client/node_modules/bower/node_modules/tmp/test-all.sh",
+		"/G/java/workspace/foxmote/server/node_modules/connect/test.js",
+		"/G/java/workspace/foxmote/client/src/app/data/Application.GetProperties.json",
+		"/G/java/workspace/foxmote/client/node_modules/grunt/AUTHORS",
+		"/G/java/workspace/foxmote/client/node_modules/grunt-contrib-watch/node_modules/gaze/node_modules/fileset/node_modules/glob/test/zz-cleanup.js",
+		"/G/java/workspace/foxmote/client/dist/www/css/foxmote.css",
+		"/G/java/workspace/foxmote/client/node_modules/bower/templates/warn.mustache",
 		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/modules/allocations/templates/panels/TowsScript.js",
 		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/modules/allocations/templates/panels/Tooltips.tml",
 		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/chart/gantt/renderers/AllocationRenderer.js",
@@ -764,38 +799,7 @@
 		"/G/java/workspace/Lima/lima-ui-overlay/src/main/webapp/static/lima/utils/validators/MinDate.js",
 		"/G/java/workspace/ariatemplates/build/templates/LICENSE-MIN",
 		"/G/java/workspace/ariatemplates/src/aria/tools/inspector/ModuleInspector.tpl",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/modules/allocations/templates/panels/Plan.tpl",
-		"/G/java/workspace/ariatemplates/build/config/files-prod-localization.json",
-		"/G/java/workspace/Lima/pom.xml",
-		"/G/java/workspace/ResourceManagement/modules/optimization/impl/src/main/resources/META-INF/spring/optimization-rm-context.xml",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/modules/allocations/templates/panels/dashboard/FlifoScript.js",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/modules/allocations/templates/dialogs/css/SuitableResources.tpl.css",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/modules/allocations/templates/panels/dashboard/Flifo.tpl",
-		"/G/java/workspace/ariatemplates/src/aria/ext/filesgenerator/tpl/FlowControllerInterface.tpl.txt",
-		"/G/java/workspace/ariatemplates/src/aria/core/FileLoader.js",
-		"/G/java/workspace/ariatemplates/build/config/files-bootstrap.json",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/modules/resources/templates/dialogs/stands/Edit.tpl",
-		"/G/java/workspace/Lima/lima-widgets/src/main/webapp/static/lima/widgets/Widget.js",
-		"/G/java/workspace/Lima/lima-widgets/src/main/webapp/static/lima/widgets/form/Input.js",
-		"/G/java/workspace/ariatemplates/src/aria/widgets/form/Input.js",
-		"/G/java/workspace/ariatemplates/src/aria/html/InputElement.js",
-		"/G/java/workspace/ariatemplates/src/aria/utils/InheritanceNormalization.js",
-		"/G/java/workspace/ariatemplates/test/aria/map/InvalidMapProvider.js",
-		"/G/java/workspace/ariatemplates/scripts/index.html",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/modules/allocations/templates/panels/TooltipsScript.js",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/modules/allocations/templates/panels/css/Tooltips.tpl.css",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/modules/generic/templates/dialogs/GroupScript.js",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/modules/allocations/templates/pages/css/Workspace.tpl.css",
-		"/G/java/workspace/ariatemplates/scripts/release-notes/wiki.ejs",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/modules/allocations/navigation/KeyboardHandler.js",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/chart/gantt/handlers/MouseHandler.js",
-		"/D/Userfiles/nabric/Desktop/255817036.json",
-		"/G/java/workspace/ariatemplates/test/aria/embed/map/MapTestOne.js",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/utils/Model.js",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/utils/validator/MinDate.js",
-		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/utils/validator/Different.js",
-		"/D/Userfiles/nabric/Desktop/255814739.json",
-		"/G/java/workspace/ariatemplates/test/aria/pageEngine/siteRootModule/ModelBindingTest.js"
+		"/G/java/workspace/ResourceManagement/webapps/ui/rm/src/main/webapp/static/app/rm/modules/allocations/templates/panels/Plan.tpl"
 	],
 	"find":
 	{
@@ -806,6 +810,9 @@
 		"height": 90.0,
 		"where_history":
 		[
+			"*.less",
+			"",
+			"*.less",
 			"*.js",
 			"",
 			"*",
@@ -930,10 +937,7 @@
 			"",
 			"*.xml",
 			"",
-			"G:\\java\\workspace_dev\\ResourceManagement\\themes\\src\\main\\webapp\\static\\less\\themes\\day",
-			"",
-			"*.js",
-			""
+			"G:\\java\\workspace_dev\\ResourceManagement\\themes\\src\\main\\webapp\\static\\less\\themes\\day"
 		]
 	},
 	"find_state":
@@ -941,6 +945,17 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"@font-face",
+			"vinyls",
+			"background-image",
+			".genre",
+			"md-a",
+			"transition",
+			"md",
+			".active",
+			"active",
+			"#e59700",
+			"e597",
 			"simula",
 			"onSimulateCallback",
 			"-1",
@@ -1057,18 +1072,7 @@
 			"select",
 			"onAlertClicked",
 			"message",
-			"alertNotifications",
-			"towingMenuItems",
-			"onContextMen",
-			"__clearTooltip",
-			"allocationTooltip",
-			"tooltip",
-			"Tooltips",
-			"Autocomple",
-			"Autoco",
-			"handleEndTimeChange",
-			"handle",
-			"split"
+			"alertNotifications"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1253,6 +1257,46 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"common",
+				"client\\src\\less\\modules\\common.less"
+			],
+			[
+				"varia",
+				"client\\src\\less\\variables.less"
+			],
+			[
+				"tap",
+				"client\\src\\common\\directives\\tap.js"
+			],
+			[
+				"remote.less",
+				"client\\src\\less\\modules\\remote.less"
+			],
+			[
+				"index.",
+				"client\\src\\index.html"
+			],
+			[
+				"tap.js",
+				"client\\src\\common\\directives\\tap.js"
+			],
+			[
+				"app",
+				"client\\src\\app\\app.js"
+			],
+			[
+				"wiza",
+				"client\\src\\less\\modules\\wizard.less"
+			],
+			[
+				"var",
+				"client\\src\\less\\variables.less"
+			],
+			[
+				"wizar",
+				"client\\src\\less\\modules\\wizard.less"
+			],
 			[
 				"resource",
 				"ResourceManagement\\webapps\\ui\\rm\\src\\main\\resources\\i18n\\resources_en.properties"
@@ -1724,46 +1768,6 @@
 			[
 				"limaobject.js",
 				"Lima\\lima-ui-overlay\\src\\main\\webapp\\static\\lima\\utils\\Object.js"
-			],
-			[
-				"tooltips.tm",
-				"ResourceManagement\\webapps\\ui\\rm\\src\\main\\webapp\\static\\app\\rm\\modules\\allocations\\templates\\panels\\Tooltips.tml"
-			],
-			[
-				"worksa",
-				"ResourceManagement\\webapps\\ui\\rm\\src\\main\\webapp\\static\\app\\rm\\modules\\allocations\\templates\\pages\\Workspace.tpl"
-			],
-			[
-				"menu.tl",
-				"ResourceManagement\\webapps\\ui\\rm\\src\\main\\webapp\\static\\app\\rm\\modules\\allocations\\templates\\panels\\Menu.tpl"
-			],
-			[
-				"alertr",
-				"ResourceManagement\\webapps\\ui\\rm\\src\\main\\webapp\\static\\app\\rm\\gantt\\chart\\renderers\\AlertRenderer.js"
-			],
-			[
-				"listsc",
-				"ResourceManagement\\webapps\\ui\\rm\\src\\main\\webapp\\static\\app\\rm\\modules\\allocations\\templates\\pages\\ListScript.js"
-			],
-			[
-				"abstractlist",
-				"ResourceManagement\\webapps\\ui\\rm\\src\\main\\webapp\\static\\app\\rm\\modules\\allocations\\templates\\panels\\dashboard\\AbstractList.tpl"
-			],
-			[
-				"tooltip.tpl",
-				"ResourceManagement\\webapps\\ui\\rm\\src\\main\\webapp\\static\\app\\rm\\modules\\allocations\\templates\\panels\\css\\Tooltips.tpl.css"
-			],
-			[
-				"per",
-				"ResourceManagement\\webapps\\ui\\rm\\src\\main\\webapp\\static\\app\\rm\\Permissions.js"
-			],
-			[
-				"shor",
-				"ResourceManagement\\webapps\\ui\\rm\\src\\main\\webapp\\static\\app\\rm\\modules\\allocations\\templates\\dialogs\\Shortcuts.tpl"
-			],
-			[
-				"allocacontroller",
-				"ResourceManagement\\webapps\\ui\\rm\\src\\main\\webapp\\static\\app\\rm\\modules\\allocations\\Controller.js"
 			]
 		],
 		"width": 0.0
