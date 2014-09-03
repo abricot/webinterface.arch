@@ -1,5 +1,5 @@
 <div ng-switch on="loading" ng-class="{loading : loading, now : !loading}">
-    <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
+    <div ng-switch-when="true" class="loading"><div class="aphelion"></div></div>
     <div ng-switch-when="false">
         <div ng-switch on="library.item.type" class="playing">
             <div ng-switch-when="movie">

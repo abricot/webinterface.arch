@@ -1,23 +1,20 @@
-.remote .arts {
-  background:#a5d4e8;
-}
-
 .remote .banner {
   background: #03a9f4 url(../img/backgrounds/wizard.png) no-repeat center;
+  background-size: 100% auto;
 }
 
 .arts .label {
   position: absolute;
+  right: 0;
   bottom: .5rem;
-  font-size: 1.5rem;
-  right: 4rem;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: #f1f1f1;
-  left: 1rem;
+  left: 0;
+  padding: 0.5rem 4rem 0.5rem 1rem;
   overflow: hidden;
-  background: rgba(0,0,0,0.5);
-  padding: 0.5rem 0;
+  font-size: 1.5rem;
+  color: #f1f1f1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .arts div[role="slider"] {
@@ -28,7 +25,7 @@
   right: 5rem;
 }
 
-section[role="region"] .remote {
+section[role="region"] .buttons {
   font-size : 3rem;
   position: absolute;
   right : 0;
@@ -38,7 +35,7 @@ section[role="region"] .remote {
   padding-top : 4rem; 
 
 }
-section[role="region"] .remote .md-action{
+section[role="region"] .buttons .md-action{
   position: relative;
   right: 0;
   box-shadow: none;
@@ -47,40 +44,40 @@ section[role="region"] .remote .md-action{
   background: #e0f2f1;
 }
 
-section[role="region"] .remote .md-action:hover {
+section[role="region"] .buttons .md-action:hover {
   background-color : #009688;
   color : #f1f1f1 !important;
 }
 
-section[role="region"] .remote .md-action i { 
+section[role="region"] .buttons .md-action i { 
   font-size: 2.5rem; text-shadow:none;
 }
 
-section[role="region"] .remote .direction{
+section[role="region"] .buttons .direction{
   background: #80deea;  
   color : #f1f1f1 !important;
   text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
 }
-section[role="region"] .remote .direction:hover{
+section[role="region"] .buttons .direction:hover{
   background : #00bcd4;
 }
 
-section[role="region"] .remote .select{
+section[role="region"] .buttons .select{
   background: #ffab91;
   color : #f1f1f1 !important;
   text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
 }
-section[role="region"] .remote .select:hover{
+section[role="region"] .buttons .select:hover{
   background: #ff5722;
 }
-section[role="region"] .remote .md-action:hover i { 
+section[role="region"] .buttons .md-action:hover i { 
   text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
 }
-section[role="region"] .remote .action{
+section[role="region"] .buttons .action{
   width : 100/3%;
 }
 
-section[role="region"] .remote .action {
+section[role="region"] .buttons .action {
   text-align: center;
   color: white;
   height: 100%;
@@ -90,11 +87,11 @@ section[role="region"] .remote .action {
 }
 
 
-section[role="region"] .remote .row {
+section[role="region"] .buttons .row {
   display: inline-table;
 }
 
-section[role="region"] .remote .row {
+section[role="region"] .buttons .row {
   display : block;
   height : 100/4%;
 }

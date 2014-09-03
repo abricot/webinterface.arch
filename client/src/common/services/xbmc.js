@@ -218,7 +218,7 @@ angular.module('services.xbmc', ['services.io'])
             factory.getPlaylistItems = function(cb) {
                 io.send('Playlist.GetItems', {
                     'playlistid': activePlaylist,
-                    'properties': ['title', 'art', 'duration', 'runtime', 'thumbnail']
+                    'properties': ['title', 'art', 'duration', 'runtime', 'thumbnail', 'rating', 'fanart']
                 }, true, 'result.items').then(cb);
             };
 

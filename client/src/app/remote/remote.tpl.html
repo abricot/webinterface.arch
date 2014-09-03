@@ -20,48 +20,50 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="action" ng-tap="xbmc.contextmenu()">
-            <div class="md-action"><i class="icon icon-list-ul"></i></div>
+    <div class="buttons">
+        <div class="row">
+            <div class="action" ng-tap="xbmc.contextmenu()">
+                <div class="md-action"><i class="icon icon-list-ul"></i></div>
+            </div>
+            <div class="action" ng-tap="xbmc.info()">
+                <div class="md-action"><i class="icon icon-info-sign"></i></div>
+            </div>
+            <div class="action" ng-tap="xbmc.showOSD()">
+                <div class="md-action"><i class="icon icon-ellipsis-horizontal"></i></div>
+            </div>
         </div>
-        <div class="action" ng-tap="xbmc.info()">
-            <div class="md-action"><i class="icon icon-info-sign"></i></div>
+        <div class="row">
+            <div class="action" ng-tap="xbmc.decreaseVolume()"  hold-trigger="true">
+                <div class="md-action"><i class="icon icon-volume-down"></i></div>
+            </div>
+            <div class="action" ng-tap="xbmc.up()">
+                <div class="md-action direction"><i class="icon icon-chevron-up"></i></div>
+            </div>
+            <div class="action"  ng-tap="xbmc.increaseVolume()" hold-trigger="true">
+                <div class="md-action"><i class="icon icon-volume-up"></i></div>
+            </div>
         </div>
-        <div class="action" ng-tap="xbmc.showOSD()">
-            <div class="md-action"><i class="icon icon-ellipsis-horizontal"></i></div>
+        <div class="row">
+            <div class="action" ng-tap="xbmc.left()">
+                <div class="md-action direction"><i class="icon icon-chevron-left"></i></div>
+            </div>
+            <div class="action" ng-tap="xbmc.select()">
+                <div class="md-action select"><i class="icon icon-circle"></i></div>
+            </div>
+            <div class="action" ng-tap="xbmc.right()">
+                <div class="md-action direction"><i class="icon icon-chevron-right"></i></div>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="action" ng-tap="xbmc.decreaseVolume()"  hold-trigger="true">
-            <div class="md-action"><i class="icon icon-volume-down"></i></div>
-        </div>
-        <div class="action" ng-tap="xbmc.up()">
-            <div class="md-action direction"><i class="icon icon-chevron-up"></i></div>
-        </div>
-        <div class="action"  ng-tap="xbmc.increaseVolume()" hold-trigger="true">
-            <div class="md-action"><i class="icon icon-volume-up"></i></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="action" ng-tap="xbmc.left()">
-            <div class="md-action direction"><i class="icon icon-chevron-left"></i></div>
-        </div>
-        <div class="action" ng-tap="xbmc.select()">
-            <div class="md-action select"><i class="icon icon-circle"></i></div>
-        </div>
-        <div class="action" ng-tap="xbmc.right()">
-            <div class="md-action direction"><i class="icon icon-chevron-right"></i></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="action" ng-tap="xbmc.back()">
-            <div class="md-action"><i class="icon icon-mail-reply"></i></div>
-        </div>
-        <div class="action" ng-tap="xbmc.down()">
-            <div class="md-action direction"><i class="icon icon-chevron-down"></i></div>
-        </div>
-        <div class="action" ng-tap="toggleKeyboard()">
-           <div class="md-action"> <i class="icon icon-keyboard"></i></div>
+        <div class="row">
+            <div class="action" ng-tap="xbmc.back()">
+                <div class="md-action"><i class="icon icon-mail-reply"></i></div>
+            </div>
+            <div class="action" ng-tap="xbmc.down()">
+                <div class="md-action direction"><i class="icon icon-chevron-down"></i></div>
+            </div>
+            <div class="action" ng-tap="toggleKeyboard()">
+               <div class="md-action"> <i class="icon icon-keyboard"></i></div>
+            </div>
         </div>
     </div>
 </div>

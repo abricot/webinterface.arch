@@ -63,20 +63,35 @@ section[role="region"] header h2.disconnected {
 }
 
 .loading {
-  font-size: 5rem;
-  color: @primaryColor;
-  text-align: center;
-  line-height: 100%;
-  height: 100%;
-  position: relative;
+  background: #03a9f4;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left : 0;
+  right : 0;
 }
 
-.loading .icon-spinner {
+.loading .aphelion {
   position: absolute;
-  top: 50%;
-  margin-top: -1.25rem;
+  height : 20rem;
+  width: 20rem;
+  top: 40%;
+  margin-top: -10rem;
   left: 50%;
-  margin-left: -2.5rem;
+  margin-left: -10rem;
+  background: transparent url(../img/icons/aphelion-512.png) no-repeat center;
+  background-size: 100%;
+}
+
+.loading .aphelion:after {
+  position: absolute;
+  bottom: -6rem;
+  left : 50%;
+  width: 30px;
+  height: 30px;
+  margin-left: -15px;
+  background: transparent url(../img/spinner.gif) no-repeat center;
+  content: "";
 }
 
 .arts,
@@ -86,8 +101,11 @@ section[role="region"] header h2.disconnected {
  position : relative;
 }
 
-.banner { height : 10rem ; background-size : 100% auto;}
-.arts {.drop-shadow;}
+.banner { 
+  height : 10rem ; 
+  background-size : 100% auto;
+}
+.arts {background-color:#03a9f4; .drop-shadow;}
 .arts .md-action {bottom: -1.75rem;}
 
 .fanart {height : 20rem;}

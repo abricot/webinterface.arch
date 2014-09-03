@@ -1,12 +1,22 @@
-<div ng-switch on="loading" ng-class="{loading : loading}">
-    <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
-    <div data-type="list" ng-switch-when="false">
-        <ul class="view songs">
+<div ng-switch on="loading" class="now" ng-class="{loading : loading}">
+    <div ng-switch-when="true" class="loading"><div class="aphelion"></div></div>
+    <div ng-switch-when="false">
+        <div class="arts">
+            <div class="banner" image image-source="items[0].fanart | asset:configuration.host">
+            </div>
+            <div class="md-action md-action-primary" ng-tap="xbmc.next()">
+                    <i class="icon-fast-forward"></i>
+            </div>
+        </div>
+        <ul data-type="list" class="view songs">
             <li class="row " ng-repeat="item in items"
-                ng-class-odd="'odd'"
                 ng-tap="xbmc.goTo($index)">
-                    <img class="span4 poster"
-                         image image-source="item.art | thumb | asset:configuration.host | fallback:'img/backgrounds/low-contrast-128.png'"/>
+                <div class="span3 flip-container">
+                    <div class="flipper">
+                        <div class="md-circle poster front" image image-source="item.art | thumb | asset:configuration.host | fallback:'img/backgrounds/low-contrast-256.png'"></div>
+                        <div class="back" rating rating-value="movie.rating" rating-max="10"></div>
+                    </div>
+                </div>
                 <div class="span8">
                     <p>{{item.label}}</p>
                     <p ng-show="item.duration">{{item.duration | time | date :'mm:ss'}}</p>
