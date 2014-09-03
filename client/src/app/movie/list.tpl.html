@@ -2,7 +2,7 @@
     <div ng-switch-when="true" class="icon-spinner icon-spin icon-large"></div>
     <div class="view movies" ng-switch-when="false">
         <div class="arts">
-            <div class="banner" source="{{randomMovie.fanart | asset:configuration.host}}">
+            <div class="banner" image image-source="randomMovie.fanart | asset:configuration.host">
             </div>
             <div class="md-action md-action-primary"
                  ng-tap="xbmc.scan('VideoLibrary')">
@@ -15,7 +15,7 @@
                 ng-class-odd="'odd'">
                 <div class="span3 flip-container">
                     <div class="flipper">
-                        <div class="md-circle poster front" source="{{movie.thumbnail | asset:configuration.host}}"></div>
+                        <div class="md-circle poster front" image-source="movie.thumbnail | asset:configuration.host"></div>
                         <div class="back" rating rating-value="movie.rating" rating-max="10"></div>
                     </div>
                 </div>

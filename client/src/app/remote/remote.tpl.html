@@ -1,9 +1,24 @@
-<div class="arts" style="background:#7465c0;">
-    <div class="banner"></div>
-    <div class="md-action md-action-primary">
-        <i class="icon icon-power-off"></i>
+<div class="arts" style="background:#7e57c2;">
+
+    <div ng-switch on="player.active">
+        <div ng-switch-when="true" ng-tap="go('/now/playing')">
+            <div class="banner" image image-source="player.item.fanart | asset:configuration.host"></div>
+            <div role="slider" seekbar seekbar-value="player.seek.percentage" seekbar-max="100" seekbar-read-only="true"></div>
+            <div class="label">{{player.item.label}}</div>
+            <div class="md-action md-action-primary" ng-tap="xbmc.shutdown()">
+                <i class="offset4 span4 icon-play" ng-tap="xbmc.togglePlay()"  ng-show="!player.speed">
+                </i>
+                <i class="offset4 span4 icon-pause" ng-tap="xbmc.togglePlay()"  ng-show="player.speed">
+                </i>
+            </div>
+        </div>
+        <div ng-switch-when="false">
+            <div class="aphelion"></div>
+            <div class="md-action md-action-primary" ng-tap="xbmc.shutdown()">
+                <i class="icon icon-power-off"></i>
+            </div>
+        </div>
     </div>
-    <div class="aphelion"></div>
 </div>
 <div class="remote">
     <div class="row">

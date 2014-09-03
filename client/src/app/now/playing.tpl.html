@@ -11,32 +11,42 @@
             </div>
 
             <div ng-switch-default class="detail">
-                <div class="row">
-                    <img class="offset1 span10" source="{{library.item.thumbnail | asset:configuration.host}}"/>
-                </div>
+                <img class="row" image image-source="library.item.thumbnail | asset:configuration.host"/>
                 <h1>
                     {{library.item.label}}
                 </h1>
             </div>
         </div>
-        <div class="seek-wrapper">
-            <div class="row times" ng-tap="toggleTimePicker()">
-                {{player.seek.time | time | date:'HH:mm:ss'}}/
-                {{player.seek.totaltime | time | date:'HH:mm:ss'}}
-                [-{{(player.seek.totaltime - player.seek.time)  | time | date:'HH:mm:ss'}}]
-            </div>
-            <div class="row">
-                <div class="span2 action" ng-tap="toggleAudioStreams()" ng-show="isTypeVideo()">
+        <div class="player">
+            <div class="row controls">
+                <div class="span3 action" ng-tap="toggleAudioStreams()" ng-show="isTypeVideo()">
                     <i class="icon-comments"></i>
                 </div>
-                <div ng-class="{span8 :isTypeVideo(), span10 : !isTypeVideo(), offset1 : !isTypeVideo()}"
-                     role="slider" aria-valuemin="0" aria-valuenow="0" aria-valuemax="100">
-                    <div seekbar seekbar-value="player.seek.percentage" seekbar-max="100"
-                         on-seekbar-changed="onSeekbarChanged(newValue)"></div>
+                <div class="times" ng-tap="toggleTimePicker()" ng-class="{span6 : isTypeVideo(), span12 : !isTypeVideo()}">
+                    {{player.seek.time | time | date:'HH:mm:ss'}}/
+                    {{player.seek.totaltime | time | date:'HH:mm:ss'}}
+                    [-{{(player.seek.totaltime - player.seek.time)  | time | date:'HH:mm:ss'}}]
                 </div>
-                <div class="span2 action" ng-tap="toggleSubtitles()" ng-show="isTypeVideo()">
+                <div class="span3 action" ng-tap="toggleSubtitles()" ng-show="isTypeVideo()">
                     <i class="icon-quote-left"></i>
                 </div>
+            </div>
+            <div role="slider" class="row" seekbar seekbar-value="player.seek.percentage" seekbar-max="100"
+                         on-seekbar-changed="onSeekbarChanged(newValue)"></div>
+            <div class="row controls">
+                <div class="span3" ng-tap="xbmc.previous()">
+                    <i class="icon-fast-backward"></i>
+                </div>
+                <div class="span3" ng-tap="xbmc.togglePlay()">
+                    <i class="icon-play" ng-show="!player.speed"></i>
+                    <i class="icon-pause" ng-show="player.speed"></i>
+                </div>
+                <div class="span3" ng-tap="xbmc.stop()">
+                    <i class="icon-stop"></i>
+                </div>
+                <div class="span3" ng-tap="xbmc.next()">
+                    <i class="icon-fast-forward"></i>
+                </div> 
             </div>
         </div>
     </div>

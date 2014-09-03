@@ -4,7 +4,7 @@
         <li class="row album" ng-repeat="album in albums"
             ng-tap="go('/music/songs/albumid/' + album.albumid)">
             <div class="span3 cover-wrapper">
-                <div class="md-circle poster" source="{{album.thumbnail | asset:configuration.host}}"
+                <div class="md-circle poster" image image-source="album.thumbnail | asset:configuration.host"
                      ng-show="hasCover(album)">
                 </div>
                 <img class="md-circle poster cover  unknow" src="img/blank.gif" ng-hide="hasCover(album)"/>
