@@ -69,17 +69,16 @@
 </div>
 
 <form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showKeyboard">
-    <header>
-        <h1> Send text </h1>
-    </header>
-    <menu>
-        <div class="row"  style="padding-bottom:6rem;" >
+    <div class="content">
+        <header>Send text</header>
+        <div class="body">
             <textarea class="offset1 span10" ng-model="textToSend"
-                      placeholder="Enter text to send"></textarea>
+                          placeholder="Text to send"></textarea>
         </div>
-        <div class="row">
-            <button class="span5 offset1" ng-tap="toggleKeyboard()"> Cancel </button>
-            <button class="span5 recommend"   ng-tap="onValidateText()"> Ok </button>
+        <div class="actions">
+            <button ng-tap="toggleKeyboard()"> Cancel </button>
+            <button class="recommend"   ng-tap="onValidateText()"> Ok </button>
         </div>
-    </menu>
+        </menu>
+    </div>
 </form>
