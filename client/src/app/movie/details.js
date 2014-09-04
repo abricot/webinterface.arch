@@ -28,5 +28,9 @@ angular.module('app')
             } else {
                 $scope.xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
             }
+
+            $scope.imdb = function (imdbnumber) {
+                window.open('http://www.imdb.com/title/' + imdbnumber + '/', '_blank');
+            };
         }
     ]);

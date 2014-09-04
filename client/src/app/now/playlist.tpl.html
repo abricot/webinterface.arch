@@ -2,7 +2,7 @@
     <div ng-switch-when="true" class="loading"><div class="aphelion"></div></div>
     <div ng-switch-when="false">
         <div class="arts">
-            <div class="banner" image image-source="items[0].fanart | asset:configuration.host">
+            <div class="banner" image image-source="items[0].fanart | asset:configuration.host  | fallback:'img/backgrounds/banner.png'">
             </div>
             <div class="md-action md-action-primary" ng-tap="xbmc.next()">
                     <i class="icon-fast-forward"></i>
@@ -13,7 +13,7 @@
                 ng-tap="xbmc.goTo($index)">
                 <div class="span3 flip-container">
                     <div class="flipper">
-                        <div class="md-circle poster front" image image-source="item.art | thumb | asset:configuration.host | fallback:'img/backgrounds/low-contrast-256.png'"></div>
+                        <div class="md-circle poster front" image image-source="item.art | thumb | asset:configuration.host | fallback:'img/icons/aphelion-256.png'"></div>
                         <div class="back" rating rating-value="movie.rating" rating-max="10"></div>
                     </div>
                 </div>

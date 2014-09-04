@@ -11,7 +11,7 @@
             </div>
 
             <div ng-switch-default class="detail">
-                <img class="row" image image-source="library.item.thumbnail | asset:configuration.host"/>
+                <img class="row" image image-source="library.item.thumbnail | asset:configuration.host | fallback:'img/icons/aphelion-256.png'"/>
                 <h1>
                     {{library.item.label}}
                 </h1>
@@ -56,13 +56,14 @@
      <div class="content">
         <header> Audio Streams </header>
         <div class="body">
-            <button ng-repeat="audio in player.audiostreams" ng-tap="setAudioStream(audio)">
-              {{audio.name}} ( {{audio.language}})
-              <i class="pull-right icon-check" ng-show="isSelected(player.current.audiostream, audio)"></i>
-            </button>
+            <label ng-repeat="audiostream in player.audiostreams">
+                <input type="radio" ng-model="$parent.stream" ng-value="audiostream.index" name="audiostreams"/>
+                {{audiostream.name}} ( {{audiostream.language}})
+            </label>
         </div>
         <div class="actions">
             <button ng-tap="toggleAudioStreams()"> Cancel </button>
+            <button class="recommend" ng-tap="onValidateAudioStream()"> Ok </button>
         </div>
     </div>
 </form>
@@ -71,17 +72,18 @@
      <div class="content">
         <header> Subtitles </header>
         <div class="body">
-            <button ng-tap="setSubtitle('off')">
+            <label>
+                <input type="radio" ng-model="sub" value="off" name="subtitles"/>
                 None
-                <i class="pull-right icon-check" ng-show="isSelected(player.current.subtitle, 'off')"></i>
-            </button>
-            <button ng-repeat="subtitle in player.subtitles" ng-tap="setSubtitle(subtitle)">
+            </label>
+            <label ng-repeat="subtitle in player.subtitles">
+                <input type="radio" ng-model="$parent.sub" ng-value="subtitle.index" name="subtitles"/>
                 {{subtitle.name}} ({{subtitle.language}})
-                <i class="pull-right icon-check" ng-show="isSelected(player.current.subtitle, subtitle)"></i>
-            </button>
+            </label>
         </div>
         <div class="actions">
             <button ng-tap="toggleSubtitles()"> Cancel </button>
+            <button class="recommend" ng-tap="onValidateSubtitles()"> Ok </button>
         </div>
     </div>
 </form>

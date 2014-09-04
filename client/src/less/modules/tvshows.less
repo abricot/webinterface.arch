@@ -12,13 +12,20 @@
 
 [data-type="list"] .season {border:0; margin-bottom:0.5rem;}
 .tvshows [data-type="list"],
-.tvshow [data-type="list"]{
+.tvshow [data-type="list"],
+.seasons [data-type="list"]{
   position: absolute;
   top: 10rem;
   right: 0;
   bottom: 0;
   left: 0;
   overflow: scroll;
+}
+
+.tvshows [data-type="list"] li:first-child,
+.tvshow [data-type="list"] li:first-child,
+.seasons [data-type="list"] li:first-child{
+  margin-top : 1rem;
 }
 
 .tvshow  .playcount {
@@ -52,4 +59,9 @@
 
 .episode.detail .thumbnail img{
   width: 100%;
+}
+
+.season-wrapper {
+  min-height: 0.1rem;
+  position: relative;
 }

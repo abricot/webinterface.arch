@@ -64,7 +64,7 @@ angular.module('app')
             if (hasCover) {
                 return assetFilter(song.thumbnail, $scope.configuration.host);
             } else {
-                return 'img/backgrounds/album.png';
+                return '';
             }
         }
 

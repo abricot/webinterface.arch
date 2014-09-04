@@ -22,12 +22,27 @@ angular.module('app')
             $scope.showSubtitleSelect = false;
             $scope.showTimePicker = false;
 
+            $scope.stream = 0;
+            $scope.sub = 0;
+
+            $scope.$watch('player.current', function (newVal, oldVal) {
+                if($scope.player.current) {
+                    if( $scope.player.current.audiostream) {
+                        $scope.stream = $scope.player.current.audiostream.index;
+                    }
+                    if($scope.player.current.subtitle) {
+                        $scope.sub = $scope.player.current.subtitle.index || 'off';
+                    }
+                }
+            });
+            
             var timeFilter = $filter('time');
             $scope.seekTime = timeFilter($scope.player.seek.time);
 
             function onPlayerItemRetrieved(item) {
                 $scope.loading = false;
                 $scope.library.item = item;
+               
             };
 
             function onPlayersRetrieved(players) {
@@ -85,16 +100,14 @@ angular.module('app')
                 $scope.showTimePicker = false;
             };
 
-            $scope.setAudioStream = function(obj) {
+            $scope.onValidateAudioStream = function() {
                 $scope.showAudioSelect = false;
-                $scope.player.current.audiostream = obj;
-                $scope.xbmc.setAudioStream(typeof obj === 'string' ? obj : obj.index);
+                $scope.xbmc.setAudioStream($scope.stream);
             };
 
-            $scope.setSubtitle = function(obj) {
+            $scope.onValidateSubtitles = function() {
                 $scope.showSubtitleSelect = false;
-                $scope.player.current.subtitle = obj;
-                $scope.xbmc.setSubtitle(typeof obj === 'string' ? obj : obj.index);
+                $scope.xbmc.setSubtitle($scope.sub);
             };
 
             $scope.toggleAudioStreams = function() {

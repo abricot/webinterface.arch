@@ -344,7 +344,7 @@ angular.module('services.xbmc', ['services.io'])
             factory.getSeasons = function(tvShowId, cb) {
                 io.send('VideoLibrary.GetSeasons', {
                     'tvshowid': tvShowId,
-                    'properties': ['season', 'showtitle', 'fanart', 'thumbnail'],
+                    'properties': ['season', 'showtitle', 'fanart', 'thumbnail', 'playcount'],
                     'limits': {
                         'start': 0,
                         'end': 75
