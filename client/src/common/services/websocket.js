@@ -10,7 +10,6 @@ angular.module('services.websocket', [])
 
         function dispose () {
             isWSConnected = false;
-            delete ws;
         };
 
         function generateInterval (k) {
@@ -51,6 +50,7 @@ angular.module('services.websocket', [])
         };
 
         factory.disconnect = function () {
+            ws.onclose = function(){}
             ws.close();
             dispose();
         };

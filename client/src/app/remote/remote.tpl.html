@@ -2,7 +2,7 @@
     <div class="arts">
         <div ng-switch on="player.active">
             <div ng-switch-when="true" ng-tap="go('/now/playing')">
-                <div class="banner" image image-source="player.item.fanart | asset:configuration.host"></div>
+                <div class="banner" image image-source="player.item.fanart | asset:host"></div>
                 <div role="slider" seekbar seekbar-value="player.seek.percentage" seekbar-max="100" seekbar-read-only="true"></div>
                 <div class="label">{{player.item.label}}</div>
                 <div class="md-action md-action-primary" ng-tap="xbmc.shutdown()">
@@ -30,6 +30,17 @@
             </div>
             <div class="action" ng-tap="xbmc.showOSD()">
                 <div class="md-action"><i class="icon icon-ellipsis-horizontal"></i></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="action" ng-tap="xbmc.previous()">
+                <div class="md-action"><i class="icon icon-fast-backward"></i></div>
+            </div>
+            <div class="action" ng-tap="xbmc.stop()">
+                <div class="md-action"><i class="icon icon-stop"></i></div>
+            </div>
+            <div class="action" ng-tap="xbmc.next()">
+               <div class="md-action"> <i class="icon icon-fast-forward"></i></div>
             </div>
         </div>
         <div class="row">
@@ -65,6 +76,7 @@
                <div class="md-action"> <i class="icon icon-keyboard"></i></div>
             </div>
         </div>
+        
     </div>
 </div>
 

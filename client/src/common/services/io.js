@@ -109,6 +109,10 @@ angular.module('services.io', ['services.websocket'])
                 websocket.connect('ws://' + url + ':' + port + '/jsonrpc', onConnected, onDiconnected);
             }
 
+            factory.disconnect = function () {
+                websocket.disconnect();
+            }
+
             var canceljob = function() {
                 angular.forEach(callbacks, function(callback, key) {
                     var now = Date.now();

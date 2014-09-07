@@ -14,7 +14,6 @@ angular.module('app')
     function MusicSongsCtrl($scope, $rootScope, $stateParams, $filter) {
         $scope.loading = true;
         $scope.filter = $stateParams.filter;
-        $scope.queue = [];
         $scope.artist = null;
         var filter = null;
         if ($scope.filter) {
@@ -38,20 +37,6 @@ angular.module('app')
             $scope.xbmc.getSongs(filter, onSongsRetrieved);
         };
 
-        var playlistAdd = function () {
-            if ($scope.isFiltered() && $scope.queue.length > 0) {
-                $scope.xbmc.queue({songid: $scope.queue[0].songid});
-                $scope.queue = $scope.queue.slice(1);
-                if ($scope.queue.length > 0) {
-                    window.setTimeout(playlistAdd.bind(this), 500);
-                }
-            }
-        }
-
-        $scope.$watch('playlist', function () {
-            playlistAdd();
-        }, true);
-
         if ($scope.xbmc.isConnected()) {
             onLoad();
         } else {
@@ -62,23 +47,18 @@ angular.module('app')
             var assetFilter = $filter('asset');
             var hasCover = typeof $scope.filter !== 'undefined' && song && song.thumbnail !== '';
             if (hasCover) {
-                return assetFilter(song.thumbnail, $scope.configuration.host);
+                return assetFilter(song.thumbnail, $scope.host);
             } else {
                 return '';
             }
-        }
+        };
 
         $scope.isFiltered = function () {
             return typeof $scope.filter !== 'undefined';
-        }
+        };
 
         $scope.play = function (item) {
             $scope.xbmc.open(item);
         };
-
-        $scope.addAlbumToQueue = function () {
-            $scope.queue = $scope.songs.slice(1);
-            $scope.play({songid : $scope.songs[0].songid})
-        }
     }
 ])

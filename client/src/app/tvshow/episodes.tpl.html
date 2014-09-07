@@ -1,9 +1,9 @@
 <div ng-switch on="loading" ng-class="{loading : loading}">
-    <div ng-switch-when="true" class="loading"><div class="aphelion"></div></div>
+    <div ng-switch-when="true" class="loading"><div class="foxy"></div></div>
     <div ng-switch-when="false" class="tvshow">
         <div class="arts">
-            <div class="banner" image image-source="episodes[0].art['tvshow.banner'] | asset:configuration.host"></div>
-            <div class="md-action md-action-primary">
+            <div class="banner" image image-source="episodes[0].art['tvshow.banner'] | asset:host | fallback:'img/backgrounds/banner.png'"></div>
+            <div class="md-action md-action-primary" ng-show="episodes.length" ng-tap="queueAll()">
                 <i class="icon-plus"></i>
             </div>
         </div>
@@ -12,7 +12,7 @@
                 ng-tap="go('/tvshow/' + tvshowid + '/'+season+'/'+episode.episodeid, 'none')">
                 <div class="span3 flip-container">
                     <div class="flipper">
-                        <div class="md-circle poster front" image image-source="episode.thumbnail | asset:configuration.host">
+                        <div class="md-circle poster front" image image-source="episode.thumbnail | asset:host">
                             <em class="playcount" ng-show="episode.playcount">&#10003;</em>
                         </div>
                         <div class="back" rating rating-value="episode.rating" rating-max="10"></div>
@@ -24,8 +24,8 @@
                     <p>{{episode.episode | episode:episode.season}}</p>
                 </div>
             </li>
-            <li ng-show="!episodes.length" class="empty list">No item here :'(</li>
         </ul>
+        <div ng-show="!episodes.length" class="empty list">Oops! nothing here</div>
     </div>
 
 </div>

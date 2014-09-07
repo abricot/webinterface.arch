@@ -1,5 +1,5 @@
 <div ng-switch on="loading" ng-class="{loading : loading, now : !loading}">
-    <div ng-switch-when="true" class="loading"><div class="aphelion"></div></div>
+    <div ng-switch-when="true" class="loading"><div class="foxy"></div></div>
     <div ng-switch-when="false">
         <div ng-switch on="library.item.type" class="playing">
             <div ng-switch-when="movie">
@@ -11,7 +11,7 @@
             </div>
 
             <div ng-switch-default class="detail">
-                <img class="row" image image-source="library.item.thumbnail | asset:configuration.host | fallback:'img/icons/aphelion-256.png'"/>
+                <img class="row" image image-source="library.item.thumbnail | asset:host | fallback:'img/icons/foxy-256.png'"/>
                 <h1>
                     {{library.item.label}}
                 </h1>

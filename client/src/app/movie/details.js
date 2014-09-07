@@ -32,5 +32,9 @@ angular.module('app')
             $scope.imdb = function (imdbnumber) {
                 window.open('http://www.imdb.com/title/' + imdbnumber + '/', '_blank');
             };
+
+            $scope.$watch('player.item', function (newVal, oldVal) {
+                $scope.isCurrentlyPlaying = $scope.player.active && $scope.player.item.id === $scope.library.item.movieid;
+            });
         }
     ]);

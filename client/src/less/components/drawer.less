@@ -105,20 +105,20 @@ section[data-type="sidebar"] > header .status{
   margin: 1rem 0;
 }
 
-section[data-type="sidebar"] > header .art {
+section[data-type="sidebar"] > header .arts {
   background-image: url(../img/backgrounds/trianglify.svg);
-  background-color: #7e57c2;
+  background-color: #ff5722;
   background-size: 100%%;
   height : 10rem;
   position: relative;
 }
 
-section[data-type="sidebar"] > header .art .status.connected{
+section[data-type="sidebar"] > header .arts .status.connected{
   background-color: #259b24!important;
   border-color: #259b24!important;
 }
 
-section[data-type="sidebar"] > header .art .status.disconnected{
+section[data-type="sidebar"] > header .arts .status.disconnected{
   background-color: #e51c23!important;
   border-color: #e51c23!important;
 }
@@ -231,7 +231,7 @@ section[data-type="sidebar"] > nav > ul > li {
   white-space: nowrap;
   overflow: hidden;
   cursor: pointer;
-  opacity: 0.75;
+  opacity: 0.5;
 }
 section[data-type="sidebar"] > nav > ul > li:hover { opacity: 1;}
 section[data-type="sidebar"] > nav > ul > li .span2{text-align: center;}
@@ -239,8 +239,9 @@ section[data-type="sidebar"] > nav > ul > li  i {
   font-size: 2rem;
 }
 
-section[data-type="sidebar"] > nav > ul > li.selected {
-  color : @headerBgColor;
+section[data-type="sidebar"] > nav > ul > li.selected,
+section[data-type="sidebar"] > nav > ul > li:hover {
+  opacity: 1;
 }
 
 

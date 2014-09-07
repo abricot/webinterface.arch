@@ -1,22 +1,30 @@
-.wizard {
+.wizard,
+.hosts {
   .box-sizing;
 }
 
-.wizard .arts {
-  background:#03a9f4;
-}
-
-.wizard .arts .aphelion {
+.hosts [data-type="list"] {
   position: absolute;
-  top : 0.5rem;
-  bottom : 0;
-  left : 3rem;
-  width : 10rem;
-  height : 10rem;
-  background: transparent url(../img/icons/aphelion-512.png) no-repeat center;
-  background-size: 100%;
+  top: 10rem;
+  right: 0;
+  left: 0;
+  bottom: 0;
 }
 
+.hosts [data-type="list"] li:first-child {
+  margin-top: 1rem;
+}
+
+.wizard .arts,
+.wizard .hosts {
+  background:@secondaryColor;
+}
+
+.wizard .banner,
+.hosts .banner {
+  background: @secondaryColor url(../img/backgrounds/banner.png) no-repeat center;
+  background-size: 100% auto;
+}
 
 .wizard h1 {
   color: @primaryColor;
@@ -40,11 +48,10 @@
   border: 0;
   border-bottom: 1px solid @primaryColor;
   background: transparent;
-  .inner-shadow(0, 0, 0, 0);
-}
+  .inner-shadow(0, 0, 0, 0);}
 
 .wizard input:focus {
-  outline-color: transparent;
+  outline-width: 0;
   border-bottom: 1px solid @outlineColor;
 }
 
@@ -66,3 +73,5 @@
   margin : 1rem 0;
   padding : 1rem;
 }
+
+.wizard .md-action.md-action-danger {bottom: 2rem;}

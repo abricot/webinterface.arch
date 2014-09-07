@@ -36,6 +36,8 @@ form[role="dialog"][data-type="action"] .content .body{
   padding: 0 0 2rem 0;
   margin: 0;
   font-size: 1.2rem;
+  max-height: 20rem;
+  overflow: scroll;
 }
 
 form[role="dialog"][data-type="action"] .content .body label{
@@ -44,9 +46,17 @@ form[role="dialog"][data-type="action"] .content .body label{
 
 form[role="dialog"][data-type="action"] .content .body textarea,
 form[role="dialog"][data-type="action"] .content .body input {
+  color: @primaryColor;
   border: 0;
-  box-shadow: none;
-  border-bottom: 1px solid rgb(169, 169, 169);
+  border-bottom: 1px solid @primaryColor;
+  background: transparent;
+  .inner-shadow(0, 0, 0, 0);
+}
+
+form[role="dialog"][data-type="action"] .content .body textarea:focus,
+form[role="dialog"][data-type="action"] .content .body input:focus {
+  outline-width: 0;
+  border-bottom: 1px solid @outlineColor;
 }
 
 form[role="dialog"][data-type="action"] .content .body textarea{

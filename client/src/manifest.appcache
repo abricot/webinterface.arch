@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# v1.1.7
+# v2.0.0
 index.html
 css/foxmote.css
 
@@ -7,35 +7,29 @@ js/lib/angular.js
 js/lib/angular-ui-router.js
 js/foxmote.js
 
+font/DS-DIGII.ttf
 font/ffosxbmc.ttf
 font/fontawesome-webfont.eot
 font/fontawesome-webfont.svg
 font/fontawesome-webfont.ttf
 font/fontawesome-webfont.woff
 font/kenyc.ttf
+font/moviegenre.ttf
+font/Roboto-Thin.ttf
 
 # Images you might use (remove the #)
 img/favicon.ico
 img/blank.gif
 img/backgrounds/album.png
-img/backgrounds/albums.jpg
-img/backgrounds/artist.png
-img/backgrounds/artists.jpg
-img/backgrounds/computer-icon.png
-img/backgrounds/low-contrast-64.png
-img/backgrounds/low-contrast-128.png
-img/backgrounds/low-contrast-256.png
-img/backgrounds/party.jpg
-img/backgrounds/songs.jpg
+img/backgrounds/banner.png
+img/backgrounds/equalizer.gif
+img/backgrounds/trianglify.svg
 img/backgrounds/vinyl.png
 img/backgrounds/vinyls.jpg
 
-img/icons/foxmote-128.png
-
-
-img/ui/handler.png
-img/ui/pattern.png
-img/ui/separator-large.png
+img/icons/foxy-256.png
+img/icons/foxy-512.png
+img/icons/spinner.gif
 
 NETWORK:
 *

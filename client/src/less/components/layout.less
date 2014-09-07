@@ -68,9 +68,14 @@ section[role="region"] div[role="splash"] {
   overflow-y: auto;
   position: absolute;
   top: 0;
-  bottom: @footerHeight;
+  bottom: 0;
   left: 2rem;
   right: 0;
+  
+}
+
+section[role="region"] div[role="splash"] {
+ background: @secondaryColor;
 }
 
 section[role="region"] div[role="main"].no-footer {
@@ -81,12 +86,14 @@ section[role="region"] div[role="main"]:last-child {
   bottom: 0;
 }
 
-section[role="region"] div[role="splash"] img{
-  position : absolute;
-  left : 50%;
-  top : 50%;
-  margin-left : -64px;
-  margin-top : -64px;
+section[role="region"] div[role="splash"] .foxy {
+  position: absolute;
+  height : 20rem;
+  width: 20rem;
+  bottom: 0%;
+  left: 0%;
+  background: transparent url(../img/icons/foxy-512.png) no-repeat left bottom;
+  background-size: 100%;
 }
 
 /* ----------------------------------

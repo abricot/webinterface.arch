@@ -6,10 +6,11 @@ section[data-type="sidebar"] .inactive-player {
   overflow: hidden;
   oveflow-y: auto;
   width : 100%;
+  background-color: @secondaryColor;
 }
 
-section[data-type="sidebar"] .inactive-player {
-  bottom: 9rem;
+section[data-type="sidebar"] .active-player {
+  bottom: 7rem;
 }
 
 section[data-type="sidebar"] .icon-remote {
@@ -17,6 +18,7 @@ section[data-type="sidebar"] .icon-remote {
   font-size: 3rem;
   position: relative;
   top: .5rem;
+  right: 0.5rem;
 }
 
 section[data-type="sidebar"] .icon-remote:before {
@@ -37,19 +39,20 @@ section[data-type="sidebar"] .now.playing {
   z-index: 10;
   height: 7rem;
   background: lighten(@regionBgColor, 25);
-  border-top : 0.2rem solid @listBorderColor;
 }
 
 section[data-type="sidebar"] .now.playing div[role="slider"] {height : auto;}
 section[data-type="sidebar"] .now.playing div[role="slider"] progress {
   margin-top : 0;
 }
-
+section[data-type="sidebar"] .now.playing .poster-wrapper {
+  position: relative;
+  height: 0.1rem;
+}
 section[data-type="sidebar"] .now.playing .poster {
   position: absolute;
   left: 50%;
   top : 50%;
-  margin-top : -2.5rem;
   margin-left: -2.5rem;
   background-size: 100%;
 }
@@ -59,6 +62,7 @@ section[data-type="sidebar"] .now.playing .title{
   font-size: 1.25rem;
   overflow: hidden;
   text-overflow: ellipsis;
+  -webkit-font-smoothing: antialiased;
 }
 section[data-type="sidebar"] .now.playing .actions{
   font-size: 2rem;

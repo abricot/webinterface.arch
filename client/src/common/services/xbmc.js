@@ -11,6 +11,10 @@ angular.module('services.xbmc', ['services.io'])
                 return io.connect(url, port);
             }
 
+            factory.disconnect = function(){
+                io.disconnect();
+            }
+
             factory.isConnected = function() {
                 return io.isConnected();
             }
@@ -228,6 +232,8 @@ angular.module('services.xbmc', ['services.io'])
                         'playlistid': activePlaylist,
                         'item': item
                     });
+                } else{
+                    factory.open(item);
                 }
             };
 
@@ -262,7 +268,7 @@ angular.module('services.xbmc', ['services.io'])
                         'start': 0,
                         'end': 100
                     },
-                    'properties': ['title', 'artist', 'thumbnail', 'year', 'genre', 'artistid'],
+                    'properties': ['title', 'artist', 'thumbnail', 'year', 'genre', 'artistid', 'rating'],
                     'sort': {
                         'order': 'ascending',
                         'method': 'label',
@@ -306,7 +312,7 @@ angular.module('services.xbmc', ['services.io'])
                         'start': 0,
                         'end': 500
                     },
-                    'properties': ['title', 'artist', 'album', 'albumid', 'thumbnail', 'duration', 'track', 'year', 'albumartistid'],
+                    'properties': ['title', 'artist', 'album', 'albumid', 'thumbnail', 'duration', 'track', 'year', 'albumartistid', 'rating'],
                     'sort': {
                         'order': 'ascending',
                         'method': 'label',

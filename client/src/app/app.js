@@ -21,7 +21,13 @@ angular.module('app')
         function($stateProvider, $urlRouterProvider, storageProvider) {
             var xbmchost = storageProvider.getItem('xbmchost', function(value) {
                 if (value === null) {
-                    $urlRouterProvider.otherwise("/settings");
+                    storageProvider.getItem('hosts', function(value) {
+                        if (value === null) {
+                            $urlRouterProvider.otherwise("/host/wizard");
+                         } else {
+                            $urlRouterProvider.otherwise("/");
+                         }
+                    });
                 } else {
                     $urlRouterProvider.otherwise("/");
                 }
@@ -52,14 +58,8 @@ angular.module('app')
                 criteria: ''
             };
 
-            $scope.configuration = {
-                host: {
-                    ip: '127.0.0.1',
-                    port: '9090',
-                    httpPort : '80',
-                    displayName: 'NCED1265'
-                }
-            };
+            $scope.hosts = [];
+            $scope.host = null;
             $scope.xbmc = xbmc;
 
             $scope.back = function() {
@@ -89,13 +89,6 @@ angular.module('app')
                     drawer.removeClass('maximize');
                 }
             }
-
-
-            $rootScope.$on("$stateChangeStart", function(event, next, current) {
-                if ($scope.configuration.host.ip === '') {
-                    $scope.go('/settings');
-                }
-            });
 
             function onPlayerPropertiesRetrieved(properties) {
                 if (properties) {
@@ -222,6 +215,15 @@ angular.module('app')
                 $scope.connected = false;
                 $scope.initialized = true;
             };
+
+            var initialize = function (host) {
+                $scope.initialized = true;
+                $scope.xbmc.connect(host.ip, host.port);
+                var hash = window.location.hash;
+                var path = hash.replace('#', '');
+                $scope.go(path === '' ? '/' : path);
+            }
+
             if (xbmc.isConnected()) {
                 onLoad();
             } else {
@@ -234,16 +236,30 @@ angular.module('app')
                     scope: this
                 });
                 storage.getItem('xbmchost', function (value) {
-                    $scope.initialized = true;
                     if(value!==null) {
-                        $scope.configuration = JSON.parse(value);
-                        $scope.configuration.host.httpPort = $scope.configuration.host.httpPort || '8080';
-                        $scope.xbmc.connect($scope.configuration.host.ip, $scope.configuration.host.port);
-                        var hash = window.location.hash;
-                        var path = hash.replace('#', '');
-                        $scope.go(path === '' ? '/' : path);
+                        //Old version of the app
+                        var defaultHost = JSON.parse(value).host;
+                        defaultHost.default = true;
+                        storage.removeItem('xbmchost');
+                        $scope.hosts = [defaultHost];
+                        storage.setItem('hosts', JSON.stringify($scope.hosts));
+                        initialize(defaultHost);
                     } else {
-                        $scope.go('/settings');
+                        //New version of the app migration was done. Default behavior
+                        storage.getItem('hosts', function(value) {
+                            if(value!==null) {
+                                var filterDefault = function (el) {
+                                    return el.default;
+                                };
+                                $scope.hosts = JSON.parse(value);
+                                var defaultHost = $scope.hosts.filter(filterDefault)[0];
+                                initialize(defaultHost);
+                            } else {
+                                $scope.initialized = true;
+                                $scope.go('/host/wizard');
+                            }
+                        });
+                        
                     }
                 })
             }
@@ -271,6 +287,13 @@ angular.module('app')
                     hash = hash.replace(':'+key, value);
                 });
                 $scope.previousHash = hash;
+            });
+            $scope.$watch('hosts', function (newVal, oldVal) {
+                var filterDefault =  function (el) {
+                    return el.default;
+                }
+                var filtered = $scope.hosts.filter(filterDefault);
+                $scope.host = filtered[0];
             });
         }
     ]);

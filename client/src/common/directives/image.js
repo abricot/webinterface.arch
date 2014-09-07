@@ -9,9 +9,7 @@ angular.module('directives.image', [])
             link: function (scope, elem, attrs) {
                 var element = elem[0];
                 var asChromeApp = false;
-                try {
-                    asChromeApp = typeof window.localStorage === 'undefined';
-                } catch (e) {
+                if(window.chrome && window.chrome.storage) {
                     asChromeApp = true;
                 }
                 var updateValue = function () {
@@ -19,7 +17,8 @@ angular.module('directives.image', [])
                         var remoteImage = new RAL.RemoteImage({
                             element : element,
                             src : scope.imageSource ,
-                            width : element.offsetWidth
+                            width : element.offsetWidth,
+                            height : element.offsetHeight
                         });
                         RAL.Queue.add(remoteImage, true);
                     } else {

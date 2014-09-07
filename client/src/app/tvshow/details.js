@@ -43,5 +43,9 @@ angular.module('app')
                     scope: this
                 });
             }
+
+            $scope.$watch('player.item', function (newVal, oldVal) {
+                $scope.isCurrentlyPlaying = $scope.player.active && $scope.player.item.id === $scope.library.item.episodeid;
+            });
         }
     ]);

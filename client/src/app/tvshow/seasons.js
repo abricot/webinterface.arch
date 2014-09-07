@@ -23,7 +23,7 @@ angular.module('app')
             function onSeasonsRetrieved(seasons) {
                 $scope.seasons = seasons || [];
                 $scope.loading = false;
-                if (seasons.length === 1) {
+                if ($scope.seasons.length === 1) {
                     $scope.go('/tvshow/' + $scope.tvshowid + '/' + seasons[0].season);
                 }
             };

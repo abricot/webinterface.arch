@@ -1,8 +1,8 @@
 <div ng-switch on="loading" class="now" ng-class="{loading : loading}">
-    <div ng-switch-when="true" class="loading"><div class="aphelion"></div></div>
+    <div ng-switch-when="true" class="loading"><div class="foxy"></div></div>
     <div ng-switch-when="false">
         <div class="arts">
-            <div class="banner" image image-source="items[0].fanart | asset:configuration.host  | fallback:'img/backgrounds/banner.png'">
+            <div class="banner" image image-source="items[0].fanart | asset:host  | fallback:'img/backgrounds/banner.png'">
             </div>
             <div class="md-action md-action-primary" ng-tap="xbmc.next()">
                     <i class="icon-fast-forward"></i>
@@ -11,11 +11,14 @@
         <ul data-type="list" class="view songs">
             <li class="row " ng-repeat="item in items"
                 ng-tap="xbmc.goTo($index)">
-                <div class="span3 flip-container">
+                <div class="span3 flip-container" ng-show="item.rating">
                     <div class="flipper">
-                        <div class="md-circle poster front" image image-source="item.art | thumb | asset:configuration.host | fallback:'img/icons/aphelion-256.png'"></div>
-                        <div class="back" rating rating-value="movie.rating" rating-max="10"></div>
+                        <div class="md-circle poster front" image image-source="item.art | thumb | asset:host | fallback:'img/icons/foxy-256.png'"></div>
+                        <div class="back" rating rating-value="item.rating" rating-max="10"></div>
                     </div>
+                </div>
+                <div class="span3 wrapper" ng-show="!item.rating">
+                    <div class="md-circle poster" image image-source="item.art | thumb | asset:host | fallback:'img/icons/foxy-256.png'"></div>
                 </div>
                 <div class="span8">
                     <p>{{item.label}}</p>
@@ -24,7 +27,7 @@
                     <img class="equalizer" src="img/backgrounds/equalizer.gif" ng-show="isPlaying(item.id)"/>
                 </div>
             </li>
-            <li ng-show="!items.length" class="empty list">No item here :'(</li>
         </ul>
+        <div ng-show="!items.length" class="empty list">Oops! nothing here</div>
     </div>
 </div>

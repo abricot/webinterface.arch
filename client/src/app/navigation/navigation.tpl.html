@@ -1,6 +1,6 @@
 <section data-type="sidebar" id="drawer">
     <header>
-        <div class="art">
+        <div class="arts">
             <div class="row">
                 <div class="span3" style="text-align : center;">
                     <div class="md-circle status" ng-class="{connected : connected, disconnected : !connected}">
@@ -9,7 +9,7 @@
                 </div>
                 <h1 class="span9" ng-switch on="connected">
                     <div ng-switch-when="true">
-                        {{configuration.host.displayName}}
+                        {{host.displayName}}
                     </div>
                     <div ng-switch-when="false">
                         No connection
@@ -18,7 +18,7 @@
             </div>
         </div>
     </header>
-    <nav ng-class="{'active-player' : player.active, 'inactive-player': player.active}">
+    <nav ng-class="{'active-player' : player.active, 'inactive-player': !player.active}">
         <ul>
             <li ng-repeat="item in medias" class="row" 
                 ng-tap="go(item.hash)" ng-class="{selected : isCurrent(item.hash)}">
@@ -63,11 +63,8 @@
         <div class="row">
             <div ng-switch on="hasPoster(player.item.art)">
                 <div ng-switch-when="true" ng-tap="go('/now/playing','none')">
-                    <div class="span3 flip-container" >
-                        <div class="flipper">
-                            <div class="md-circle poster front" image image-source="player.item.art | thumb  | asset:configuration.host | fallback:'img/icons/aphelion-256.png'"></div>
-                            <div class="back" rating rating-value="player.item.rating" rating-max="10"></div>
-                        </div>
+                    <div class="span3 poster-wrapper" >
+                        <div class="md-circle poster" image image-source="player.item.art | thumb  | asset:host | fallback:'img/icons/foxy-256.png'"></div>
                     </div>
                 </div>
             </div>

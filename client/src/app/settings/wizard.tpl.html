@@ -2,31 +2,33 @@
 <form class="wizard" name="wizard" >
     <div class="arts">
         <div class="banner"></div>
-        <div class="aphelion"></div>
-        <button class="md-action md-action-primary" ng-tap="save()">
+        <div class="md-action md-action-primary" ng-tap="save()">
             <i class="icon-save"></i>
-        </button>
+        </div>
     </div>
     <p> 
         <label>Display name:</label>
-        <input type="text" placeholder="Ex : HTPC" required="" ng-model="configuration.host.displayName" tabindex="1">
+        <input type="text" placeholder="Ex : HTPC" required="" ng-model="host.displayName" tabindex="1">
         <button type="reset" class="icon-remove"></button>
     </p>
     <p>
         <label>Host IP:</label>
-        <input name="ip" type="text" placeholder="Ex : 192.16.0.1, hostname" required="" ng-model="configuration.host.ip" tabindex="2">
+        <input name="ip" type="text" placeholder="Ex : 192.16.0.1, hostname" required="" ng-model="host.ip" tabindex="2">
         <button type="reset" class="icon-remove"></button>
     </p>
     <div class="row">
         <p class="span6">
             <label>Webserver port</label>
-            <input type="text" placeholder="Ex : 8080" required="" ng-model="configuration.host.httpPort" tabindex="3">
+            <input type="text" placeholder="Ex : 8080" required="" ng-model="host.httpPort" tabindex="3">
             <button type="reset" class="icon-remove"></button>
         </p>
         <p class="span6">
             <label>Api port</label>
-            <input type="text" placeholder="Ex : 9090" required="" ng-model="configuration.host.port" tabindex="3">
+            <input type="text" placeholder="Ex : 9090" required="" ng-model="host.port" tabindex="3">
             <button type="reset" class="icon-remove"></button>
         </p>
+    </div>
+    <div class="md-action md-action-danger" ng-tap="delete()" ng-show="hosts.length > 1 && hostIndex !== null">
+        <i class="icon-trash"></i>
     </div>
 </form>

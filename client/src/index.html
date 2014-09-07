@@ -33,12 +33,11 @@
         <section id="page" role="region" ng-show="initialized" ng-tap="hideDrawer()">
             <header  ui-view="header"></header>
             <div role="main" ui-view="body" ng-class="{'no-footer' : !hasFooter(), 'no-header' : !hasHeader()}"></div>
-            <footer  ui-view="footer" ng-show="hasFooter()"></footer>
         </section>
 
         <section role="region" ng-show="!initialized">
-            <div role="splash" class="no-footer">
-                <img src="img/icons/foxmote-128.png"/>
+            <div role="splash">
+                <div class="foxy"></div>
             </div>
         </section>
 

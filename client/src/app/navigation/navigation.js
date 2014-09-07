@@ -25,7 +25,7 @@ angular.module('app')
                     label: 'Remote'
                 },
                 {
-                    hash: '/settings',
+                    hash: '/hosts',
                     icon: 'icon-cogs',
                     label: 'Settings'
                 }
