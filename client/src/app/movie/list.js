@@ -8,8 +8,8 @@ angular.module('app')
             }
         })
     }])
-    .controller('MovieListCtrl', ['$scope',
-        function MovieListCtrl($scope) {
+    .controller('MovieListCtrl', ['$scope', 'storage',
+        function MovieListCtrl($scope, storage) {
             $scope.loading = true;
             function onMoviesRetrieved (movies) {
                 $scope.loading = false;
@@ -27,7 +27,7 @@ angular.module('app')
             }
 
             $scope.getRandomIndex = function () {
-                
+
                 return randomIndex;
             }
         }

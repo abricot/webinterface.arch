@@ -28,7 +28,7 @@ angular.module('app')
                 $scope.hostIndex = parseInt($stateParams.hostIndex);
                 $scope.host = $scope.hosts[$scope.hostIndex];
             }
-            
+
             $scope.save = function () {
                 if($scope.wizard.$valid) {
                     if($scope.hosts.length === 0) {
@@ -39,7 +39,7 @@ angular.module('app')
                     } else {
                         $scope.hosts.push($scope.host);
                     }
-                    storage.setItem('hosts', JSON.stringify($scope.hosts));
+                    storage.setItem('hosts', $scope.hosts);
                     if($scope.host.default) {
                         $scope.xbmc.connect($scope.host.ip, $scope.host.port);
                     }
@@ -61,7 +61,7 @@ angular.module('app')
                         $scope.xbmc.disconnect();
                         $scope.xbmc.connect(firstHost.ip, firstHost.port);
                     }
-                    storage.setItem('hosts', JSON.stringify($scope.hosts));
+                    storage.setItem('hosts', $scope.hosts);
                     $scope.go('/hosts');
                 }
             }

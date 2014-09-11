@@ -1,4 +1,4 @@
-angular.module('services.xbmc', ['services.io'])
+angular.module('services.xbmc', ['services.io.mock'])
     .factory('xbmc', ['$rootScope', '$q', '$parse', '$interval', 'io',
         function($rootScope, $q, $parse, $interval, io) {
             // We return this object to anything injecting our service
@@ -160,7 +160,7 @@ angular.module('services.xbmc', ['services.io'])
                     factory.setSubtitle(1);
                     subtitleState = null;
                 }
-                
+
                 factory.setSubtitle(1);
             },
 
@@ -297,7 +297,7 @@ angular.module('services.xbmc', ['services.io'])
                 }, true, 'result.artists').then(cb);
 
             };
-            
+
             factory.getArtistDetails = function(artistid, cb) {
                 io.send('AudioLibrary.GetArtistDetails', {
                     'artistid' : artistid,
@@ -346,7 +346,7 @@ angular.module('services.xbmc', ['services.io'])
                     'properties': ['genre'],
                 }, true, 'result.tvshowdetails').then(cb);
             };
-            
+
             factory.getSeasons = function(tvShowId, cb) {
                 io.send('VideoLibrary.GetSeasons', {
                     'tvshowid': tvShowId,

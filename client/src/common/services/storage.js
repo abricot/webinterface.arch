@@ -4,22 +4,35 @@ angular.module('services.storage', [])
         if(window.chrome && window.chrome.storage) {
             asChromeApp = true;
         }
+
+        var toObject = function (jsonStr) {
+            var obj = null;
+            if(jsonStr !== null) {
+                obj = JSON.parse(jsonStr);
+            }
+            return obj;
+        };
+
+        var toJSON = function (obj) {
+            return JSON.stringify(obj);
+        };
+
         this.getItem = function (key, cb) {
             if(!asChromeApp) {
-                cb(window.localStorage.getItem(key));
+                cb(toObject(window.localStorage.getItem(key)));
             } else {
                 chrome.storage.local.get(key, function(items){
-                    cb(items[key] || null);
+                    cb(toObject(items[key] || null));
                 })
             }
         }
 
         this.setItem = function (key, value) {
             if(!asChromeApp) {
-                window.localStorage.setItem(key, value);
+                window.localStorage.setItem(key, toJSON(value));
             } else {
                 var items = {};
-                items[key] = value;
+                items[key] = toJSON(value);
                 chrome.storage.local.set(items);
             }
         };

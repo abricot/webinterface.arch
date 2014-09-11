@@ -24,6 +24,6 @@ angular.module('app')
                     el.default=false;
                 })
                 host.default = true;
-                storage.setItem('hosts', JSON.stringify($scope.hosts));
+                storage.setItem('hosts', $scope.hosts);
             }
         }]);

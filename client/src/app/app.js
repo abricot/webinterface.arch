@@ -32,11 +32,11 @@ angular.module('app')
                     $urlRouterProvider.otherwise("/");
                 }
             });
-        } 
+        }
     ])
     .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter', 'xbmc', 'storage',
         function($scope, $rootScope, $state, $location, $filter, xbmc, storage) {
-            
+
             $scope.$state = $state;
             $scope.connected = false;
             $scope.initialized = false;
@@ -204,7 +204,7 @@ angular.module('app')
                 scope: this
             });
 
-            
+
             var onLoad = function() {
                 $scope.$apply(function() {
                     $scope.connected = true;
@@ -238,11 +238,11 @@ angular.module('app')
                 storage.getItem('xbmchost', function (value) {
                     if(value!==null) {
                         //Old version of the app
-                        var defaultHost = JSON.parse(value).host;
+                        var defaultHost = value.host;
                         defaultHost.default = true;
                         storage.removeItem('xbmchost');
                         $scope.hosts = [defaultHost];
-                        storage.setItem('hosts', JSON.stringify($scope.hosts));
+                        storage.setItem('hosts', $scope.hosts);
                         initialize(defaultHost);
                     } else {
                         //New version of the app migration was done. Default behavior
@@ -251,7 +251,7 @@ angular.module('app')
                                 var filterDefault = function (el) {
                                     return el.default;
                                 };
-                                $scope.hosts = JSON.parse(value);
+                                $scope.hosts = value;
                                 var defaultHost = $scope.hosts.filter(filterDefault)[0];
                                 initialize(defaultHost);
                             } else {
@@ -259,7 +259,7 @@ angular.module('app')
                                 $scope.go('/host/wizard');
                             }
                         });
-                        
+
                     }
                 })
             }
@@ -281,7 +281,7 @@ angular.module('app')
             main.addEventListener('swipe', onSwipe.bind(this));
 
             $scope.previousState = null;
-            $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
+            $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
                 var hash = fromState.url;
                 angular.forEach(fromParams, function(value, key){
                     hash = hash.replace(':'+key, value);
