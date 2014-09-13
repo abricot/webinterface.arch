@@ -1,4 +1,4 @@
-angular.module('services.xbmc', ['services.io.mock'])
+angular.module('services.xbmc', ['services.io'])
     .factory('xbmc', ['$rootScope', '$q', '$parse', '$interval', 'io',
         function($rootScope, $q, $parse, $interval, io) {
             // We return this object to anything injecting our service

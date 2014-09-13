@@ -15,9 +15,11 @@ angular.module('app')
             });
         }
     ])
-    .controller('MusicAlbumsCtrl', ['$scope', '$stateParams',
-        function MusicAlbumsCtrl($scope, $stateParams) {
+    .controller('MusicAlbumsCtrl', ['$scope', '$stateParams', 'storage',
+        function MusicAlbumsCtrl($scope, $stateParams, storage) {
             $scope.loading = true;
+            $scope.updating = true;
+
             $scope.filter = $stateParams.filter;
 
             var filter = null;
@@ -28,17 +30,32 @@ angular.module('app')
                     value: $scope.filterId
                 };
             }
-            function onArtistRetrieved (artist) {
+
+            function onArtistFromSource (artist) {
                 $scope.artist = artist;
                 $scope.loading = false;
+                $scope.updating = false;
 
             };
-            function onAlbumsRetrieved(albums) {
-                $scope.albums = albums;
-                $scope.xbmc.getArtistDetails(albums[0].artistid[0], onArtistRetrieved);
+
+            function onAlbumsFromCache(albums) {
+                if(albums) {
+                    $scope.albums = albums;
+                    $scope.loading = false;
+                }
             };
+
+            function onAlbumsFromSource(albums) {
+                $scope.albums = albums;
+                if ($scope.filter) {
+                    storage.setItem('AudioLibrary.Albums', albums);
+                }
+                $scope.xbmc.getArtistDetails(albums[0].artistid[0], onArtistFromSource);
+            };
+
             var onLoad = function() {
-                $scope.xbmc.getAlbums(filter, onAlbumsRetrieved);
+                storage.getItem('AudioLibrary.Albums', onAlbumsFromCache);
+                $scope.xbmc.getAlbums(filter, onAlbumsFromSource);
             };
             if ($scope.xbmc.isConnected()) {
                 onLoad();

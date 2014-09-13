@@ -17,16 +17,23 @@ angular.module('app')
     ])
     .controller('EpisodeDetailsCtrl', ['$scope', '$stateParams', '$location',
         function EpisodeDetailsCtrl($scope, $stateParams, $location) {
+            $scope.isCurrentlyPlaying = false;
             $scope.episodeid = parseInt($stateParams.episodeid);
             var episode = null;
+
+            function isCurrentlyPlaying() {
+                return $scope.player.active && $scope.player.item.id === $scope.library.item.episodeid;
+            };
+
             function onTvShowDetailsRetrieved(details) {
                 episode.genre = details.genre;
                 $scope.library.item = episode;
+                $scope.isCurrentlyPlaying = isCurrentlyPlaying();
                 $scope.loading = false;
             };
 
             function onEpisodeDetailsRetrieved(item) {
-                                item.type = 'episode';
+                item.type = 'episode';
                 episode = item;
                 $scope.xbmc.getTVShowDetails(episode.tvshowid, onTvShowDetailsRetrieved);
             };
@@ -45,7 +52,7 @@ angular.module('app')
             }
 
             $scope.$watch('player.item', function (newVal, oldVal) {
-                $scope.isCurrentlyPlaying = $scope.player.active && $scope.player.item.id === $scope.library.item.episodeid;
+                $scope.isCurrentlyPlaying = isCurrentlyPlaying();
             });
         }
     ]);

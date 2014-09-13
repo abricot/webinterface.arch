@@ -11,14 +11,37 @@ angular.module('app')
     .controller('MovieListCtrl', ['$scope', 'storage',
         function MovieListCtrl($scope, storage) {
             $scope.loading = true;
-            function onMoviesRetrieved (movies) {
-                $scope.loading = false;
-                $scope.movies = movies;
-                var randomIndex = Math.floor(Math.random()*movies.length);
-                $scope.randomMovie = movies[randomIndex];
+            $scope.updating = true;
+            
+            function updateRandomMovie () {
+                if($scope.movies.length) {
+                    var randomIndex = Math.floor(Math.random()*$scope.movies.length);
+                    $scope.randomMovie = $scope.movies[randomIndex];
+                }
             };
+
+            function onMoviesFromCache (movies) {
+                if(movies) {
+                    $scope.loading = false;
+                    $scope.movies = movies;
+                    updateRandomMovie();
+                }
+            };
+
+            function onMoviesFromSource (movies) {
+                movies = movies || [];
+                $scope.loading = false;
+                $scope.updating = false;
+                storage.setItem('VideoLibrary.Movies', movies);
+                if(!angular.equals(movies, $scope.movies)) {
+                    updateRandomMovie();
+                }
+                $scope.movies = movies;
+            };
+
             var onLoad = function () {
-                 $scope.xbmc.getMovies(onMoviesRetrieved);
+                storage.getItem('VideoLibrary.Movies', onMoviesFromCache);
+                $scope.xbmc.getMovies(onMoviesFromSource);
             };
             if ($scope.xbmc.isConnected()) {
                 onLoad();

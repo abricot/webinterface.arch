@@ -7,7 +7,7 @@ angular.module('services.storage', [])
 
         var toObject = function (jsonStr) {
             var obj = null;
-            if(jsonStr !== null) {
+            if(jsonStr !== null && typeof jsonStr !== 'undefined') {
                 obj = JSON.parse(jsonStr);
             }
             return obj;

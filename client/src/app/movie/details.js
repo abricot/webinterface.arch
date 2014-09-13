@@ -15,10 +15,17 @@ angular.module('app')
         function MovieDetailsCtrl($scope, $stateParams, $location, utilities) {
             $scope.movieid = parseInt($stateParams.movieid);
             $scope.loading = true;
+            $scope.isCurrentlyPlaying = false;
+
+            function isCurrentlyPlaying() {
+                return $scope.player.active && $scope.player.item.id === $scope.library.item.movieid;
+            };
+
             function onMovieRetrieved (item) {
-                $scope.loading = false;
                 item.type = 'movie';
                 $scope.library.item = item;
+                $scope.isCurrentlyPlaying = isCurrentlyPlaying();
+                $scope.loading = false;
             };
             var onLoad = function () {
                 $scope.xbmc.getMovieDetails($scope.movieid, onMovieRetrieved);
@@ -34,7 +41,7 @@ angular.module('app')
             };
 
             $scope.$watch('player.item', function (newVal, oldVal) {
-                $scope.isCurrentlyPlaying = $scope.player.active && $scope.player.item.id === $scope.library.item.movieid;
+                $scope.isCurrentlyPlaying = isCurrentlyPlaying();
             });
         }
     ]);

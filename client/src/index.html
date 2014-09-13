@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app" ng-csp>
+<html ng-app="app" ng-csp  ng-controller="AppCtrl">
   <head>
     <title>Foxmote</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"></meta>
@@ -7,12 +7,13 @@
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"></link>
     <link rel="icon" href="img/favicon.ico" type="image/x-icon"></link>
     <link rel="stylesheet" type="text/css" href="css/angular-csp.css" ></link>
-    <link rel="stylesheet" type="text/css" href="css/<%= grunt.config.get('pkg.name') %>.css" ></link>
+    <link rel="stylesheet" type="text/css" href="css/yin.css" ng-disabled="theme==='yang'"></link>
+    <link rel="stylesheet" type="text/css" href="css/yang.css" ng-disabled="theme==='yin'"></link>
     <script type="text/javascript" src="js/lib/angular.js"></script>
     <script type="text/javascript" src="js/lib/mousetrap.js"></script>
     <script type="text/javascript" src="js/<%= grunt.config.get('pkg.name') %>.js"></script>
   </head>
-  <body role="application" ng-controller="AppCtrl">
+  <body role="application">
         <keybinding on="up" invoke="xbmc.up()"></keybinding>
         <keybinding on="left" invoke="xbmc.left()"></keybinding>
         <keybinding on="enter" invoke="xbmc.select()"></keybinding>

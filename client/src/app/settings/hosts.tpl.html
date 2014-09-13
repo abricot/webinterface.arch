@@ -14,15 +14,15 @@
           ng-tap="go('/host/' + $index)">
           <div ng-switch on="host.default">
             <div ng-switch-when="true" class="span3 wrapper">
-              <div class="md-circle poster front" image image-source="host.thumbnail | asset:host| fallback:'img/icons/foxy-256.png'">
-                <em class="playcount" ng-show="host.default">&#10003;</em>
-              </div>
+              <div class="md-action md-action-primary poster">
+                <i class="icon-ok"></i>
+              </div> 
             </div>
-            <div ng-switch-when="false" class="span3 flip-container">
+            <div ng-switch-when="false" class="span3 flip-container" ng-tap="setAsDefault(host)">
               <div class="flipper">
                 <div class="md-circle poster front" image image-source="host.thumbnail | asset:host| fallback:'img/icons/foxy-256.png'">
                 </div>
-                <div class="md-action md-action-primary poster back" ng-tap="setAsDefault(host)">
+                <div class="md-action md-action-primary poster back" >
                   <i class="icon-ok"></i>
                 </div>   
               </div>

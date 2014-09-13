@@ -9,6 +9,9 @@
                 <i class="icon-refresh"></i>
             </div>
         </div>
+        <div class="spinner" ng-show="updating">
+            <div class="bar"></div>
+        </div>
         <ul data-type="list">
             <li class="tvshow row" ng-repeat="show in tvshows"
                 ng-tap="go('/tvshow/' + show.tvshowid, 'none')">

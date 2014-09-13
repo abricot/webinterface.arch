@@ -62,7 +62,7 @@ section[role="region"] header h2.disconnected {
 
 }
 .loading {
-  background: @secondaryColor;
+  background: #03a9f4;
   position: absolute;
   top:0;
   bottom: 0;
@@ -147,7 +147,7 @@ section[role="region"] header h2.disconnected {
   width : 100%;
   background-size : 100% auto;
 }
-.arts {z-index:2;background-color:@secondaryColor; .drop-shadow;}
+.arts {z-index:2;background-color:#03a9f4; .drop-shadow;}
 .arts .md-action {bottom: -1.75rem;}
 
 .fanart {height : 20rem;}
@@ -231,8 +231,8 @@ section[role="region"] header h2.disconnected {
   right: 1rem;
 }
 
-.md-action.md-action-primary { background: #7e57c2 !important;}
-.md-action.md-action-danger { background: #e51c23 !important;}
+.md-action.md-action-primary { background: @secondaryColor !important;}
+.md-action.md-action-danger { background: @dangerColor !important;}
 
 .md-action i {
   display: block;
@@ -322,6 +322,6 @@ section[role="region"] header h2.disconnected {
 }
 
 [data-type="list"] .poster {
-  border : 0.25rem solid #7e57c2!important;
+  border : 0.25rem solid @secondaryColor!important;
 }
 

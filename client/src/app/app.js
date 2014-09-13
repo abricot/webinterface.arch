@@ -36,7 +36,8 @@ angular.module('app')
     ])
     .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter', 'xbmc', 'storage',
         function($scope, $rootScope, $state, $location, $filter, xbmc, storage) {
-
+            $scope.theme = 'yin';
+            storage.getItem('theme', function (theme) {$scope.theme=theme;});
             $scope.$state = $state;
             $scope.connected = false;
             $scope.initialized = false;
@@ -76,19 +77,24 @@ angular.module('app')
 
             $scope.isConnected = function() {
                 return xbmc.isConnected()
-            }
+            };
 
             $scope.toggleDrawer = function() {
                 var drawer = angular.element(document.querySelector('#drawer'));
                 drawer.toggleClass('maximize');
-            }
+            };
+
+            $scope.toggleTheme = function() {
+                $scope.theme = $scope.theme === 'yin' ? 'yang' : 'yin';
+                storage.setItem('theme', $scope.theme);
+            };
 
             $scope.hideDrawer = function() {
                 var drawer = angular.element(document.querySelector('#drawer'));
                 if(drawer.hasClass('maximize')) {
                     drawer.removeClass('maximize');
                 }
-            }
+            };
 
             function onPlayerPropertiesRetrieved(properties) {
                 if (properties) {

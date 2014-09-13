@@ -29,7 +29,10 @@ module.exports = function (grunt) {
             tpl: {
                 app: ['src/app/**/*.html']
             },
-            less: ['src/less/app.less'], // recess:build doesn't accept ** in its file patterns
+            less: {
+                yin : ['src/less/themes/yin/app.less'], // recess:build doesn't accept ** in its file patterns
+                yang : ['src/less/themes/yang/app.less']
+            },
             lessWatch: ['src/less/**/*.less']
         },
         clean: ['<%= distdir %>/*'],
@@ -113,15 +116,19 @@ module.exports = function (grunt) {
         recess: {
             build: {
                 files: {
-                    '<%= wwwdir %>/css/<%= pkg.name %>.css':
-                        ['<%= src.less %>', 'vendor/font-awesome/less/font-awesome.less'] },
+                    '<%= wwwdir %>/css/yin.css':
+                        ['<%= src.less.yin %>', 'vendor/font-awesome/less/font-awesome.less'],
+                    '<%= wwwdir %>/css/yang.css':
+                        ['<%= src.less.yang %>', 'vendor/font-awesome/less/font-awesome.less'] 
+                },
                 options: {
                     compile: true
                 }
             },
             min: {
                 files: {
-                    '<%= wwwdir %>/css/<%= pkg.name %>.css': ['<%= src.less %>', 'vendor/font-awesome/less/font-awesome.less']
+                    '<%= wwwdir %>/css/yin.css': ['<%= src.less.yin %>', 'vendor/font-awesome/less/font-awesome.less'],
+                    '<%= wwwdir %>/css/yang.css': ['<%= src.less.yang %>', 'vendor/font-awesome/less/font-awesome.less']
                 },
                 options: {
                     compress: true
