@@ -52,8 +52,8 @@ section[data-type="sidebar"] {
   top: 0;
   left: -0.1rem;
   overflow: hidden;
-  transform: translateX(-100%);
-  -webkit-transform: translateX(-100%);
+  transform: translate3d(-100%,0,0);
+  -webkit-transform: translate3d(-100%,0,0);
   transition: all 0.25s ease;
 }
 
@@ -63,9 +63,7 @@ section[data-type="sidebar"] > footer {
   position: relative;
   z-index: 10;
   height: 5rem;
-  color: @headerTextColor;
   .drop-shadow(0, 0.2rem, 0.3rem, 0.5);
-  background: @draverHeaderBgColor;
   width: 100%;
 }
 
@@ -107,6 +105,7 @@ section[data-type="sidebar"] > header .status{
 
 section[data-type="sidebar"] > header .arts {
   background-image: url(../img/backgrounds/trianglify.svg);
+  background-size: 100%;
   background-color: #ff5722;
   background-size: 100%%;
   height : 10rem;
@@ -166,13 +165,9 @@ section[data-type="sidebar"] > header button {
   font-weight: 600;
   font-size: 1.4rem;
   line-height: 1.1em;
-  color: @headerTextColor;
+  color: white;
 }
 
-section[data-type="sidebar"] > header a:first-letter,
-section[data-type="sidebar"] > header button:first-letter {
-  text-transform: uppercase;
-}
 
 /* Icon definitions */
 section[data-type="sidebar"] > header .icon {
@@ -209,19 +204,11 @@ section[data-type="sidebar"] > nav > ul > li {
   transition: background 0.2s ease;
 }
 
-section[data-type="sidebar"] > nav > ul > li:active {
-  background: @drawerActiveBgColor;
-}
-
-section[data-type="sidebar"] > nav > ul > li:last-child > a {
-  border: 0;
-}
-
 section[data-type="sidebar"] > nav > ul > li {
   text-decoration: none;
   color: @drawerTextColor;
   font-size: 1.5rem;
-  line-height: 4rem;
+  line-height: 3.5rem;
   text-indent: 1rem;
   padding-right: 0.8rem;
   width: 100%;
@@ -251,8 +238,8 @@ section[data-type="sidebar"] > nav > ul > li:hover {
  * ---------------------------------- */
 @media (max-width: 800px) {
   section[data-type="sidebar"].maximize {
-    transform: translateX(0%);
-    -webkit-transform: translateX(0%);
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
     border-left: 0.1rem solid @borderColor;
     z-index : 100;
     box-shadow: 0 17px 50px rgba(0,0,0,.19);
@@ -262,6 +249,7 @@ section[data-type="sidebar"] > nav > ul > li:hover {
 @media (min-width: 800px) {
   section[data-type="sidebar"] {
     width: 30%;
+    transform : translate3d(0,0,0);
   }
 
   section[role="region"] {

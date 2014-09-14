@@ -58,9 +58,6 @@ section[role="region"] header h2.disconnected {
   border-left: 3rem solid red;
 }
 
-*.active {
-
-}
 .loading {
   background: #03a9f4;
   position: absolute;
@@ -95,7 +92,7 @@ section[role="region"] header h2.disconnected {
 .spinner {
   position: relative;
   height: 0.25rem;
-  background-color: @secondaryColor;
+  background-color: @secondaryBgColor;
 }
 
 .spinner .bar {
@@ -167,7 +164,7 @@ section[role="region"] header h2.disconnected {
   right: -.75rem;
   color: white;
   font-size: 1rem;
-  background: @headerBgColor;
+  background: @secondaryBgColor;
   line-height: 1rem;
   height: 1rem;
   width: 1rem;
@@ -187,7 +184,7 @@ section[role="region"] header h2.disconnected {
   font-size: 2rem;
   color: white;
   text-align: center;
-  color: @primaryColor;
+  color: @primaryTextColor;
   padding: 0 1rem;
   font-size: 1.5rem;
 
@@ -231,8 +228,8 @@ section[role="region"] header h2.disconnected {
   right: 1rem;
 }
 
-.md-action.md-action-primary { background: @secondaryColor !important;}
-.md-action.md-action-danger { background: @dangerColor !important;}
+.md-action.md-action-primary { background: @secondaryBgColor !important;}
+.md-action.md-action-danger { background: @dangerBgColor !important;}
 
 .md-action i {
   display: block;
@@ -250,8 +247,8 @@ section[role="region"] header h2.disconnected {
 
 
 .rating {
-  background-color: @secondaryColor!important;
-  border-color: @secondaryColor!important;
+  background-color: @secondaryBgColor!important;
+  border-color: @secondaryBgColor!important;
 
 }
 
@@ -282,7 +279,8 @@ section[role="region"] header h2.disconnected {
   text-align: center;
 }
   /* flip the pane when hovered */
-.row:hover .flip-container .flipper {
+.row:hover .flip-container .flipper,
+.flipper.flipped {
   transform: rotateY(180deg);
 }
 
@@ -322,6 +320,6 @@ section[role="region"] header h2.disconnected {
 }
 
 [data-type="list"] .poster {
-  border : 0.25rem solid @secondaryColor!important;
+  border : 0.25rem solid @secondaryBgColor!important;
 }
 

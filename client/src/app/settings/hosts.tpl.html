@@ -19,13 +19,13 @@
               </div> 
             </div>
             <div ng-switch-when="false" class="span3 flip-container" ng-tap="setAsDefault(host)">
-              <div class="flipper">
+              <flipper>
                 <div class="md-circle poster front" image image-source="host.thumbnail | asset:host| fallback:'img/icons/foxy-256.png'">
                 </div>
                 <div class="md-action md-action-primary poster back" >
                   <i class="icon-ok"></i>
                 </div>   
-              </div>
+              </flipper>
             </div>
           <div class="span8">
               <p>{{host.displayName}}</p>

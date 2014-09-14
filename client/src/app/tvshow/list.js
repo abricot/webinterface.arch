@@ -19,10 +19,12 @@ angular.module('app')
         function TvShowListCtrl($scope, storage) {
             $scope.loading = true;
             $scope.updating = true;
-
+            $scope.tvshows = [];
             function updateRandomShow() {
-                 var randomIndex = Math.floor(Math.random()*$scope.tvshows.length);
-                $scope.randomShow = $scope.tvshows[randomIndex];
+                if($scope.tvshows.length) {
+                    var randomIndex = Math.floor(Math.random()*$scope.tvshows.length);
+                    $scope.randomShow = $scope.tvshows[randomIndex];
+                }
             }
 
             function onTvShowsFromCache(tvshows) {

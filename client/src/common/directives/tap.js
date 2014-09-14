@@ -28,11 +28,12 @@ angular.module('directives.tap', [])
                     });
 
                     elm.bind('touchend', function (evt) {
+                        evt.stopPropagation();
                         var end = coordinates(evt.changedTouches[0]);
                         var tapping  = Math.abs(end.screenX - start.screenX)  < THRESHOLD &&
                                        Math.abs(end.screenY - start.screenY)  < THRESHOLD;
                         if(tapping) {
-                            scope.$apply(attrs.ngTap);
+                            scope.ngTap();
                         }
                         elm.removeClass('active');
                     });

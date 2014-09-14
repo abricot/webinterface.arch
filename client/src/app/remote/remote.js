@@ -18,15 +18,25 @@ angular.module('app')
         function RemoteCtrl($scope, $location) {
             $scope.textToSend = '';
             $scope.showKeyboard = false;
+            $scope.showShutdownOptions = false;
 
             $scope.toggleKeyboard = function() {
                 $scope.showKeyboard = !$scope.showKeyboard;
+            };
+
+            $scope.toggleShutdownOptions = function() {
+                $scope.showShutdownOptions = !$scope.showShutdownOptions;
             };
 
             $scope.onValidateText = function() {
                 $scope.xbmc.sendText($scope.textToSend);
                 $scope.showKeyboard = false;
                 $scope.textToSend = '';
+            };
+
+            $scope.execCommand = function(xbmcCommand){
+                $scope.toggleShutdownOptions();
+                $scope.xbmc[xbmcCommand]();
             };
 
         }

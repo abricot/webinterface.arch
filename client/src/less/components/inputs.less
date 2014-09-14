@@ -83,21 +83,17 @@ a[role="button"],
   height: 3.8rem;
   margin: 0 0 1rem;
   padding: 0 1.5rem;
-  -moz-box-sizing: border-box;
   display: inline-block;
   vertical-align: middle;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  .gradient(#ccc, #ccc, #fafafa) ;
-  border: 0.1rem solid #a6a6a6;
-  border-radius: 0.2rem;
-  font-weight: 500;
+  .gradient(@primaryBgColor, @primaryBgColor, @primaryBgColor) ;
+  border: 0;
   font-size: 1.6rem;
   line-height: 3.8rem;
   color: #333;
   text-align: center;
-  text-shadow: 0.1rem 0.1rem 0 rgba(255,255,255,0.3);
   text-decoration: none;
   outline: none;
 }
@@ -106,16 +102,7 @@ a[role="button"],
 button.recommend,
 a[role="button"].recommend,
 .button.recommend {
-  .gradient(#00aacc, #00aacc, #00caf2);
+  .gradient(@secondaryBgColor, @secondaryBgColor, @secondaryBgColor);
 }
 
 /* Press (default & recommend) */
-button:active,
-a[role="button"]:active,
-button.recommend:active,
-a.recommend[role="button"]:active  {
-  border-color: #008aaa;
-  background: #008aaa;
-  background-size: auto 100%;
-  color: #fff;
-}

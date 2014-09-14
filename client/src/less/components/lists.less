@@ -36,8 +36,7 @@
   min-height: @listMinHeight;
   .box-sizing(border-box);
   transition: transform 0.3s ease, padding 0.3s ease;
-  border-bottom: solid 0.1rem @listBorderColor;
-  color: @listTextColor;
+  border-bottom: solid 0.1rem @borderColor;
   margin: 0;
   display: block;
   position: relative;
@@ -48,9 +47,9 @@
 
 [data-type="list"] li:hover,
 [data-type="list"] li.active {
-  background: @primaryColor;
-  color: @listBgColor;
+  background: @primaryBgColor;
 }
+
 [data-type="list"] li:last-child {
   border: none;
 }
@@ -79,7 +78,6 @@
 /* Disabled */
 [data-type="list"] li[aria-disabled="true"]:after {
   content: "";
-  background-color: @listBgColor;
   opacity: 0.7;
   position: absolute;
   left: 0;
@@ -138,13 +136,8 @@
 [data-type="list"] li p:first-of-type {
   font-size: 1.8rem;
   line-height: 2.2rem;
-  color: @listTextColor;
 }
 
-[data-type="list"] li:hover p:first-of-type,
-[data-type="list"] li.active p:first-of-type{
-  color : @listBgColor;
-}
 [data-type="list"] li p:only-child,
 [data-type="list"] li p:first-of-type:last-of-type {
   line-height: 4rem;

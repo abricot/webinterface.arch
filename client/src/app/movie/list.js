@@ -12,7 +12,7 @@ angular.module('app')
         function MovieListCtrl($scope, storage) {
             $scope.loading = true;
             $scope.updating = true;
-            
+            $scope.movies = [];
             function updateRandomMovie () {
                 if($scope.movies.length) {
                     var randomIndex = Math.floor(Math.random()*$scope.movies.length);

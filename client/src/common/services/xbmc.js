@@ -215,6 +215,18 @@ angular.module('services.xbmc', ['services.io'])
                 io.send('System.Shutdown');
             };
 
+            factory.hibernate = function() {
+                io.send('System.Hibernate');
+            };
+
+            factory.suspend = function() {
+                io.send('System.Suspend');
+            };
+
+            factory.reboot = function() {
+                io.send('System.Reboot');
+            };
+
             factory.activateWindow = function(params) {
                 io.send('GUI.ActivateWindow', params);
             };

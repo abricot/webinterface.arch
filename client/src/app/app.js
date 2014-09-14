@@ -5,6 +5,7 @@ angular.module('app', [
     'ui.state',
     'ui.bootstrap',
     'directives.image',
+    'directives.flipper',
     'directives.keybinding',
     'directives.rating',
     'directives.seekbar',
@@ -276,11 +277,11 @@ angular.module('app')
 
             var onSwipe = function(event) {
                 var direction = event.detail.direction || '';
-                var page = angular.element(document.querySelector('#page'));
-                if (direction.toLowerCase() === 'left' && page.hasClass('minimize')) {
-                    page.removeClass('minimize');
-                } else if (direction.toLowerCase() === 'right' && !page.hasClass('minimize')) {
-                    page.addClass('minimize');
+                var drawer = angular.element(document.querySelector('#drawer'));
+                if (direction.toLowerCase() === 'left' && drawer.hasClass('maximize')) {
+                    drawer.removeClass('maximize');
+                } else if (direction.toLowerCase() === 'right' && !drawer.hasClass('maximize')) {
+                    drawer.addClass('maximize');
                 }
             };
 

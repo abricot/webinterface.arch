@@ -24,10 +24,10 @@ form[role="dialog"][data-type="action"] .content{
   margin-left : -12.5rem;
   left : 50%;
   .box-sizing;
+  color : @dialogTextColor;
 }
 
 form[role="dialog"][data-type="action"] .content header{
-  color : #4d4d4d;
   padding : 0 0 1.5rem 0;
   font-size: 2rem;
 }
@@ -37,7 +37,7 @@ form[role="dialog"][data-type="action"] .content .body{
   margin: 0;
   font-size: 1.2rem;
   max-height: 20rem;
-  overflow: scroll;
+  overflow: auto;
 }
 
 form[role="dialog"][data-type="action"] .content .body label{
@@ -46,9 +46,9 @@ form[role="dialog"][data-type="action"] .content .body label{
 
 form[role="dialog"][data-type="action"] .content .body textarea,
 form[role="dialog"][data-type="action"] .content .body input {
-  color: @primaryColor;
+  color: @primaryTextColor;
   border: 0;
-  border-bottom: 1px solid @primaryColor;
+  border-bottom: 1px solid @primaryBgColor;
   background: transparent;
   .inner-shadow(0, 0, 0, 0);
 }
@@ -80,6 +80,7 @@ form[role="dialog"][data-type="action"] .content .actions button {
   opacity : 0.5;
   height: auto;
   margin : 0;
+  color : @dialogTextColor;
 }
 
 form[role="dialog"][data-type="action"] .content .actions button:hover {
@@ -87,6 +88,6 @@ form[role="dialog"][data-type="action"] .content .actions button:hover {
 }
 
 form[role="dialog"][data-type="action"] .content .actions .recommend {
-  color : #2196f3;
+  color : @secondaryBgColor;
   font-weight: bold;
 }

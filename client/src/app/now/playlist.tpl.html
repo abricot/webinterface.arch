@@ -12,10 +12,12 @@
             <li class="row " ng-repeat="item in items"
                 ng-tap="xbmc.goTo($index)">
                 <div class="span3 flip-container" ng-show="item.rating">
-                    <div class="flipper">
-                        <div class="md-circle poster front" image image-source="item.art | thumb | asset:host | fallback:'img/icons/foxy-256.png'"></div>
+                    <flipper>
+                        <div class="front">
+                            <div class="md-circle poster" image image-source="item.art | thumb | asset:host | fallback:'img/icons/foxy-256.png'"></div>
+                        </div>
                         <div class="back" rating rating-value="item.rating" rating-max="10"></div>
-                    </div>
+                    </flipper>
                 </div>
                 <div class="span3 wrapper" ng-show="!item.rating">
                     <div class="md-circle poster" image image-source="item.art | thumb | asset:host | fallback:'img/icons/foxy-256.png'"></div>

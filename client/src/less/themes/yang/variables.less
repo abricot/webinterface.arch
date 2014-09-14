@@ -6,57 +6,33 @@
 @fluidGridColumnWidth:    percentage(@gridColumnWidth/@gridRowWidth);
 @fluidGridGutterWidth:    percentage(@gridGutterWidth/@gridRowWidth);
 
-@primaryColor : #aaa;
-@secondaryColor : #03a9f4;
-@dangerColor : #e51c23;
+@primaryBgColor : #eceff1;
+@primaryTextColor : #666;
+@secondaryBgColor : #03a9f4;
+@dangerBgColor : #e51c23;
 @outlineColor : #03a9f4;
 @disabledBgColor : #008aaa;
 
 @borderRadius : 0rem;
-@borderColor : #555a6d;
+@borderColor : #f1f1f1;
 
-@headerHeight : 8rem;
-@headerTextColor : #fff;
-@headerBgColor : #9c27b0;
-@headerTopBgColor : @headerBgColor;
-@headerBottomBgColor : #9c27b0;
-@headerShadowHeight : 0.1rem;
-@headerSearchBorderColor : #555a6d;
-
-@subHeaderHeight : 3rem;
-@subHeaderColor : #f6f6f6;
-@subHeaderBgColor: #49c9b0;
-
-@footerHeight : 50px;
-@footerTextColor : #fff;
-@footerBgColor : #434a5d;
-@footerTopBgColor : @headerBgColor;
-@footerBottomBgColor : #434a5d;
 
 @regionBgColor : #fff;
-@regionColor : #666;
 
-@listTextColor : @primaryColor;
-@listBorderColor : #eee;
-@listBgColor : @regionBgColor;
 @listMinHeight : 6rem;
-@listOddBgColor : lighten(@regionBgColor, 5);
+@subListTextColor : lighten(@primaryTextColor, 10%);
 
-@subListTextColor : #e6e6e6;
-
-@drawerTextColor : #fff;
-@drawerActiveBgColor : #00ABCC;
-@draverHeaderBgColor : lighten(@headerBgColor, 15);
-@draverBgColor : @secondaryColor;
+@draverBgColor : @secondaryBgColor;
+@drawerTextColor : white;
 
 @seekbarHeight : 0.5rem;
 @seekbarBgColor : #666;
 
-@dialogBgColor : #ffffff;
-@dialogColor : white;
+@dialogBgColor : @regionBgColor;
+@dialogTextColor: @primaryTextColor;
 
-@movieRatingBgColor : #00caf2;
-@movieRatingTextColor : #fff;
+@ratingBgColor : #00caf2;
+@ratingTextColor : #fff;
 
 @tabsBgColor : #03a9f4;
-@playerColor : #03a9f4;
+@playerBgColor : #03a9f4;

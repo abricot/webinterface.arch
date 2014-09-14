@@ -16,12 +16,14 @@
             <li class="tvshow row" ng-repeat="show in tvshows"
                 ng-tap="go('/tvshow/' + show.tvshowid, 'none')">
                 <div class="span3 flip-container">
-                    <div class="flipper">
-                        <div class="md-circle poster front" image image-source="show.thumbnail | asset:host">
-                            <em class="playcount" ng-show="show.playcount">&#10003;</em>
+                    <flipper>
+                        <div class="front">
+                            <div class="md-circle poster front" image image-source="show.thumbnail | asset:host">
+                                <em class="playcount" ng-show="show.playcount">&#10003;</em>
+                            </div>
                         </div>
                         <div class="back" rating rating-value="show.rating" rating-max="10"></div>
-                    </div>
+                    </flipper>
                 </div> 
                 <div class="span8">
                     <p>{{show.title}}</p>

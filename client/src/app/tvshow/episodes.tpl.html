@@ -11,14 +11,15 @@
             <li class="row episode" ng-repeat="episode in episodes"
                 ng-tap="go('/tvshow/' + tvshowid + '/'+season+'/'+episode.episodeid, 'none')">
                 <div class="span3 flip-container">
-                    <div class="flipper">
-                        <div class="md-circle poster front" image image-source="episode.thumbnail | asset:host">
-                            <em class="playcount" ng-show="episode.playcount">&#10003;</em>
+                    <flipper>
+                        <div class="front">
+                            <div class="md-circle poster" image image-source="episode.thumbnail | asset:host">
+                                <em class="playcount" ng-show="episode.playcount">&#10003;</em>
+                            </div>
                         </div>
                         <div class="back" rating rating-value="episode.rating" rating-max="10"></div>
                     </div>
-
-                </div>
+                </flipper>
                 <div class="span8">
                     <p>{{episode.title}}</p>
                     <p>{{episode.episode | episode:episode.season}}</p>

@@ -8,11 +8,13 @@
             <li class="row album" ng-repeat="album in albums"
                 ng-tap="go('/music/songs/albumid/' + album.albumid)">
                 <div class="span3 flip-container" ng-show="album.rating">
-                    <div class="flipper">
-                        <div class="md-circle poster" image image-source="album.thumbnail | asset:host | fallback:'img/icons/foxy-256.png'">
+                    <flipper>
+                        <div class="front">
+                            <div class="md-circle poster" image image-source="album.thumbnail | asset:host | fallback:'img/icons/foxy-256.png'">
+                            </div>
                         </div>
                         <div class="back" rating rating-value="album.rating" rating-max="10"></div>
-                    </div>
+                    </flipper>
                 </div>
                 <div class="span3 wrapper" ng-show="!album.rating">
                     <div class="md-circle poster" image image-source="album.thumbnail | asset:host | fallback:'img/icons/foxy-256.png'">

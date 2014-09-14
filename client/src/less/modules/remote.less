@@ -40,11 +40,11 @@ section[role="region"] .buttons .md-action{
   right: 0;
   box-shadow: none;
   transition: all 0.25s ease;
-  color : #f1f1f1 !important;
-  background: @primaryColor;
+  color : #666 !important;
+  background: @primaryBgColor;
 }
 
-section[role="region"] .buttons .md-action:hover {
+section[role="region"] .buttons .md-action.active {
   background-color : #009688;
   color : #f1f1f1 !important;
 }
@@ -59,7 +59,7 @@ section[role="region"] .buttons .direction{
   text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
 }
 
-section[role="region"] .buttons .direction:hover{
+section[role="region"] .buttons .direction.active{
   background: #3f51b5;  
 }
 
@@ -68,10 +68,10 @@ section[role="region"] .buttons .select{
   color : #f1f1f1 !important;
   text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
 }
-section[role="region"] .buttons .select:hover{
+section[role="region"] .buttons .select.active{
   background: #ff5722;
 }
-section[role="region"] .buttons .md-action:hover i { 
+section[role="region"] .buttons .md-action.active i { 
   text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
 }
 section[role="region"] .buttons .action{
@@ -95,4 +95,8 @@ section[role="region"] .buttons .row {
 section[role="region"] .buttons .row {
   display : block;
   height : 100/5%;
+}
+
+form[role="dialog"][data-type="action"] .content .body .command:last-child {
+  margin-bottom: 0;
 }
