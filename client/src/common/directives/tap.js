@@ -10,6 +10,20 @@ angular.module('directives.tap', [])
                 ngTap : '&'
             },
             link: function (scope, elm, attrs) {
+                var promise;
+                var down = function () {
+                    elm.addClass('active');
+                    if(scope.holdTrigger) {
+                        promise = $interval(scope.ngTap, 100);
+                    }
+                };
+
+                var up = function () {
+                    elm.removeClass('active');
+                    if(promise !== null) {
+                        $interval.cancel(promise);
+                    }
+                };
                 // if there is no touch available, we'll fall back to click
                 if (isTouch) {
                     var THRESHOLD = 5;
@@ -24,35 +38,23 @@ angular.module('directives.tap', [])
                     }
                     elm.bind('touchstart', function (evt) {
                         start = coordinates(evt.touches[0]);
-                        elm.addClass('active');
+                        down();
                     });
-
+                    elm.bind('touchleave', up);
                     elm.bind('touchend', function (evt) {
-                        evt.stopPropagation();
                         var end = coordinates(evt.changedTouches[0]);
                         var tapping  = Math.abs(end.screenX - start.screenX)  < THRESHOLD &&
                                        Math.abs(end.screenY - start.screenY)  < THRESHOLD;
                         if(tapping) {
                             scope.ngTap();
                         }
-                        elm.removeClass('active');
+                        up();
                     });
                 }
                 else {
-                    elm.bind('mousedown', function () {
-                        elm.addClass('active');
-                        if(scope.holdTrigger) {
-                            promise = $interval(scope.ngTap, 100);
-                        }
-                    });
-                    elm.bind('mouseup', function () {
-                        elm.removeClass('active');
-                        if(promise !== null) {
-                            $interval.cancel(promise);
-                        }
-                    });
+                    elm.bind('mousedown', down);
+                    elm.bind('mouseup', up);
                     elm.bind('click', function (evt) {
-                        evt.stopPropagation();
                         scope.ngTap();
                     });
                 }
