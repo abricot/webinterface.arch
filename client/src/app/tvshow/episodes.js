@@ -5,7 +5,7 @@ angular.module('app')
                 url: '/tvshow/:tvshowid/:season',
                 views: {
                     header: {
-                        templateUrl: 'layout/headers/basic.tpl.html'
+                        templateUrl: 'layout/headers/backable.tpl.html'
                     },
                     body: {
                         templateUrl: 'tvshow/episodes.tpl.html',

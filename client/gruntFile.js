@@ -47,9 +47,11 @@ module.exports = function (grunt) {
             chrome : {
                 files: [{ dest : '<%= wwwdir %>/js', src : 'chrome.js', expand: true, cwd: 'src/' }]
             },
+            /*
             data : {
                 files: [{ dest : '<%= wwwdir %>/js/data', src : '**', expand: true, cwd: 'src/app/data/' }]
             },
+            */
             manifests : {
               files: [{ dest: '<%= wwwdir %>', src : 'manifest.*', expand: true, cwd: 'src'}]
             }

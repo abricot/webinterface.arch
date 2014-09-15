@@ -29,13 +29,13 @@ angular.module('app')
                     key: $scope.filter,
                     value: $scope.filterId
                 };
+                $scope.updating = false;
             }
 
             function onArtistFromSource (artist) {
                 $scope.artist = artist;
                 $scope.loading = false;
                 $scope.updating = false;
-
             };
 
             function onAlbumsFromCache(albums) {
@@ -48,9 +48,13 @@ angular.module('app')
             function onAlbumsFromSource(albums) {
                 $scope.albums = albums;
                 if ($scope.filter) {
+                    $scope.xbmc.getArtistDetails(albums[0].artistid[0], onArtistFromSource);
+                } else {
                     storage.setItem('AudioLibrary.Albums', albums);
+                    $scope.loading = false;
+                    $scope.updating = false;
+                    
                 }
-                $scope.xbmc.getArtistDetails(albums[0].artistid[0], onArtistFromSource);
             };
 
             var onLoad = function() {

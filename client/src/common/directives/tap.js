@@ -7,6 +7,7 @@ angular.module('directives.tap', [])
             restrict: 'A',
             scope : {
                 holdTrigger : '=',
+                stopPropagation : '=',
                 ngTap : '&'
             },
             link: function (scope, elm, attrs) {
@@ -42,6 +43,9 @@ angular.module('directives.tap', [])
                     });
                     elm.bind('touchleave', up);
                     elm.bind('touchend', function (evt) {
+                        if(scope.stopPropagation) {
+                            evt.stopPropagation();
+                        }
                         var end = coordinates(evt.changedTouches[0]);
                         var tapping  = Math.abs(end.screenX - start.screenX)  < THRESHOLD &&
                                        Math.abs(end.screenY - start.screenY)  < THRESHOLD;
@@ -55,6 +59,9 @@ angular.module('directives.tap', [])
                     elm.bind('mousedown', down);
                     elm.bind('mouseup', up);
                     elm.bind('click', function (evt) {
+                        if(scope.stopPropagation) {
+                            evt.stopPropagation();
+                        }
                         scope.ngTap();
                     });
                 }

@@ -42,6 +42,7 @@ angular.module('app')
             $scope.$state = $state;
             $scope.connected = false;
             $scope.initialized = false;
+            $scope.isMaximized = false;
             $scope.player = {
                 id: -1,
                 active: false,
@@ -81,8 +82,7 @@ angular.module('app')
             };
 
             $scope.toggleDrawer = function() {
-                var drawer = angular.element(document.querySelector('#drawer'));
-                drawer.toggleClass('maximize');
+                $scope.isMaximized = !$scope.isMaximized;
             };
 
             $scope.toggleTheme = function() {
