@@ -41,7 +41,14 @@ angular.module('app')
 
             function onPlayerItemRetrieved(item) {
                 $scope.loading = false;
-                $scope.library.item = item;
+                if($scope.library.item.type === 'episode') {
+                    $scope.xbmc.getTVShowDetails(item.tvshowid, function(details){
+                        item.genre = details.genre;
+                        $scope.library.item = item;
+                    });
+                } else {
+                  $scope.library.item = item;
+                }
                
             };
 
