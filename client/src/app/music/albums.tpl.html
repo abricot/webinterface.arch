@@ -10,14 +10,14 @@
                 <div class="span3 flip-container" ng-show="album.rating">
                     <flipper>
                         <div class="front">
-                            <div class="md-circle poster" image image-source="album.thumbnail | asset:host | fallback:'img/icons/foxy-256.png'">
+                            <div class="md-circle poster" image image-source="album.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'">
                             </div>
                         </div>
                         <div class="back" rating rating-value="album.rating" rating-max="10"></div>
                     </flipper>
                 </div>
                 <div class="span3 wrapper" ng-show="!album.rating">
-                    <div class="md-circle poster" image image-source="album.thumbnail | asset:host | fallback:'img/icons/foxy-256.png'">
+                    <div class="md-circle poster" image image-source="album.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'">
                     </div>
                 </div>
                 <div class="span8">

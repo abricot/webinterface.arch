@@ -70,6 +70,9 @@ angular.module('app')
             };
 
             $scope.go = function(path) {
+                if($scope.isMaximized){
+                    $scope.isMaximized = !$scope.isMaximized;
+                }
                 $location.path(path);
             };
 
