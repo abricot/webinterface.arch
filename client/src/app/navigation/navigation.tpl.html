@@ -21,7 +21,7 @@
     <nav ng-class="{'active-player' : player.active, 'inactive-player': !player.active}">
         <ul>
             <li ng-repeat="item in medias" class="row" 
-                ng-tap="go(item.hash)" ng-class="{selected : isCurrent(item.hash)}">
+                ng-click="go(item.hash)" ng-class="{selected : isCurrent(item.hash)}">
                 <div class="span2">
                     <i class="{{item.icon}}"></i>
                 </div>
@@ -30,7 +30,7 @@
                 </div>
             </li>
             <li  ng-show="player.active" class="row" 
-                 ng-tap="go('/now/playing')" ng-class="{selected :isCurrent('/now/playing')}">
+                 ng-click="go('/now/playing')" ng-class="{selected :isCurrent('/now/playing')}">
                 <div class="span2">
                     <i class="icon-youtube-play"></i>
                 </div>
@@ -39,7 +39,7 @@
                 </div>
             </li>
             <li ng-show="player.active" class="row" 
-                ng-tap="go('/now/playlist')" ng-class="{selected :isCurrent('/now/playlist')}">
+                ng-click="go('/now/playlist')" ng-class="{selected :isCurrent('/now/playlist')}">
                 <div class="span2">
                     <i class="icon-glass"></i>
                 </div>
@@ -48,7 +48,7 @@
                 </div>
             </li>
             <li ng-repeat="item in controls" class="row" 
-                ng-tap="go(item.hash)" ng-class="{selected :isCurrent(item.hash)}">
+                ng-click="go(item.hash)" ng-class="{selected :isCurrent(item.hash)}">
                 <div class="span2">
                     <i class="{{item.icon}}"></i>
                 </div>
@@ -56,7 +56,7 @@
                     {{item.label}}
                 </div>
             </li>
-            <li  class="row" ng-tap="toggleTheme()">
+            <li  class="row" ng-click="toggleTheme()">
                 <div class="span2">
                     <i class="icon-exchange"></i>
                 </div>
@@ -70,7 +70,7 @@
         <div role="slider" seekbar seekbar-value="player.seek.percentage" seekbar-max="100" seekbar-read-only="true"></div>
         <div class="row">
             <div ng-switch on="hasPoster(player.item.art)">
-                <div ng-switch-when="true" ng-tap="go('/now/playing','none')">
+                <div ng-switch-when="true" ng-click="go('/now/playing','none')">
                     <div class="span3 poster-wrapper" >
                         <div class="md-circle poster" image image-source="player.item.art | thumb  | asset:host | fallback:'img/icons/foxy-512.png'"></div>
                     </div>
@@ -80,9 +80,9 @@
                 {{getLabel(player.item)}}
             </div>
             <div class="span2 actions">
-                <div class="offset4 span4 icon-play" ng-tap="xbmc.togglePlay()"  ng-show="!player.speed">
+                <div class="offset4 span4 icon-play" ng-click="xbmc.togglePlay()"  ng-show="!player.speed">
                 </div>
-                <div class="offset4 span4 icon-pause" ng-tap="xbmc.togglePlay()"  ng-show="player.speed">
+                <div class="offset4 span4 icon-pause" ng-click="xbmc.togglePlay()"  ng-show="player.speed">
                 </div>
             </div>
         </div>

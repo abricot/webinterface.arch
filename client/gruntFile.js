@@ -85,7 +85,8 @@ module.exports = function (grunt) {
                 src:[
                     'vendor/angular/angular.js', 
                     'src/assets/js/ui-bootstrap-custom-0.10.0.js', 
-                    'vendor/angular-ui-router/release/angular-ui-router.js'
+                    'vendor/angular-ui-router/release/angular-ui-router.js',
+                    'vendor/angular-touch/angular-touch.js',
                 ],
                 dest: '<%= wwwdir %>/js/lib/angular.js'
             },

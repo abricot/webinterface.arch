@@ -6,7 +6,7 @@
         </div>
         <ul data-type="list" class="view albums">
             <li class="row album" ng-repeat="album in albums"
-                ng-tap="go('/music/songs/albumid/' + album.albumid)">
+                ng-click="go('/music/songs/albumid/' + album.albumid)">
                 <div class="span3 flip-container" ng-show="album.rating">
                     <flipper>
                         <div class="front">

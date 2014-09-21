@@ -13,7 +13,7 @@
     <script type="text/javascript" src="js/lib/mousetrap.js"></script>
     <script type="text/javascript" src="js/<%= grunt.config.get('pkg.name') %>.js"></script>
   </head>
-  <body role="application">
+  <body role="application" ng-swipe-right="showDrawer()" ng-swipe-left="hideDrawer()">
         <keybinding on="up" invoke="xbmc.up()"></keybinding>
         <keybinding on="left" invoke="xbmc.left()"></keybinding>
         <keybinding on="enter" invoke="xbmc.select()"></keybinding>
@@ -31,9 +31,9 @@
         <keybinding on="home" invoke="xbmc.home()"></keybinding>
         <keybinding on="end" invoke="xbmc.stop()"></keybinding>
  
-        <section id="page" role="region" ng-show="initialized" ng-tap="hideDrawer()">
+        <section id="page" role="region" ng-show="initialized">
             <header  ui-view="header"></header>
-            <div role="main" ui-view="body" ng-class="{'no-footer' : !hasFooter(), 'no-header' : !hasHeader()}"></div>
+            <div role="main" ui-view="body" ng-class="{'no-footer' : !hasFooter(), 'no-header' : !hasHeader()}" ng-click="hideDrawer()"></div>
         </section>
 
         <section role="region" ng-show="!initialized">

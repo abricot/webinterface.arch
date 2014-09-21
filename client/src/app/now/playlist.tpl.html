@@ -4,13 +4,13 @@
         <div class="arts">
             <div class="banner" image image-source="items[0].fanart | asset:host  | fallback:'img/backgrounds/banner.png'">
             </div>
-            <div class="md-action md-action-primary" ng-tap="xbmc.next()">
+            <div class="md-action md-action-primary" ng-click="xbmc.next()">
                     <i class="icon-fast-forward"></i>
             </div>
         </div>
         <ul data-type="list" class="view songs">
             <li class="row " ng-repeat="item in items"
-                ng-tap="xbmc.goTo($index)">
+                ng-click="xbmc.goTo($index)">
                 <div class="span3 flip-container" ng-show="item.rating">
                     <flipper>
                         <div class="front">

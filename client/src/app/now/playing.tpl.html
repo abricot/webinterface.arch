@@ -19,32 +19,32 @@
         </div>
         <div class="player">
             <div class="row controls">
-                <div class="span3 action" ng-tap="toggleAudioStreams()" ng-show="isTypeVideo()">
+                <div class="span3 action" ng-click="toggleAudioStreams()" ng-show="isTypeVideo()">
                     <i class="icon-comments"></i>
                 </div>
-                <div class="times" ng-tap="toggleTimePicker()" ng-class="{span6 : isTypeVideo(), span12 : !isTypeVideo()}">
+                <div class="times" ng-click="toggleTimePicker()" ng-class="{span6 : isTypeVideo(), span12 : !isTypeVideo()}">
                     {{player.seek.time | time | date:'HH:mm:ss'}}/
                     {{player.seek.totaltime | time | date:'HH:mm:ss'}}
                     [-{{(player.seek.totaltime - player.seek.time)  | time | date:'HH:mm:ss'}}]
                 </div>
-                <div class="span3 action" ng-tap="toggleSubtitles()" ng-show="isTypeVideo()">
+                <div class="span3 action" ng-click="toggleSubtitles()" ng-show="isTypeVideo()">
                     <i class="icon-quote-left"></i>
                 </div>
             </div>
             <div role="slider" class="row" seekbar seekbar-value="player.seek.percentage" seekbar-max="100"
                          on-seekbar-changed="onSeekbarChanged(newValue)"></div>
             <div class="row controls">
-                <div class="span3" ng-tap="xbmc.previous()">
+                <div class="span3" ng-click="xbmc.previous()">
                     <i class="icon-fast-backward"></i>
                 </div>
-                <div class="span3" ng-tap="xbmc.togglePlay()">
+                <div class="span3" ng-click="xbmc.togglePlay()">
                     <i class="icon-play" ng-show="!player.speed"></i>
                     <i class="icon-pause" ng-show="player.speed"></i>
                 </div>
-                <div class="span3" ng-tap="xbmc.stop()">
+                <div class="span3" ng-click="xbmc.stop()">
                     <i class="icon-stop"></i>
                 </div>
-                <div class="span3" ng-tap="xbmc.next()">
+                <div class="span3" ng-click="xbmc.next()">
                     <i class="icon-fast-forward"></i>
                 </div>
             </div>
@@ -57,13 +57,13 @@
         <header> Audio Streams </header>
         <div class="body">
             <label ng-repeat="audiostream in player.audiostreams">
-                <input type="radio" ng-model="$parent.stream" ng-value="audiostream.index" name="audiostreams"/>
+                <input type="radio" ng-model="stream" ng-value="audiostream.index" name="audiostreams"/>
                 {{audiostream.name}} ( {{audiostream.language}})
             </label>
         </div>
         <div class="actions">
-            <button ng-tap="toggleAudioStreams()"> Cancel </button>
-            <button class="recommend" ng-tap="onValidateAudioStream()"> Ok </button>
+            <button ng-click="toggleAudioStreams()"> Cancel </button>
+            <button class="recommend" ng-click="onValidateAudioStream()"> Ok </button>
         </div>
     </div>
 </form>
@@ -77,13 +77,13 @@
                 None
             </label>
             <label ng-repeat="subtitle in player.subtitles">
-                <input type="radio" ng-model="$parent.sub" ng-value="subtitle.index" name="subtitles"/>
+                <input type="radio" ng-model="sub" ng-value="subtitle.index" name="subtitles"/>
                 {{subtitle.name}} ({{subtitle.language}})
             </label>
         </div>
         <div class="actions">
-            <button ng-tap="toggleSubtitles()"> Cancel </button>
-            <button class="recommend" ng-tap="onValidateSubtitles()"> Ok </button>
+            <button ng-click="toggleSubtitles()"> Cancel </button>
+            <button class="recommend" ng-click="onValidateSubtitles()"> Ok </button>
         </div>
     </div>
 </form>
@@ -99,8 +99,8 @@
             </div>
         </div>
         <div class="actions">
-            <button  ng-tap="toggleTimePicker()"> Cancel </button>
-            <button class="recommend" ng-tap="onValidateSeekTime()"> Ok </button>
+            <button  ng-click="toggleTimePicker()"> Cancel </button>
+            <button class="recommend" ng-click="onValidateSeekTime()"> Ok </button>
         </div>
     </div>
 </form>

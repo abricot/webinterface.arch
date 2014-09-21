@@ -3,13 +3,13 @@
     <div ng-switch-when="false" class="tvshow">
         <div class="arts">
             <div class="banner" image image-source="episodes[0].art['tvshow.banner'] | asset:host | fallback:'img/backgrounds/banner.png'"></div>
-            <div class="md-action md-action-primary" ng-show="episodes.length" ng-tap="queueAll()">
+            <div class="md-action md-action-primary" ng-show="episodes.length" ng-click="queueAll()">
                 <i class="icon-plus"></i>
             </div>
         </div>
         <ul data-type="list" class="view">
             <li class="row episode" ng-repeat="episode in episodes"
-                ng-tap="go('/tvshow/' + tvshowid + '/'+season+'/'+episode.episodeid, 'none')">
+                ng-click="go('/tvshow/' + tvshowid + '/'+season+'/'+episode.episodeid, 'none')">
                 <div class="span3 flip-container">
                     <flipper>
                         <div class="front">

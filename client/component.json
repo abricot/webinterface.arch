@@ -1,11 +1,12 @@
 {
-	"name": "foxmote",
-	"version": "0.5",
-	"dependencies": {
-	"angular": "~1.2.14",
+  "name": "foxmote",
+  "version": "0.5",
+  "dependencies": {
+    "angular": "~1.2.14",
     "angular-bootstrap": "~0.10.0",
-    "angular-ui-router" : "~0.0.1",
-    "font-awesome" : "~3.2.0",
-    "mousetrap" : "~1.2.0"
-	}
+    "angular-ui-router": "~0.0.1",
+    "angular-touch": "~1.2.25",
+    "font-awesome": "~3.2.0",
+    "mousetrap": "~1.2.0"
+  }
 }

@@ -4,21 +4,22 @@
         <div class="arts">
             <div class="fanart" image image-source="library.item.thumbnail | asset:host"></div>
             <div class="md-action md-action-primary"
-                 ng-tap="xbmc.open({'episodeid': library.item.episodeid})" ng-show="!player.active">
+                 ng-click="xbmc.open({'episodeid': library.item.episodeid})" ng-show="!player.active">
                 <i class="icon-play"></i>
             </div>
             <div class="md-action md-action-primary"
-                 ng-tap="xbmc.queue({'episodeid': library.item.episodeid})" ng-show="player.active && !isCurrentlyPlaying">
+                 ng-click="xbmc.queue({'episodeid': library.item.episodeid})" ng-show="player.active && !isCurrentlyPlaying">
                 <i class="icon-plus"></i>
             </div>
             <div class="md-action md-action-primary"
-                 ng-tap="xbmc.togglePlay()" ng-show="player.active && isCurrentlyPlaying">
+                 ng-click="xbmc.togglePlay()" ng-show="player.active && isCurrentlyPlaying">
                 <i class="icon-play" ng-show="!player.speed"></i>
                 <i class="icon-pause" ng-show="player.speed"></i>
             </div>
             <div class="poster-wrapper">
                 <img class=" poster" image image-source="library.item.art['tvshow.poster'] | asset:host | fallback:'img/icons/foxy-512.png'"/>
             </div>
+            <streamdetails details="library.item.streamdetails"></streamdetails>
         </div>
         <h1>
             {{library.item.title}}
@@ -43,6 +44,7 @@
                     </div>
                 </div>
             </div>
+            
             <p class="plot">{{library.item.plot}}</p>
         </div>
     </div>

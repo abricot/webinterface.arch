@@ -4,24 +4,25 @@
         <div class="arts">
             <div class="fanart" image image-source="library.item.fanart | asset:host"></div>
             <div class="md-action md-action-primary"
-                 ng-tap="xbmc.open({'movieid': library.item.movieid})" ng-show="!player.active">
+                 ng-click="xbmc.open({'movieid': library.item.movieid})" ng-show="!player.active">
                 <i class="icon-play"></i>
             </div>
             <div class="md-action md-action-primary"
-                 ng-tap="xbmc.queue({'movieid': library.item.movieid})" ng-show="player.active && !isCurrentlyPlaying">
+                 ng-click="xbmc.queue({'movieid': library.item.movieid})" ng-show="player.active && !isCurrentlyPlaying">
                 <i class="icon-plus"></i>
             </div>
             <div class="md-action md-action-primary"
-                 ng-tap="xbmc.togglePlay()" ng-show="player.active && isCurrentlyPlaying">
+                 ng-click="xbmc.togglePlay()" ng-show="player.active && isCurrentlyPlaying">
                 <i class="icon-play" ng-show="!player.speed"></i>
                 <i class="icon-pause" ng-show="player.speed"></i>
             </div>
             <div class="poster-wrapper">
                 <img class=" poster" image image-source="library.item.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'"/>
-                <div class="preview"  ng-tap="xbmc.open({'file': library.item.trailer})">
+                <div class="preview"  ng-click="xbmc.open({'file': library.item.trailer})">
                     <i class="icon-film"></i>
                 </div>
             </div>
+            <streamdetails details="library.item.streamdetails"></streamdetails>
         </div>
         <h1>
             {{library.item.title}}

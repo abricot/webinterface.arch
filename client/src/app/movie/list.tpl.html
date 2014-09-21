@@ -5,7 +5,7 @@
             <div class="banner" image image-source="randomMovie.fanart | asset:host | fallback:'img/backgrounds/banner.png'">
             </div>
             <div class="md-action md-action-primary"
-                 ng-tap="xbmc.scan('VideoLibrary')">
+                 ng-click="xbmc.scan('VideoLibrary')">
                 <i class="icon-refresh"></i>
             </div>
         </div>
@@ -14,7 +14,7 @@
         </div>
         <ul data-type="list">
             <li class="row movie" ng-repeat="movie in movies"
-                ng-tap="go('/movie/' + movie.movieid, 'none')">
+                ng-click="go('/movie/' + movie.movieid, 'none')">
                 <div class="span3 flip-container">
                     <flipper>
                         <div class="front">

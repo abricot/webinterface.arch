@@ -3,7 +3,7 @@
     <div class="artist" ng-switch-when="false">
       <div class="album arts">
           <div class="banner" image image-source="artist.fanart | asset:host | fallback:'img/backgrounds/banner.png'"></div>
-          <div class="md-action md-action-primary" ng-tap="xbmc.queue({'albumid': songs[0].albumid})">
+          <div class="md-action md-action-primary" ng-click="xbmc.queue({'albumid': songs[0].albumid})">
               <i class="icon-plus"></i>
           </div>
           <div class="span4 thumb">

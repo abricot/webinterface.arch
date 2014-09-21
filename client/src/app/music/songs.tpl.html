@@ -6,7 +6,7 @@
         </div>
         <ul data-type="list" class="view songs">
             <li class="row song" ng-repeat="song in songs"
-                ng-tap="play({songid : song.songid})">
+                ng-click="play({songid : song.songid})">
                 <div class="span10">
                     <p>{{song.label}}</p>
                     <p>{{song.artist.join(', ')}}</p>

@@ -5,18 +5,18 @@
                 <div class="banner" image image-source="player.item.fanart | asset:host"></div>
                 <div role="slider" seekbar seekbar-value="player.seek.percentage" seekbar-max="100" seekbar-read-only="true"></div>
                 <div class="label">{{player.item.label}}</div>
-                <div class="md-action md-action-primary" ng-tap="xbmc.togglePlay()" ng-show="!player.speed">
+                <div class="md-action md-action-primary" ng-click="xbmc.togglePlay()" ng-show="!player.speed">
                     <i class="offset4 span4 icon-play">
                     </i>
                 </div>
-                <div class="md-action md-action-primary" ng-tap="xbmc.togglePlay()"  ng-show="player.speed">
+                <div class="md-action md-action-primary" ng-click="xbmc.togglePlay()"  ng-show="player.speed">
                     <i class="offset4 span4 icon-pause">
                     </i>
                 </div>
             </div>
             <div ng-switch-when="false">
                 <div class="banner"></div>
-                <div class="md-action md-action-primary" ng-tap="toggleShutdownOptions()">
+                <div class="md-action md-action-primary" ng-click="toggleShutdownOptions()">
                     <i class="icon icon-power-off"></i>
                 </div>
             </div>
@@ -25,85 +25,85 @@
     <div class="buttons">
         <div class="row">
             <div class="action">
-                <div class="md-action"  ng-tap="xbmc.contextmenu()">
+                <div class="md-action"  ng-click="xbmc.contextmenu()">
                     <i class="icon icon-list-ul"></i>
                 </div>
             </div>
             <div class="action">
-                <div class="md-action"  ng-tap="xbmc.info()">
+                <div class="md-action"  ng-click="xbmc.info()">
                     <i class="icon icon-info-sign"></i>
                 </div>
             </div>
             <div class="action">
-                <div class="md-action" ng-tap="xbmc.showOSD()">
+                <div class="md-action" ng-click="xbmc.showOSD()">
                     <i class="icon icon-ellipsis-horizontal"></i>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="action">
-                <div class="md-action" ng-tap="xbmc.previous()">
+                <div class="md-action" ng-click="xbmc.previous()">
                     <i class="icon icon-fast-backward"></i>
                 </div>
             </div>
             <div class="action">
-                <div class="md-action" ng-tap="xbmc.stop()">
+                <div class="md-action" ng-click="xbmc.stop()">
                     <i class="icon icon-stop"></i>
                 </div>
             </div>
             <div class="action">
-               <div class="md-action" ng-tap="xbmc.next()"> 
+               <div class="md-action" ng-click="xbmc.next()"> 
                     <i class="icon icon-fast-forward"></i>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="action">
-                <div class="md-action" ng-tap="xbmc.decreaseVolume()"  hold-trigger="true">
+                <div class="md-action" ng-hold="xbmc.decreaseVolume()">
                     <i class="icon icon-volume-down"></i>
                 </div>
             </div>
             <div class="action">
-                <div class="md-action direction"  ng-tap="xbmc.up()">
+                <div class="md-action direction"  ng-click="xbmc.up()">
                     <i class="icon icon-chevron-up"></i>
                 </div>
             </div>
             <div class="action">
-                <div class="md-action" ng-tap="xbmc.increaseVolume()" hold-trigger="true">
+                <div class="md-action" ng-hold="xbmc.increaseVolume()" >
                     <i class="icon icon-volume-up"></i>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="action">
-                <div class="md-action direction" ng-tap="xbmc.left()">
+                <div class="md-action direction" ng-click="xbmc.left()">
                     <i class="icon icon-chevron-left"></i>
                 </div>
             </div>
             <div class="action">
-                <div class="md-action select" ng-tap="xbmc.select()">
+                <div class="md-action select" ng-click="xbmc.select()">
                     <i class="icon icon-circle"></i>
                 </div>
             </div>
             <div class="action">
-                <div class="md-action direction" ng-tap="xbmc.right()">
+                <div class="md-action direction" ng-click="xbmc.right()">
                     <i class="icon icon-chevron-right"></i>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="action">
-                <div class="md-action" ng-tap="xbmc.back()">
+                <div class="md-action" ng-click="xbmc.back()">
                     <i class="icon icon-mail-reply"></i>
                 </div>
             </div>
             <div class="action">
-                <div class="md-action direction" ng-tap="xbmc.down()">
+                <div class="md-action direction" ng-click="xbmc.down()">
                     <i class="icon icon-chevron-down"></i>
                 </div>
             </div>
             <div class="action">
-               <div class="md-action" ng-tap="toggleKeyboard()">
+               <div class="md-action" ng-click="toggleKeyboard()">
                     <i class="icon icon-keyboard"></i>
                 </div>
             </div>
@@ -120,8 +120,8 @@
                           placeholder="Text to send"></textarea>
         </div>
         <div class="actions">
-            <button ng-tap="toggleKeyboard()"> Cancel </button>
-            <button class="recommend"   ng-tap="onValidateText()"> Ok </button>
+            <button ng-click="toggleKeyboard()"> Cancel </button>
+            <button class="recommend"   ng-click="onValidateText()"> Ok </button>
         </div>
     </div>
 </form>
@@ -130,13 +130,13 @@
     <div class="content">
         <header>System</header>
         <div class="body">
-            <button class="command" ng-tap="execCommand('shutdown')">Power off</button>
-            <button class="command" ng-tap="execCommand('hibernate')">Hibernate</button>
-            <button class="command" ng-tap="execCommand('suspend')">Suspend</button>
-            <button class="command" ng-tap="execCommand('reboot')">Reboot</button>
+            <button class="command" ng-click="execCommand('shutdown')">Power off</button>
+            <button class="command" ng-click="execCommand('hibernate')">Hibernate</button>
+            <button class="command" ng-click="execCommand('suspend')">Suspend</button>
+            <button class="command" ng-click="execCommand('reboot')">Reboot</button>
         </div>
         <div class="actions">
-            <button ng-tap="toggleShutdownOptions()">Cancel</button>
+            <button ng-click="toggleShutdownOptions()">Cancel</button>
         </div>
     </div>
 </form>
