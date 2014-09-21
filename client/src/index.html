@@ -14,40 +14,40 @@
     <script type="text/javascript" src="js/<%= grunt.config.get('pkg.name') %>.js"></script>
   </head>
   <body role="application" ng-swipe-right="showDrawer()" ng-swipe-left="hideDrawer()">
-        <keybinding on="up" invoke="xbmc.up()"></keybinding>
-        <keybinding on="left" invoke="xbmc.left()"></keybinding>
-        <keybinding on="enter" invoke="xbmc.select()"></keybinding>
-        <keybinding on="right" invoke="xbmc.right()"></keybinding>
-        <keybinding on="backspace" invoke="xbmc.back()"></keybinding>
-        <keybinding on="down" invoke="xbmc.down()"></keybinding>
-        <keybinding on="space" invoke="xbmc.togglePlay()"></keybinding>
-        <keybinding on="ctrl+i" invoke="xbmc.info()"></keybinding>
-        <keybinding on="ctrl+m" invoke="xbmc.mute()"></keybinding>
-        <keybinding on="ctrl+o" invoke="xbmc.showOSD()"></keybinding>
-        <keybinding on="pageup" invoke="xbmc.increaseVolume()"></keybinding>
-        <keybinding on="pagedown" invoke="xbmc.decreaseVolume()"></keybinding>
-        <keybinding on="ctrl+s" invoke="xbmc.toggleSubtitles()"></keybinding>
+    <keybinding on="up" invoke="xbmc.up()"></keybinding>
+    <keybinding on="left" invoke="xbmc.left()"></keybinding>
+    <keybinding on="enter" invoke="xbmc.select()"></keybinding>
+    <keybinding on="right" invoke="xbmc.right()"></keybinding>
+    <keybinding on="backspace" invoke="xbmc.back()"></keybinding>
+    <keybinding on="down" invoke="xbmc.down()"></keybinding>
+    <keybinding on="space" invoke="xbmc.togglePlay()"></keybinding>
+    <keybinding on="ctrl+i" invoke="xbmc.info()"></keybinding>
+    <keybinding on="ctrl+m" invoke="xbmc.mute()"></keybinding>
+    <keybinding on="ctrl+o" invoke="xbmc.showOSD()"></keybinding>
+    <keybinding on="pageup" invoke="xbmc.increaseVolume()"></keybinding>
+    <keybinding on="pagedown" invoke="xbmc.decreaseVolume()"></keybinding>
+    <keybinding on="ctrl+s" invoke="xbmc.toggleSubtitles()"></keybinding>
 
-        <keybinding on="home" invoke="xbmc.home()"></keybinding>
-        <keybinding on="end" invoke="xbmc.stop()"></keybinding>
- 
-        <section id="page" role="region" ng-show="initialized">
-            <header  ui-view="header"></header>
-            <div role="main" ui-view="body" ng-class="{'no-footer' : !hasFooter(), 'no-header' : !hasHeader()}" ng-click="hideDrawer()"></div>
-        </section>
+    <keybinding on="home" invoke="xbmc.home()"></keybinding>
+    <keybinding on="end" invoke="xbmc.stop()"></keybinding>
+    
+    <section id="page" role="region" ng-show="initialized">
+      <header  ui-view="header"></header>
+      <div role="main" ui-view="body" ng-class="{'no-footer' : !hasFooter(), 'no-header' : !hasHeader()}" ng-click="hideDrawer()"></div>
+    </section>
 
-        <section role="region" ng-show="!initialized">
-            <div role="splash">
-                <div class="foxy"></div>
-            </div>
-        </section>
+    <section role="region" ng-show="!initialized">
+      <div role="splash">
+        <div class="foxy"></div>
+      </div>
+    </section>
 
-        <div ng-include src="'navigation/navigation.tpl.html'" ng-controller="NavigationCtrl"></div>
-        <div class="font-loader"> 
-            <div class="kenyanCoffee">Preload kenyc.ttf</div>
-            <div class="ffosxbmc">Preload ffosxbmc.ttf</div>
-            <div class="movieGenre">Preload moviegenre.ttf</div>
-            <div class="digi">Preload digi.ttf</div>
-        </div>
+    <div ng-include src="'navigation/navigation.tpl.html'" ng-controller="NavigationCtrl"></div>
+    <div class="font-loader"> 
+      <div class="kenyanCoffee">Preload kenyc.ttf</div>
+      <div class="ffosxbmc">Preload ffosxbmc.ttf</div>
+      <div class="movieGenre">Preload moviegenre.ttf</div>
+      <div class="digi">Preload digi.ttf</div>
+    </div>
   </body>
 </html>

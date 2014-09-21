@@ -5,10 +5,10 @@ angular.module('directives.streamdetails', [])
     restrict: 'E',
     replace : true,
     template: '<div class="stream details">'+
-    '<div class="detail video mode" ng-show="hasVideo()">{{getVideoMode()}}<i class="icon-film"></i></div>'+
-    '<div class="detail audio channels" ng-show="hasAudio()">{{getAudioChannels()}}<i class="icon-volume-up"></i></div>'+
-    '<div class="detail audio lang" ng-show="hasAudio()">{{getAudioLanguage()}}<i class="icon-comments-alt"></i></div>'+
-    '<div class="detail audio subtitle" ng-show="hasSubtitle()">{{getSubtitles()}}<i class="icon-file-text-alt"></i></div>'+
+    '<div class="detail video mode" ng-show="hasVideo()"><i class="icon-film"></i>{{getVideoMode()}}</div>'+
+    '<div class="detail audio channels" ng-show="hasAudio()"><i class="icon-volume-up"></i>{{getAudioChannels()}}</div>'+
+    '<div class="detail audio lang" ng-show="hasAudio()"><i class="icon-comments-alt"></i>{{getAudioLanguage()}}</div>'+
+    '<div class="detail audio subtitle" ng-show="hasSubtitle()"><i class="icon-file-text-alt"></i>{{getSubtitles()}}</div>'+
     '</div>',
     scope: {
       details: '='
@@ -27,9 +27,7 @@ angular.module('directives.streamdetails', [])
       scope.getVideoMode = function () {
         if(scope.hasVideo()) {
           var firstVideo = scope.details.video[0];
-          if(firstVideo.width === 1920) {
-            return 'FHD';
-          } else if(firstVideo.width === 1280) {
+          if(firstVideo.width >= 1280) {
             return 'HD';
           } else {
             return 'SD';

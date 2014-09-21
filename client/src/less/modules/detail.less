@@ -144,28 +144,29 @@
 }
 
 .stream.details {
-  margin-top : 1rem;
-  text-align  : center;
-  margin-top: 1rem;
-  text-align: center;
   position: absolute;
-  bottom: 2rem;
-  left: 13.5rem;
+  top: 4rem;
+  left: 14rem;
+  text-align: center;
+  transform: rotate(90deg);
+  transform-origin: .5rem;
+  white-space: nowrap;
 }
 
 .stream.details .detail {
+  display: inline-block;
   padding: 0.5rem .5rem;
   margin-bottom: .5rem;
   font-size: 1.2rem;
-  background-color: @regionBgColor;
+  color: #666666;
+  text-align: right;
+  background-color: #f1f1f1;
   color: @primaryTextColor;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-  border-radius: 0.25rem;
-  text-align: right;
 }
 
 .stream.details .detail:last-child {
   margin : 0;
 }
 
-.stream.details .detail i {padding-left : .5rem;}
+.stream.details .detail i {padding-right : .5rem;}
