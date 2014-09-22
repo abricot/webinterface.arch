@@ -93,6 +93,10 @@ module.exports = function (grunt) {
             mousetrap: {
                 src:['vendor/mousetrap/mousetrap.js'],
                 dest: '<%= wwwdir %>/js/lib/mousetrap.js'
+            },
+            googleAnalyticsBundle : {
+                src:['vendor/chrome-platform-analytic/google-analytics-bundle.js'],
+                dest: '<%= wwwdir %>/js/lib/google-analytics-bundle.js'
             }
         },
         uglify: {

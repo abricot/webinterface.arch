@@ -31,8 +31,8 @@
                     <i class="icon-quote-left"></i>
                 </div>
             </div>
-            <div role="slider" class="row" seekbar seekbar-value="player.seek.percentage" seekbar-max="100"
-                         on-seekbar-changed="onSeekbarChanged(newValue)"></div>
+            <seekbar seekbar-value="player.seek.percentage" seekbar-max="100"
+                         on-seekbar-changed="onSeekbarChanged(newValue)"></seekbar>
             <div class="row controls">
                 <div class="span3" ng-click="xbmc.previous()">
                     <i class="icon-fast-backward"></i>

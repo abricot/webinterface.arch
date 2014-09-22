@@ -1,6 +1,6 @@
 angular.module('services.xbmc', ['services.io'])
-.factory('xbmc', ['$rootScope', '$q', '$parse', '$interval', 'io',
-  function($rootScope, $q, $parse, $interval, io) {
+.factory('xbmc', [ 'io',
+  function(io) {
     // We return this object to anything injecting our service
     var factory = {};
     var activePlayer = -1;

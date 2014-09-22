@@ -59,7 +59,7 @@ angular.module('app')
 
     var onLoad = function() {
       if (!$scope.filter) {
-        storage.getItem('AudioLibrary.Albums', onAlbumsFromCache);
+        storage.getItem('AudioLibrary.Albums').then(onAlbumsFromCache);
       }
       $scope.xbmc.getAlbums(filter, onAlbumsFromSource);
     };

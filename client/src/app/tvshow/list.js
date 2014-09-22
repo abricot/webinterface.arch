@@ -46,7 +46,7 @@ angular.module('app')
     };
 
     var onLoad = function() {
-      storage.getItem('VideoLibrary.TVShows', onTvShowsFromCache);
+      storage.getItem('VideoLibrary.TVShows').then(onTvShowsFromCache);
       $scope.xbmc.getTVShows(onTvShowsFromSource);
     };
 

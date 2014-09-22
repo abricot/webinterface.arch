@@ -1,5 +1,6 @@
 angular.module('services.storage', [])
-.provider('storage', function () {
+.factory('storage', [ '$q', '$timeout', function ($q, $timeout) {
+  var factory = {};
   var asChromeApp = false;
   if(window.chrome && window.chrome.storage) {
     asChromeApp = true;
@@ -17,17 +18,21 @@ angular.module('services.storage', [])
     return JSON.stringify(obj);
   };
 
-  this.getItem = function (key, cb) {
+  factory.getItem = function (key) {
+    var defer = $q.defer();
     if(!asChromeApp) {
-      cb(toObject(window.localStorage.getItem(key)));
+      $timeout(function(){
+        defer.resolve(toObject(window.localStorage.getItem(key)));
+      }, 100);
     } else {
       chrome.storage.local.get(key, function(items){
-        cb(toObject(items[key] || null));
-      })
+        defer.resolve(toObject(items[key] || null));
+      });
     }
+    return defer.promise;
   };
 
-  this.setItem = function (key, value) {
+  factory.setItem = function (key, value) {
     if(!asChromeApp) {
       window.localStorage.setItem(key, toJSON(value));
     } else {
@@ -37,7 +42,7 @@ angular.module('services.storage', [])
     }
   };
 
-  this.removeItem = function (key) {
+  factory.removeItem = function (key) {
     if(!asChromeApp) {
       window.localStorage.removeItem(key);
     } else {
@@ -45,11 +50,5 @@ angular.module('services.storage', [])
     }
   };
 
-  this.$get = function () {
-    return {
-      getItem: this.getItem,
-      setItem: this.setItem,
-      removeItem: this.removeItem
-    }
-  };
-});
+  return factory;
+}]);

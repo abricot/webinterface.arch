@@ -5,7 +5,7 @@ angular.module('directives.flipper', [])
     restrict: 'E',
     transclude : true,
     replace : true,
-    template: '<div class="flipper" ng-transclude ng-class="{flipped : flipped}"></div>',
+    templateUrl: 'template/flipper/flipper.tpl.html',
     link: function (scope, elem, attrs) {
       scope.flipped = false;
       elem.bind('touchstart', function (evt) {

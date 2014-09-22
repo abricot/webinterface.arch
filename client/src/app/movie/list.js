@@ -40,7 +40,7 @@ angular.module('app')
     };
 
     var onLoad = function () {
-      storage.getItem('VideoLibrary.Movies', onMoviesFromCache);
+      storage.getItem('VideoLibrary.Movies').then(onMoviesFromCache);
       $scope.xbmc.getMovies(onMoviesFromSource);
     };
     if ($scope.xbmc.isConnected()) {

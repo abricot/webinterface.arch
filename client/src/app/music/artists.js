@@ -20,7 +20,7 @@ angular.module('app')
 
     var onLoad = function () {
       $scope.loading = true;
-      storage.getItem('AudioLibrary.Artists', onArtistsFromCache);
+      storage.getItem('AudioLibrary.Artists').then(onArtistsFromCache);
       $scope.xbmc.getArtists(onArtistsFromSource);
     };
     if ($scope.xbmc.isConnected()) {

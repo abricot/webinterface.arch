@@ -3,12 +3,7 @@ angular.module('directives.rating', [])
 .directive('rating', function () {
   return {
     restrict: 'A',
-    template: '<div class="md-circle rating">' +
-    '<div class="value">{{roundedValue}}</div>' +
-    '<i class="star icon-star left"></i>'+
-    '<i class="star icon-star middle"></i>'+
-    '<i class="star icon-star right"></i>'+
-    '</div>',
+    templateUrl: 'template/rating/rating.tpl.html',
     scope: {
       ratingValue: '=',
       ratingMax: '='

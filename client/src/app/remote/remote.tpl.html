@@ -3,7 +3,7 @@
         <div ng-switch on="player.active">
             <div ng-switch-when="true">
                 <div class="banner" image image-source="player.item.fanart | asset:host"></div>
-                <div role="slider" seekbar seekbar-value="player.seek.percentage" seekbar-max="100" seekbar-read-only="true"></div>
+                <seekbar seekbar-value="player.seek.percentage" seekbar-max="100" seekbar-read-only="true"></seekbar>
                 <div class="label">{{player.item.label}}</div>
                 <div class="md-action md-action-primary" ng-click="xbmc.togglePlay()" ng-show="!player.speed">
                     <i class="offset4 span4 icon-play">

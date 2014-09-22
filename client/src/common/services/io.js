@@ -1,4 +1,3 @@
-"use strict";
 angular.module('services.io', ['services.websocket'])
 .factory('io', ['$rootScope', '$q', '$parse', 'websocket',
   function($rootScope, $q, $parse, websocket) {

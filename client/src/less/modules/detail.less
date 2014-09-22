@@ -16,7 +16,7 @@
   .box-sizing;
   width  :100%;
   background-size: 100%;
-  height : 20rem;
+  height : 19rem;
   border: 0.25rem solid white;
 }
 
@@ -145,28 +145,28 @@
 
 .stream.details {
   position: absolute;
-  top: 4rem;
+  top: 5rem;
   left: 14rem;
   text-align: center;
+  white-space: nowrap;
   transform: rotate(90deg);
   transform-origin: .5rem;
-  white-space: nowrap;
 }
 
 .stream.details .detail {
-  display: inline-block;
-  padding: 0.5rem .5rem;
+  display: inline;
+  padding: .5rem .5rem;
   margin-bottom: .5rem;
-  font-size: 1.2rem;
   color: #666666;
   text-align: right;
   background-color: #f1f1f1;
   color: @primaryTextColor;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  font-size: 1.1rem;
 }
 
 .stream.details .detail:last-child {
   margin : 0;
 }
 
-.stream.details .detail i {padding-right : .5rem;}
+.stream.details .detail i {padding-right : .25rem;}

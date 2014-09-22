@@ -2,9 +2,9 @@
 angular.module('directives.seekbar', [])
 .directive('seekbar', function () {
   return {
-    restrict: 'A',
-    template: '<progress max="{{seekbarMax}}"></progress>' +
-    '<button></button>',
+    restrict: 'E',
+    replace : true,
+    templateUrl: 'template/seekbar/seekbar.tpl.html',
     scope: {
       seekbarValue: '=',
       seekbarMax: '=',

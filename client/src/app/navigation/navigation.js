@@ -32,11 +32,6 @@ angular.module('app')
       return '';
     };
 
-    $scope.go = function (path) {
-      $location.path(path);
-      $scope.toggleDrawer();
-    };
-
     $scope.hasPoster = function (art) {
       var result = false;
       if (art) {

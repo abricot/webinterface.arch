@@ -20,32 +20,27 @@ angular.module('app', [
 
 // this is where our app definition is
 angular.module('app')
-.config(['$stateProvider', '$urlRouterProvider', 'storageProvider',
-  function($stateProvider, $urlRouterProvider, storageProvider) {
-    var xbmchost = storageProvider.getItem('xbmchost', function(value) {
-      if (value === null) {
-        storageProvider.getItem('hosts', function(value) {
-          if (value === null) {
-            $urlRouterProvider.otherwise("/host/wizard");
-          } else {
-            $urlRouterProvider.otherwise("/");
-          }
-        });
-      } else {
-        $urlRouterProvider.otherwise("/");
-      }
-    });
+.config(['$stateProvider', '$urlRouterProvider',
+  function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/");
   }
-  ])
+])
 .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter', 'xbmc', 'storage',
   function($scope, $rootScope, $state, $location, $filter, xbmc, storage) {
+    var asChromeApp = window.chrome && window.chrome.storage;
+    var analyticsService, analyticsTracker;
+    if(asChromeApp) {
+      analyticsService  = analytics.getService('Foxmote');
+      analyticsTracker = analyticsService.getTracker('UA-55050807-1');
+    }
+
     $scope.theme = 'yin';
     storage.getItem('theme', function(theme) {
       $scope.theme = theme;
     });
     $scope.$state = $state;
     $scope.connected = false;
-    $scope.initialized = false;
+    $scope.initialized = true;
     $scope.isMaximized = false;
     $scope.player = {
       id: -1,
@@ -78,6 +73,9 @@ angular.module('app')
         $scope.isMaximized = !$scope.isMaximized;
       }
       $location.path(path);
+      if(asChromeApp) {
+        analyticsTracker.sendAppView(path);
+      }
     };
 
     $scope.hasFooter = function() {
@@ -250,7 +248,7 @@ angular.module('app')
         fn: onDisconnect,
         scope: this
       });
-      storage.getItem('xbmchost', function(value) {
+      storage.getItem('xbmchost').then(function(value) {
         if (value !== null) {
           //Old version of the app
           var defaultHost = value.host;
@@ -261,7 +259,7 @@ angular.module('app')
           initialize(defaultHost);
         } else {
           //New version of the app migration was done. Default behavior
-          storage.getItem('hosts', function(value) {
+          storage.getItem('hosts').then(function(value) {
             if (value !== null) {
               var filterDefault = function(el) {
                 return el.default;

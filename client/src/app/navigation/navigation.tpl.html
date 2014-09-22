@@ -67,7 +67,7 @@
         </ul>
     </nav>
     <div class="now playing" ng-show="player.active">
-        <div role="slider" seekbar seekbar-value="player.seek.percentage" seekbar-max="100" seekbar-read-only="true"></div>
+        <seekbar seekbar-value="player.seek.percentage" seekbar-max="100" seekbar-read-only="true"></seekbar>
         <div class="row">
             <div ng-switch on="hasPoster(player.item.art)">
                 <div ng-switch-when="true" ng-click="go('/now/playing','none')">

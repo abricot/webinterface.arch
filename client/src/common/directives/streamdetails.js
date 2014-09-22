@@ -4,12 +4,7 @@ angular.module('directives.streamdetails', [])
   return {
     restrict: 'E',
     replace : true,
-    template: '<div class="stream details">'+
-    '<div class="detail video mode" ng-show="hasVideo()"><i class="icon-film"></i>{{getVideoMode()}}</div>'+
-    '<div class="detail audio channels" ng-show="hasAudio()"><i class="icon-volume-up"></i>{{getAudioChannels()}}</div>'+
-    '<div class="detail audio lang" ng-show="hasAudio()"><i class="icon-comments-alt"></i>{{getAudioLanguage()}}</div>'+
-    '<div class="detail audio subtitle" ng-show="hasSubtitle()"><i class="icon-file-text-alt"></i>{{getSubtitles()}}</div>'+
-    '</div>',
+    templateUrl: 'template/streamdetails/streamdetails.tpl.html',
     scope: {
       details: '='
     },
