@@ -25,6 +25,8 @@ angular.module('app')
 }])
 .controller('MusicCtrl', ['$scope',
   function MusicCtrl($scope, $stateParams) {
+    var states = ['music.albums','music.artists','music.songs'];
+    var paths = ['/musics/albums', '/musics/artists', '/musics/songs'];
     $scope.isSelected = function (category) {
       return $scope.$state.current.name === category;
     }

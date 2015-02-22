@@ -3,5 +3,6 @@ angular.module('filters.xbmc', [
   'filters.xbmc.episode',
   'filters.xbmc.fallback',
   'filters.xbmc.thumb',
-  'filters.xbmc.time'
+  'filters.xbmc.time',
+  'filters.xbmc.trust'
 ]);

@@ -32,8 +32,6 @@
 .music .content {
   position : absolute;
   top : 15rem;
-  overflow : scroll;
-  overflow-x : hidden;
   bottom: 0;
   right: 0;
   left : 0;
@@ -41,6 +39,17 @@
 
 .music .content .loading .foxy:after {
   top: 25%;
+}
+
+.music .content [data-type="list"] {
+  position: absolute;
+  left : 0;
+  right : 0;
+  bottom : 0;
+  top : 0;
+  
+  overflow : scroll;
+  overflow-x : hidden;
 }
 
 .music .content [data-type="list"] li:first-child {

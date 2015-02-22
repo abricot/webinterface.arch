@@ -13,32 +13,29 @@ angular.module('app')
 .controller('MusicSongsCtrl', ['$scope', '$rootScope', '$stateParams', '$filter', 'storage',
   function MusicSongsCtrl($scope, $rootScope, $stateParams, $filter, storage) {
     $scope.loading = true;
-    $scope.updating = true;
+    $scope.fetching = false;
+
+    $scope.requestItemsBy = 100;
+    $scope.total = Infinity;
 
     $scope.filter = $stateParams.filter;
     $scope.artist = null;
+    $scope.songs = [];
 
     var filter = null;
     if ($scope.filter) {
-      filter = {key : $scope.filter, value : parseInt($stateParams.filterId)}
-      $scope.updating = false;
+      filter = {key : $scope.filter, value : parseInt($stateParams.filterId)} 
     }
 
-    function onSongsFromCache (songs) {
-      if(songs) {
-        $scope.songs = songs;
-        $scope.loading = false;
-      }
-    };
-
-    function onSongsFromSource (songs) {
-      $scope.songs = songs;
+    function onSongsFromSource (result) {
+      var songs = result ? result.songs : [];
+      $scope.total = result ? result.limits.total : Infinity;
+      $scope.songs = $scope.songs.concat(songs);
       if(filter !== null) {
         $scope.xbmc.getArtistDetails(songs[0].albumartistid[0], onArtistRetrieved);
       } else {
         $scope.loading = false;
-        $scope.updating = false;
-        storage.setItem('AudioLibrary.Songs', songs);
+        $scope.fetching = false;
       }
     };
 
@@ -47,11 +44,12 @@ angular.module('app')
       $scope.loading = false;
     };
 
-    var onLoad = function () {
-      if (!$scope.filter) {
-        storage.getItem('AudioLibrary.Songs').then(onSongsFromCache);
+    function onLoad() {
+      var limits =  {
+        'start' : 0,
+        'end' : $scope.requestItemsBy
       }
-      $scope.xbmc.getSongs(filter, onSongsFromSource);
+      $scope.xbmc.getSongs(filter, onSongsFromSource, limits);
     };
 
     if ($scope.xbmc.isConnected()) {
@@ -72,6 +70,17 @@ angular.module('app')
 
     $scope.isFiltered = function () {
       return typeof $scope.filter !== 'undefined';
+    };
+
+    $scope.loadMore = function () {
+      if($scope.songs.length < $scope.total) {
+        $scope.fetching = true;
+        var limits =  {
+          'start' : $scope.songs.length,
+          'end' : Math.min($scope.songs.length+$scope.requestItemsBy, $scope.total)
+        };
+         $scope.xbmc.getSongs(filter, onSongsFromSource, limits);
+      }
     };
 
     $scope.play = function (item) {

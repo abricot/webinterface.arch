@@ -50,9 +50,11 @@ angular.module('services.websocket', [])
   };
 
   factory.disconnect = function () {
-    ws.onclose = function(){}
-    ws.close();
-    dispose();
+    if(ws!==null) {
+      ws.onclose = function(){}
+      ws.close();
+      dispose();
+    }
   };
 
   factory.send = function (request) {

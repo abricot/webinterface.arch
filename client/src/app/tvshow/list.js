@@ -18,8 +18,38 @@ angular.module('app')
 .controller('TvShowListCtrl', ['$scope', 'storage',
   function TvShowListCtrl($scope, storage) {
     $scope.loading = true;
-    $scope.updating = true;
+    $scope.scanning = false;
+    $scope.fetching = false;
+
+    $scope.requestItemsBy = 50;
+    $scope.total = Infinity;
     $scope.tvshows = [];
+
+    function onTvShowsFromSource(result) {
+      var tvshows = result ? result.tvshows : [];
+      $scope.total = result ? result.limits.total : Infinity;
+      if($scope.scanning) {
+        if(!angular.equals($scope.tvshows, tvshows)) {
+          $scope.tvshows = tvshows;
+        }
+      } else {
+        $scope.tvshows = $scope.tvshows.concat(tvshows);
+      }
+
+      updateRandomShow();
+      $scope.loading = false;
+      $scope.scanning = false;
+      $scope.fetching = false;
+    };
+
+    function onLoad() {
+      var limits =  {
+        'start' : 0,
+        'end' : $scope.requestItemsBy
+      }
+      $scope.xbmc.getTVShows(onTvShowsFromSource, limits);
+    };
+
     function updateRandomShow() {
       if($scope.tvshows.length) {
         var randomIndex = Math.floor(Math.random()*$scope.tvshows.length);
@@ -27,28 +57,10 @@ angular.module('app')
       }
     };
 
-    function onTvShowsFromCache(tvshows) {
-      if(tvshows) {
-        $scope.loading = false;
-        $scope.tvshows = tvshows;
-        updateRandomShow();
-      }
-    };
-
-    function onTvShowsFromSource(tvshows) {
-      $scope.loading = false;
-      $scope.updating = false;
-      storage.setItem('VideoLibrary.TVShows', tvshows);
-      if(!angular.equals(tvshows, $scope.tvshows)) {
-        updateRandomShow();
-      }
-      $scope.tvshows = tvshows;
-    };
-
-    var onLoad = function() {
-      storage.getItem('VideoLibrary.TVShows').then(onTvShowsFromCache);
-      $scope.xbmc.getTVShows(onTvShowsFromSource);
-    };
+    $scope.xbmc.register('VideoLibrary.OnScanFinished', {
+      fn: onLoad,
+      scope: this
+    });
 
     if ($scope.xbmc.isConnected()) {
       onLoad();
@@ -58,5 +70,23 @@ angular.module('app')
         scope: this
       });
     }
+
+    $scope.loadMore = function () {
+      if(!$scope.scanning && $scope.tvshows.length < $scope.total) {
+        $scope.fetching = true;
+        var limits =  {
+          'start' : $scope.tvshows.length,
+          'end' : Math.min($scope.tvshows.length+$scope.requestItemsBy, $scope.total)
+        };
+        $scope.xbmc.getTVShows(onTvShowsFromSource, limits);
+      }
+    };
+
+    $scope.scan = function () {
+      if(!$scope.fetching) {
+        $scope.scanning = true;
+        $scope.xbmc.scan('VideoLibrary');
+      }
+    };
   }
 ]);

@@ -97,6 +97,10 @@ module.exports = function (grunt) {
             googleAnalyticsBundle : {
                 src:['vendor/chrome-platform-analytic/google-analytics-bundle.js'],
                 dest: '<%= wwwdir %>/js/lib/google-analytics-bundle.js'
+            },
+            lrInfiniteScroll : {
+                src:['vendor/lrInfiniteScroll/lrInfiniteScroll.js'],
+                dest: '<%= wwwdir %>/js/lib/lrInfiniteScroll.js'
             }
         },
         uglify: {
@@ -118,6 +122,10 @@ module.exports = function (grunt) {
             mousetrap: {
                 src:['vendor/mousetrap/mousetrap.js'],
                 dest: '<%= wwwdir %>/js/lib/mousetrap.js'
+            },
+            lrInfiniteScroll : {
+                src:['vendor/lrInfiniteScroll/lrInfiniteScroll.js'],
+                dest: '<%= wwwdir %>/js/lib/lrInfiniteScroll.js'
             }
         },
         recess: {

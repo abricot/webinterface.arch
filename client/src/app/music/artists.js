@@ -2,26 +2,27 @@ angular.module('app')
 .controller('MusicArtistsCtrl', ['$scope', 'storage',
   function MusicAlbumsCtrl($scope, storage) {
     $scope.loading = true;
-    $scope.updating = true;
+    $scope.fetching = false;
 
-    function onArtistsFromCache(artists) {
-      if(artists) {
-        $scope.artists = artists;
-        $scope.loading = false;
-      }
-    };
+    $scope.requestItemsBy = 50;
+    $scope.total = Infinity;
+    $scope.artists = [];
 
-    function onArtistsFromSource(artists) {
-      $scope.artists = artists;
-      storage.setItem('AudioLibrary.Artists', artists);
+    function onArtistsFromSource(result) {
+       var artists = result ? result.artists : [];
+      $scope.total = result ? result.limits.total : Infinity;
+      $scope.artists = $scope.artists.concat(artists);
       $scope.loading = false;
-      $scope.updating = false;
+      $scope.fetching = false;
     };
 
-    var onLoad = function () {
+    function onLoad () {
       $scope.loading = true;
-      storage.getItem('AudioLibrary.Artists').then(onArtistsFromCache);
-      $scope.xbmc.getArtists(onArtistsFromSource);
+      var limits =  {
+        'start' : 0,
+        'end' : $scope.requestItemsBy
+      }
+      $scope.xbmc.getArtists(onArtistsFromSource, limits);
     };
     if ($scope.xbmc.isConnected()) {
       onLoad();
@@ -31,6 +32,17 @@ angular.module('app')
 
     $scope.hasCover = function (artist) {
       return artist.thumbnail !== '';
+    };
+
+    $scope.loadMore = function () {
+      if($scope.artists.length < $scope.total) {
+        $scope.fetching = true;
+        var limits =  {
+          'start' : $scope.artists.length,
+          'end' : Math.min($scope.artists.length+$scope.requestItemsBy, $scope.total)
+        };
+         $scope.xbmc.getArtists(onArtistsFromSource, limits);
+      }
     };
   }
 ]);

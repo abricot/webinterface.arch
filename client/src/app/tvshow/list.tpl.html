@@ -5,14 +5,14 @@
             <div class="banner" image image-source="randomShow.art.banner | asset:host">
             </div>
             <div class="md-action md-action-primary"
-                 ng-click="xbmc.scan('VideoLibrary')">
+                 ng-click="scan()">
                 <i class="icon-refresh"></i>
             </div>
         </div>
-        <div class="spinner" ng-show="updating">
+        <div class="spinner" ng-show="scanning">
             <div class="bar"></div>
         </div>
-        <ul data-type="list">
+        <ul data-type="list" lr-infinite-scroll="loadMore">
             <li class="tvshow row" ng-repeat="show in tvshows"
                 ng-click="go('/tvshow/' + show.tvshowid, 'none')">
                 <div class="span3 flip-container">
@@ -33,6 +33,7 @@
             </li>
         </ul>
         <div ng-show="!tvshows.length" class="empty list">Oops! nothing here</div>
+        <spinner ng-show="fetching"></spinner>
     </div>
 </div>
 

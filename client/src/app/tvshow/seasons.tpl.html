@@ -5,9 +5,12 @@
         <div class="banner" image image-source="seasons[0].fanart | asset:host | fallback:'img/backgrounds/banner.png'">
         </div>
         <div class="md-action md-action-primary"
-        ng-click="xbmc.scan('VideoLibrary')">
+        ng-click="scan()">
         <i class="icon-refresh"></i>
       </div>
+    </div>
+    <div class="spinner" ng-show="updating">
+        <div class="bar"></div>
     </div>
     <ul data-type="list">
       <li class="row season" ng-repeat="season in seasons | filter:library.criteria"

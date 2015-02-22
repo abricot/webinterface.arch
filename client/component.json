@@ -8,6 +8,7 @@
     "angular-touch": "~1.2.25",
     "font-awesome": "~3.2.0",
     "mousetrap": "~1.2.0",
-    "chrome-platform-analytic": "git://github.com/GoogleChrome/chrome-platform-analytics"
+    "chrome-platform-analytic": "git://github.com/GoogleChrome/chrome-platform-analytics",
+    "lrInfiniteScroll" : "git://github.com/lorenzofox3/lrInfiniteScroll"
   }
 }

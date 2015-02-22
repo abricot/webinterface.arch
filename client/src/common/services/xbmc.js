@@ -261,19 +261,20 @@ angular.module('services.xbmc', ['services.io'])
       }
     };
 
-    factory.getMovies = function(cb) {
+    factory.getMovies = function(cb, limits) {
+      limits = limits || {
+        'start': 0,
+        'end': 50
+      };
       io.send('VideoLibrary.GetMovies', {
-        'limits': {
-          'start': 0,
-          'end': 75
-        },
+        'limits': limits,
         'properties': ['title', 'genre', 'rating', 'thumbnail', 'runtime', 'playcount', 'streamdetails', 'fanart'],
         'sort': {
           'order': 'ascending',
           'method': 'label',
           'ignorearticle': true
         }
-      }, true, 'result.movies').then(cb);
+      }, true, 'result').then(cb);
     };
 
     factory.getMovieDetails = function(movieId, cb) {
@@ -286,12 +287,13 @@ angular.module('services.xbmc', ['services.io'])
 
     };
 
-    factory.getAlbums = function(filter, cb) {
+    factory.getAlbums = function(filter, cb, limits) {
+      limits = limits || {
+        'start': 0,
+        'end': 50
+      };
       var params = {
-        'limits': {
-          'start': 0,
-          'end': 100
-        },
+        'limits': limits,
         'properties': ['title', 'artist', 'thumbnail', 'year', 'genre', 'artistid', 'rating'],
         'sort': {
           'order': 'ascending',
@@ -303,22 +305,23 @@ angular.module('services.xbmc', ['services.io'])
         params.filter = {};
         params.filter[filter.key] = filter.value;
       }
-      io.send('AudioLibrary.GetAlbums', params, true, 'result.albums').then(cb);
+      io.send('AudioLibrary.GetAlbums', params, true, 'result').then(cb);
     };
 
-    factory.getArtists = function(cb) {
+    factory.getArtists = function(cb, limits) {
+      limits = limits || {
+        'start': 0,
+        'end': 50
+      };
       io.send('AudioLibrary.GetArtists', {
-        'limits': {
-          'start': 0,
-          'end': 100
-        },
+        'limits': limits,
         'properties': ['genre', 'thumbnail', 'fanart'],
         'sort': {
           'order': 'ascending',
           'method': 'label',
           'ignorearticle': true
         }
-      }, true, 'result.artists').then(cb);
+      }, true, 'result').then(cb);
 
     };
 
@@ -330,16 +333,17 @@ angular.module('services.xbmc', ['services.io'])
 
     };
 
-    factory.getSongs = function(filter, cb) {
+    factory.getSongs = function(filter, cb, limits) {
+      limits = limits || {
+        'start': 0,
+        'end': 100
+      }
       var params = {
-        'limits': {
-          'start': 0,
-          'end': 500
-        },
+        'limits': limits,
         'properties': ['title', 'artist', 'album', 'albumid', 'thumbnail', 'duration', 'track', 'year', 'albumartistid', 'rating'],
         'sort': {
           'order': 'ascending',
-          'method': 'label',
+          'method': 'title',
           'ignorearticle': true
         }
       };
@@ -348,21 +352,22 @@ angular.module('services.xbmc', ['services.io'])
         params.filter[filter.key] = filter.value;
         params.sort.method = 'track';
       }
-      io.send('AudioLibrary.GetSongs', params, true, 'result.songs').then(cb);
+      io.send('AudioLibrary.GetSongs', params, true, 'result').then(cb);
     };
 
-    factory.getTVShows = function(cb) {
+    factory.getTVShows = function(cb, limits) {
+      limits = limits || {
+        'start': 0,
+        'end': 50
+      };
       io.send('VideoLibrary.GetTVShows', {
-        'limits': {
-          'start': 0,
-          'end': 75
-        },
+        'limits': limits,
         'properties': ['genre', 'title', 'rating', 'art', 'playcount', 'thumbnail', 'watchedepisodes', 'episode'],
         'sort': {
           'order': 'ascending',
           'method': 'label'
         }
-      }, true, 'result.tvshows').then(cb);
+      }, true, 'result').then(cb);
     };
 
     factory.getTVShowDetails = function(tvShowId, cb) {

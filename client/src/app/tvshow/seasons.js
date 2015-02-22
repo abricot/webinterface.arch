@@ -18,11 +18,13 @@ angular.module('app')
 .controller('TvShowSeasonsCtrl', ['$scope', '$stateParams', '$location',
   function TvShowSeasonsCtrl($scope, $stateParams, $location) {
     $scope.loading = true;
+    $scope.updating = false;
     $scope.tvshowid = parseInt($stateParams.tvshowid);
 
     function onSeasonsRetrieved(seasons) {
       $scope.seasons = seasons || [];
       $scope.loading = false;
+      $scope.updating = false;
       if ($scope.seasons.length === 1) {
         $scope.go('/tvshow/' + $scope.tvshowid + '/' + seasons[0].season);
       }
@@ -30,6 +32,11 @@ angular.module('app')
     var onLoad = function() {
       $scope.xbmc.getSeasons($scope.tvshowid, onSeasonsRetrieved);
     };
+
+    $scope.xbmc.register('VideoLibrary.OnScanFinished', {
+      fn: onLoad,
+      scope: this
+    });
     if ($scope.xbmc.isConnected()) {
       onLoad();
     } else {
@@ -38,5 +45,10 @@ angular.module('app')
         scope: this
       });
     }
+
+    $scope.scan = function () {
+      $scope.updating = true;
+      $scope.xbmc.scan('VideoLibrary');
+    };
   }
 ]);
