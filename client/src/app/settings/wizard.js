@@ -21,7 +21,9 @@ angular.module('app')
       port: '9090',
       httpPort : '8080',
       displayName: '',
-      default : false
+      default : false,
+      username : 'kodi',
+      password : ''
     };
     $scope.hostIndex = null;
     if(typeof $stateParams.hostIndex !== 'undefined') {
@@ -41,7 +43,7 @@ angular.module('app')
         }
         storage.setItem('hosts', $scope.hosts);
         if($scope.host.default) {
-          $scope.xbmc.connect($scope.host.ip, $scope.host.port);
+          $scope.initialize($scope.host);
         }
         if($scope.hosts.length > 1) {
           $scope.go('/hosts');

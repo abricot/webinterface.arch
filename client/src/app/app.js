@@ -12,10 +12,12 @@ angular.module('app', [
   'directives.rating',
   'directives.seekbar',
   'directives.streamdetails',
+  'directives.spinner',
   'filters.xbmc',
   'services.xbmc',
   'services.storage',
-  'templates.app'
+  'templates.app',
+  'lrInfiniteScroll'
   ]);
 
 // this is where our app definition is
@@ -62,6 +64,7 @@ angular.module('app')
 
     $scope.hosts = [];
     $scope.host = null;
+    $scope.webserverURL = 'about:blank';
     $scope.xbmc = xbmc;
 
     $scope.back = function() {
@@ -80,6 +83,26 @@ angular.module('app')
 
     $scope.hasFooter = function() {
       return $scope.$state.current.views && $scope.$state.current.views.footer;
+    };
+
+    $scope.initialize = function(host) {
+      if($scope.xbmc.isConnected()) {
+        $scope.xbmc.disconnect();
+      }
+      $scope.xbmc.connect(host.ip, host.port);
+      if(host.username !== '' && host.password !== '') {
+        //Let RAL knows that we should use credentials
+        RAL.authorization = {
+          username : host.username,
+          password : host.password
+        };
+        var authentificationPrefix = host.username + ':' + host.password + '@';
+        $scope.webserverURL = 'http://'+authentificationPrefix+host.ip+':'+host.httpPort;
+      }
+      $scope.initialized = true;
+      var hash = window.location.hash;
+      var path = hash.replace('#', '');
+      $scope.go(path === '' ? '/' : path);
     };
 
     $scope.isConnected = function() {
@@ -101,7 +124,7 @@ angular.module('app')
 
     $scope.showDrawer = function() {
       $scope.isMaximized = true;
-    }
+    };
 
     function onPlayerPropertiesRetrieved(properties) {
       if (properties) {
@@ -217,7 +240,6 @@ angular.module('app')
       scope: this
     });
 
-
     var onLoad = function() {
       $scope.$apply(function() {
         $scope.connected = true;
@@ -228,14 +250,6 @@ angular.module('app')
       $scope.connected = false;
       $scope.initialized = true;
     };
-
-    var initialize = function(host) {
-      $scope.initialized = true;
-      $scope.xbmc.connect(host.ip, host.port);
-      var hash = window.location.hash;
-      var path = hash.replace('#', '');
-      $scope.go(path === '' ? '/' : path);
-    }
 
     if (xbmc.isConnected()) {
       onLoad();
@@ -256,7 +270,7 @@ angular.module('app')
           storage.removeItem('xbmchost');
           $scope.hosts = [defaultHost];
           storage.setItem('hosts', $scope.hosts);
-          initialize(defaultHost);
+          $scope.initialize(defaultHost);
         } else {
           //New version of the app migration was done. Default behavior
           storage.getItem('hosts').then(function(value) {
@@ -266,7 +280,7 @@ angular.module('app')
               };
               $scope.hosts = value;
               var defaultHost = $scope.hosts.filter(filterDefault)[0];
-              initialize(defaultHost);
+              $scope.initialize(defaultHost);
             } else {
               $scope.initialized = true;
               $scope.go('/host/wizard');

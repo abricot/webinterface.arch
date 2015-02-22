@@ -12,7 +12,9 @@
     <script type="text/javascript" src="js/lib/angular.js"></script>
     <script type="text/javascript" src="js/lib/mousetrap.js"></script>
     <script type="text/javascript" src="js/lib/google-analytics-bundle.js"></script>
+    <script type="text/javascript" src="js/lib/lrInfiniteScroll.js"></script>
     <script type="text/javascript" src="js/<%= grunt.config.get('pkg.name') %>.js"></script>
+
   </head>
   <body role="application" ng-swipe-right="showDrawer()" ng-swipe-left="hideDrawer()">
     <keybinding on="up" invoke="xbmc.up()"></keybinding>
@@ -34,7 +36,7 @@
     
     <section id="page" role="region" ng-show="initialized">
       <header  ui-view="header"></header>
-      <div role="main" ui-view="body" ng-class="{'no-footer' : !hasFooter(), 'no-header' : !hasHeader()}" ng-click="hideDrawer()"></div>
+      <div role="main" ui-view="body" ng-class="{'no-footer' : !hasFooter(), 'no-header' : !hasHeader()}"></div>
     </section>
 
     <section role="region" ng-show="!initialized">
@@ -49,6 +51,15 @@
       <div class="ffosxbmc">Preload ffosxbmc.ttf</div>
       <div class="movieGenre">Preload moviegenre.ttf</div>
       <div class="digi">Preload digi.ttf</div>
+    </div>
+
+    <div ng-switch on="initialized">
+      <div ng-switch-when="true">
+        <iframe src="{{webserverURL | trust}}" style="display:none;"></iframe>
+      </div>
+      <div ng-switch-when="false">
+        <iframe src="{{"about:blank" | trust}}" style="display:none;"></iframe>
+      </div>
     </div>
   </body>
 </html>

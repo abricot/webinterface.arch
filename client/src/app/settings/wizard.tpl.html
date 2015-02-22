@@ -6,25 +6,37 @@
             <i class="icon-save"></i>
         </div>
     </div>
-    <p> 
-        <label>Display name:</label>
-        <input type="text" placeholder="Ex : HTPC" required="" ng-model="host.displayName" tabindex="1">
-        <button type="reset" class="icon-remove"></button>
-    </p>
-    <p>
-        <label>Host IP:</label>
-        <input name="ip" type="text" placeholder="Ex : 192.16.0.1, hostname" required="" ng-model="host.ip" tabindex="2">
-        <button type="reset" class="icon-remove"></button>
-    </p>
-    <div class="row">
-        <p class="span6">
-            <label>Webserver port</label>
-            <input type="text" placeholder="Ex : 8080" required="" ng-model="host.httpPort" tabindex="3">
+    <div class="settings">
+        <p> 
+            <label>Display name:</label>
+            <input type="text" placeholder="Ex : HTPC" required="" ng-model="host.displayName" tabindex="1">
             <button type="reset" class="icon-remove"></button>
         </p>
-        <p class="span6">
-            <label>Api port</label>
-            <input type="text" placeholder="Ex : 9090" required="" ng-model="host.port" tabindex="3">
+        <div class="row">
+            <p class="span7">
+                <label>Host IP:</label>
+                <input name="ip" type="text" placeholder="Ex : 192.16.0.1, hostname" required="" ng-model="host.ip" tabindex="2"/>
+                <button type="reset" class="icon-remove"></button>
+            </p>
+            <p class="span5">
+                <label>Api port</label>
+                <input type="text" placeholder="Ex : 9090" required="" ng-model="host.port" tabindex="3"/>
+                <button type="reset" class="icon-remove"></button>
+            </p>
+        </div>
+        <p>
+            <label>Webserver port</label>
+            <input type="text" placeholder="Ex : 8080" required="" ng-model="host.httpPort" tabindex="3"/>
+            <button type="reset" class="icon-remove"></button>
+        </p>
+        <p>
+            <label>Webserver username</label>
+            <input type="text" placeholder="Ex : Kodi" ng-model="host.username" tabindex="4"/>
+            <button type="reset" class="icon-remove"></button>
+        </p>
+        <p>
+            <label>Webserver password</label>
+            <input type="password" ng-model="host.password" tabindex="5"/>
             <button type="reset" class="icon-remove"></button>
         </p>
     </div>
