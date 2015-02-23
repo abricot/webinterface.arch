@@ -6,9 +6,10 @@ angular.module('services.xbmc', ['services.io'])
     var activePlayer = -1;
     var activePlaylist = -1;
     var volume = 0;
+    
 
     factory.connect = function(url, port) {
-      return io.connect(url, port);
+      io.connect(url, port);
     };
 
     factory.disconnect = function(){
@@ -114,6 +115,13 @@ angular.module('services.xbmc', ['services.io'])
       }, true, 'result').then(cb);
     };
 
+    factory.getApplicationProperties = function(cb) {
+      io.send('Application.GetProperties', {
+        'properties': ['volume','muted', 'name', 'version']
+      }, true, 'result').then(cb);
+    };
+   
+
     factory.goTo = function(index) {
       io.send('Player.GoTo', {
         'playerid': activePlayer,
@@ -195,22 +203,14 @@ angular.module('services.xbmc', ['services.io'])
       });
     };
 
-    (function getVolume(cb) {
-      io.send('Application.GetProperties', {
-        'properties': ['volume']
-      }, true, 'result.volume').then(function(value) {
-        volume = value;
-      });
-    })();
-
-    factory.increaseVolume = function() {
+    factory.increaseVolume = function(volume) {
       volume = Math.min(volume + 1, 100);
       io.send('Application.SetVolume', {
         'volume': volume
       });
     };
     
-    factory.decreaseVolume = function() {
+    factory.decreaseVolume = function(volume) {
       volume = Math.max(volume - 1, 0);
       io.send('Application.SetVolume', {
         'volume':volume

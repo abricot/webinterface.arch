@@ -44,6 +44,7 @@ angular.module('app')
     $scope.connected = false;
     $scope.initialized = true;
     $scope.isMaximized = false;
+    $scope.application = {};
     $scope.player = {
       id: -1,
       active: false,
@@ -126,6 +127,10 @@ angular.module('app')
       $scope.isMaximized = true;
     };
 
+    function onApplicationPropertiesRetrieved(properties) {
+      $scope.application = properties;
+    }
+
     function onPlayerPropertiesRetrieved(properties) {
       if (properties) {
         var timeFilter = $filter('time');
@@ -167,6 +172,10 @@ angular.module('app')
       }
     };
 
+    function onVolumeChanged(obj) {
+      $scope.application.volume = obj.params.data.volume;
+      $scope.application.muted = obj.params.data.muted;
+    };
 
     var updateSeek = function() {
       $scope.$apply(function() {
@@ -239,11 +248,16 @@ angular.module('app')
       fn: onPlaylistClear,
       scope: this
     });
+    xbmc.register('Application.OnVolumeChanged', {
+      fn: onVolumeChanged,
+      scope : this
+    });
 
     var onLoad = function() {
       $scope.$apply(function() {
         $scope.connected = true;
       });
+      xbmc.getApplicationProperties(onApplicationPropertiesRetrieved);
       xbmc.getActivePlayers(onPlayersRetrieved);
     }
     var onDisconnect = function() {
