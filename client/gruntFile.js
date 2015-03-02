@@ -87,20 +87,16 @@ module.exports = function (grunt) {
                     'src/assets/js/ui-bootstrap-custom-0.10.0.js', 
                     'vendor/angular-ui-router/release/angular-ui-router.js',
                     'vendor/angular-touch/angular-touch.js',
+                    'vendor/lrInfiniteScroll/lrInfiniteScroll.js'
                 ],
                 dest: '<%= wwwdir %>/js/lib/angular.js'
             },
-            mousetrap: {
-                src:['vendor/mousetrap/mousetrap.js'],
-                dest: '<%= wwwdir %>/js/lib/mousetrap.js'
-            },
-            googleAnalyticsBundle : {
-                src:['vendor/chrome-platform-analytic/google-analytics-bundle.js'],
-                dest: '<%= wwwdir %>/js/lib/google-analytics-bundle.js'
-            },
-            lrInfiniteScroll : {
-                src:['vendor/lrInfiniteScroll/lrInfiniteScroll.js'],
-                dest: '<%= wwwdir %>/js/lib/lrInfiniteScroll.js'
+            thirdparty: {
+                src:[
+                    'vendor/mousetrap/mousetrap.js',
+                    'vendor/chrome-platform-analytic/google-analytics-bundle.js'
+                ],
+                dest: '<%= wwwdir %>/js/lib/third.js'
             }
         },
         uglify: {
@@ -115,17 +111,11 @@ module.exports = function (grunt) {
                 src:[
                     'vendor/angular/angular.js', 
                     'src/assets/js/ui-bootstrap-custom-0.10.0.js', 
-                    'vendor/angular-ui-router/release/angular-ui-router.js'
+                    'vendor/angular-ui-router/release/angular-ui-router.js',
+                    'vendor/angular-touch/angular-touch.js',
+                    'vendor/lrInfiniteScroll/lrInfiniteScroll.js'
                 ],
                 dest: '<%= wwwdir %>/js/lib/angular.js'
-            },
-            mousetrap: {
-                src:['vendor/mousetrap/mousetrap.js'],
-                dest: '<%= wwwdir %>/js/lib/mousetrap.js'
-            },
-            lrInfiniteScroll : {
-                src:['vendor/lrInfiniteScroll/lrInfiniteScroll.js'],
-                dest: '<%= wwwdir %>/js/lib/lrInfiniteScroll.js'
             }
         },
         recess: {
