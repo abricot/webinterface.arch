@@ -15,6 +15,7 @@ angular.module('app', [
   'directives.spinner',
   'filters.xbmc',
   'services.xbmc',
+  'services.tmdb',
   'services.storage',
   'templates.app',
   'lrInfiniteScroll'
@@ -27,8 +28,8 @@ angular.module('app')
     $urlRouterProvider.otherwise("/");
   }
 ])
-.controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter', 'xbmc', 'storage',
-  function($scope, $rootScope, $state, $location, $filter, xbmc, storage) {
+.controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter', 'xbmc', 'storage', 'tmdb',
+  function($scope, $rootScope, $state, $location, $filter, xbmc, storage, tmdb) {
     var asChromeApp = window.chrome && window.chrome.storage;
     var analyticsService, analyticsTracker;
     if(asChromeApp) {
@@ -67,6 +68,7 @@ angular.module('app')
     $scope.host = null;
     $scope.webserverURL = 'about:blank';
     $scope.xbmc = xbmc;
+    $scope.tmdb = tmdb;
 
     $scope.back = function() {
       $scope.go($scope.previousHash);

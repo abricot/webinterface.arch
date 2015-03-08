@@ -1,0 +1,11 @@
+ <nav >
+    <ul class="clearfix tabs">
+        <li ng-repeat="item in medias"
+            ng-click="go(item.hash)" ng-class="{selected : isCurrent(item.hash)}"
+            class="tab">
+            <div class="label">
+                {{item.label}}
+            </div>
+        </li>
+    </ul>
+</nav>

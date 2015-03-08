@@ -1,0 +1,17 @@
+body {
+  background: @regionBgColor;
+}
+#grid > .fluid(@fluidGridColumnWidth, @fluidGridGutterWidth);
+
+section[role="region"] {height : 100%;}
+section[role="region"] header {height: 4rem;}
+section[role="region"] div[role="main"] {
+  height: calc(100% - 10rem);
+}
+
+[data-type="list"], .detail {
+  padding : 0;
+  margin : 0;
+  overflow: auto;
+  height : 100%;
+}

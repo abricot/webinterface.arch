@@ -1,20 +1,4 @@
 angular.module('app')
-.config(['$stateProvider',
-  function($stateProvider) {
-    $stateProvider.state('playing', {
-      url: '/now/playing',
-      views: {
-        header: {
-          templateUrl: 'layout/headers/backable.tpl.html'
-        },
-        body: {
-          templateUrl: 'now/playing.tpl.html',
-          controller: 'NowPlayingCtrl'
-        }
-      }
-    });
-  }
-])
 .controller('NowPlayingCtrl', ['$scope', '$filter',
   function NowPlayingCtrl($scope, $filter) {
     $scope.loading = true;
@@ -44,10 +28,10 @@ angular.module('app')
       if($scope.library.item.type === 'episode') {
         $scope.xbmc.getTVShowDetails(item.tvshowid, function(details){
           item.genre = details.genre;
-          $scope.library.item = item;
+          $scope.player.item = item;
         });
       } else {
-        $scope.library.item = item;
+        $scope.player.item = item;
       }
     };
 
@@ -55,8 +39,6 @@ angular.module('app')
       if (players.length > 0) {
         var player = players[0];
         $scope.xbmc.getPlayerItem(onPlayerItemRetrieved, player.playerid);
-      } else {
-        $scope.go('/');
       }
     };
 
@@ -116,6 +98,10 @@ angular.module('app')
       $scope.xbmc.setSubtitle($scope.sub);
     };
 
+    $scope.onVolumeChanged = function(newValue) {
+      $scope.xbmc.setVolume(newValue);
+    }
+
     $scope.toggleAudioStreams = function() {
       $scope.showAudioSelect = !$scope.showAudioSelect;
     };
@@ -133,10 +119,6 @@ angular.module('app')
       newValue = Math.min(newValue, 100);
       newValue = Math.max(newValue, 0);
       $scope.xbmc.seek(newValue);
-    },
-
-    $scope.$watch('player.item', function() {
-      $scope.library.item = $scope.player.item;
-    }, true);
+    }
   }
 ]);

@@ -1,0 +1,122 @@
+.detail {
+  margin-top : 1rem;
+}
+
+.detail .poster-wrapper {
+  width : 18rem;
+  height : 27rem;
+  position: relative;
+  top : auto;
+  bottom: auto;
+  left : auto;
+  right: auto;
+  float : left;
+}
+
+.detail .poster-wrapper .poster{
+  height : 100%;
+}
+
+.detail .details {
+  float: left;
+  width: calc(75% - 10rem);
+  margin-left: 2rem;
+  box-sizing: border-box;
+}
+
+.detail h1 {
+  font-family: Roboto;
+  font-size : 2.5rem;
+  text-align: left;
+  padding : 0 0 2rem 0 ;
+  position: relative;
+}
+
+.detail h1 .more{
+  float: right;
+  font-size: 1.5rem;
+  color: white;
+  background: @actionBgColor;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+}
+
+.detail h1 .more:hover{
+  background:lighten(#D65447, 10%);
+}
+.detail h1 .more.hidden{display: none;}
+.detail .description{
+  background: #f5f5f5;
+  margin-top : 2rem;
+  padding-bottom: 2rem;
+}
+
+.detail .description > .row{
+  border-top:1px solid @regionBgColor; 
+  margin-bottom : 2rem;
+}
+
+.detail .properties .md-circle {
+  margin-right: 3rem;
+  float: left; 
+}
+
+.detail .fanart {
+  margin : 1rem 0;
+}
+.detail .actor,
+.detail .similar {
+  color : @primaryTextColor;
+  display: inline-block;
+  padding: 0 2rem 0 0;
+  width: 9rem;
+}
+.detail .collapsed {
+  overflow: hidden;
+  white-space: nowrap;
+} 
+.detail .actor .poster,
+.detail .similar .poster, {
+  width : 9rem;
+  height : 13.5rem;
+  background-size: 9rem 13.5rem; 
+  margin-bottom: 1rem;
+}
+
+.detail .actor .name,
+.detail .actor .role,
+.detail .similar .title, {
+  overflow: hidden;;
+  text-overflow : ellipsis;
+  white-space: nowrap;
+}
+
+.detail .credit,
+.detail .info {
+  padding-bottom: 0.5rem;
+}
+
+.detail .acions {
+  position: absolute;
+  right: 0rem;
+  top: 2rem;
+  background: @actionBgColor;
+}
+
+.detail .acions .md-action {
+  width : 10rem;
+  height : 10rem;
+}
+
+.detail .acions .md-action i {
+  font-size: 4rem;
+  line-height: 10rem;
+} 
+
+.detail .thumbnail {
+  width : 13.5rem;
+  height : 7.5rem;
+  background-position: center;
+  background-size : 100% auto;
+  margin : 0.5rem 0; 
+}

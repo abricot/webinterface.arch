@@ -4,9 +4,7 @@ angular.module('app')
     $stateProvider.state('tvshows', {
       url: '/tvshows',
       views: {
-        header: {
-          templateUrl: 'layout/headers/basic.tpl.html'
-        },
+        header: {templateUrl: 'layout/headers/navigation.tpl.html', controller : 'HeaderNavController'},
         body: {
           templateUrl: 'tvshow/list.tpl.html',
           controller: 'TvShowListCtrl'

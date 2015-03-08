@@ -1,32 +1,63 @@
-<div ng-switch on="loading" ng-class="{loading : loading}">
-  <div ng-switch-when="true" class="loading"><div class="foxy"></div></div>
-  <div ng-switch-when="false" class="seasons">
-    <div class="arts">
-        <div class="banner" image image-source="seasons[0].fanart | asset:host | fallback:'img/backgrounds/banner.png'">
+<div ng-switch on="loading" class="tvshow detail">
+  <div ng-switch-when="false">
+    <div class="row">
+        <div class="offset2 span8 clearfix" style="position:relative;">
+            <div class="poster-wrapper">
+                <img class=" poster" image image-source="library.item.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'"/>
+            </div>
+            <div class="details">
+                <h1>{{library.item.title}}</h1>
+                <h3>{{library.item.genre.join(', ')}}</h3>
+                <p>{{library.item.year}}</p>
+                <p class="plot">{{library.item.plot}}</p>
+            </div>
+            <div class="acions">
+              <div class="md-action md-action-primary"
+                    ng-click="queueAll()" >
+                <i class="icon-plus"></i>
+              </div> 
+            </div>
         </div>
-        <div class="md-action md-action-primary"
-        ng-click="scan()">
-        <i class="icon-refresh"></i>
+    </div>
+    <div class="description">
+        <div class="row">
+            <div class="offset2 span8">
+                <h1>
+                  Episodes
+                  <i class="icon-chevron-right"></i>
+                  <a class="season">
+                    <span class="md-circle fanart" image image-source="season.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'"">
+                    </span>
+                    {{season.label}}
+                    <i class="icon-chevron-down" ng-show="seasons.length>1"></i>
+                    <select ng-options="season.label for season in seasons" 
+                            ng-model="season"
+                            ng-change="changeSeason(season)"></select>
+                    {{selectedSeason}}
+                  </a>
+                </h1>
+                <ul data-type="list">
+                  <li class="row episode" ng-repeat="episode in episodes"
+                      ng-click="go('/tvshow/' + tvshowid + '/'+season+'/'+episode.episodeid, 'none')">
+                    <div class="thumbnail span3" image image-source="episode.thumbnail | asset:host">
+                      <div class="md-action md-action-primary">
+                          <i class="icon-play"></i>
+                      </div>
+                    </div>    
+                    <div class="span9">
+                      <p>
+                        {{episode.episode | episode:episode.season}} - 
+                        {{episode.title}} 
+                      </p>
+                      <p><span class="runtime">{{episode.runtime | time | date:'HH:mm'}}</span></p>
+                      <p>{{episode.plot}}</p>
+                    </div>
+                  </li>
+              </ul>
+            </div>
+        </div>
       </div>
     </div>
-    <div class="spinner" ng-show="updating">
-        <div class="bar"></div>
-    </div>
-    <ul data-type="list">
-      <li class="row season" ng-repeat="season in seasons | filter:library.criteria"
-      ng-click="go('/tvshow/' + tvshowid + '/' + season.season)">
-        <div class="span3 wrapper">
-          <div class="md-circle poster front" image image-source="season.thumbnail  | asset:host">
-            <em class="playcount" ng-show="show.playcount">&#10003;</em>
-          </div>
-        </div>
-        <div class="span8">
-          <p>{{season.showtitle}}</p>
-          <p>{{season.label}}</p>
-        </div>
-      </li>
-    </ul>
-    <div ng-show="!seasons.length" class="empty list">Oops! nothing here</div>
-  </div>
+  </div>    
 </div>
 

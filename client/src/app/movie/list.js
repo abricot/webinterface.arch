@@ -3,7 +3,7 @@ angular.module('app')
   $stateProvider.state('movies', {
     url: '/movies',
     views: {
-      header: {templateUrl: 'layout/headers/basic.tpl.html'},
+      header: {templateUrl: 'layout/headers/navigation.tpl.html', controller : 'HeaderNavController'},
       body: {templateUrl: 'movie/list.tpl.html', controller: 'MovieListCtrl'}
     }
   })

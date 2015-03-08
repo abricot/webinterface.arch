@@ -204,14 +204,14 @@ angular.module('services.xbmc', ['services.io'])
     };
 
     factory.increaseVolume = function(volume) {
-      volume = Math.min(volume + 1, 100);
-      io.send('Application.SetVolume', {
-        'volume': volume
-      });
+      factory.setVolume(Math.min(volume + 1, 100));
     };
     
     factory.decreaseVolume = function(volume) {
-      volume = Math.max(volume - 1, 0);
+      factory.setVolume(Math.max(volume - 1, 0));
+    };
+
+    factory.setVolume = function(volume) {
       io.send('Application.SetVolume', {
         'volume':volume
       });
@@ -280,7 +280,8 @@ angular.module('services.xbmc', ['services.io'])
     factory.getMovieDetails = function(movieId, cb) {
       io.send('VideoLibrary.GetMovieDetails', {
         'properties': ['title', 'genre', 'rating', 'thumbnail', 'plot', 'streamdetails',
-        'studio', 'director', 'fanart', 'runtime', 'trailer', 'imdbnumber','mpaa','cast'
+        'studio', 'director', 'fanart', 'runtime', 'trailer', 'imdbnumber','mpaa','cast',
+        'writer', 'year'
         ],
         'movieid': movieId
       }, true, 'result.moviedetails').then(cb);
@@ -373,7 +374,9 @@ angular.module('services.xbmc', ['services.io'])
     factory.getTVShowDetails = function(tvShowId, cb) {
       io.send('VideoLibrary.GetTVShowDetails', {
         'tvshowid': tvShowId,
-        'properties': ['genre'],
+        'properties': ['title', 'genre', 'rating', 'thumbnail', 'plot', 'episode',
+        'studio', 'fanart', 'episodeguide', 'season', 'imdbnumber','mpaa','cast',
+        'year' ],
       }, true, 'result.tvshowdetails').then(cb);
     };
 
@@ -396,7 +399,7 @@ angular.module('services.xbmc', ['services.io'])
       io.send('VideoLibrary.GetEpisodes', {
         'tvshowid': tvShowId,
         'season': season,
-        'properties': ['title', 'rating', 'firstaired', 'runtime', 'season', 'episode', 'thumbnail', 'art', 'playcount'],
+        'properties': ['title', 'rating', 'firstaired', 'runtime', 'season', 'episode', 'thumbnail', 'art', 'playcount', 'plot'],
         'limits': {
           'start': 0,
           'end': 75

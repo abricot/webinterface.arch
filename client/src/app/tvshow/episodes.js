@@ -39,11 +39,13 @@ angular.module('app')
     function onEpisodesRetrieved(episodes) {
       $scope.loading = false;
       $scope.episodes = episodes;
+      $scope.xbmc.getTVShowDetails($scope.tvshowid);
     };
 
     var onLoad = function() {
       $scope.laoding = true;
-      $scope.xbmc.getEpisodes($scope.tvshowid, $scope.season, onEpisodesRetrieved);
+      $scope.xbmc.getTVShowDetails($scope.tvshowid);
+      //$scope.xbmc.getEpisodes($scope.tvshowid, $scope.season, onEpisodesRetrieved);
     };
 
     if ($scope.xbmc.isConnected()) {

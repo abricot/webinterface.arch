@@ -1,0 +1,66 @@
+
+.cards {
+  text-align: center;
+  height: 100%;
+}
+
+[data-type="list"] .card{
+  display: inline-block;
+  margin : 0.5em;
+  width : 18rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position : relative;
+  cursor: pointer;
+  border : 0.2rem solid transparent;
+}
+
+[data-type="list"] .card:hover{
+  border : 0.2rem solid #d5d5d5;
+}
+
+[data-type="list"] .card .poster{
+  width : 18rem;
+  height : 27rem;
+  background-size: 18rem;
+  background-position: center; 
+  box-sizing: border-box;
+  box-shadow : 0 0 0 0;
+  transition : all 250ms ease-in;
+}
+
+[data-type="list"] .card:hover .poster{
+  background-size: 25rem;
+}
+
+[data-type="list"] .card .description{
+  background: lighten(@regionBgColor, 25%);
+  padding : 0.5em;
+}
+[data-type="list"] .card .description h3,
+[data-type="list"] .card .description p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+[data-type="list"] .card .poster{
+  position: relative;
+  margin : 0;
+  left : auto;
+  top : auto;
+  border-color : lighten(@regionBgColor, 25%);
+  border : 0.25rem solid @secondaryBgColor;
+  background-color: #7465c0;
+}
+
+[data-type="list"] .card .rating {
+  bottom: -1.5rem;
+  left: 1;
+  top: auto;
+}
+[data-type="list"] .card .description .clock{
+  font-size: 1.5rem;
+  padding: 0;
+  margin: 0;
+  text-align: right;
+}

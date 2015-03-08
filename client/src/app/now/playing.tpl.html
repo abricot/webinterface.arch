@@ -1,23 +1,49 @@
-<div ng-switch on="loading" ng-class="{loading : loading, now : !loading}">
-    <div ng-switch-when="true" class="loading"><div class="foxy"></div></div>
-    <div ng-switch-when="false">
-        <div ng-switch on="library.item.type" class="playing">
-            <div ng-switch-when="movie">
-                <div ng-include src="'movie/details.tpl.html'"></div>
+<seekbar seekbar-value="player.seek.percentage" seekbar-max="100"
+         on-seekbar-changed="onSeekbarChanged(newValue)"
+         class="seekbar" ng-show="player.active"></seekbar>
+<div class="row buttons">
+    <div class="span4 player-wrapper">
+        <div class="player row" ng-show="player.active">
+            <div class="poster-wrapper span3" >
+                <div class="md-circle poster" image 
+                     image-source="player.item.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'"></div>
             </div>
-
-            <div ng-switch-when="episode">
-                <div ng-include src="'tvshow/details.tpl.html'"></div>
-            </div>
-
-            <div ng-switch-default class="detail">
-                <img class="row" image image-source="library.item.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'"/>
-                <h1>
-                    {{library.item.label}}
-                </h1>
+            <div class="label span8">{{player.item.label}}</div>
+            <div class="md-action span1">
+              <i class="icon icon-ellipsis-vertical"></i>
             </div>
         </div>
-        <div class="player">
+    </div>
+    <div class="span4" style="text-align:center;">
+      <div class="md-action" ng-click="xbmc.previous()" >
+          <i class="icon icon-fast-backward"></i>
+      </div>
+      <div class="md-action" ng-click="xbmc.stop()">
+          <i class="icon icon-stop"></i>
+      </div>
+      <div class="md-action" ng-click="xbmc.togglePlay()" ng-show="!player.speed">
+          <i class="icon-play"></i>
+      </div>
+      <div class="md-action" ng-click="xbmc.togglePlay()"  ng-show="player.speed">
+          <i class="icon-pause"></i>
+      </div>
+      <div class="md-action" ng-click="xbmc.next()"  >
+          <i class="icon icon-fast-forward"></i>
+      </div>
+    </div>
+    <div class="span4" style="text-align:right;">
+        <div class="md-action"  ng-hold="xbmc.dereaseVolume(application.volume)" >
+            <i class="icon icon-volume-down"></i>
+        </div>
+        <seekbar seekbar-value="application.volume" seekbar-max="100"
+         on-seekbar-changed="onVolumeChanged(newValue)"
+         class="volume seekbar"></seekbar>
+        <div class="md-action"  ng-hold="xbmc.increaseVolume(application.volume)" >
+            <i class="icon icon-volume-up"></i>
+        </div>
+    </div>
+  </div>
+        <!--div class="player">
             <div class="row controls">
                 <div class="span3 action" ng-click="toggleAudioStreams()" ng-show="isTypeVideo()">
                     <i class="icon-comments"></i>
@@ -31,8 +57,7 @@
                     <i class="icon-quote-left"></i>
                 </div>
             </div>
-            <seekbar seekbar-value="player.seek.percentage" seekbar-max="100"
-                         on-seekbar-changed="onSeekbarChanged(newValue)"></seekbar>
+            <
             <div class="row controls">
                 <div class="span3" ng-click="xbmc.previous()">
                     <i class="icon-fast-backward"></i>
@@ -48,11 +73,11 @@
                     <i class="icon-fast-forward"></i>
                 </div>
             </div>
-        </div>
+        </div -->
     </div>
 </div>
 
-<form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showAudioSelect">
+ <form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showAudioSelect">
      <div class="content">
         <header> Audio Streams </header>
         <div class="body">

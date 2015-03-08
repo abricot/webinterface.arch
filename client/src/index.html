@@ -35,21 +35,8 @@
     <section id="page" role="region" ng-show="initialized">
       <header  ui-view="header"></header>
       <div role="main" ui-view="body" ng-class="{'no-footer' : !hasFooter(), 'no-header' : !hasHeader()}"></div>
+      <div ng-include src="'now/playing.tpl.html'" ng-controller="NowPlayingCtrl" class="playing"></div>
     </section>
-
-    <section role="region" ng-show="!initialized">
-      <div role="splash">
-        <div class="foxy"></div>
-      </div>
-    </section>
-
-    <div ng-include src="'navigation/navigation.tpl.html'" ng-controller="NavigationCtrl"></div>
-    <div class="font-loader"> 
-      <div class="kenyanCoffee">Preload kenyc.ttf</div>
-      <div class="ffosxbmc">Preload ffosxbmc.ttf</div>
-      <div class="movieGenre">Preload moviegenre.ttf</div>
-      <div class="digi">Preload digi.ttf</div>
-    </div>
 
     <div ng-switch on="initialized">
       <div ng-switch-when="true">

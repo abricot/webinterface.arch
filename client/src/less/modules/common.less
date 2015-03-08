@@ -23,7 +23,7 @@
   src: url('../font/Roboto-Thin.TTF');
 
 }
-
+.fill-height{height: 100%;}
 section[role="region"] header .logo {
   position: absolute;
   top: 0;
@@ -136,7 +136,9 @@ section[role="region"] header h2.disconnected {
 .banner,
 .fanart {
  background-size : auto 100%;
+ background-position: center;
  position : relative;
+ background-color: @secondaryBgColor; 
 }
 
 .banner {
@@ -228,8 +230,8 @@ section[role="region"] header h2.disconnected {
   right: 1rem;
 }
 
-.md-action.md-action-primary { background: @secondaryBgColor !important;}
-.md-action.md-action-danger { background: @dangerBgColor !important;}
+.md-action.md-action-primary { background: @actionBgColor;}
+.md-action.md-action-danger { background: @dangerBgColor;}
 
 .md-action i {
   display: block;
@@ -255,6 +257,7 @@ section[role="region"] header h2.disconnected {
 .rating .value{
   font-size: 2rem;
   line-height: 4rem;
+  text-align: center;
 }
 
 .rating .star {
@@ -320,8 +323,27 @@ section[role="region"] header h2.disconnected {
   margin-left : -2.5rem;
 }
 
-[data-type="list"] .poster {
-  border : 0.25rem solid @secondaryBgColor!important;
-  background-color: #7465c0!important;
+.tabs{
+  background: @tabsBgColor;
+  box-shadow : 0 1px 2px rgba(0, 0, 0, 0.1);
+  z-index : 4
 }
 
+.tabs .tab{
+  color : white;
+  opacity : 0.75;
+  border-bottom: 0.5rem solid transparent;
+  text-align: center;
+  padding : 1rem 0;
+  cursor: pointer;
+  font-size : 1.5rem;
+  text-transform: uppercase;
+}
+
+.tabs .tab:hover{
+  opacity : 1;
+}
+
+.tabs .tab.selected {
+  border-bottom: 0.5rem solid #ffff85;
+}
