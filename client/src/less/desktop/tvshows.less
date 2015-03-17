@@ -40,18 +40,22 @@
   padding-bottom: 0.5rem;
   cursor: pointer;
 }
-.detail .episode:hover {background: #e5e5e5;}
+.detail .episode:last-child {
+  border-bottom: 0;
+}
+.detail .episode:hover {background: @regionBgColor;}
 .detail .episode p{
-  padding : 0;
+  padding : 0 .5rem;
   margin: .5rem 0 0 0;
 }
 
 .detail .episode .runtime {font-family: 'digi';}
 .detail .episode .md-action {
+  top: 50%;
+  right: auto;
+  left: 50%;
   display: none;
-  top : 1.75rem;
-  right:auto;
-  left : 4.25rem;
+  transform: translateX(-50%) translateY(-50%);
 }
 .detail .episode:hover .md-action{
   display: block;

@@ -1,15 +1,27 @@
 angular.module('app')
 .config(['$stateProvider', function ($stateProvider) {
   $stateProvider.state('movies', {
-    url: '/movies',
+    url: '/movies/:sort',
     views: {
       header: {templateUrl: 'layout/headers/navigation.tpl.html', controller : 'HeaderNavController'},
       body: {templateUrl: 'movie/list.tpl.html', controller: 'MovieListCtrl'}
     }
   })
 }])
-.controller('MovieListCtrl', ['$scope', 'storage',
-  function MovieListCtrl($scope, storage) {
+.controller('MovieListCtrl', ['$scope', '$stateParams',
+  function MovieListCtrl($scope, $stateParams) {
+    $scope.sort = {
+      'order': 'ascending',
+      'method': 'label',
+      'ignorearticle': true
+    };
+    if($stateParams.sort .toLowerCase() === 'recents') {
+      $scope.sort =  {
+        'order': 'descending',
+        'method': 'dateadded',
+        'ignorearticle': true
+      };
+    }
     $scope.loading = true;
     $scope.scanning = false;
     $scope.fetching = false;
@@ -39,7 +51,7 @@ angular.module('app')
         'start' : 0,
         'end' : $scope.requestItemsBy
       }
-      $scope.xbmc.getMovies(onMoviesFromSource, limits);
+      $scope.xbmc.getMovies(onMoviesFromSource, limits, $scope.sort);
     };
 
     function updateRandomMovie () {

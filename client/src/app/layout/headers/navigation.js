@@ -4,19 +4,22 @@ angular.module('app')
     $scope.medias = [{
       hash: '/movies',
       icon: 'icon-film',
-      label: 'Movies'
+      label: 'Movies',
+      matchRegExp : /movie.*$/
     }, {
       hash: '/tvshows',
       icon: 'icon-facetime-video',
-      label: 'TV Shows'
+      label: 'TV Shows',
+      matchRegExp : /tvshow.*$/
     }, {
-      hash: '/musics/artists',
+      hash: '/musics/artists/all',
       icon: 'icon-music',
-      label: 'Musics'
+      label: 'Musics',
+      matchRegExp : /music.*$/
     }];
 
-    $scope.isCurrent = function (hash) {
-      return hash === $location.path();
+    $scope.isCurrent = function (matchRegExp) {
+      return $location.path().match(matchRegExp) !== null;
     };
   }
 ]);

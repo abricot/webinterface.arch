@@ -27,9 +27,9 @@
   box-shadow: 0 2px 5px 0 rgba(0,0,0,.258824);
   border-radius: 50%;
   overflow: hidden;
-  background-color: #000!important;
+  background-color: @actionBgColor !important;
   color: #f1f1f1!important;
-  opacity : 0.5;
+  opacity : 0.75;
   position: absolute;
   top : 50%;
   left : 50%;
@@ -41,7 +41,7 @@
 }
 
 .detail .preview:hover {
-  opacity: 0.75;
+  opacity:1;
 }
 
 .detail .preview i {
@@ -58,7 +58,7 @@
 
 .detail li {
   font-size: 1.5rem;
-  color: white;
+  color: @primaryTextColor;
 }
 
 .detail .label {

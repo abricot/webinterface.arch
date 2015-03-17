@@ -1,20 +1,4 @@
 angular.module('app')
-.config(['$stateProvider',
-  function($stateProvider) {
-    $stateProvider.state('filteredAlbums', {
-      url: '/music/albums/:filter/:filterId',
-      views: {
-        header: {
-          templateUrl: 'layout/headers/backable.tpl.html'
-        },
-        body: {
-          templateUrl: 'music/artist.albums.tpl.html',
-          controller: 'MusicAlbumsCtrl'
-        }
-      }
-    });
-  }
-])
 .controller('MusicAlbumsCtrl', ['$scope', '$stateParams', 'storage',
   function MusicAlbumsCtrl($scope, $stateParams, storage) {
     $scope.loading = true;
@@ -35,11 +19,19 @@ angular.module('app')
       };
     }
 
+    function onSongsFromSource (result) {
+      $scope.songs = result.songs;
+      $scope.loading = false;
+    }
+    
     function onArtistFromSource (artist) {
       $scope.artist = artist;
-      $scope.loading = false;
+      var songFilter = {
+        key : 'artistid',
+        value : $scope.albums[0].artistid[0]
+      }
+      $scope.xbmc.getSongs(songFilter, onSongsFromSource, {start:0, end:200});
     };
-
 
     function onAlbumsFromSource(result) {
       var albums = result ? result.albums : [];
@@ -71,6 +63,12 @@ angular.module('app')
         scope: this
       });
     }
+
+    $scope.isPartOf = function (album) {
+      return function (song) {
+        return song.albumid === album.albumid;
+      };
+    };
 
     $scope.hasCover = function(album) {
       return album.thumbnail !== '';

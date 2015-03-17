@@ -1,0 +1,117 @@
+.music .content {height: calc(100% - 4rem);}
+
+.music .tabs{background: lighten(@secondaryBgColor, 10%);}
+.music .tabs .tab{padding: 1rem 0 0.5rem 0;}
+
+[data-type="list"] .card.artist,
+[data-type="list"] .card.album {width :18rem;}
+
+.artist {position: relative;}
+
+[data-type="list"] .artist .poster,
+.artist .poster,
+[data-type="list"] .album .poster,
+.album .poster{
+  height: 18rem;
+  width:18rem;
+  background-repeat: no-repeat;
+  background-color : @primaryBgColor;
+}
+
+.detail .artist .poster-wrapper {height: 18rem;}
+
+.songs-wrapper .detail .actions {min-height: 18rem;}
+.songs {
+  padding: 2rem 0;
+  background: @primaryBgColor;
+  box-sizing: border-box;
+  height: calc(100% - 18rem);
+  overflow: auto;
+}
+
+.songs [data-type="list"]{padding : 0 17%;}
+
+.song {
+  font-size : 1.2rem;
+  font-weight: normal;
+  line-height: 4rem;
+  cursor: pointer;
+  border-bottom: 1px solid @borderColor;
+  box-sizing: border-box;
+}
+
+.song:hover {
+  background: @regionBgColor;
+}
+
+.song div {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.song .track {
+  position: relative;
+  padding-left: 5rem;
+}
+
+.song .track .icon-play{
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: inline-block;
+  line-height: 2rem;
+  text-align: center;
+  background: @actionBgColor;
+  color: white;
+  display: none;
+  position: absolute;
+  left:50%;
+  top:50%;
+  margin-top: -1rem;
+  margin-left: -1rem;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.258824);
+}
+.song .track .icon-play:before{padding-left: 0.2rem;}
+.song:hover .track .icon-play{display: inline-block;}
+
+.song  .track  .thumbnail {
+  width: 4rem;
+  height: 100%;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-right: 0.5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.song .duration {
+  font-family: 'digi';
+}
+.songs .album {padding-top:2rem;}
+.songs .album:first-child {padding-top:0rem;}
+.songs .album .poster{
+  width: 9rem;
+  height: 9rem;
+  background-size: 9rem 9rem;
+  float: left;
+  margin: 0 1rem 1rem 0rem;
+  position: relative;
+}
+
+.songs .album .detail {position: relative;}
+.songs .album .detail .md-action {top: .5rem;}
+
+.songs .album .poster:hover .md-action {
+  display: block;
+}
+
+.songs .album h1{
+  display: inline-block;
+  font-size: 2.5rem;
+  font-family: Roboto;
+  color: @primaryTextColor;
+  margin: 0.5rem 0;
+  padding : 0;
+}

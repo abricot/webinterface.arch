@@ -34,8 +34,10 @@
     
     <section id="page" role="region" ng-show="initialized">
       <header  ui-view="header"></header>
-      <div role="main" ui-view="body" ng-class="{'no-footer' : !hasFooter(), 'no-header' : !hasHeader()}"></div>
-      <div ng-include src="'now/playing.tpl.html'" ng-controller="NowPlayingCtrl" class="playing"></div>
+      <div role="main" ui-view="body" class="row">
+      </div>
+      <div ng-include src="'now/playing.tpl.html'" ng-controller="NowPlayingCtrl" 
+           class="playing"></div>
     </section>
 
     <div ng-switch on="initialized">

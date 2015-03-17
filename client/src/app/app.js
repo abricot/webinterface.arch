@@ -25,7 +25,7 @@ angular.module('app', [
 angular.module('app')
 .config(['$stateProvider', '$urlRouterProvider',
   function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("/movies/recents");
   }
 ])
 .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter', 'xbmc', 'storage', 'tmdb',
@@ -37,7 +37,7 @@ angular.module('app')
       analyticsTracker = analyticsService.getTracker('UA-55050807-1');
     }
 
-    $scope.theme = 'yin';
+    $scope.theme = 'yang';
     storage.getItem('theme', function(theme) {
       $scope.theme = theme;
     });

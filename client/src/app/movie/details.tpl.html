@@ -1,7 +1,9 @@
-<div ng-switch on="loading" class="movie detail">
+<div ng-switch on="loading" class="movie detail fill-height" ng-class="{loading : loading}">
+    <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
     <div ng-switch-when="false">
-        <div class="row">
-            <div class="offset2 span8 clearfix" style="position:relative;">
+        <div class="row wrapper">
+            <div class="fanart" image image-source="library.item.fanart | asset:host"></div>
+            <div class="offset2 span5 clearfix" style="position:relative;">
                 <div class="poster-wrapper">
                     <img class=" poster" image image-source="library.item.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'"/>
                 </div>
@@ -20,21 +22,21 @@
                         <div class="md-circle cast" image image-source="library.item.cast[0].thumbnail | asset:host | fallback:'img/icons/foxy-512.png'">
                         </div>
                     </div>
-                    <div class="acions">
-                        <div class="md-action md-action-primary"
-                             ng-click="xbmc.open({'movieid': library.item.movieid})" ng-show="!player.active">
-                            <i class="icon-play"></i>
-                        </div>
-                        <div class="md-action md-action-primary"
-                             ng-click="xbmc.queue({'movieid': library.item.movieid})" ng-show="player.active && !isCurrentlyPlaying">
-                            <i class="icon-plus"></i>
-                        </div>
-                        <div class="md-action md-action-primary"
-                             ng-click="xbmc.togglePlay()" ng-show="player.active && isCurrentlyPlaying">
-                            <i class="icon-play" ng-show="!player.speed"></i>
-                            <i class="icon-pause" ng-show="player.speed"></i>
-                        </div>
-                    </div>
+                </div>
+            </div>
+            <div class="span3 actions">
+                <div class="md-action md-action-primary"
+                     ng-click="xbmc.open({'movieid': library.item.movieid})" ng-show="!player.active">
+                    <i class="icon-play"></i>
+                </div>
+                <div class="md-action md-action-primary"
+                     ng-click="xbmc.queue({'movieid': library.item.movieid})" ng-show="player.active && !isCurrentlyPlaying">
+                    <i class="icon-plus"></i>
+                </div>
+                <div class="md-action md-action-primary"
+                     ng-click="xbmc.togglePlay()" ng-show="player.active && isCurrentlyPlaying">
+                    <i class="icon-play" ng-show="!player.speed"></i>
+                    <i class="icon-pause" ng-show="player.speed"></i>
                 </div>
             </div>
         </div>

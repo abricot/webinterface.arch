@@ -261,19 +261,20 @@ angular.module('services.xbmc', ['services.io'])
       }
     };
 
-    factory.getMovies = function(cb, limits) {
+    factory.getMovies = function(cb, limits, sort) {
       limits = limits || {
         'start': 0,
         'end': 50
       };
+      sort = sort || {
+        'order': 'ascending',
+        'method': 'label',
+        'ignorearticle': true
+      };
       io.send('VideoLibrary.GetMovies', {
         'limits': limits,
-        'properties': ['title', 'genre', 'rating', 'thumbnail', 'runtime', 'playcount', 'streamdetails', 'fanart'],
-        'sort': {
-          'order': 'ascending',
-          'method': 'label',
-          'ignorearticle': true
-        }
+        'properties': ['title', 'genre', 'rating', 'thumbnail', 'runtime', 'playcount', 'streamdetails', 'fanart', 'year', 'dateadded'],
+        'sort': sort
       }, true, 'result').then(cb);
     };
 
@@ -281,7 +282,7 @@ angular.module('services.xbmc', ['services.io'])
       io.send('VideoLibrary.GetMovieDetails', {
         'properties': ['title', 'genre', 'rating', 'thumbnail', 'plot', 'streamdetails',
         'studio', 'director', 'fanart', 'runtime', 'trailer', 'imdbnumber','mpaa','cast',
-        'writer', 'year'
+        'writer', 'year','plotoutline', 'tagline'
         ],
         'movieid': movieId
       }, true, 'result.moviedetails').then(cb);
@@ -297,8 +298,8 @@ angular.module('services.xbmc', ['services.io'])
         'limits': limits,
         'properties': ['title', 'artist', 'thumbnail', 'year', 'genre', 'artistid', 'rating'],
         'sort': {
-          'order': 'ascending',
-          'method': 'label',
+          'order': 'descending',
+          'method': 'year',
           'ignorearticle': true
         },
       };
@@ -307,6 +308,16 @@ angular.module('services.xbmc', ['services.io'])
         params.filter[filter.key] = filter.value;
       }
       io.send('AudioLibrary.GetAlbums', params, true, 'result').then(cb);
+    };
+
+    factory.getAlbumDetails = function(albumid, cb) {
+      io.send('AudioLibrary.GetAlbumDetails', {
+        'albumid' : albumid,
+        'properties': ['title','description', 'artist', 'genre', 'albumlabel', 'year', 
+                       'fanart',  'thumbnail', 'playcount', 'genreid', 'artistid', 
+                       'displayartist']
+      }, true, 'result.albumdetails').then(cb);
+
     };
 
     factory.getArtists = function(cb, limits) {
@@ -329,7 +340,7 @@ angular.module('services.xbmc', ['services.io'])
     factory.getArtistDetails = function(artistid, cb) {
       io.send('AudioLibrary.GetArtistDetails', {
         'artistid' : artistid,
-        'properties': ['genre', 'thumbnail', 'fanart']
+        'properties': ['formed', 'description', 'genre', 'thumbnail', 'fanart']
       }, true, 'result.artistdetails').then(cb);
 
     };

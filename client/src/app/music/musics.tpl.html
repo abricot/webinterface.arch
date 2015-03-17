@@ -1,15 +1,8 @@
-<div class="music">
-    <div class="arts">
-        <div class="banner"></div>
-        <div class="md-action md-action-primary"
-             ng-click="xbmc.open({'file' : undefined})">
-            <i class="icon-random"></i>
-        </div>
-    </div>
+<div class="music fill-height">
     <div class="tabs row">
-        <a class="span4 tab" ng-click="go('/musics/albums')" ng-class="{selected : isSelected('music.albums')}">Albums</a>
-        <a class="span4 tab" ng-click="go('/musics/artists')" ng-class="{selected : isSelected('music.artists')}">Artists</a>
-        <a class="span4 tab" ng-click="go('/musics/songs')" ng-class="{selected : isSelected('music.songs')}">Songs</a>
+        <a class="span4 tab" href="#/musics/albums/all" ng-class="{selected : isSelected('music.*albums$')}">Albums</a>
+        <a class="span4 tab" href="#/musics/artists/all" ng-class="{selected : isSelected('music.*artists$')}">Artists</a>
+        <a class="span4 tab" href="#/musics/songs/all" ng-class="{selected : isSelected('music.*songs')}">Songs</a>
     </div>
     <div ui-view class="content">
         

@@ -1,30 +1,18 @@
-<div ng-switch on="loading" ng-class="{loading : loading}">
-    <div ng-switch-when="true" class="loading"><div class="foxy"></div></div>
-    <div ng-switch-when="false">
-        <ul data-type="list" class="view albums" lr-infinite-scroll="loadMore">
-            <li class="row album" ng-repeat="album in albums"
-                ng-click="go('/music/songs/albumid/' + album.albumid)">
-                <div class="span3 flip-container" ng-show="album.rating">
-                    <flipper>
-                        <div class="front">
-                            <div class="md-circle poster" image image-source="album.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'">
-                            </div>
-                        </div>
-                        <div class="back" rating rating-value="album.rating" rating-max="10"></div>
-                    </flipper>
-                </div>
-                <div class="span3 wrapper" ng-show="!album.rating">
-                    <div class="md-circle poster" image image-source="album.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'">
+<div ng-switch on="loading" class="fill-height" ng-class="{loading : loading}">
+    <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
+    <div ng-switch-when="false" class="cards albums">
+        <ul data-type="list" lr-infinite-scroll="loadMore">
+            <li class="row album card" ng-repeat="album in albums">
+                <a href="#/musics/songs/albumid/{{album.albumid}}">
+                    <div class="poster" image image-source="album.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
                     </div>
-                </div>
-                <div class="span8">
-                    <p>{{album.label}}</p>
-                    <p>{{album.artist.join(', ')}}</p>
-                    <p>{{album.year}}</p>
-                </div>
+                    <div class="description">
+                        <h3>{{album.label}}</h3>
+                        <p>{{album.artist.join(', ')}}</p>
+                    </div>
+                </a>
             </li>
         </ul>
-        <div ng-show="!albums.length" class="empty list">Oops! nothing here</div>
         <spinner ng-show="fetching"></spinner>
     </div>
 </div>

@@ -1,17 +1,51 @@
 body {
   background: @regionBgColor;
+  color : @primaryTextColor;
 }
 #grid > .fluid(@fluidGridColumnWidth, @fluidGridGutterWidth);
 
 section[role="region"] {height : 100%;}
-section[role="region"] header {height: 4rem;}
+section[role="region"] header {
+  height: 4rem;
+  background: @secondaryBgColor;
+}
+
 section[role="region"] div[role="main"] {
-  height: calc(100% - 10rem);
+  height: calc(100% - 9rem);
+}
+
+section[role="region"] .no-footer {
+   height: calc(100% - 4rem);
 }
 
 [data-type="list"], .detail {
   padding : 0;
   margin : 0;
   overflow: auto;
-  height : 100%;
 }
+
+[data-type="list"] { height : 100%;}
+
+
+.loading .kodi {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: transparent url(../img/backgrounds/kodi.png) no-repeat center center;
+  background-size: 25%;
+}
+
+.loading .kodi:after {
+  content: "Loading";
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: @primaryTextColor;
+  font-family: Roboto;
+}
+

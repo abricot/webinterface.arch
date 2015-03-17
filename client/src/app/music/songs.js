@@ -1,25 +1,14 @@
 angular.module('app')
-.config(['$stateProvider', function ($stateProvider) {
-  $stateProvider.state('filteredSongs', {
-    url: '/music/songs/:filter/:filterId',
-    views: {
-      header: {templateUrl: 'layout/headers/backable.tpl.html'},
-      body: {
-        templateUrl: 'music/album.songs.tpl.html', controller: 'MusicSongsCtrl'
-      }
-    }
-  });
-}])
 .controller('MusicSongsCtrl', ['$scope', '$rootScope', '$stateParams', '$filter', 'storage',
   function MusicSongsCtrl($scope, $rootScope, $stateParams, $filter, storage) {
     $scope.loading = true;
     $scope.fetching = false;
 
-    $scope.requestItemsBy = 100;
+    $scope.requestItemsBy = 75;
     $scope.total = Infinity;
 
     $scope.filter = $stateParams.filter;
-    $scope.artist = null;
+    $scope.album = null;
     $scope.songs = [];
 
     var filter = null;
@@ -32,15 +21,15 @@ angular.module('app')
       $scope.total = result ? result.limits.total : Infinity;
       $scope.songs = $scope.songs.concat(songs);
       if(filter !== null) {
-        $scope.xbmc.getArtistDetails(songs[0].albumartistid[0], onArtistRetrieved);
+        $scope.xbmc.getAlbumDetails(filter.value, onAlbumRetrieved);
       } else {
         $scope.loading = false;
         $scope.fetching = false;
       }
     };
 
-    function onArtistRetrieved (artist) {
-      $scope.artist = artist;
+    function onAlbumRetrieved (album) {
+      $scope.album = album;
       $scope.loading = false;
     };
 
@@ -81,10 +70,6 @@ angular.module('app')
         };
          $scope.xbmc.getSongs(filter, onSongsFromSource, limits);
       }
-    };
-
-    $scope.play = function (item) {
-      $scope.xbmc.open(item);
     };
   }
 ]);

@@ -3,32 +3,39 @@ angular.module('app')
   $stateProvider.state('music', {
     url: '/musics',
     views: {
-      header: {templateUrl: 'layout/headers/basic.tpl.html'},
+      header: {templateUrl: 'layout/headers/navigation.tpl.html', controller : 'HeaderNavController'},
       body: {
         templateUrl: 'music/musics.tpl.html',
         controller: 'MusicCtrl'
       }
     }
-  }).state('music.albums', {
-    url : '/albums',
+  }).state('music.albums', { 
+    url : '/albums/all',
     templateUrl: 'music/albums.tpl.html',
     controller: 'MusicAlbumsCtrl'
+  }).state('music.filteredAlbums', { 
+    url: '/albums/:filter/:filterId',
+    templateUrl: 'music/artist.albums.tpl.html',
+    controller: 'MusicAlbumsCtrl'
   }).state('music.artists', {
-    url : '/artists',
+    url : '/artists/all',
     templateUrl: 'music/artists.tpl.html',
     controller: 'MusicArtistsCtrl'
   }).state('music.songs', {
-    url : '/songs',
+    url : '/songs/all',
+    templateUrl: 'music/songs.tpl.html',
+    controller: 'MusicSongsCtrl'
+  }).state('music.filteredSongs', {
+    url : '/songs/:filter/:filterId',
     templateUrl: 'music/songs.tpl.html',
     controller: 'MusicSongsCtrl'
   });
 }])
 .controller('MusicCtrl', ['$scope',
   function MusicCtrl($scope, $stateParams) {
-    var states = ['music.albums','music.artists','music.songs'];
-    var paths = ['/musics/albums', '/musics/artists', '/musics/songs'];
-    $scope.isSelected = function (category) {
-      return $scope.$state.current.name === category;
+    $scope.isSelected = function (regExpStr) {
+      var regExp = new RegExp(regExpStr, 'gi');
+      return $scope.$state.current.name.match(regExp) !== null;
     }
   }
 ]);

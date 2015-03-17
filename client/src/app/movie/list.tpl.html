@@ -1,21 +1,31 @@
-<div ng-switch on="loading" class="fill-height">
+<div ng-switch on="loading" class="fill-height" ng-class="{loading : loading}">
+    <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
     <div ng-switch-when="false" class="cards movies">
-        <ul data-type="list" lr-infinite-scroll="loadMore">
-            <li class="card movie" ng-repeat="movie in movies"
-                ng-click="go('/movie/' + movie.movieid, 'none')">
-                <div class="poster" image image-source="movie.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'">
-                    <div rating rating-value="movie.rating" rating-max="10"></div>
-                </div>
-                <div class="description">
-                    <h3>{{movie.label}}</h3>
-                    <p>{{movie.genre.join(', ')}}</p>
-                    <p class="clock">
-                        {{movie.runtime | time | date:'HH:mm'}}
-                    </p>
-                </div>
-                
-            </li>
-        </ul>
+        <div class="tabs row">
+            <a class="span6 tab" href="#/movies/recents" ng-class="{selected : sort.method === 'dateadded'}">Recently added</a>
+            <a class="span6 tab" href="#/movies/all"  ng-class="{selected : sort.method === 'label'}">All movies</a>
+        </div>
+        <div class="content">
+            <ul data-type="list" lr-infinite-scroll="loadMore">
+                <li class="card movie" ng-repeat="movie in movies">
+                    <a href="#/movie/{{movie.movieid}}">
+                        <div class="poster" image image-source="movie.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'">
+                            <div rating rating-value="movie.rating" rating-max="10"></div>
+                        </div>
+                        <div class="description">
+                            <h3>{{movie.label}}</h3>
+                            <h4>{{movie.year}}</h4>
+                            <p class="clock">
+                                {{movie.runtime | time | date:'HH:mm'}}
+                            </p>
+                            <div class="playcount" ng-show="movie.playcount">
+                                 <i class="icon-ok"></i> 
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
         <div ng-show="!movies.length" class="empty list">Oops! nothing here</div>
         <spinner ng-show="fetching"></spinner>
     </div>

@@ -1,20 +1,53 @@
-<div ng-switch on="loading" ng-class="{loading : loading}">
-    <div ng-switch-when="true" class="loading"><div class="foxy"></div></div>
-    <div ng-switch-when="false">
-        <ul data-type="list" class="view songs" lr-infinite-scroll="loadMore">
-            <li class="row song" ng-repeat="song in songs"
-                ng-click="play({songid : song.songid})">
-                <div class="span10">
-                    <p>{{song.label}}</p>
-                    <p>{{song.artist.join(', ')}}</p>
+<div ng-switch on="loading" class="fill-height songs-wrapper" ng-class="{loading : loading}">
+    <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
+    <div ng-switch-when="false" class="fill-height">
+        <div class="detail wrapper row">
+            <div class="offset2 span5 card artist">
+                <div class="poster-wrapper">
+                    <div class="poster" image image-source="album.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
+                    </div>
                 </div>
-                <div class="span2">
-                    <p></p>
-                    <p class="clock">{{song.duration | time | date :'mm:ss'}}</p>
+                <div class="details">
+                    <h1>{{album.label | fallback:'Songs'}}</h1>
+                    <h3>{{album.genre.join(', ')}}</h3>
+                    <p ng-show="album">{{album.year}}</p>
+                    <p ng-show="!album">{{total}} songs in your library</p>
                 </div>
-            </li>
-        </ul>
-        <div ng-show="!songs.length" class="empty list">Oops! nothing here</div>
+            </div>
+            <div class="span3 actions">
+                <div class="md-action md-action-primary"
+                   ng-click="xbmc.open({'file' : undefined})"
+                   ng-show="!album">
+                    <i class="icon-random"></i>
+                </div>
+                <div class="md-action md-action-primary"
+                     ng-click="xbmc.queue({'albumid': album.albumid})" 
+                     ng-show="album && player.active">
+                    <i class="icon-plus"></i>
+                </div>
+                <div class="md-action md-action-primary"
+                     ng-click="xbmc.open({'albumid': album.albumid})" 
+                     ng-show="album && !player.active">
+                    <i class="icon-play"></i>
+                </div>
+            </div>
+        </div>
+        <div class="row songs">
+            <ul data-type="list" lr-infinite-scroll="loadMore">
+                <li class="row song" ng-repeat="song in songs"
+                    ng-click="xbmc.open({songid : song.songid})">
+                    <div class="span5 track">
+                        <span class="thumbnail" image image-source="song.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
+                            <i class="icon-play"></i>
+                        </span>
+                        {{song.label}}
+                    </div>
+                    <div class="span3">{{song.album}}</div>
+                    <div class="span3">{{song.artist.join(', ')}}</div>
+                    <div class="span1 duration">{{song.duration | time | date :'mm:ss'}}</div>
+                </li>
+            </ul>
+        </div>
         <spinner ng-show="fetching"></spinner>
     </div>
 </div>

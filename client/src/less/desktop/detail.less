@@ -1,5 +1,23 @@
 .detail {
-  margin-top : 1rem;
+  padding-top : .5rem;
+}
+.detail .wrapper,
+.detail.wrapper { 
+  position: relative;
+  padding-bottom: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.detail .wrapper .fanart,
+.detail.wrapper .fanart{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-position: center;
+  background-size: 100% auto;
+  opacity: 0.1;
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 .detail .poster-wrapper {
@@ -17,11 +35,29 @@
   height : 100%;
 }
 
+.detail .actions {
+  position: relative;
+  min-height: 27rem;
+}
+.detail .actions .md-action {
+  width : 10rem;
+  height : 10rem;
+  position: absolute;
+  top : 1rem;
+  left : 50%;
+  margin-left: -5rem;
+}
+
+.detail .actions .md-action i {
+  font-size: 4rem;
+  line-height: 10rem;
+} 
+
 .detail .details {
   float: left;
-  width: calc(75% - 10rem);
-  margin-left: 2rem;
-  box-sizing: border-box;
+  width: calc(85% - 18rem);
+  padding-left: 2rem;
+  .box-sizing(border-box);
 }
 
 .detail h1 {
@@ -46,8 +82,7 @@
 }
 .detail h1 .more.hidden{display: none;}
 .detail .description{
-  background: #f5f5f5;
-  margin-top : 2rem;
+  background: @primaryBgColor;
   padding-bottom: 2rem;
 }
 
@@ -96,27 +131,10 @@
   padding-bottom: 0.5rem;
 }
 
-.detail .acions {
-  position: absolute;
-  right: 0rem;
-  top: 2rem;
-  background: @actionBgColor;
-}
-
-.detail .acions .md-action {
-  width : 10rem;
-  height : 10rem;
-}
-
-.detail .acions .md-action i {
-  font-size: 4rem;
-  line-height: 10rem;
-} 
-
 .detail .thumbnail {
-  width : 13.5rem;
-  height : 7.5rem;
+  height : 10rem;
   background-position: center;
   background-size : 100% auto;
   margin : 0.5rem 0; 
+  position : relative;
 }

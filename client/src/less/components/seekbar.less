@@ -25,7 +25,7 @@ progress::-webkit-progress-bar {
 }
 
 progress::-webkit-progress-value {
-    background: #01579b;
+    background: @actionBgColor;
 }
 
 div[role="slider"] > label {
@@ -65,10 +65,11 @@ div[role="slider"] button {
   padding: 0;
   margin: -1rem 0 0 -1rem;
   font: 0/0 a;
-  background: #01579b;
+  background: @actionBgColor;
   border: solid 0.1rem transparent;
   border-radius: 50%;
   transition: border 0.15s ease;
+  z-index: 4;
 }
 
 div[role="slider"] button:active {

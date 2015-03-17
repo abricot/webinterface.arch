@@ -1,7 +1,6 @@
 angular.module('app')
 .controller('NowPlayingCtrl', ['$scope', '$filter',
   function NowPlayingCtrl($scope, $filter) {
-    $scope.loading = true;
     $scope.showAudioSelect = false;
     $scope.showSubtitleSelect = false;
     $scope.showTimePicker = false;
@@ -22,37 +21,6 @@ angular.module('app')
 
     var timeFilter = $filter('time');
     $scope.seekTime = timeFilter($scope.player.seek.time);
-
-    function onPlayerItemRetrieved(item) {
-      $scope.loading = false;
-      if($scope.library.item.type === 'episode') {
-        $scope.xbmc.getTVShowDetails(item.tvshowid, function(details){
-          item.genre = details.genre;
-          $scope.player.item = item;
-        });
-      } else {
-        $scope.player.item = item;
-      }
-    };
-
-    function onPlayersRetrieved(players) {
-      if (players.length > 0) {
-        var player = players[0];
-        $scope.xbmc.getPlayerItem(onPlayerItemRetrieved, player.playerid);
-      }
-    };
-
-    var onLoad = function() {
-      $scope.xbmc.getActivePlayers(onPlayersRetrieved);
-    };
-    if ($scope.xbmc.isConnected()) {
-      onLoad();
-    } else {
-      $scope.xbmc.register('Websocket.OnConnected', {
-        fn: onLoad,
-        scope: this
-      });
-    }
 
     $scope.isTypeVideo = function() {
       return $scope.player.type === 'video' ||

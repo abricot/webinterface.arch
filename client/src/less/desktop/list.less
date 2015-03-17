@@ -1,7 +1,7 @@
 
 .cards {
-  text-align: center;
   height: 100%;
+  text-align: center;
 }
 
 [data-type="list"] .card{
@@ -12,8 +12,34 @@
   position : relative;
   cursor: pointer;
   border : 0.2rem solid transparent;
+  text-decoration: none;
+  position: relative;
 }
 
+[data-type="list"] .card  .playcount {
+  background-color: @actionBgColor;
+  top : 0;
+  right: 1rem;
+  border-radius: 0;
+}
+[data-type="list"] .card  .playcount:after {
+  width: 0;
+  height: 0;
+  border-top: .75rem solid @actionBgColor;
+  border-right: 1rem solid transparent;
+  border-left: 1rem solid transparent;
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -.7rem;
+}
+
+[data-type="list"] .card a,
+[data-type="list"] .card a:hover,
+[data-type="list"] .card a:visited{ 
+  text-decoration: none;
+  color : @primaryTextColor;
+}
 [data-type="list"] .card:hover{
   border : 0.2rem solid #d5d5d5;
 }
@@ -50,14 +76,17 @@
   top : auto;
   border-color : lighten(@regionBgColor, 25%);
   border : 0.25rem solid @secondaryBgColor;
-  background-color: #7465c0;
+  background-color: @secondaryBgColor;
 }
 
 [data-type="list"] .card .rating {
   bottom: -1.5rem;
   left: 1;
   top: auto;
+  background: @actionBgColor !important;
+  border-color: @actionBgColor !important;
 }
+
 [data-type="list"] .card .description .clock{
   font-size: 1.5rem;
   padding: 0;
