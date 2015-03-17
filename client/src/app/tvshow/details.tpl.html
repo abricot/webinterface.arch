@@ -1,0 +1,66 @@
+<div ng-switch on="loading" class="tvshow detail fill-height" ng-class="{loading : loading}">
+  <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
+  <div ng-switch-when="false">
+    <div class="row wrapper">
+        <div class="fanart" image image-source="library.item.fanart | asset:host"></div>
+            
+        <div class="offset2 span6 clearfix" style="position:relative;">
+            <div class="poster-wrapper">
+                <img class=" poster" image image-source="library.item.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'"/>
+            </div>
+            <div class="details">
+                <h1>{{library.item.title}}</h1>
+                <h3>{{library.item.genre.join(', ')}}</h3>
+                <p>{{library.item.year}}</p>
+                <p class="plot">{{library.item.plot}}</p>
+            </div>
+        </div>
+        <div class="span2 actions">
+          <div class="md-action md-action-primary"
+                ng-click="queueAll()" >
+            <i class="icon-plus"></i>
+          </div> 
+        </div>
+    </div>
+    <div class="description">
+        <div class="row">
+            <div class="offset2 span8">
+                <h1>
+                  Episodes
+                  <i class="icon-chevron-right"></i>
+                  <a class="season">
+                    <span class="md-circle fanart" image image-source="season.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'"">
+                    </span>
+                    {{season.label}}
+                    <i class="icon-chevron-down" ng-show="seasons.length>1"></i>
+                    <select ng-options="season.label for season in seasons" 
+                            ng-model="season"
+                            ng-change="changeSeason(season)"></select>
+                    {{selectedSeason}}
+                  </a>
+                </h1>
+                <ul data-type="list">
+                  <li class="row episode" ng-repeat="episode in episodes"
+                      ng-click="openOrQueue(episode.episodeid)">
+                    <div class="thumbnail span3" image image-source="episode.thumbnail | asset:host">
+                      <div class="md-action md-action-primary">
+                          <i class="icon-play"></i>
+                      </div>
+                    </div>    
+                    <div class="span9">
+                      <p>
+                        {{episode.episode | episode:episode.season}} - 
+                        {{episode.title}} 
+                      </p>
+                      <p><span class="runtime">{{episode.runtime | time | date:'HH:mm'}}</span></p>
+                      <p>{{episode.plot}}</p>
+                    </div>
+                  </li>
+              </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>    
+</div>
+
