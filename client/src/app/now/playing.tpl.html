@@ -1,5 +1,5 @@
 <div class="row buttons">
-  <div class="span2 actions-wrapper" style="text-align:center;">
+  <div class="actions-wrapper">
     <div class="md-action" ng-click="xbmc.previous()" >
         <i class="icon icon-fast-backward"></i>
     </div>
@@ -13,7 +13,7 @@
         <i class="icon icon-fast-forward"></i>
     </div>
   </div>
-  <div class="span8 player-wrapper" ng-switch on="player.active">
+  <div class="player-wrapper" ng-switch on="player.active">
     <div ng-switch-when="false" class="empty">
     </div>
     <div ng-switch-when="true">
@@ -36,16 +36,32 @@
       </div>
     </div>
   </div>
-  <div class="span2  voulme-wrapper">
+  <div class="actions-wrapper">
+    <div class="md-action" ng-click="xbmc.home()" >
+        <i class="icon-home"></i>
+    </div>
+    <div class="md-action" ng-click="xbmc.home()" >
+        <i class="icon-reorder"></i>
+    </div>
+    <div class="md-action" ng-click="xbmc.mute()" >
+        <i class="icon-volume-up" ng-show="application.muted"></i>
+        <i class="icon-volume-off" ng-show="!application.muted"></i>
+    </div>
+    <div class="md-action" ng-click="toggleShutdownOptions()">
+        <i class="icon icon-power-off"></i>
+    </div>
+    <!--
     <div class="md-action"  ng-hold="xbmc.dereaseVolume(application.volume)" >
         <i class="icon icon-volume-down"></i>
     </div>
+
     <seekbar seekbar-value="application.volume" seekbar-max="100"
      on-seekbar-changed="onVolumeChanged(newValue)"
      class="volume seekbar"></seekbar>
     <div class="md-action"  ng-hold="xbmc.increaseVolume(application.volume)" >
         <i class="icon icon-volume-up"></i>
     </div>
+    -->
   </div>
 </div>
 
@@ -98,6 +114,21 @@
         <div class="actions">
             <button  ng-click="toggleTimePicker()"> Cancel </button>
             <button class="recommend" ng-click="onValidateSeekTime()"> Ok </button>
+        </div>
+    </div>
+</form>
+
+<form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showShutdownOptions">
+    <div class="content">
+        <header>System</header>
+        <div class="body">
+            <button class="command" ng-click="execCommand('shutdown')">Power off</button>
+            <button class="command" ng-click="execCommand('hibernate')">Hibernate</button>
+            <button class="command" ng-click="execCommand('suspend')">Suspend</button>
+            <button class="command" ng-click="execCommand('reboot')">Reboot</button>
+        </div>
+        <div class="actions">
+            <button ng-click="toggleShutdownOptions()">Cancel</button>
         </div>
     </div>
 </form>

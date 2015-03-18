@@ -4,6 +4,7 @@ angular.module('app')
     $scope.showAudioSelect = false;
     $scope.showSubtitleSelect = false;
     $scope.showTimePicker = false;
+    $scope.showShutdownOptions = false;
 
     $scope.stream = 0;
     $scope.sub = 0;
@@ -78,10 +79,15 @@ angular.module('app')
       $scope.showSubtitleSelect = !$scope.showSubtitleSelect;
     };
 
+    $scope.toggleShutdownOptions = function() {
+      $scope.showShutdownOptions = !$scope.showShutdownOptions;
+    };
+
     $scope.toggleTimePicker = function() {
       $scope.seekTime = timeFilter($scope.player.seek.time);
       $scope.showTimePicker = !$scope.showTimePicker;
     };
+
 
     $scope.updateSeek = function(newValue) {
       newValue = Math.min(newValue, 100);

@@ -8,11 +8,21 @@
   z-index: 4;
 }
 
-.player-wrapper {
+.playing .actions-wrapper {
+  width : 17%;
+  margin : 0;
+  float : left;
+  text-align: center;
+}
+
+.playing .player-wrapper {
   min-height: 1px;
   position: relative;
   background: lighten(@secondaryBgColor, 10%);
   min-height: 6rem;
+  margin: 0;
+  width: 66%;
+  float : left;
 }
 
 .player-wrapper .empty{
@@ -49,6 +59,7 @@
   box-shadow: none;
   transition: all 0.25s ease;
   border-radius: 0;
+  height : 100%;
 }
 
 .buttons .md-action .icon-pause,
@@ -64,7 +75,7 @@ section[role="region"] .buttons .md-action:active {
 section[role="region"] .buttons i { 
   font-size: 2.5rem; 
   text-shadow:none;
-  line-height: 6.5rem;
+  line-height: 6rem;
 }
 
 section[role="region"] .buttons i { 
@@ -95,7 +106,11 @@ section[role="region"] .buttons i {
 .playing .dropdown-menu li {cursor:pointer;padding:0.5rem 1rem;}
 .playing .dropdown-menu li:hover {background: @regionBgColor;}
 
-.voulme-wrapper {text-align: right;}
+.voulme-wrapper {
+  text-align: right;
+  margin : 0;
+  width : 17%;
+}
 .voulme-wrapper  .md-action,
 .voulme-wrapper  .md-circle{
   position: relative;

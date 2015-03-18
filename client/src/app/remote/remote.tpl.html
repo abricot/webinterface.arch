@@ -16,7 +16,7 @@
             </div>
             <div ng-switch-when="false">
                 <div class="banner"></div>
-                <div class="md-action md-action-primary" ng-click="toggleShutdownOptions()">
+                <div class="md-action md-action-primary" >
                     <i class="icon icon-power-off"></i>
                 </div>
             </div>
@@ -126,18 +126,5 @@
     </div>
 </form>
 
-<form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showShutdownOptions">
-    <div class="content">
-        <header>System</header>
-        <div class="body">
-            <button class="command" ng-click="execCommand('shutdown')">Power off</button>
-            <button class="command" ng-click="execCommand('hibernate')">Hibernate</button>
-            <button class="command" ng-click="execCommand('suspend')">Suspend</button>
-            <button class="command" ng-click="execCommand('reboot')">Reboot</button>
-        </div>
-        <div class="actions">
-            <button ng-click="toggleShutdownOptions()">Cancel</button>
-        </div>
-    </div>
-</form>
+
 
