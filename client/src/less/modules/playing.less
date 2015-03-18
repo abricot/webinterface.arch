@@ -32,7 +32,7 @@
   height : 6rem;
   line-height : 6rem;
   color : #f1f1f1;
-  
+
 }
 .now .controls i {
   cursor: pointer;
@@ -77,9 +77,14 @@
 
 .time {text-align : center; }
 .time .btn-link {color : #2196f3;}
-.time .picker {display : inline-block;}
+.time .picker {
+  display : inline-block;
+  text-align: center;
+}
 
-.now [data-type="list"]{   
+.time .picker table{margin:0 auto;}
+
+.now [data-type="list"]{
   position: absolute;
   top: 10rem;
   right : 0;

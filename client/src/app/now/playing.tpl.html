@@ -1,72 +1,72 @@
 <div class="row buttons">
-  <div class="actions-wrapper">
-    <div class="md-action" ng-click="xbmc.previous()" >
-        <i class="icon icon-fast-backward"></i>
-    </div>
-    <div class="md-action" ng-click="xbmc.togglePlay()" ng-show="!player.speed">
-        <i class="icon-play"></i>
-    </div>
-    <div class="md-action" ng-click="xbmc.togglePlay()"  ng-show="player.speed">
-        <i class="icon-pause"></i>
-    </div>
-    <div class="md-action" ng-click="xbmc.next()"  >
-        <i class="icon icon-fast-forward"></i>
-    </div>
-  </div>
-  <div class="player-wrapper" ng-switch on="player.active">
-    <div ng-switch-when="false" class="empty">
-    </div>
-    <div ng-switch-when="true">
-      <seekbar seekbar-value="player.seek.percentage" seekbar-max="100"
-           on-seekbar-changed="onSeekbarChanged(newValue)"
-           class="seekbar"></seekbar>
-      <div class="player">
-
-        <div class="poster-wrapper" >
-          <div class="poster" image image-source="player.item.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'"></div>
+    <div class="actions-wrapper">
+        <div class="md-action" ng-click="xbmc.previous()" >
+            <i class="icon icon-fast-backward"></i>
         </div>
-        <div class="label">{{player.item.label}}</div>
-        <div class="md-action more">
-          <i class="icon icon-ellipsis-vertical" ng-show="isTypeVideo()"></i>
-          <ul class="dropdown-menu" ng-show="isTypeVideo()">
-            <li ng-click="toggleAudioStreams()">Switch audio</li>
-            <li ng-click="toggleSubtitles()">Switch subtitles</li>
-          </ul>
+        <div class="md-action" ng-click="xbmc.stop()">
+            <i class="icon-stop"></i>
         </div>
-      </div>
+        <div class="md-action" ng-click="xbmc.togglePlay()" ng-show="!player.speed">
+            <i class="icon-play"></i>
+        </div>
+        <div class="md-action" ng-click="xbmc.togglePlay()"  ng-show="player.speed">
+            <i class="icon-pause"></i>
+        </div>
+        <div class="md-action" ng-click="xbmc.next()"  >
+            <i class="icon icon-fast-forward"></i>
+        </div>
     </div>
-  </div>
-  <div class="actions-wrapper">
-    <div class="md-action" ng-click="xbmc.home()" >
-        <i class="icon-home"></i>
+    <div class="player-wrapper" ng-switch on="player.active">
+        <div ng-switch-when="false" class="empty">
+        </div>
+        <div ng-switch-when="true">
+            <seekbar seekbar-value="player.seek.percentage" seekbar-max="100"
+                     on-seekbar-changed="onSeekbarChanged(newValue)"
+                     class="seekbar"></seekbar>
+            <div class="player">
+                <div class="poster-wrapper" >
+                    <div class="poster" image image-source="player.item.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'"></div>
+                </div>
+                <div class="label">{{player.item.label}}</div>
+                <div class="label times" ng-click="toggleTimePicker()">
+                    {{player.seek.time | time | date:'HH:mm:ss'}}/
+                    {{player.seek.totaltime | time | date:'HH:mm:ss'}}
+                    [-{{(player.seek.totaltime - player.seek.time)  | time | date:'HH:mm:ss'}}]
+                </div>
+                <div class="md-action more">
+                    <i class="icon icon-ellipsis-vertical" ng-show="isTypeVideo()"></i>
+                    <ul class="dropdown-menu" ng-show="isTypeVideo()">
+                        <li ng-click="toggleAudioStreams()">Switch audio</li>
+                        <li ng-click="toggleSubtitles()">Switch subtitles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="md-action" ng-click="xbmc.home()" >
-        <i class="icon-reorder"></i>
+    <div class="actions-wrapper">
+        <div class="volume-wrapper">
+            <seekbar seekbar-value="application.volume" seekbar-max="100"
+                 on-seekbar-changed="onVolumeChanged(newValue)"
+                 class="volume seekbar"></seekbar>
+        </div>
+        <div class="md-action" ng-click="xbmc.home()" >
+            <i class="icon-home"></i>
+        </div>
+        <div class="md-action" ng-click="xbmc.home()" >
+            <i class="icon-reorder"></i>
+        </div>
+        <div class="md-action" ng-click="xbmc.mute()" >
+            <i class="icon-volume-up" ng-show="application.muted"></i>
+            <i class="icon-volume-off" ng-show="!application.muted"></i>
+        </div>
+        <div class="md-action" ng-click="toggleShutdownOptions()">
+            <i class="icon icon-power-off"></i>
+        </div>
     </div>
-    <div class="md-action" ng-click="xbmc.mute()" >
-        <i class="icon-volume-up" ng-show="application.muted"></i>
-        <i class="icon-volume-off" ng-show="!application.muted"></i>
-    </div>
-    <div class="md-action" ng-click="toggleShutdownOptions()">
-        <i class="icon icon-power-off"></i>
-    </div>
-    <!--
-    <div class="md-action"  ng-hold="xbmc.dereaseVolume(application.volume)" >
-        <i class="icon icon-volume-down"></i>
-    </div>
-
-    <seekbar seekbar-value="application.volume" seekbar-max="100"
-     on-seekbar-changed="onVolumeChanged(newValue)"
-     class="volume seekbar"></seekbar>
-    <div class="md-action"  ng-hold="xbmc.increaseVolume(application.volume)" >
-        <i class="icon icon-volume-up"></i>
-    </div>
-    -->
-  </div>
 </div>
 
- <form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showAudioSelect">
-     <div class="content">
+<form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showAudioSelect">
+    <div class="content">
         <header> Audio Streams </header>
         <div class="body">
             <label ng-repeat="audiostream in player.audiostreams">
@@ -82,7 +82,7 @@
 </form>
 
 <form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showSubtitleSelect">
-     <div class="content">
+    <div class="content">
         <header> Subtitles </header>
         <div class="body">
             <label>
@@ -107,7 +107,7 @@
         <div class="body">
             <div class="time">
                 <div ng-model="seekTime" class="picker">
-                  <timepicker hour-step="1" minute-step="1" show-meridian="false"></timepicker>
+                    <timepicker hour-step="1" minute-step="1" show-meridian="false"></timepicker>
                 </div>
             </div>
         </div>

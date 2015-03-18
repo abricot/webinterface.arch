@@ -1,8 +1,12 @@
-
 .cards {
   height: 100%;
   text-align: center;
 }
+
+.cards .content {height: calc(100% - 4rem);}
+
+.cards .tabs{background: lighten(@secondaryBgColor, 10%);}
+.cards .tabs .tab{padding: 1rem 0 0.5rem 0;}
 
 [data-type="list"] .card{
   display: inline-block;
@@ -36,7 +40,7 @@
 
 [data-type="list"] .card a,
 [data-type="list"] .card a:hover,
-[data-type="list"] .card a:visited{ 
+[data-type="list"] .card a:visited{
   text-decoration: none;
   color : @primaryTextColor;
 }
@@ -48,7 +52,7 @@
   width : 18rem;
   height : 27rem;
   background-size: 18rem;
-  background-position: center; 
+  background-position: center;
   box-sizing: border-box;
   box-shadow : 0 0 0 0;
   transition : all 250ms ease-in;
