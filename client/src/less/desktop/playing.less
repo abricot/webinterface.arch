@@ -68,7 +68,8 @@
   background: @actionBgColor;
 }
 
-section[role="region"] .buttons .md-action:active {
+section[role="region"] .buttons .md-action:active,
+section[role="region"] .buttons .md-action:hover {
   background-color : #009688;
   color : #f1f1f1 !important;
 }
@@ -114,11 +115,32 @@ section[role="region"] .buttons i {
 .playing .dropdown-menu li {cursor:pointer;padding:0.5rem 1rem;}
 .playing .dropdown-menu li:hover {background: @regionBgColor;}
 
-.voulme-wrapper {
-  text-align: right;
-  margin : 0;
-  width : 17%;
+
+.md-action:hover .volume-wrapper .volume.seekbar {
+  display : block;
 }
+
+.volume-wrapper .volume.seekbar {
+  position: absolute;
+  top: -9rem;
+  left: -4rem;
+  display: none;
+  width: 11rem;
+  height: 3rem;
+  padding: 1rem;
+  background : lighten(@secondaryBgColor, 10%);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.volume-wrapper div[role="slider"] progress{
+  position: absolute;
+  top: 50%;
+  width: auto;
+  transform: translateY(-50%);
+  left: 1rem;
+  right: 1rem;
+}
+
 .voulme-wrapper  .md-action,
 .voulme-wrapper  .md-circle{
   position: relative;
@@ -132,13 +154,6 @@ section[role="region"] .buttons i {
 }
 .voulme-wrapper  .md-action i,
 .voulme-wrapper  .md-circle i,{line-height: 4rem;}
-
-.volume.seekbar {
-    top: -0.5rem;
-  display: inline-block;
-  width: 10rem;
-  margin: 0 0.5rem;
-}
 
 .chooser button i {
   font-size: 2rem;

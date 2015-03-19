@@ -12,6 +12,10 @@ angular.module('directives.seekbar', [])
     },
     link: function (scope, elem, attrs) {
       var seekbarReadOnly = angular.isDefined(attrs.seekbarReadOnly) ? attrs.seekbarReadOnly : false;
+      scope.seekbarIsVertical =  false;
+      if(angular.isDefined(attrs.seekbarOrientation) && attrs.seekbarOrientation == 'vertical') {
+        scope.seekbarIsVertical = true;
+      }
       var thumb = elem.find('button');
       var progress = elem.find('progress');
       var body = angular.element(document).find('body');
@@ -28,31 +32,22 @@ angular.module('directives.seekbar', [])
         var newValue = -1;
 
         var offset = function (el) {
-          var offsetLeft = el.prop('offsetLeft');
-          var offsetTop = el.prop('offsetTop');
-          var tmp = el;
-          var position;
-          var hasParent = true;
-          while (hasParent) {
-            tmp = tmp.parent();
-            if (tmp[0].nodeName.toLowerCase() === 'body') {
-              hasParent = false;
-            } else {
-              position = getComputedStyle(tmp[0]).position;
-              if (position === 'relative' || position === 'absolute' || position === 'fixed') {
-                offsetLeft += tmp.prop('offsetLeft');
-                offsetTop += tmp.prop('offsetTop');
-              }
-            }
+          return el[0].getBoundingClientRect();
+        };
+
+        var toPercentage = function (target, progress) {
+          var position =  offset(progress);
+          var percent = (target.clientX - position.left) / position.width;
+          if(scope.seekbarIsVertical) {
+            percent = (position.height - (target.clientY -  position.top))/ position.height;
           }
-          return {left: offsetLeft, top: offsetTop};
+          return percent;
         };
 
         progress.bind('click touchstart', function (evt) {
           evt.stopPropagation();
           var target = evt.touches ? evt.touches[0] : evt;
-          var x = target.clientX;
-          var percent = (x - offset(progress).left) / progress.prop('offsetWidth');
+          var percent = toPercentage(target, progress);
           if (percent < 0)
             percent = 0;
           if (percent > 1)
@@ -71,8 +66,7 @@ angular.module('directives.seekbar', [])
           evt.stopPropagation();
           if (moving) {
             var target = evt.touches ? evt.touches[0] : evt;
-            var x = target.clientX;
-            var percent = (x - offset(progress).left) / progress.prop('offsetWidth');
+            var percent = toPercentage(target, progress);
             if (percent < 0)
               percent = 0;
             if (percent > 1)
@@ -93,12 +87,34 @@ angular.module('directives.seekbar', [])
         }
         thumb.bind('touchend', onMoveEnd);
         body.bind('mouseup', onMoveEnd);
+
+        var onMouseWheel = function (event) {
+          event = window.event || event;
+          var delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
+          var oldValue = parseInt(progress.attr('value'));
+          var newValue = oldValue + delta;
+          if (newValue < 0)
+            newValue = 0;
+          if (newValue > 100)
+            newValue = 100;
+          scope.onSeekbarChanged({newValue: newValue});
+        };
+
+        elem[0].addEventListener('DOMMouseScroll', onMouseWheel, false ); // For FF and Opera
+        elem[0].addEventListener('mousewheel', onMouseWheel, false ); // For others
       }
-      
+
       scope.$watch('seekbarValue', function (newVal, oldVal) {
         if (newVal && !moving) {
           scope.seekbarValue = newVal;
           update(newVal);
+        }
+      });
+
+      scope.$on('$destroy', function() {
+       if(!seekbarReadOnly) {
+          elem[0].removeEventListener('DOMMouseScroll', onMouseWheel, false ); // For FF and Opera
+          elem[0].removeEventListener('mousewheel', onMouseWheel, false ); // For others
         }
       });
     }

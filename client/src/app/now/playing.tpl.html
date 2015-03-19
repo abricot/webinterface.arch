@@ -20,7 +20,7 @@
         <div ng-switch-when="false" class="empty">
         </div>
         <div ng-switch-when="true">
-            <seekbar seekbar-value="player.seek.percentage" seekbar-max="100"
+            <seekbar seekbar-value="player.seek.percentage" seekbar-amx="100"
                      on-seekbar-changed="onSeekbarChanged(newValue)"
                      class="seekbar"></seekbar>
             <div class="player">
@@ -44,20 +44,21 @@
         </div>
     </div>
     <div class="actions-wrapper">
-        <div class="volume-wrapper">
-            <seekbar seekbar-value="application.volume" seekbar-max="100"
-                 on-seekbar-changed="onVolumeChanged(newValue)"
-                 class="volume seekbar"></seekbar>
-        </div>
         <div class="md-action" ng-click="xbmc.home()" >
             <i class="icon-home"></i>
         </div>
         <div class="md-action" ng-click="xbmc.home()" >
             <i class="icon-reorder"></i>
         </div>
-        <div class="md-action" ng-click="xbmc.mute()" >
+        <div class="md-action">
             <i class="icon-volume-up" ng-show="application.muted"></i>
             <i class="icon-volume-off" ng-show="!application.muted"></i>
+            <div class="volume-wrapper">
+                <seekbar seekbar-value="application.volume" seekbar-max="100"
+                     on-seekbar-changed="onVolumeChanged(newValue)"
+                     seekbar-orientation="vertical"
+                     class="volume seekbar"></seekbar>
+            </div>
         </div>
         <div class="md-action" ng-click="toggleShutdownOptions()">
             <i class="icon icon-power-off"></i>
