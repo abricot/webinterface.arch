@@ -5,6 +5,7 @@ angular.module('app')
     $scope.showSubtitleSelect = false;
     $scope.showTimePicker = false;
     $scope.showShutdownOptions = false;
+    $scope.showRemote = false;
 
     $scope.stream = 0;
     $scope.sub = 0;
@@ -22,6 +23,19 @@ angular.module('app')
 
     var timeFilter = $filter('time');
     $scope.seekTime = timeFilter($scope.player.seek.time);
+
+    $scope.getHashForItem = function () {
+      if($scope.player.type === 'video') {
+        if( $scope.player.item.tvshowid === -1) {
+          return '/movie/'+ $scope.player.item.id;
+        } else {
+          return '/tvshow/'+ $scope.player.item.tvshowid
+        }
+      } else if($scope.player.type === 'audio') {
+        return '/musics/songs/albumid/'+ $scope.player.item.albumid;
+      }
+      return '';
+    },
 
     $scope.isTypeVideo = function() {
       return $scope.player.type === 'video' ||
@@ -75,12 +89,12 @@ angular.module('app')
       $scope.showAudioSelect = !$scope.showAudioSelect;
     };
 
-    $scope.toggleSubtitles = function() {
-      $scope.showSubtitleSelect = !$scope.showSubtitleSelect;
+     $scope.toggleRemote = function() {
+      $scope.showRemote = !$scope.showRemote;
     };
 
-    $scope.toggleShutdownOptions = function() {
-      $scope.showShutdownOptions = !$scope.showShutdownOptions;
+    $scope.toggleSubtitles = function() {
+      $scope.showSubtitleSelect = !$scope.showSubtitleSelect;
     };
 
     $scope.toggleTimePicker = function() {

@@ -2,7 +2,7 @@
   padding-top : .5rem;
 }
 .detail .wrapper,
-.detail.wrapper { 
+.detail.wrapper {
   position: relative;
   padding-bottom: 2rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -44,14 +44,14 @@
   height : 10rem;
   position: absolute;
   top : 1rem;
-  left : 50%;
-  margin-left: -5rem;
+  right : 0;
+  transform: translateX(-50%);
 }
 
 .detail .actions .md-action i {
   font-size: 4rem;
   line-height: 10rem;
-} 
+}
 
 .detail .details {
   float: left;
@@ -87,13 +87,13 @@
 }
 
 .detail .description > .row{
-  border-top:1px solid @regionBgColor; 
+  border-top:1px solid @regionBgColor;
   margin-bottom : 2rem;
 }
 
 .detail .properties .md-circle {
   margin-right: 3rem;
-  float: left; 
+  float: left;
 }
 
 .detail .fanart {
@@ -109,12 +109,12 @@
 .detail .collapsed {
   overflow: hidden;
   white-space: nowrap;
-} 
+}
 .detail .actor .poster,
 .detail .similar .poster, {
   width : 9rem;
   height : 13.5rem;
-  background-size: 9rem 13.5rem; 
+  background-size: 9rem 13.5rem;
   margin-bottom: 1rem;
 }
 
@@ -135,6 +135,6 @@
   height : 10rem;
   background-position: center;
   background-size : 100% auto;
-  margin : 0.5rem 0; 
+  margin : 0.5rem 0;
   position : relative;
 }

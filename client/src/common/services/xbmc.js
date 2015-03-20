@@ -6,7 +6,7 @@ angular.module('services.xbmc', ['services.io'])
     var activePlayer = -1;
     var activePlaylist = -1;
     var volume = 0;
-    
+
 
     factory.connect = function(url, port) {
       io.connect(url, port);
@@ -31,39 +31,39 @@ angular.module('services.xbmc', ['services.io'])
     factory.up = function() {
       io.send('Input.Up');
     };
-    
+
     factory.down = function() {
       io.send('Input.Down');
     };
-    
+
     factory.left = function() {
       io.send('Input.Left');
     };
-    
+
     factory.right = function() {
       io.send('Input.Right');
     };
-    
+
     factory.select = function() {
       io.send('Input.Select');
     };
-    
+
     factory.back = function() {
       io.send('Input.Back');
     };
-    
+
     factory.contextmenu = function() {
       io.send('Input.ContextMenu');
     };
-    
+
     factory.info = function() {
       io.send('Input.Info');
     };
-    
+
     factory.home = function() {
       io.send('Input.Home');
     };
-    
+
     factory.sendText = function (textToSend) {
       io.send('Input.sendText', {'text' : textToSend});
     };
@@ -120,7 +120,7 @@ angular.module('services.xbmc', ['services.io'])
         'properties': ['volume','muted', 'name', 'version']
       }, true, 'result').then(cb);
     };
-   
+
 
     factory.goTo = function(index) {
       io.send('Player.GoTo', {
@@ -206,7 +206,7 @@ angular.module('services.xbmc', ['services.io'])
     factory.increaseVolume = function(volume) {
       factory.setVolume(Math.min(volume + 1, 100));
     };
-    
+
     factory.decreaseVolume = function(volume) {
       factory.setVolume(Math.max(volume - 1, 0));
     };
@@ -313,8 +313,8 @@ angular.module('services.xbmc', ['services.io'])
     factory.getAlbumDetails = function(albumid, cb) {
       io.send('AudioLibrary.GetAlbumDetails', {
         'albumid' : albumid,
-        'properties': ['title','description', 'artist', 'genre', 'albumlabel', 'year', 
-                       'fanart',  'thumbnail', 'playcount', 'genreid', 'artistid', 
+        'properties': ['title','description', 'artist', 'genre', 'albumlabel', 'year',
+                       'fanart',  'thumbnail', 'playcount', 'genreid', 'artistid',
                        'displayartist']
       }, true, 'result.albumdetails').then(cb);
 
@@ -352,7 +352,7 @@ angular.module('services.xbmc', ['services.io'])
       }
       var params = {
         'limits': limits,
-        'properties': ['title', 'artist', 'album', 'albumid', 'thumbnail', 'duration', 'track', 'year', 'albumartistid', 'rating'],
+        'properties': ['title', 'artist', 'album', 'albumid', 'thumbnail', 'duration', 'track', 'year', 'albumartistid', 'rating', 'lyrics'],
         'sort': {
           'order': 'ascending',
           'method': 'title',
@@ -425,7 +425,7 @@ angular.module('services.xbmc', ['services.io'])
     factory.getEpisodeDetails = function(episodeId, cb) {
       io.send('VideoLibrary.GetEpisodeDetails', {
         'episodeid': episodeId,
-        'properties': ['title', 'plot', 'rating', 'runtime', 'thumbnail', 'art', 
+        'properties': ['title', 'plot', 'rating', 'runtime', 'thumbnail', 'art',
         'playcount', 'cast', 'season', 'tvshowid', 'streamdetails']
       }, true, 'result.episodedetails').then(cb);
     };

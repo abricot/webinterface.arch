@@ -2,6 +2,7 @@
     <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
     <div ng-switch-when="false" class="fill-height">
         <div class="detail wrapper row">
+            <div class="fanart" image image-source="album.fanart | asset:host"></div>
             <div class="offset2 span5 card artist">
                 <div class="poster-wrapper">
                     <div class="poster" image image-source="album.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
@@ -21,12 +22,12 @@
                     <i class="icon-random"></i>
                 </div>
                 <div class="md-action md-action-primary"
-                     ng-click="xbmc.queue({'albumid': album.albumid})" 
+                     ng-click="xbmc.queue({'albumid': album.albumid})"
                      ng-show="album && player.active">
                     <i class="icon-plus"></i>
                 </div>
                 <div class="md-action md-action-primary"
-                     ng-click="xbmc.open({'albumid': album.albumid})" 
+                     ng-click="xbmc.open({'albumid': album.albumid})"
                      ng-show="album && !player.active">
                     <i class="icon-play"></i>
                 </div>

@@ -1,9 +1,10 @@
 <nav class="row">
     <ul class="clearfix tabs span8 offset2">
-        <li ng-repeat="item in medias"
-            ng-click="go(item.hash)" ng-class="{selected : isCurrent(item.matchRegExp)}"
+        <li ng-repeat="item in medias" ng-class="{selected : isCurrent(item.matchRegExp)}"
             class="tab">
-            <div class="label">{{item.label}}</div>
+            <a href="#{{item.hash}}" ng-class="{selected : isCurrent(item.matchRegExp)}" class="tab">
+                <div class="label">{{item.label}}</div>
+            </a>
         </li>
     </ul>
     <div class="status" ng-class="{connected : connected, disconnected : !connected}">

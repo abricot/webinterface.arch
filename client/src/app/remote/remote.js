@@ -35,9 +35,9 @@ angular.module('app')
       $scope.textToSend = '';
     };
 
-    $scope.execCommand = function(xbmcCommand){
-      $scope.toggleShutdownOptions();
-      $scope.xbmc[xbmcCommand]();
+     $scope.toggleShutdownOptions = function() {
+      $scope.showShutdownOptions = !$scope.showShutdownOptions;
     };
+
   }
 ]);

@@ -2,8 +2,8 @@
     <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
     <div ng-switch-when="false" class="cards tvshows">
         <div class="tabs row">
-            <a class="span6 tab" href="#/tvshows/recents" ng-class="{selected : sort.method === 'dateadded'}">Recently added</a>
-            <a class="span6 tab" href="#/tvshows/all"  ng-class="{selected : sort.method === 'label'}">All movies</a>
+            <a class="span6 tab" href="#/tvshows/recents" ng-class="{selected : sort.method === 'dateadded'}">Recently added episodes</a>
+            <a class="span6 tab" href="#/tvshows/all"  ng-class="{selected : sort.method === 'label'}">All shows</a>
         </div>
         <div class="content">
             <ul data-type="list" lr-infinite-scroll="loadMore">

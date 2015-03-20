@@ -3,112 +3,68 @@
         <div ng-switch on="player.active">
             <div ng-switch-when="true">
                 <div class="banner" image image-source="player.item.fanart | asset:host"></div>
-                <seekbar seekbar-value="player.seek.percentage" seekbar-max="100" seekbar-read-only="true"></seekbar>
                 <div class="label">{{player.item.label}}</div>
-                <div class="md-action md-action-primary" ng-click="xbmc.togglePlay()" ng-show="!player.speed">
-                    <i class="offset4 span4 icon-play">
-                    </i>
-                </div>
-                <div class="md-action md-action-primary" ng-click="xbmc.togglePlay()"  ng-show="player.speed">
-                    <i class="offset4 span4 icon-pause">
-                    </i>
-                </div>
             </div>
             <div ng-switch-when="false">
                 <div class="banner"></div>
-                <div class="md-action md-action-primary" >
-                    <i class="icon icon-power-off"></i>
-                </div>
             </div>
         </div>
     </div>
-    <div class="buttons">
-        <div class="row">
-            <div class="action">
-                <div class="md-action"  ng-click="xbmc.contextmenu()">
-                    <i class="icon icon-list-ul"></i>
-                </div>
-            </div>
-            <div class="action">
-                <div class="md-action"  ng-click="xbmc.info()">
-                    <i class="icon icon-info-sign"></i>
-                </div>
-            </div>
-            <div class="action">
-                <div class="md-action" ng-click="xbmc.showOSD()">
-                    <i class="icon icon-ellipsis-horizontal"></i>
-                </div>
+    <div class="row">
+        <div class="offset3 span3">
+            <div class="md-action" ng-click="xbmc.up()">
+                <i class="icon icon-chevron-up"></i>
             </div>
         </div>
-        <div class="row">
-            <div class="action">
-                <div class="md-action" ng-click="xbmc.previous()">
-                    <i class="icon icon-fast-backward"></i>
-                </div>
-            </div>
-            <div class="action">
-                <div class="md-action" ng-click="xbmc.stop()">
-                    <i class="icon icon-stop"></i>
-                </div>
-            </div>
-            <div class="action">
-               <div class="md-action" ng-click="xbmc.next()"> 
-                    <i class="icon icon-fast-forward"></i>
-                </div>
+        <div class="offset3 span3">
+            <div class="md-action" ng-click="toggleShutdownOptions()">
+                <i class="icon icon-power-off"></i>
             </div>
         </div>
-        <div class="row">
-            <div class="action">
-                <div class="md-action" ng-hold="xbmc.decreaseVolume(application.volume)">
-                    <i class="icon icon-volume-down"></i>
-                </div>
-            </div>
-            <div class="action">
-                <div class="md-action direction"  ng-click="xbmc.up()">
-                    <i class="icon icon-chevron-up"></i>
-                </div>
-            </div>
-            <div class="action">
-                <div class="md-action" ng-hold="xbmc.increaseVolume(application.volume)" >
-                    <i class="icon icon-volume-up"></i>
-                </div>
+    </div>
+    <div class="row">
+        <div class="span3">
+            <div class="md-action">
+                <i class="icon icon-chevron-left" ng-click="xbmc.left()"></i>
             </div>
         </div>
-        <div class="row">
-            <div class="action">
-                <div class="md-action direction" ng-click="xbmc.left()">
-                    <i class="icon icon-chevron-left"></i>
-                </div>
-            </div>
-            <div class="action">
-                <div class="md-action select" ng-click="xbmc.select()">
-                    <i class="icon icon-circle"></i>
-                </div>
-            </div>
-            <div class="action">
-                <div class="md-action direction" ng-click="xbmc.right()">
-                    <i class="icon icon-chevron-right"></i>
-                </div>
+        <div class="span3">
+            <div class="md-action" ng-click="xbmc.select()">
+                <i class="icon icon-circle"></i>
             </div>
         </div>
-        <div class="row">
-            <div class="action">
-                <div class="md-action" ng-click="xbmc.back()">
-                    <i class="icon icon-mail-reply"></i>
-                </div>
-            </div>
-            <div class="action">
-                <div class="md-action direction" ng-click="xbmc.down()">
-                    <i class="icon icon-chevron-down"></i>
-                </div>
-            </div>
-            <div class="action">
-               <div class="md-action" ng-click="toggleKeyboard()">
-                    <i class="icon icon-keyboard"></i>
-                </div>
+        <div class="span3">
+            <div class="md-action"  ng-click="xbmc.right()">
+                <i class="icon icon-chevron-right"></i>
             </div>
         </div>
-
+        <div class="span3">
+            <div class="md-action" ng-click="xbmc.info()">
+                <i class="icon icon-info-sign"></i>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span3">
+            <div class="md-action" ng-click="xbmc.back()">
+                <i class="icon icon-mail-reply"></i>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="md-action" ng-click="xbmc.down()">
+                <i class="icon icon-chevron-down"></i>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="md-action" ng-click="toggleKeyboard()">
+                <i class="icon icon-keyboard"></i>
+            </div>
+        </div>
+        <div class="span3">
+            <div class="md-action" ng-click="xbmc.contextmenu()">
+                <i class="icon icon-list-ul"></i>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -127,4 +83,17 @@
 </form>
 
 
-
+<form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showShutdownOptions">
+    <div class="content">
+        <header>System</header>
+        <div class="body">
+            <button class="command" ng-click="execCommand('shutdown')">Power off</button>
+            <button class="command" ng-click="execCommand('hibernate')">Hibernate</button>
+            <button class="command" ng-click="execCommand('suspend')">Suspend</button>
+            <button class="command" ng-click="execCommand('reboot')">Reboot</button>
+        </div>
+        <div class="actions">
+            <button ng-click="toggleShutdownOptions()">Cancel</button>
+        </div>
+    </div>
+</form>

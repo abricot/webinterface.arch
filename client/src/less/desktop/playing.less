@@ -13,6 +13,7 @@
   margin : 0;
   float : left;
   text-align: center;
+  position: relative;
 }
 
 .playing .player-wrapper {
@@ -63,10 +64,6 @@
   height : 100%;
 }
 
-.buttons .md-action .icon-pause,
-.buttons .md-action .icon-play{
-  background: @actionBgColor;
-}
 
 section[role="region"] .buttons .md-action:active,
 section[role="region"] .buttons .md-action:hover {
@@ -94,14 +91,14 @@ section[role="region"] .buttons i {
 .more:hover .dropdown-menu{display: block;}
 
 .player-wrapper .times  {
-  right: 0;
-  left: 0;
+  right: 15rem;
+  left: 15rem;
   text-align: center;
 }
 
 .playing .dropdown-menu {
   position: absolute;
-  top: -100%;
+  top: 0;
   z-index: 9;
   padding: 0;
   font-size: 1.5rem;
@@ -110,6 +107,7 @@ section[role="region"] .buttons i {
   box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.4);
   width: 17rem;
   color : @primaryTextColor;
+  transform : translateY(-100%);
 }
 
 .playing .dropdown-menu li {cursor:pointer;padding:0.5rem 1rem;}
@@ -130,6 +128,7 @@ section[role="region"] .buttons i {
   padding: 1rem;
   background : lighten(@secondaryBgColor, 10%);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 250ms ease-in;
 }
 
 .volume-wrapper div[role="slider"] progress{
@@ -167,3 +166,41 @@ section[role="region"] .buttons i {
 }
 
 .time .picker table{margin:0 auto;}
+
+.remote-menu {
+  position: absolute;
+  z-index: 9;
+  background : lighten(@secondaryBgColor, 10%);
+  box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.4);
+  width: 17%;
+  bottom : 0rem;
+  right : 0;
+  text-align: center;
+  transform : translateY(100%);
+  transition: all 250ms ease-in;
+  opacity: 0;
+}
+.remote-menu.visible{
+  bottom: 6rem;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.remote-menu .row .span3:last-child {
+  background: @secondaryBgColor;
+}
+
+.remote-menu .arts .label {
+  position: absolute;
+  right: 0;
+  bottom: 0rem;
+  left: 0;
+  padding: 0.5rem 4rem 0.5rem 1rem;
+  overflow: hidden;
+  font-size: 1.5rem;
+  color: #f1f1f1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.5);
+  text-align: left;
+}
