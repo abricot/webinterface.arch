@@ -1,0 +1,17 @@
+<div class="fill-height cards">
+    <div class="tabs row">
+        <a class="span6 tab" href="#/tvshows/recents" 
+           ng-class="{selected :  isSelected('tvshows.recents')}">
+           Recently added episodes
+        </a>
+        <a class="span6 tab" href="#/tvshows/all" 
+           ng-class="{selected :  isSelected('tvshows.all')}">
+           All shows
+        </a>
+    </div>
+    <div ui-view class="content tvshows">
+    </div>
+</div>
+
+
+
