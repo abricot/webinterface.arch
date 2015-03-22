@@ -43,5 +43,17 @@ angular.module('app')
         $scope.xbmc.getTVShows(onTvShowsFromSource, limits);
       }
     };
+
+    $scope.toggleWatched = function (show) {
+      var newValue =  show.playcount ? 0 : 1;
+      $scope.xbmc.setTVShowDetails({
+        tvshowid : show.tvshowid,
+        playcount  :newValue
+      },  function(result) {
+        if(result === 'OK') {
+          show.playcount = newValue;
+        }
+      })
+    };
   }
 ]);

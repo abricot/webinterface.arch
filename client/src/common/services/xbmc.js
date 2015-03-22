@@ -261,20 +261,28 @@ angular.module('services.xbmc', ['services.io'])
       }
     };
 
-    factory.getMovies = function(cb, limits, sort) {
+    var moviesProperties = ['file', 'title', 'genre', 'rating', 'thumbnail', 'runtime', 'playcount',
+                            'streamdetails', 'fanart', 'year', 'dateadded', 'resume'];
+    factory.getMovies = function(cb, limits) {
       limits = limits || {
         'start': 0,
         'end': 50
       };
-      sort = sort || {
-        'order': 'ascending',
-        'method': 'label',
-        'ignorearticle': true
-      };
       io.send('VideoLibrary.GetMovies', {
         'limits': limits,
-        'properties': ['title', 'genre', 'rating', 'thumbnail', 'runtime', 'playcount', 'streamdetails', 'fanart', 'year', 'dateadded'],
-        'sort': sort
+        'properties': moviesProperties,
+        'sort': {
+          'order': 'ascending',
+          'method': 'label',
+          'ignorearticle': true
+        }
+      }, true, 'result').then(cb);
+    };
+
+    factory.getRecentlyAddedMovies = function(cb, limits) {
+      io.send('VideoLibrary.GetRecentlyAddedMovies', {
+        'properties': moviesProperties,
+        'limits': limits
       }, true, 'result').then(cb);
     };
 
@@ -287,6 +295,10 @@ angular.module('services.xbmc', ['services.io'])
         'movieid': movieId
       }, true, 'result.moviedetails').then(cb);
 
+    };
+
+    factory.setMovieDetails = function (updateData, cb) {
+       io.send('VideoLibrary.SetMovieDetails', updateData, true, 'result').then(cb);
     };
 
     factory.getAlbums = function(filter, cb, limits) {
@@ -391,6 +403,10 @@ angular.module('services.xbmc', ['services.io'])
       }, true, 'result.tvshowdetails').then(cb);
     };
 
+    factory.setTVShowDetails = function (updateData, cb) {
+       io.send('VideoLibrary.SetTVShowDetails', updateData, true, 'result').then(cb);
+    };
+
     factory.getSeasons = function(tvShowId, cb) {
       io.send('VideoLibrary.GetSeasons', {
         'tvshowid': tvShowId,
@@ -406,11 +422,12 @@ angular.module('services.xbmc', ['services.io'])
       }, true, 'result.seasons').then(cb);
     };
 
+    var episodesProperties = ['file', 'title', 'rating', 'runtime', 'season', 'episode', 'thumbnail', 'fanart','art', 'playcount', 'resume', 'tvshowid', 'plot'];
     factory.getEpisodes = function(tvShowId, season, cb) {
       io.send('VideoLibrary.GetEpisodes', {
         'tvshowid': tvShowId,
         'season': season,
-        'properties': ['title', 'rating', 'firstaired', 'runtime', 'season', 'episode', 'thumbnail', 'art', 'playcount', 'plot'],
+        'properties':episodesProperties,
         'limits': {
           'start': 0,
           'end': 75
@@ -430,9 +447,17 @@ angular.module('services.xbmc', ['services.io'])
       }, true, 'result.episodedetails').then(cb);
     };
 
+    factory.setEpisodeDetails = function (updateData, cb) {
+       io.send('VideoLibrary.SetEpisodeDetails', updateData, true, 'result').then(cb);
+    };
+
     factory.getRecentlyAddedEpisodes = function(cb, limits) {
+      limits = limits || {
+        'start': 0,
+        'end': 50
+      };
       io.send('VideoLibrary.GetRecentlyAddedEpisodes', {
-        'properties': ['title', 'rating', 'runtime', 'season', 'episode', 'thumbnail', 'fanart','art', 'playcount'],
+        'properties': episodesProperties,
         'limits': limits,
         'sort': {
           'order': 'descending',
@@ -443,6 +468,14 @@ angular.module('services.xbmc', ['services.io'])
 
     factory.scan = function (library) {
       io.send(library+'.scan');
+    };
+
+    factory.addFavourite = function (title, path, cb) {
+      io.send('Favourites.AddFavourite', {
+        'title' : title,
+        'type' : 'media',
+        'path' : path
+      }, true, 'result').then(cb);
     };
 
     return factory;

@@ -37,6 +37,7 @@
                             <i class="icon-play"></i>
                           </span>
                           {{song.label}}
+                          <img class="equalizer" src="img/backgrounds/equalizer.gif" ng-show="isPlaying(song.songid)"/>
                       </div>
                       <div class="span3">{{song.album}}</div>
                       <div class="span3">{{song.artist.join(', ')}}</div>

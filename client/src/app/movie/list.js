@@ -10,39 +10,23 @@ angular.module('app')
 }])
 .controller('MovieListCtrl', ['$scope', '$stateParams',
   function MovieListCtrl($scope, $stateParams) {
-    $scope.sort = {
-      'order': 'ascending',
-      'method': 'label',
-      'ignorearticle': true
-    };
-    if($stateParams.sort .toLowerCase() === 'recents') {
-      $scope.sort =  {
-        'order': 'descending',
-        'method': 'dateadded',
-        'ignorearticle': true
-      };
-    }
     $scope.loading = true;
-    $scope.scanning = false;
     $scope.fetching = false;
 
     $scope.requestItemsBy = 50;
     $scope.total = Infinity;
     $scope.movies = [];
+    $scope.criteria = $stateParams.sort.toLowerCase();
+    var method = 'getMovies';
+    if($stateParams.sort.toLowerCase() === 'recents') {
+      method = 'getRecentlyAddedMovies';
+    }
 
     function onMoviesFromSource(result) {
       var movies = result ? result.movies : [];
       $scope.total = result ? result.limits.total : Infinity;
-      if($scope.scanning) {
-        if(!angular.equals($scope.movies, movies)) {
-          $scope.movies = movies;
-        }
-      } else {
-        $scope.movies = $scope.movies.concat(movies);
-      }
-      updateRandomMovie();
+      $scope.movies = $scope.movies.concat(movies);
       $scope.loading = false;
-      $scope.scanning = false;
       $scope.fetching = false
     };
 
@@ -51,14 +35,7 @@ angular.module('app')
         'start' : 0,
         'end' : $scope.requestItemsBy
       }
-      $scope.xbmc.getMovies(onMoviesFromSource, limits, $scope.sort);
-    };
-
-    function updateRandomMovie () {
-      if($scope.movies.length) {
-        var randomIndex = Math.floor(Math.random()*$scope.movies.length);
-        $scope.randomMovie = $scope.movies[randomIndex];
-      }
+      $scope.xbmc[method](onMoviesFromSource, limits);
     };
 
     $scope.xbmc.register('VideoLibrary.OnScanFinished', {
@@ -72,26 +49,27 @@ angular.module('app')
       $scope.xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
     }
 
-    $scope.getRandomIndex = function () {
-      return randomIndex;
-    };
-
     $scope.loadMore = function () {
-      if(!$scope.scanning && $scope.movies.length < $scope.total) {
+      if($scope.movies.length < $scope.total) {
         $scope.fetching = true;
         var limits =  {
           'start' : $scope.movies.length,
           'end' : Math.min($scope.movies.length+$scope.requestItemsBy, $scope.total)
         };
-        $scope.xbmc.getMovies(onMoviesFromSource, limits);
+        $scope.xbmc[method](onMoviesFromSource, limits);
       }
     };
 
-    $scope.scan = function () {
-      if(!$scope.fetching) {
-        $scope.scanning = true;
-        $scope.xbmc.scan('VideoLibrary');
-      }
-    }
+    $scope.toggleWatched = function (movie) {
+      var newValue =  movie.playcount ? 0 : 1;
+      $scope.xbmc.setMovieDetails({
+        movieid : movie.movieid,
+        playcount  :newValue
+      },  function(result) {
+        if(result === 'OK') {
+          movie.playcount = newValue;
+        }
+      })
+    };
   }
 ]);

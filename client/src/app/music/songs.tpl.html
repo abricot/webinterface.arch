@@ -2,7 +2,7 @@
     <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
     <div ng-switch-when="false" class="fill-height">
         <div class="detail wrapper row">
-            <div class="fanart" image image-source="album.fanart | asset:host"></div>
+            <div class="fanart" image image-source="album.fanart | asset:host | fallback:'img/backgrounds/vinyls.jpg'"></div>
             <div class="offset2 span5 card artist">
                 <div class="poster-wrapper">
                     <div class="poster" image image-source="album.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
@@ -42,6 +42,7 @@
                             <i class="icon-play"></i>
                         </span>
                         {{song.label}}
+                        <img class="equalizer" src="img/backgrounds/equalizer.gif" ng-show="isPlaying(song.songid)"/>
                     </div>
                     <div class="span3">{{song.album}}</div>
                     <div class="span3">{{song.artist.join(', ')}}</div>

@@ -73,12 +73,6 @@ angular.module('app')
         scope: this
       });
     }
-
-    $scope.scan = function () {
-      $scope.updating = true;
-      $scope.xbmc.scan('VideoLibrary');
-    };
-
     $scope.changeSeason = function (season) {
       $scope.xbmc.getEpisodes($scope.tvshowid, season.season, onEpisodesRetrieved);
     };
@@ -94,6 +88,18 @@ angular.module('app')
     $scope.queueAll = function () {
       $scope.xbmc.queue({episodeid : $scope.episodes[0].episodeid});
       $scope.queue = $scope.episodes.slice(1);
+    };
+
+    $scope.toggleWatched = function (episode) {
+      var newValue =  episode.playcount ? 0 : 1;
+      $scope.xbmc.setEpisodeDetails({
+        episodeid : episode.episodeid,
+        playcount  :newValue
+      },  function(result) {
+        if(result === 'OK') {
+          episode.playcount = newValue;
+        }
+      })
     };
   }
 ]);

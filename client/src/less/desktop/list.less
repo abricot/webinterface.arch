@@ -65,12 +65,33 @@
 [data-type="list"] .card .description{
   background: lighten(@regionBgColor, 25%);
   padding : 0.5em;
+  position: relative;
 }
 [data-type="list"] .card .description h3,
 [data-type="list"] .card .description p {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+[data-type="list"] .card .description div[role="slider"]{
+  padding-top : 0.5rem;
+}
+
+[data-type="list"] .card .description .controls {
+  position: absolute;
+  bottom : 1.5rem;
+  left : 1rem;
+  cursor : pointer;
+  font-size: 1.5rem;
+}
+
+[data-type="list"] .card .description .controls i {
+  padding-right:0.5rem;
+  opacity: 0.5;
+}
+
+[data-type="list"] .card .description .controls i:hover {
+  opacity: 1;
 }
 
 [data-type="list"] .card .poster{

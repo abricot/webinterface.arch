@@ -43,5 +43,17 @@ angular.module('app')
         $scope.xbmc.getRecentlyAddedEpisodes(onEpiosdesFromSource, limits);
       }
     };
+
+    $scope.toggleWatched = function (episode) {
+      var newValue =  episode.playcount ? 0 : 1;
+      $scope.xbmc.setEpisodeDetails({
+        episodeid : episode.episodeid,
+        playcount  :newValue
+      },  function(result) {
+        if(result === 'OK') {
+          episode.playcount = newValue;
+        }
+      })
+    };
   }]
 );

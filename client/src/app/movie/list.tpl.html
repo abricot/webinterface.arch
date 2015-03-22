@@ -2,8 +2,8 @@
     <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
     <div ng-switch-when="false" class="cards movies">
         <div class="tabs row">
-            <a class="span6 tab" href="#/movies/recents" ng-class="{selected : sort.method === 'dateadded'}">Recently added</a>
-            <a class="span6 tab" href="#/movies/all"  ng-class="{selected : sort.method === 'label'}">All movies</a>
+            <a class="span6 tab" href="#/movies/recents" ng-class="{selected :criteria==='recents'}">Recently added</a>
+            <a class="span6 tab" href="#/movies/all"  ng-class="{selected :criteria==='all'}">All movies</a>
         </div>
         <div class="content">
             <ul data-type="list" lr-infinite-scroll="loadMore">
@@ -11,6 +11,9 @@
                     <a href="#/movie/{{movie.movieid}}">
                         <div class="poster" image image-source="movie.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'">
                             <div rating rating-value="movie.rating" rating-max="10"></div>
+                             <div class="playcount" ng-show="movie.playcount">
+                                 <i class="icon-ok"></i>
+                            </div>
                         </div>
                         <div class="description">
                             <h3>{{movie.label}}</h3>
@@ -18,8 +21,16 @@
                             <p class="clock">
                                 {{movie.runtime | time | date:'HH:mm'}}
                             </p>
-                            <div class="playcount" ng-show="movie.playcount">
-                                 <i class="icon-ok"></i> 
+                            <seekbar seekbar-value="movie.resume.position" seekbar-max="movie.resume.total"
+                                     seekbar-read-only="true">
+                            </seekbar>
+                            <div class="controls">
+                                <i class="icon-play" ng-click="xbmc.open({'movieid' : movie.movieid}); $event.preventDefault();"></i>
+                                <i class="icon-plus" ng-click="xbmc.queue({'movieid' : movie.movieid}); $event.preventDefault();"
+                                   ng-show="player.active"></i>
+                                <i ng-class="{'icon-eye-open':!movie.playcount, 'icon-eye-close':movie.playcount}"
+                                   ng-click="toggleWatched(movie); $event.preventDefault();"
+                                  ></i>
                             </div>
                         </div>
                     </a>

@@ -6,11 +6,22 @@
                 <a href="#/tvshow/{{show.tvshowid}}">
                     <div class="poster" image image-source="show.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'">
                         <div rating rating-value="show.rating" rating-max="10"></div>
+                        <div class="playcount" ng-show="show.playcount">
+                             <i class="icon-ok"></i>
+                        </div>
                     </div>
                     <div class="description">
                         <h3>{{show.title}}</h3>
                         <p>{{show.genre.join(', ')}}</p>
                         <p>{{show.episode}} episodes</p>
+                        <seekbar seekbar-value="show.watchedepisodes" seekbar-max="show.episode"
+                                 seekbar-read-only="true">
+                        </seekbar>
+                        <div class="controls" >
+                            <i ng-class="{'icon-eye-open':!show.playcount, 'icon-eye-close':show.playcount}"
+                                   ng-click="toggleWatched(show); $event.preventDefault();"
+                                  ></i>
+                        </div>
                     </div>
                 </a>
             </li>

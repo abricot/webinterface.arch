@@ -7,7 +7,7 @@ angular.module('app')
       label: 'Movies',
       matchRegExp : /movie.*$/
     }, {
-      hash: '/tvshows/all',
+      hash: '/tvshows/recents',
       icon: 'icon-facetime-video',
       label: 'TV Shows',
       matchRegExp : /tvshow.*$/

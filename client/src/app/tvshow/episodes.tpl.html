@@ -3,16 +3,32 @@
     <div ng-switch-when="false" class="fill-height" >
         <ul data-type="list" lr-infinite-scroll="loadMore">
             <li class="card tvshow" ng-repeat="episode in episodes">
-                <div class="poster" image image-source="episode.art['tvshow.poster'] | asset:host | fallback:'img/icons/foxy-512.png'">
-                    <div rating rating-value="episode.rating" rating-max="10"></div>
-                    <div class="playcount" ng-show="episode.playcount">
-                         <i class="icon-ok"></i> 
+                <a href="#/tvshow/{{episode.tvshowid}}">
+                    <div class="poster" image image-source="episode.art['tvshow.poster'] | asset:host | fallback:'img/icons/foxy-512.png'">
+                        <div rating rating-value="episode.rating" rating-max="10"></div>
+                        <div class="playcount" ng-show="episode.playcount">
+                             <i class="icon-ok"></i>
+                        </div>
                     </div>
-                </div>
-                <div class="description">
-                    <h3>{{episode.title}}</h3>
-                    <p>Episode {{episode.episode}}</p>
-                </div>
+                    <div class="description">
+                        <h3>{{episode.title}}</h3>
+                        <p>Episode {{episode.episode}}</p>
+                        <p class="clock">
+                            {{episode.runtime | time | date:'HH:mm'}}
+                        </p>
+                        <seekbar seekbar-value="episode.resume.position" seekbar-max="episode.resume.total"
+                                 seekbar-read-only="true">
+                        </seekbar>
+                        <div class="controls">
+                            <i class="icon-play" ng-click="xbmc.open({'episodeid' : episode.episodeid}); $event.preventDefault();"></i>
+                            <i class="icon-plus" ng-click="xbmc.queue({'episodeid' : episode.episodeid}); $event.preventDefault();"
+                               ng-show="player.active"></i>
+                            <i ng-class="{'icon-eye-open':!episode.playcount, 'icon-eye-close':episode.playcount}"
+                                   ng-click="toggleWatched(episode); $event.preventDefault();"
+                                  ></i>
+                        </div>
+                    </div>
+                </a>
             </li>
         </ul>
         <div ng-show="!episodes.length" class="empty list">Oops! nothing here</div>

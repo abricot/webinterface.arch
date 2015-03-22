@@ -112,6 +112,10 @@ angular.module('app')
       return xbmc.isConnected()
     };
 
+    $scope.isPlaying = function (id) {
+      return  $scope.player && $scope.player.item  && $scope.player.item.id === id;
+    };
+
     $scope.toggleDrawer = function() {
       $scope.isMaximized = !$scope.isMaximized;
     };
@@ -278,33 +282,27 @@ angular.module('app')
         fn: onDisconnect,
         scope: this
       });
-      storage.getItem('xbmchost').then(function(value) {
-        if (value !== null) {
-          //Old version of the app
-          var defaultHost = value.host;
-          defaultHost.default = true;
-          storage.removeItem('xbmchost');
-          $scope.hosts = [defaultHost];
-          storage.setItem('hosts', $scope.hosts);
-          $scope.initialize(defaultHost);
-        } else {
-          //New version of the app migration was done. Default behavior
-          storage.getItem('hosts').then(function(value) {
-            if (value !== null) {
-              var filterDefault = function(el) {
-                return el.default;
-              };
-              $scope.hosts = value;
-              var defaultHost = $scope.hosts.filter(filterDefault)[0];
-              $scope.initialize(defaultHost);
-            } else {
-              $scope.initialized = true;
-              $scope.go('/host/wizard');
-            }
-          });
 
+      //New version of the app migration was done. Default behavior
+      storage.getItem('hosts').then(function(value) {
+        var filterDefault = function(el) {
+          return el.default;
+        };
+        if (value !== null) {
+          $scope.hosts = value;
+        } else {
+           $scope.hosts = [{
+            default: true,
+            displayName: 'localhost',
+            httpPort: window.location.port === '' ? '80': window.location.port,
+            ip: window.location.hostname,
+            port: '9090'
+          }];
         }
-      })
+        var defaultHost = $scope.hosts.filter(filterDefault)[0];
+        $scope.initialize(defaultHost);
+      });
+
     }
 
     $scope.previousState = null;

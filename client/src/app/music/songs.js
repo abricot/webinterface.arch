@@ -13,7 +13,7 @@ angular.module('app')
 
     var filter = null;
     if ($scope.filter) {
-      filter = {key : $scope.filter, value : parseInt($stateParams.filterId)} 
+      filter = {key : $scope.filter, value : parseInt($stateParams.filterId)}
     }
 
     function onSongsFromSource (result) {

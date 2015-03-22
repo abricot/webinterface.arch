@@ -66,8 +66,8 @@
         </div>
         <div class="span3">
             <div class="md-action">
-                <i class="icon-volume-up" ng-show="application.muted"></i>
-                <i class="icon-volume-off" ng-show="!application.muted"></i>
+                <i class="icon-volume-up" ng-show="application.muted" ng-click="xbmc.mute()"></i>
+                <i class="icon-volume-off" ng-show="!application.muted" ng-click="xbmc.mute()"></i>
                 <div class="volume-wrapper">
                     <seekbar seekbar-value="application.volume" seekbar-max="100"
                     on-seekbar-changed="onVolumeChanged(newValue)"

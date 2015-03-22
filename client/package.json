@@ -1,6 +1,6 @@
 {
-    "name": "foxmote",
-    "version": "0.0.1",
+    "name": "webinterface.arc",
+    "version": "0.0.2",
     "author": "Nicolas ABRIC",
     "description": "Yet another XBMC remote for firefox os",
     "contributors": [

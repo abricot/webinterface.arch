@@ -27,16 +27,17 @@
                     <h1>
                       Episodes
                       <i class="icon-chevron-right"></i>
-                      <a class="season">
+                      <span class="season">
                         <span class="md-circle fanart" image image-source="season.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'">
                         </span>
                         {{season.label}}
                         <i class="icon-chevron-down" ng-show="seasons.length>1"></i>
                         <select ng-options="season.label for season in seasons"
                                 ng-model="season"
-                                ng-change="changeSeason(season)"></select>
+                                ng-change="changeSeason(season)"
+                                ng-show="seasons.length>1"></select>
                         {{selectedSeason}}
-                      </a>
+                      </span>
                     </h1>
                     <ul data-type="list">
                         <li class="row episode" ng-repeat="episode in episodes"
@@ -46,16 +47,23 @@
                                     <i class="icon-play"></i>
                                 </div>
                                 <div class="playcount" ng-show="episode.playcount">
-                                     <i class="icon-ok"></i> 
+                                     <i class="icon-ok"></i>
                                 </div>
                             </div>
                             <div class="span9">
-                            <p>
-                                {{episode.episode | episode:episode.season}} -
-                                {{episode.title}}
-                            </p>
-                            <p><span class="runtime">{{episode.runtime | time | date:'HH:mm'}}</span></p>
-                            <p>{{episode.plot}}</p>
+                                <p>
+                                    {{episode.episode | episode:episode.season}} -
+                                    {{episode.title}}
+                                </p>
+                                <p><span class="runtime">{{episode.runtime | time | date:'HH:mm'}}</span></p>
+                                <p>{{episode.plot}}</p>
+                                <div class="controls">
+                                    <i class="icon-plus" ng-click="xbmc.queue({'episodeid' : episode.episodeid}); $event.stopPropagation();"
+                                       ng-show="player.active"></i>
+                                    <i ng-class="{'icon-eye-open':!episode.playcount, 'icon-eye-close':episode.playcount}"
+                                       ng-click="toggleWatched(episode); $event.stopPropagation();"
+                                      ></i>
+                                </div>
                             </div>
                         </li>
                     </ul>
