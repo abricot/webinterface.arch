@@ -430,6 +430,17 @@ angular.module('services.xbmc', ['services.io'])
       }, true, 'result.episodedetails').then(cb);
     };
 
+    factory.getRecentlyAddedEpisodes = function(cb, limits) {
+      io.send('VideoLibrary.GetRecentlyAddedEpisodes', {
+        'properties': ['title', 'rating', 'runtime', 'season', 'episode', 'thumbnail', 'fanart','art', 'playcount'],
+        'limits': limits,
+        'sort': {
+          'order': 'descending',
+          'method': 'dateadded'
+        }
+      }, true, 'result').then(cb);
+    };
+
     factory.scan = function (library) {
       io.send(library+'.scan');
     };

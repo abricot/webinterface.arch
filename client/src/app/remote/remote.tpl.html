@@ -5,9 +5,6 @@
                 <div class="banner" image image-source="player.item.fanart | asset:host"></div>
                 <div class="label">{{player.item.label}}</div>
             </div>
-            <div ng-switch-when="false">
-                <div class="banner"></div>
-            </div>
         </div>
     </div>
     <div class="row">
@@ -67,33 +64,3 @@
         </div>
     </div>
 </div>
-
-<form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showKeyboard">
-    <div class="content">
-        <header>Send text</header>
-        <div class="body">
-            <textarea class="offset1 span10" ng-model="textToSend"
-                          placeholder="Text to send"></textarea>
-        </div>
-        <div class="actions">
-            <button ng-click="toggleKeyboard()"> Cancel </button>
-            <button class="recommend"   ng-click="onValidateText()"> Ok </button>
-        </div>
-    </div>
-</form>
-
-
-<form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showShutdownOptions">
-    <div class="content">
-        <header>System</header>
-        <div class="body">
-            <button class="command" ng-click="execCommand('shutdown')">Power off</button>
-            <button class="command" ng-click="execCommand('hibernate')">Hibernate</button>
-            <button class="command" ng-click="execCommand('suspend')">Suspend</button>
-            <button class="command" ng-click="execCommand('reboot')">Reboot</button>
-        </div>
-        <div class="actions">
-            <button ng-click="toggleShutdownOptions()">Cancel</button>
-        </div>
-    </div>
-</form>

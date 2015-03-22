@@ -2,12 +2,12 @@ angular.module('app')
 .controller('HeaderNavController', ['$scope', '$location', '$filter',
   function ($scope, $location, $filter) {
     $scope.medias = [{
-      hash: '/movies',
+      hash: '/movies/recents',
       icon: 'icon-film',
       label: 'Movies',
       matchRegExp : /movie.*$/
     }, {
-      hash: '/tvshows',
+      hash: '/tvshows/all',
       icon: 'icon-facetime-video',
       label: 'TV Shows',
       matchRegExp : /tvshow.*$/

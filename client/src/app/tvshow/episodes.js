@@ -1,0 +1,47 @@
+angular.module('app')
+.controller('EpisodesCtrl', ['$scope',
+  function EpisodesCtrl($scope) {
+    $scope.loading = true;
+    $scope.fetching = false;
+
+    $scope.requestItemsBy = 50;
+    $scope.total = Infinity;
+    $scope.episodes = [];
+
+    function onEpiosdesFromSource(result) {
+      var episodes = result ? result.episodes : [];
+      $scope.total = result ? result.limits.total : Infinity;
+      $scope.episodes = $scope.episodes.concat(episodes);
+      $scope.loading = false;
+      $scope.fetching = false;
+    };
+
+    function onLoad() {
+      var limits =  {
+        'start' : 0,
+        'end' : $scope.requestItemsBy
+      }
+      $scope.xbmc.getRecentlyAddedEpisodes(onEpiosdesFromSource, limits);
+    };
+
+    if ($scope.xbmc.isConnected()) {
+      onLoad();
+    } else {
+      $scope.xbmc.register('Websocket.OnConnected', {
+        fn: onLoad,
+        scope: this
+      });
+    }
+
+    $scope.loadMore = function () {
+      if( $scope.episodes.length < $scope.total) {
+        $scope.fetching = true;
+        var limits =  {
+          'start' : $scope.episodes.length,
+          'end' : Math.min($scope.episodes.length+$scope.requestItemsBy, $scope.total)
+        };
+        $scope.xbmc.getRecentlyAddedEpisodes(onEpiosdesFromSource, limits);
+      }
+    };
+  }]
+);

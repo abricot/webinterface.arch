@@ -91,9 +91,11 @@ section[role="region"] .buttons i {
 .more:hover .dropdown-menu{display: block;}
 
 .player-wrapper .times  {
-  right: 15rem;
-  left: 15rem;
+  left: 50%;
+  width : auto;
   text-align: center;
+  transform: translateY(-50%) translateX(-50%);
+  cursor: pointer;
 }
 
 .playing .dropdown-menu {
@@ -179,6 +181,7 @@ section[role="region"] .buttons i {
   transform : translateY(100%);
   transition: all 250ms ease-in;
   opacity: 0;
+  min-width : 20rem;
 }
 .remote-menu.visible{
   bottom: 6rem;

@@ -25,14 +25,14 @@
         </div>
 
     </div>
-    <div class="player-wrapper" ng-switch on="player.active">
+    <div class="player-wrapper " ng-switch on="player.active">
         <div ng-switch-when="false" class="empty">
         </div>
         <div ng-switch-when="true">
             <seekbar seekbar-value="player.seek.percentage" seekbar-max="100"
             on-seekbar-changed="onSeekbarChanged(newValue)"
             class="seekbar"></seekbar>
-            <div class="player">
+            <div class="player row">
                 <a href="#{{getHashForItem()}}" class="poster-wrapper" >
                     <div class="poster" image image-source="player.item.thumbnail | asset:host | fallback:'img/icons/foxy-512.png'"></div>
                 </a>
@@ -86,7 +86,7 @@
 </div>
 
  <div class="remote-menu buttons" ng-class="{visible : showRemote}"
-      ng-include src="'remote/remote.tpl.html'" ng-controller="RemoteCtrl"></div>
+      ng-include src="'remote/remote.tpl.html'"></div>
 
 <form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showAudioSelect">
     <div class="content">
@@ -137,6 +137,37 @@
         <div class="actions">
             <button  ng-click="toggleTimePicker()"> Cancel </button>
             <button class="recommend" ng-click="onValidateSeekTime()"> Ok </button>
+        </div>
+    </div>
+</form>
+
+
+<form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showKeyboard">
+    <div class="content">
+        <header>Send text</header>
+        <div class="body">
+            <textarea class="offset1 span10" ng-model="textToSend"
+                          placeholder="Text to send"></textarea>
+        </div>
+        <div class="actions">
+            <button ng-click="toggleKeyboard()"> Cancel </button>
+            <button class="recommend"   ng-click="onValidateText()"> Ok </button>
+        </div>
+    </div>
+</form>
+
+
+<form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showShutdownOptions">
+    <div class="content">
+        <header>System</header>
+        <div class="body">
+            <button class="command" ng-click="execCommand('shutdown')">Power off</button>
+            <button class="command" ng-click="execCommand('hibernate')">Hibernate</button>
+            <button class="command" ng-click="execCommand('suspend')">Suspend</button>
+            <button class="command" ng-click="execCommand('reboot')">Reboot</button>
+        </div>
+        <div class="actions">
+            <button ng-click="toggleShutdownOptions()">Cancel</button>
         </div>
     </div>
 </form>

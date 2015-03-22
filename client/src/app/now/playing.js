@@ -6,6 +6,9 @@ angular.module('app')
     $scope.showTimePicker = false;
     $scope.showShutdownOptions = false;
     $scope.showRemote = false;
+    $scope.textToSend = '';
+    $scope.showKeyboard = false;
+    $scope.showShutdownOptions = false;
 
     $scope.stream = 0;
     $scope.sub = 0;
@@ -76,6 +79,13 @@ angular.module('app')
       $scope.xbmc.setAudioStream($scope.stream);
     };
 
+    $scope.onValidateText = function() {
+      $scope.xbmc.sendText($scope.textToSend);
+      $scope.showKeyboard = false;
+      $scope.textToSend = '';
+    };
+    
+
     $scope.onValidateSubtitles = function() {
       $scope.showSubtitleSelect = false;
       $scope.xbmc.setSubtitle($scope.sub);
@@ -102,6 +112,17 @@ angular.module('app')
       $scope.showTimePicker = !$scope.showTimePicker;
     };
 
+    $scope.toggleKeyboard = function() {
+      $scope.showKeyboard = !$scope.showKeyboard;
+    };
+
+    $scope.toggleShutdownOptions = function() {
+      $scope.showShutdownOptions = !$scope.showShutdownOptions;
+    };
+
+    $scope.toggleShutdownOptions = function() {
+      $scope.showShutdownOptions = !$scope.showShutdownOptions;
+    };
 
     $scope.updateSeek = function(newValue) {
       newValue = Math.min(newValue, 100);

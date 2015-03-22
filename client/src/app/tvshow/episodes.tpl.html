@@ -1,0 +1,20 @@
+<div ng-switch on="loading" class="fill-height" ng-class="{loading : loading}">
+    <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
+    <div ng-switch-when="false" class="fill-height" >
+        <ul data-type="list" lr-infinite-scroll="loadMore">
+            <li class="card tvshow" ng-repeat="episode in episodes">
+                <div class="poster" image image-source="episode.art['tvshow.poster'] | asset:host | fallback:'img/icons/foxy-512.png'">
+                    <div rating rating-value="episode.rating" rating-max="10"></div>
+                    <div class="playcount" ng-show="episode.playcount">
+                         <i class="icon-ok"></i> 
+                    </div>
+                </div>
+                <div class="description">
+                    <h3>{{episode.title}}</h3>
+                    <p>Episode {{episode.episode}}</p>
+                </div>
+            </li>
+        </ul>
+        <div ng-show="!episodes.length" class="empty list">Oops! nothing here</div>
+    </div>
+</div>
