@@ -1,18 +1,20 @@
 angular.module('services.tmdb', [])
 .factory('tmdb', ['$http', '$interpolate',
   function($http, $interpolate) {
+    var apiKey = 'a76cc8ff9e26a5f688544d73c90e4807';
     var factory = {};
-    var interpolateFn = $interpolate('http://api.themoviedb.org/3/{{action}}{{parameters}}');
+    var interpolateFn = $interpolate('http://api.themoviedb.org/3/{{action}}?api_key={{apiKey}}{{parameters}}');
     var httpConfig = {
       headers : {
         'Accept' : 'application/json'
       }
     };
 
-    factory.find = function (imdbNumer) {
+    factory.find = function (source, id) {
       var url = interpolateFn({
-        action : 'find/'+imdbNumer,
-        parameters : '?api_key=a76cc8ff9e26a5f688544d73c90e4807&external_source=imdb_id'
+        action : 'find/'+id,
+        apiKey : apiKey,
+        parameters : '&external_source='+source
       });
       return $http.get(url, httpConfig);
     };
@@ -20,7 +22,17 @@ angular.module('services.tmdb', [])
     factory.similar = function (id, page) {
       var url = interpolateFn({
         action : 'movie/'+id+'/similar',
-        parameters : '?api_key=a76cc8ff9e26a5f688544d73c90e4807&page='+page
+        apiKey : apiKey,
+        parameters : '&page='+page
+      });
+      return $http.get(url, httpConfig);
+    };
+
+    factory.tvSeason = function (id, season) {
+      var url = interpolateFn({
+        action : 'tv/'+id+'/season/'+season,
+        apiKey : apiKey,
+        parameters : ''
       });
       return $http.get(url, httpConfig);
     };

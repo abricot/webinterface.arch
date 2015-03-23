@@ -433,8 +433,8 @@ angular.module('services.xbmc', ['services.io'])
           'end': 75
         },
         'sort': {
-          'order': 'ascending',
-          'method': 'label'
+          'order': 'descending',
+          'method': 'episode'
         }
       }, true, 'result.episodes').then(cb);
     };

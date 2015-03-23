@@ -28,7 +28,7 @@ angular.module('app')
       $scope.library.item = item;
       $scope.isCurrentlyPlaying = isCurrentlyPlaying();
       $scope.loading = false;
-      $scope.tmdb.find(item.imdbnumber).then(function(result){
+      $scope.tmdb.find('imdb_id', item.imdbnumber).then(function(result){
         var movies = result.data.movie_results;
         if(movies.length === 1) {
           $scope.tmdb.similar(movies[0].id, 1).then(function(result){

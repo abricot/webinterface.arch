@@ -21,6 +21,7 @@ angular.module('app')
     $scope.selectedSeason = '';
     $scope.seasons = [];
     $scope.queue = [];
+    $scope.nextAiringEpisodes = [];
 
     var onPlaylistAdd = function () {
       if($scope.queue.length > 0) {
@@ -36,6 +37,15 @@ angular.module('app')
       onPlaylistAdd();
     }, true);
 
+    function getNextAiringEpisodes(episodes) {
+      episodes = episodes || [];
+      var now = Date.now();
+      return episodes.filter(function(episode){
+        var airDate = new Date(episode['air_date']);
+        return airDate.getTime() > now;
+      });
+    }
+
     function isCurrentlyPlaying(episodeid) {
       return $scope.player.active && episodeid === $scope.library.item.episodeid;
     };
@@ -49,6 +59,15 @@ angular.module('app')
       $scope.seasons = seasons || [];
       $scope.season = seasons[seasons.length-1];
       $scope.xbmc.getEpisodes($scope.tvshowid, $scope.season.season, onEpisodesRetrieved);
+      $scope.tmdb.find('tvdb_id', $scope.library.item.imdbnumber).then(function(result){
+        var shows = result.data.tv_results;
+        if(shows.length === 1) {
+          $scope.tmdb.tvSeason(shows[0].id, $scope.season.season).then(function(result){
+            $scope.nextAiringEpisodes = getNextAiringEpisodes(result.data.episodes);
+
+          });
+        }
+      });
     };
 
     function onTvShowRetrieved(item) {

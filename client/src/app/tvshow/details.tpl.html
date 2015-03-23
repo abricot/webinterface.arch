@@ -24,6 +24,22 @@
         <div class="description">
             <div class="row">
                 <div class="offset2 span8">
+                    <div class="next episode" ng-show="nextAiringEpisodes.length">
+                        <h1>
+                          Next Episode
+                        </h1>
+                        <div class="row episode">
+                            <div class="thumbnail span3">
+                            </div>
+                            <div class="span9">
+                                <p>
+                                    {{nextAiringEpisodes[0].episode_number | episode:nextAiringEpisodes[0].season_number}} -
+                                    {{nextAiringEpisodes[0].name}} airs {{nextAiringEpisodes[0].air_date | date : 'fullDate'}}
+                                </p>
+                                <p>{{nextAiringEpisodes[0].overview}}</p>
+                            </div>
+                        </div>
+                    </div>
                     <h1>
                       Episodes
                       <i class="icon-chevron-right"></i>
