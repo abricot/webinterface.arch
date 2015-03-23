@@ -31,7 +31,8 @@
   cursor: pointer;
 }
 
-.detail .episode {
+.detail .episode,
+.detail .next-episode  {
   color : @primaryTextColor;
   position: relative;
   border-bottom: 1px solid @regionBgColor;
@@ -39,11 +40,14 @@
   padding-bottom: 0.5rem;
   cursor: pointer;
 }
-.detail .episode:last-child {
+.detail .episode:last-child,
+.detail .next-episode {
   border-bottom: 0;
 }
+.detail .next-episode {cursor: default;}
 .detail .episode:hover {background: @regionBgColor;}
-.detail .episode p{
+.detail .episode p,
+.detail .next-episode p{
   padding : 0 .5rem;
   margin: .5rem 0 0 0;
 }

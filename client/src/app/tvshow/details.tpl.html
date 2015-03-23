@@ -24,19 +24,19 @@
         <div class="description">
             <div class="row">
                 <div class="offset2 span8">
-                    <div class="next episode" ng-show="nextAiringEpisodes.length">
+                    <div ng-show="nextAiringEpisodes !== null">
                         <h1>
                           Next Episode
                         </h1>
-                        <div class="row episode">
-                            <div class="thumbnail span3">
+                        <div class="row next-episode">
+                            <div class="thumbnail span3" image image-source="getImageURL(nextAiringEpisode.still_path) | fallback:'img/icons/foxy-512.png'">
                             </div>
                             <div class="span9">
                                 <p>
-                                    {{nextAiringEpisodes[0].episode_number | episode:nextAiringEpisodes[0].season_number}} -
-                                    {{nextAiringEpisodes[0].name}} airs {{nextAiringEpisodes[0].air_date | date : 'fullDate'}}
+                                    {{nextAiringEpisode.episode_number | episode:nextAiringEpisode.season_number}} -
+                                    {{nextAiringEpisode.name}} airs {{nextAiringEpisode.air_date | date : 'fullDate'}}
                                 </p>
-                                <p>{{nextAiringEpisodes[0].overview}}</p>
+                                <p>{{nextAiringEpisode.overview}}</p>
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                     </h1>
                     <ul data-type="list">
                         <li class="row episode" ng-repeat="episode in episodes"
-                            ng-click="openOrQueue(episode.episodeid)">
+                            ng-click="xbmc.open({'episodeid': episode.episodeid})">
                             <div class="thumbnail span3" image image-source="episode.thumbnail | asset:host">
                                 <div class="md-action md-action-primary">
                                     <i class="icon-play"></i>

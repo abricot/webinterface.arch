@@ -21,7 +21,7 @@ angular.module('app')
     $scope.selectedSeason = '';
     $scope.seasons = [];
     $scope.queue = [];
-    $scope.nextAiringEpisodes = [];
+    $scope.nextAiringEpisode = null;
 
     var onPlaylistAdd = function () {
       if($scope.queue.length > 0) {
@@ -63,8 +63,10 @@ angular.module('app')
         var shows = result.data.tv_results;
         if(shows.length === 1) {
           $scope.tmdb.tvSeason(shows[0].id, $scope.season.season).then(function(result){
-            $scope.nextAiringEpisodes = getNextAiringEpisodes(result.data.episodes);
-
+            var nextAiringEpisodes = getNextAiringEpisodes(result.data.episodes);
+            if(nextAiringEpisodes.length>0) {
+              $scope.nextAiringEpisode = nextAiringEpisodes[0];
+            }
           });
         }
       });
@@ -96,12 +98,12 @@ angular.module('app')
       $scope.xbmc.getEpisodes($scope.tvshowid, season.season, onEpisodesRetrieved);
     };
 
-    $scope.openOrQueue = function (episodeid) {
-      if(isCurrentlyPlaying(episodeid)){
-        $scope.xbmc.queue({'episodeid': episodeid});
-      } else {
-        $scope.xbmc.open({'episodeid': episodeid});
+    $scope.getImageURL = function (stillPath) {
+      var url = 'http://image.tmdb.org/t/p/original';
+      if(typeof stillPath  === 'undefined' || stillPath === null) {
+        return '';
       }
+      return url + stillPath;
     };
 
     $scope.queueAll = function () {
