@@ -62,11 +62,14 @@ angular.module('app')
       $scope.tmdb.find('tvdb_id', $scope.library.item.imdbnumber).then(function(result){
         var shows = result.data.tv_results;
         if(shows.length === 1) {
-          $scope.tmdb.tvSeason(shows[0].id, $scope.season.season).then(function(result){
-            var nextAiringEpisodes = getNextAiringEpisodes(result.data.episodes);
-            if(nextAiringEpisodes.length>0) {
-              $scope.nextAiringEpisode = nextAiringEpisodes[0];
-            }
+          $scope.tmdb.tv(shows[0].id).then(function(result) {
+            var tv = result.data;
+            $scope.tmdb.tvSeason(tv.id, tv.number_of_seasons).then(function(result){
+              var nextAiringEpisodes = getNextAiringEpisodes(result.data.episodes);
+              if(nextAiringEpisodes.length>0) {
+                $scope.nextAiringEpisode = nextAiringEpisodes[0];
+              }
+            });
           });
         }
       });

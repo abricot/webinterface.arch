@@ -4,7 +4,7 @@
         <ul data-type="list" lr-infinite-scroll="loadMore">
             <li class="card tvshow" ng-repeat="episode in episodes">
                 <a href="#/tvshow/{{episode.tvshowid}}">
-                    <div class="poster" image image-source="episode.art['tvshow.poster'] | asset:host | fallback:'img/icons/foxy-512.png'">
+                    <div class="poster" image image-source="episode.art['tvshow.poster'] | asset:host | fallback:'img/icons/awe-512.png'">
                         <div rating rating-value="episode.rating" rating-max="10"></div>
                         <div class="playcount" ng-show="episode.playcount">
                              <i class="icon-ok"></i>

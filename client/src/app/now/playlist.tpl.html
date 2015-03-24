@@ -14,13 +14,13 @@
                 <div class="span3 flip-container" ng-show="item.rating">
                     <flipper>
                         <div class="front">
-                            <div class="md-circle poster" image image-source="item.art | thumb | asset:host | fallback:'img/icons/foxy-512.png'"></div>
+                            <div class="md-circle poster" image image-source="item.art | thumb | asset:host | fallback:'img/icons/awe-512.png'"></div>
                         </div>
                         <div class="back" rating rating-value="item.rating" rating-max="10"></div>
                     </flipper>
                 </div>
                 <div class="span3 wrapper" ng-show="!item.rating">
-                    <div class="md-circle poster" image image-source="item.art | thumb | asset:host | fallback:'img/icons/foxy-512.png'"></div>
+                    <div class="md-circle poster" image image-source="item.art | thumb | asset:host | fallback:'img/icons/awe-512.png'"></div>
                 </div>
                 <div class="span8">
                     <p>{{item.label}}</p>

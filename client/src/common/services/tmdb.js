@@ -28,6 +28,15 @@ angular.module('services.tmdb', [])
       return $http.get(url, httpConfig);
     };
 
+     factory.tv = function (id) {
+      var url = interpolateFn({
+        action : 'tv/'+id,
+        apiKey : apiKey,
+        parameters : ''
+      });
+      return $http.get(url, httpConfig);
+    };
+
     factory.tvSeason = function (id, season) {
       var url = interpolateFn({
         action : 'tv/'+id+'/season/'+season,
