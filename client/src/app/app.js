@@ -2,6 +2,7 @@
 RAL.FileManifest.reset();
 
 angular.module('app', [
+  'ngAnimate',
   'ngTouch',
   'ui.state',
   'ui.bootstrap',

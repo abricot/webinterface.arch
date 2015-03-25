@@ -118,3 +118,24 @@
   margin: 0;
   text-align: right;
 }
+
+.repeat-animation.ng-enter {
+  /* standard transition code */
+  -webkit-transition: 1s linear all;
+  transition: 1s linear all;
+  opacity:0;
+}
+.repeat-animation.ng-enter-stagger {
+  /* this will have a 100ms delay between each successive leave animation */
+  -webkit-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+
+  /* in case the stagger doesn't work then these two values
+   must be set to 0 to avoid an accidental CSS inheritance */
+  -webkit-transition-duration: 0s;
+  transition-duration: 0s;
+}
+.repeat-animation.ng-enter.ng-enter-active {
+  /* standard transition styles */
+  opacity:1;
+}

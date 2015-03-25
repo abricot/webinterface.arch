@@ -57,8 +57,13 @@ angular.module('app')
 
     function onSeasonsRetrieved(seasons) {
       $scope.seasons = seasons || [];
-      $scope.season = seasons[seasons.length-1];
-      $scope.xbmc.getEpisodes($scope.tvshowid, $scope.season.season, onEpisodesRetrieved);
+      if($scope.seasons.length > 0) {
+        $scope.season = seasons[seasons.length-1];
+        $scope.xbmc.getEpisodes($scope.tvshowid, $scope.season.season, onEpisodesRetrieved);
+      } else {
+        $scope.loading = false;
+      }
+    
       $scope.tmdb.find('tvdb_id', $scope.library.item.imdbnumber).then(function(result){
         var shows = result.data.tv_results;
         if(shows.length === 1) {

@@ -86,6 +86,7 @@ module.exports = function (grunt) {
             angular: {
                 src:[
                     'vendor/angular/angular.js',
+                    'vendor/angular-animate/angular-animate.js',
                     'src/assets/js/ui-bootstrap-custom-0.10.0.js',
                     'vendor/angular-ui-router/release/angular-ui-router.js',
                     'vendor/angular-touch/angular-touch.js',

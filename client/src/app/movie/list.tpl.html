@@ -7,7 +7,7 @@
         </div>
         <div class="content">
             <ul data-type="list" lr-infinite-scroll="loadMore">
-                <li class="card movie" ng-repeat="movie in movies">
+                <li class="card movie repeat-animation" ng-repeat="movie in movies">
                     <a href="#/movie/{{movie.movieid}}">
                         <div class="poster" image image-source="movie.thumbnail | asset:host | fallback:'img/icons/awe-512.png'">
                             <div rating rating-value="movie.rating" rating-max="10"></div>

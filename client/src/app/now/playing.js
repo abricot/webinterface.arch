@@ -27,6 +27,11 @@ angular.module('app')
     var timeFilter = $filter('time');
     $scope.seekTime = timeFilter($scope.player.seek.time);
 
+    $scope.execCommand = function(xbmcCommand){
+      $scope.toggleShutdownOptions();
+      $scope.xbmc[xbmcCommand]();
+    };
+
     $scope.getHashForItem = function () {
       if($scope.player.type === 'video') {
         if( $scope.player.item.tvshowid === -1) {
