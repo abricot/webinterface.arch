@@ -4,13 +4,21 @@
         <li class="card tvshow repeat-animation" ng-repeat="show in tvshows">
             <a href="#/tvshow/{{show.tvshowid}}">
                 <div class="poster" image image-source="show.thumbnail | asset:host | fallback:'img/icons/awe-512.png'">
-                    <div rating rating-value="show.rating" rating-max="10"></div>
+                    <flipper>
+                        <div class="front">
+                            <div rating rating-value="show.rating" rating-max="10"></div>
+                        </div>
+                        <div class="back">
+                            <div class="md-circle rating">
+                               <img class="studio" image image-source="studioFn({studio : show.studio[0]})"
+                                    ng-show="show.studio.length"
+                                    onerror="this.style.display='none';"/>
+                            </div>
+                        </div>
+                    </flipper>
                     <div class="playcount" ng-show="show.playcount">
                          <i class="icon-ok"></i>
                     </div>
-                    <img class="studio" image image-source="studioFn({studio : show.studio[0]})"
-                         ng-show="show.studio.length"
-                         onerror="this.style.display='none';"/>
                 </div>
                 <div class="description">
                     <h3>{{show.title}}</h3>

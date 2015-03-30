@@ -29,7 +29,7 @@ angular.module('app')
     $urlRouterProvider.otherwise("/movies/recents");
   }
 ])
-.controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter', 
+.controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter',
   '$interpolate', 'xbmc', 'storage', 'tmdb',
   function($scope, $rootScope, $state, $location, $filter, $interpolate, xbmc, storage, tmdb) {
     var asChromeApp = window.chrome && window.chrome.storage;

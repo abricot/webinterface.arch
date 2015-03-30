@@ -9,13 +9,22 @@
             <li class="card movie repeat-animation" ng-repeat="movie in movies">
                 <a href="#/movie/{{movie.movieid}}">
                     <div class="poster" image image-source="movie.thumbnail | asset:host | fallback:'img/icons/awe-512.png'">
-                        <div rating rating-value="movie.rating" rating-max="10"></div>
-                         <div class="playcount" ng-show="movie.playcount">
+                        <flipper>
+                            <div class="front">
+                                <div rating rating-value="movie.rating" rating-max="10"></div>
+                            </div>
+                            <div class="back">
+                                <div class="md-circle rating">
+                                    <i class="icon-play" ng-click="xbmc.open({'movieid' : movie.movieid}); $event.preventDefault();"
+                                       ng-show="!player.active"></i>
+                                    <i class="icon-plus" ng-click="xbmc.queue({'movieid' : movie.movieid}); $event.preventDefault();"
+                                       ng-show="player.active"></i>
+                                </div>
+                            </div>
+                        </flipper>
+                        <div class="playcount" ng-show="movie.playcount">
                              <i class="icon-ok"></i>
                         </div>
-                        <img class="studio" image image-source="studioFn({studio : movie.studio[0]})"
-                             ng-show="movie.studio.length"
-                             onerror="this.style.display='none';"/>
                     </div>
                     <div class="description">
                         <h3>{{movie.label}}</h3>
@@ -27,9 +36,7 @@
                                  seekbar-read-only="true">
                         </seekbar>
                         <div class="controls">
-                            <i class="icon-play" ng-click="xbmc.open({'movieid' : movie.movieid}); $event.preventDefault();"></i>
-                            <i class="icon-plus" ng-click="xbmc.queue({'movieid' : movie.movieid}); $event.preventDefault();"
-                               ng-show="player.active"></i>
+
                             <i ng-class="{'icon-eye-open':!movie.playcount, 'icon-eye-close':movie.playcount}"
                                ng-click="toggleWatched(movie); $event.preventDefault();"
                               ></i>

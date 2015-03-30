@@ -80,19 +80,15 @@
   transition : all 250ms ease-in;
 }
 
-[data-type="list"] .card:hover .poster{
-  background-size: 25rem;
-}
-
 [data-type="list"] .card .studio {
-  z-index: 2;
   position: absolute;
-  height: 4.5rem;
-  background-size: auto 100%;
+  top: 50%;
+  width: 100%;
+  background-position: 0 50%;
   background-repeat: no-repeat;
-  background-position: 0% 50%;
-  left: 0.5rem;
-  right: 0rem;
+  background-size: auto 100%;
+  transform: translateY(-50%);
+  left: 0;
 }
 
 [data-type="list"] .card .description{
@@ -115,7 +111,7 @@
   bottom : 1.5rem;
   left : 1rem;
   cursor : pointer;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
 }
 
 [data-type="list"] .card .description .controls i {
@@ -137,11 +133,25 @@
   background-color: @secondaryBgColor;
 }
 
+[data-type="list"] .card .flipper {
+  position: absolute;
+  bottom: 3rem;
+  left : 50%;
+  transform : translateX(-50%);
+  z-index: 2;
+}
+
+[data-type="list"] .card:hover .flipper{
+  transform: rotateY(180deg);
+}
+
+[data-type="list"] .card .flipper .back .md-circle i {
+  font-size: 2rem;
+  padding-left: 0.5rem;
+}
+
 [data-type="list"] .card .rating {
-  bottom: -1.5rem;
-  left: 1;
-  top: auto;
-  background: @actionBgColor !important;
+  background-color: @actionBgColor !important;
   border-color: @actionBgColor !important;
 }
 
@@ -154,8 +164,8 @@
 
 .repeat-animation.ng-enter {
   /* standard transition code */
-  -webkit-transition: 1s linear all;
-  transition: 1s linear all;
+  -webkit-transition: 0.5s linear all;
+  transition: 0.5s linear all;
   opacity:0;
 }
 .repeat-animation.ng-enter-stagger {
