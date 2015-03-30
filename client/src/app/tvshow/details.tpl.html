@@ -82,7 +82,10 @@
                                        ng-show="player.active"></i>
                                     <i ng-class="{'icon-eye-open':!episode.playcount, 'icon-eye-close':episode.playcount}"
                                        ng-click="toggleWatched(episode); $event.stopPropagation();"
-                                      ></i>
+                                    ></i>
+                                    <i class="icon-trash"
+                                       ng-click="remove($index, episode); $event.stopPropagation();"
+                                    ></i>
                                 </div>
                             </div>
                         </li>

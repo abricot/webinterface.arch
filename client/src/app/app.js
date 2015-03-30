@@ -29,8 +29,9 @@ angular.module('app')
     $urlRouterProvider.otherwise("/movies/recents");
   }
 ])
-.controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter', 'xbmc', 'storage', 'tmdb',
-  function($scope, $rootScope, $state, $location, $filter, xbmc, storage, tmdb) {
+.controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter', 
+  '$interpolate', 'xbmc', 'storage', 'tmdb',
+  function($scope, $rootScope, $state, $location, $filter, $interpolate, xbmc, storage, tmdb) {
     var asChromeApp = window.chrome && window.chrome.storage;
     var analyticsService, analyticsTracker;
     if(asChromeApp) {
@@ -70,7 +71,7 @@ angular.module('app')
     $scope.webserverURL = 'about:blank';
     $scope.xbmc = xbmc;
     $scope.tmdb = tmdb;
-
+    $scope.studioFn = $interpolate('https://cdn.rawgit.com/ccMatrix/StudioLogos/master/161x109_mono_png/{{studio}}.png');
     $scope.back = function() {
       $scope.go($scope.previousHash);
     };

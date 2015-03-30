@@ -43,6 +43,13 @@ angular.module('app')
         $scope.xbmc.getTVShows(onTvShowsFromSource, limits);
       }
     };
+    
+    $scope.remove = function (index, show) {
+      var onTVShowRemoved = function(){
+        $scope.tvshows.splice(index, 1);
+      };
+      $scope.xbmc.removeTVShow(show.tvshowid, onTVShowRemoved);
+    };
 
     $scope.toggleWatched = function (show) {
       var newValue =  show.playcount ? 0 : 1;

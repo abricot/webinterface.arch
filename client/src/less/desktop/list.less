@@ -3,6 +3,28 @@
   text-align: center;
 }
 
+.cards .kodi {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: transparent url(../img/backgrounds/kodi.png) no-repeat center center;
+  background-size: 25%;
+}
+
+.cards .kodi:after {
+  content: "Loading";
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: @primaryTextColor;
+  font-family: Roboto;
+}
+
 .cards .content {height: calc(100% - 4rem);}
 
 .cards .tabs{background: lighten(@secondaryBgColor, 10%);}
@@ -60,6 +82,17 @@
 
 [data-type="list"] .card:hover .poster{
   background-size: 25rem;
+}
+
+[data-type="list"] .card .studio {
+  z-index: 2;
+  position: absolute;
+  height: 4.5rem;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: 0% 50%;
+  left: 0.5rem;
+  right: 0rem;
 }
 
 [data-type="list"] .card .description{

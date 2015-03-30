@@ -119,6 +119,13 @@ angular.module('app')
       $scope.queue = $scope.episodes.slice(1);
     };
 
+    $scope.remove = function (index, episode) {
+      var onEpisodeRemoved = function(){
+        $scope.episodes.splice(index, 1);
+      };
+      $scope.xbmc.removeEpisode(episode.episodeid, onEpisodeRemoved);
+    };
+
     $scope.toggleWatched = function (episode) {
       var newValue =  episode.playcount ? 0 : 1;
       $scope.xbmc.setEpisodeDetails({

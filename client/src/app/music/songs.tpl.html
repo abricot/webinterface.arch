@@ -1,6 +1,6 @@
-<div ng-switch on="loading" class="fill-height songs-wrapper" ng-class="{loading : loading}">
-    <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
-    <div ng-switch-when="false" class="fill-height">
+<div class="fill-height songs-wrapper">
+    <div class="kodi" ng-hide="songs.length"></div>
+    <div class="fill-height">
         <div class="detail wrapper row">
             <div class="fanart" image image-source="album.fanart | asset:host | fallback:'img/backgrounds/vinyls.jpg'"></div>
             <div class="offset2 span5 card artist">
@@ -35,7 +35,7 @@
         </div>
         <div class="row songs">
             <ul data-type="list" lr-infinite-scroll="loadMore">
-                <li class="row song" ng-repeat="song in songs"
+                <li class="row song repeat-animation" ng-repeat="song in songs"
                     ng-click="xbmc.open({songid : song.songid})">
                     <div class="span5 track">
                         <span class="thumbnail" image image-source="song.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
@@ -49,7 +49,7 @@
                     <div class="span1 duration">{{song.duration | time | date :'mm:ss'}}</div>
                 </li>
             </ul>
+            <div ng-show="!songs.length" class="empty list">Oops! nothing here</div>
         </div>
-        <spinner ng-show="fetching"></spinner>
     </div>
 </div>

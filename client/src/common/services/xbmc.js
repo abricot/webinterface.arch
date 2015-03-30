@@ -261,8 +261,16 @@ angular.module('services.xbmc', ['services.io'])
       }
     };
 
+    factory.addFavourite = function (title, path, cb) {
+      io.send('Favourites.AddFavourite', {
+        'title' : title,
+        'type' : 'media',
+        'path' : path
+      }, true, 'result').then(cb);
+    };
+
     var moviesProperties = ['file', 'title', 'genre', 'rating', 'thumbnail', 'runtime', 'playcount',
-                            'streamdetails', 'fanart', 'year', 'dateadded', 'resume'];
+                            'streamdetails', 'fanart', 'year', 'dateadded', 'resume', 'studio'];
     factory.getMovies = function(cb, limits) {
       limits = limits || {
         'start': 0,
@@ -290,7 +298,7 @@ angular.module('services.xbmc', ['services.io'])
       io.send('VideoLibrary.GetMovieDetails', {
         'properties': ['title', 'genre', 'rating', 'thumbnail', 'plot', 'streamdetails',
         'studio', 'director', 'fanart', 'runtime', 'trailer', 'imdbnumber','mpaa','cast',
-        'writer', 'year','plotoutline', 'tagline'
+        'writer', 'year','plotoutline', 'tagline', 'art', 'showlink'
         ],
         'movieid': movieId
       }, true, 'result.moviedetails').then(cb);
@@ -386,7 +394,7 @@ angular.module('services.xbmc', ['services.io'])
       };
       io.send('VideoLibrary.GetTVShows', {
         'limits': limits,
-        'properties': ['genre', 'title', 'rating', 'art', 'playcount', 'thumbnail', 'watchedepisodes', 'episode'],
+        'properties': ['genre', 'title', 'rating', 'art', 'playcount', 'thumbnail', 'watchedepisodes', 'episode', 'studio'],
         'sort': {
           'order': 'ascending',
           'method': 'label'
@@ -422,7 +430,9 @@ angular.module('services.xbmc', ['services.io'])
       }, true, 'result.seasons').then(cb);
     };
 
-    var episodesProperties = ['file', 'title', 'rating', 'runtime', 'season', 'episode', 'thumbnail', 'fanart','art', 'playcount', 'resume', 'tvshowid', 'plot'];
+    var episodesProperties = ['file', 'title', 'rating', 'runtime', 'season', 
+    'episode', 'thumbnail', 'fanart','art', 'playcount', 'resume', 'tvshowid',
+    'plot'];
     factory.getEpisodes = function(tvShowId, season, cb) {
       io.send('VideoLibrary.GetEpisodes', {
         'tvshowid': tvShowId,
@@ -466,16 +476,20 @@ angular.module('services.xbmc', ['services.io'])
       }, true, 'result').then(cb);
     };
 
-    factory.scan = function (library) {
-      io.send(library+'.scan');
+    factory.removeEpisode = function (episodeId, cb) {
+       io.send('VideoLibrary.RemoveEpisode', {'episodeid':episodeId}, true, 'result').then(cb);
     };
 
-    factory.addFavourite = function (title, path, cb) {
-      io.send('Favourites.AddFavourite', {
-        'title' : title,
-        'type' : 'media',
-        'path' : path
-      }, true, 'result').then(cb);
+    factory.removeMovie = function (movieId, cb) {
+       io.send('VideoLibrary.RemoveMovie',  {'movieid':movieid}, true, 'result').then(cb);
+    };
+
+    factory.removeTVShow = function (tvshowid, cb) {
+       io.send('VideoLibrary.RemoveTVShow', {'tvshowid':tvshowid}, true, 'result').then(cb);
+    };
+
+    factory.scan = function (library) {
+      io.send(library+'.scan');
     };
 
     return factory;

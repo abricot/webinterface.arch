@@ -60,6 +60,14 @@ angular.module('app')
       }
     };
 
+    $scope.remove = function (index, movie) {
+      var onMovieRemoved = function(){
+        $scope.movies.splice(index, 1);
+      };
+      $scope.xbmc.removeEpisode(movie.movieid, onMovieRemoved);
+    };
+
+
     $scope.toggleWatched = function (movie) {
       var newValue =  movie.playcount ? 0 : 1;
       $scope.xbmc.setMovieDetails({

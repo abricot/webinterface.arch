@@ -1,8 +1,8 @@
-<div ng-switch on="loading" class="fill-height" ng-class="{loading : loading}">
-    <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
-    <div ng-switch-when="false" class="cards albums">
+<div class="fill-height">
+    <div class="kodi" ng-hide="albums.length"></div>
+    <div class="cards albums">
         <ul data-type="list" lr-infinite-scroll="loadMore">
-            <li class="row album card" ng-repeat="album in albums">
+            <li class="row album card repeat-animation" ng-repeat="album in albums">
                 <a href="#/musics/songs/albumid/{{album.albumid}}">
                     <div class="poster" image image-source="album.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
                     </div>
@@ -13,7 +13,7 @@
                 </a>
             </li>
         </ul>
-        <spinner ng-show="fetching"></spinner>
+        <div ng-show="!albums.length" class="empty list">Oops! nothing here</div>
     </div>
 </div>
 
