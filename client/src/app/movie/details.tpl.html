@@ -21,6 +21,11 @@
                         </div>
                         <div class="md-circle cast" image image-source="library.item.cast[0].thumbnail | asset:host | fallback:'img/icons/awe-512.png'">
                         </div>
+                        <div class="md-circle studio">
+                            <img image image-source="studioFn({studio : library.item.studio[0]})"
+                                 ng-show="library.item.studio.length"
+                                 onerror="this.src='img/icons/default-studio.png';"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,7 +122,7 @@
                             <b class="span3">Audio languages</b>
                             <div class="span9">{{getAudio()}}</div>
                         </li>
-                        <li class="row info">
+                        <li class="row info" ng-show="library.item.mpaa !==''">
                             <b class="span3">MPAA</b>
                             <div class="span9">{{library.item.mpaa}}</div>
                         </li>

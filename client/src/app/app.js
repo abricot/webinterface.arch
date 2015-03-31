@@ -72,6 +72,7 @@ angular.module('app')
     $scope.xbmc = xbmc;
     $scope.tmdb = tmdb;
     $scope.studioFn = $interpolate('https://cdn.rawgit.com/ccMatrix/StudioLogos/master/161x109_mono_png/{{studio}}.png');
+    $scope.languageFn = $interpolate('https://cdn.rawgit.com/BigNoid/Aeon-Nox/master/media/flags/subtitles/flags/{{language}}.png')
     $scope.back = function() {
       $scope.go($scope.previousHash);
     };

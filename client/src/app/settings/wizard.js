@@ -67,5 +67,15 @@ angular.module('app')
         $scope.go('/hosts');
       }
     };
+
+    $scope.$watch('hosts', function(newVal, oldVal) {
+      var filterDefault = function(el) {
+        return el.default;
+      }
+      var filtered = $scope.hosts.filter(filterDefault);
+      if(filtered.length ===1) {
+        $scope.host = filtered[0];
+      }
+    });
   }
 ]);

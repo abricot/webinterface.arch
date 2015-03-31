@@ -5,7 +5,9 @@
             <div class="label">{{item.label}}</div>
         </a>
     </div>
-    <div class="status" ng-class="{connected : connected, disconnected : !connected}">
+    <div class="status" ng-class="{connected : connected, disconnected : !connected}"  ng-click="toggleWizard()">
         <i ng-class="{'icon-ok' : connected, 'icon-remove' : !connected}"></i>
     </div>
+    <div class="dropdown-menu" ng-class="{visible : showWizard}"
+         ng-include src="'settings/wizard.tpl.html'" ng-controller="WizardCtrl"></div>
 </nav>

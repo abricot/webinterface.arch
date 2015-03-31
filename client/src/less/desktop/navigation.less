@@ -2,6 +2,7 @@ nav {
   font-size : 2.25em;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   text-transform: uppercase;
+  position: relative;
 }
 
 
@@ -19,7 +20,7 @@ nav .tab.selected{
   border-color : @secondaryBgColor;
 }
 
-.status {
+nav .status {
   display: inline-block;
   width : 4rem;
   height: 4rem;
@@ -28,14 +29,47 @@ nav .tab.selected{
   text-align: center;
   position: absolute;
   right: 0;
+  cursor : pointer;
 }
-.status i {line-height: 4rem;}
-.status.connected{
+
+nav .status i {line-height: 4rem;}
+nav .status.connected{
   background-color: @actionBgColor !important;
   border-color: @actionBgColor !important;
 }
 
-.status.disconnected{
+nav .status.disconnected{
   background-color: #e51c23!important;
   border-color: #e51c23!important;
 }
+
+nav .dropdown-menu {
+  width: 30rem;
+  position: absolute;
+  bottom: 4rem;
+  right: 0;
+  z-index: 10;
+  background : lighten(@secondaryBgColor, 10%);
+  min-height : 35rem;
+  text-align: left;
+  transition: all 250ms ease-in;
+  opacity: 0;
+}
+nav .dropdown-menu.visible {
+  transform: translateY(100%);
+  opacity: 1;
+  bottom: 0rem;
+}
+
+
+nav .dropdown-menu .username,
+nav .dropdown-menu .password,
+nav .dropdown-menu .name,
+nav .dropdown-menu .md-action-danger {
+  display: none;
+}
+
+nav .dropdown-menu .settings{
+  overflow: auto;
+}
+

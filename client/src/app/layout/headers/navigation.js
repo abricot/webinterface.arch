@@ -1,6 +1,8 @@
 angular.module('app')
 .controller('HeaderNavController', ['$scope', '$location', '$filter',
   function ($scope, $location, $filter) {
+    $scope.showWizard = false;
+
     $scope.medias = [{
       hash: '/movies/recents',
       icon: 'icon-film',
@@ -21,5 +23,9 @@ angular.module('app')
     $scope.isCurrent = function (matchRegExp) {
       return $location.path().match(matchRegExp) !== null;
     };
+
+    $scope.toggleWizard = function () {
+      $scope.showWizard = !$scope.showWizard;
+    }
   }
 ]);

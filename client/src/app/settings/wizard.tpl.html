@@ -7,34 +7,34 @@
         </div>
     </div>
     <div class="settings">
-        <p> 
+        <p class="name">
             <label>Display name:</label>
             <input type="text" placeholder="Ex : HTPC" required="" ng-model="host.displayName" tabindex="1">
             <button type="reset" class="icon-remove"></button>
         </p>
         <div class="row">
-            <p class="span7">
+            <p class="span7 host">
                 <label>Host IP:</label>
                 <input name="ip" type="text" placeholder="Ex : 192.16.0.1, hostname" required="" ng-model="host.ip" tabindex="2"/>
                 <button type="reset" class="icon-remove"></button>
             </p>
-            <p class="span5">
+            <p class="span5 wsport">
                 <label>Api port</label>
                 <input type="text" placeholder="Ex : 9090" required="" ng-model="host.port" tabindex="3"/>
                 <button type="reset" class="icon-remove"></button>
             </p>
         </div>
-        <p>
+        <p class="httpport">
             <label>Webserver port</label>
             <input type="text" placeholder="Ex : 8080" required="" ng-model="host.httpPort" tabindex="3"/>
             <button type="reset" class="icon-remove"></button>
         </p>
-        <p>
+        <p class="username">
             <label>Webserver username</label>
             <input type="text" placeholder="Ex : Kodi" ng-model="host.username" tabindex="4"/>
             <button type="reset" class="icon-remove"></button>
         </p>
-        <p>
+        <p class="password">
             <label>Webserver password</label>
             <input type="password" ng-model="host.password" tabindex="5"/>
             <button type="reset" class="icon-remove"></button>
