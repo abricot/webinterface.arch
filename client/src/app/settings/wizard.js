@@ -32,7 +32,7 @@ angular.module('app')
     }
 
     $scope.save = function () {
-      if($scope.wizard.$valid) {
+      if(this.wizard.$valid) {
         if($scope.hosts.length === 0) {
           $scope.host.default = true;
         }

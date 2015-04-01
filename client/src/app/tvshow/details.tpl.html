@@ -3,7 +3,7 @@
     <div ng-switch-when="false">
         <div class="row wrapper">
             <div class="fanart" image image-source="library.item.fanart | asset:host"></div>
-            <div class="offset2 span6 clearfix" style="position:relative;">
+            <div class="offset2 span8 clearfix" style="position:relative;">
                 <div class="poster-wrapper">
                     <img class=" poster" image image-source="library.item.thumbnail | asset:host | fallback:'img/icons/awe-512.png'"/>
                 </div>
@@ -14,7 +14,7 @@
                     <p class="plot">{{library.item.plot}}</p>
                 </div>
             </div>
-            <div class="span2 actions">
+            <div class="actions">
               <div class="md-action md-action-primary"
                     ng-click="queueAll()"
                     ng-show="episodes.length">

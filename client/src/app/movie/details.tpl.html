@@ -3,7 +3,7 @@
     <div ng-switch-when="false">
         <div class="row wrapper">
             <div class="fanart" image image-source="library.item.fanart | asset:host"></div>
-            <div class="offset2 span5 clearfix" style="position:relative;">
+            <div class="offset2 span8 clearfix">
                 <div class="poster-wrapper">
                     <img class=" poster" image image-source="library.item.thumbnail | asset:host | fallback:'img/icons/awe-512.png'"/>
                 </div>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <div class="span3 actions">
+            <div class="actions">
                 <div class="md-action md-action-primary"
                      ng-click="xbmc.open({'movieid': library.item.movieid})" ng-show="!player.active">
                     <i class="icon-play"></i>

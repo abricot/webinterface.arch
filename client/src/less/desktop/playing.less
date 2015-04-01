@@ -38,7 +38,8 @@
   white-space: nowrap;
   line-height: 3.5em;
   display: inline-block;
-  padding-left : 2rem;
+  padding-left : 1rem;
+  max-width: 50%;
 }
 
 .player .poster-wrapper {
@@ -49,7 +50,7 @@
 .player .poster-wrapper .poster{
   width: 5rem;
   height: 5rem;
-  background-size: auto 100%;
+  background-size: 100% auto;
   border: 0;
   box-shadow: none;
   background-position: center;
@@ -86,23 +87,26 @@ section[role="region"] .buttons i {
   right : 0;
   top : 50%;
   transform : translateY(-50%);
+  max-width: 30%;
 }
 
 
 .player-wrapper .times  {
-  left: 50%;
+  right: 6rem;
   width : auto;
   text-align: center;
-  transform: translateY(-50%) translateX(-50%);
   cursor: pointer;
 }
 
-.more .dropdown-menu{display: none;}
-.more:hover .dropdown-menu{display: block;}
+.more .dropdown-menu,
+.more .remote-menu{display: none;}
+.more:hover .dropdown-menu,
+.more:hover .remote-menu{display: block;}
 
 .more .dropdown-menu {
   position: absolute;
-  top: 0;
+  top: -1rem;
+  right : 0;
   z-index: 9;
   padding: 0;
   font-size: 1.5rem;
@@ -114,7 +118,7 @@ section[role="region"] .buttons i {
   transform : translateY(-100%);
 }
 
-.playing .dropdown-menu li {cursor:pointer;padding:0.5rem 1rem;}
+.playing .dropdown-menu li {cursor:pointer;padding:1rem;}
 .playing .dropdown-menu li:hover {background: @regionBgColor;}
 
 
@@ -177,18 +181,11 @@ section[role="region"] .buttons i {
   background : lighten(@secondaryBgColor, 10%);
   box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.4);
   width: 17%;
-  bottom : 0rem;
+  bottom : 6rem;
   right : 0;
   text-align: center;
-  transform : translateY(100%);
   transition: all 250ms ease-in;
-  opacity: 0;
   min-width : 30rem;
-}
-.remote-menu.visible{
-  bottom: 6rem;
-  transform: translateY(0);
-  opacity: 1;
 }
 
 .remote-menu .row .span3:last-child {
@@ -208,4 +205,11 @@ section[role="region"] .buttons i {
   white-space: nowrap;
   background: rgba(0, 0, 0, 0.5);
   text-align: left;
+}
+
+@media screen and (max-width: 1024px) {
+    .playing .actions-wrapper{width:25%;}
+    .playing .player-wrapper{width:50%;}
+    .player-wrapper .times {display: none;}
+    .player .label {max-width: 80%;}
 }

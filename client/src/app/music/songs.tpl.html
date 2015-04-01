@@ -3,7 +3,7 @@
     <div class="fill-height">
         <div class="detail wrapper row">
             <div class="fanart" image image-source="album.fanart | asset:host | fallback:'img/backgrounds/vinyls.jpg'"></div>
-            <div class="offset2 span5 card artist">
+            <div class="offset2 span8 card artist">
                 <div class="poster-wrapper">
                     <div class="poster" image image-source="album.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
                     </div>
@@ -15,7 +15,7 @@
                     <p ng-show="!album">{{total}} songs in your library</p>
                 </div>
             </div>
-            <div class="span3 actions">
+            <div class="actions">
                 <div class="md-action md-action-primary"
                    ng-click="xbmc.open({'file' : undefined})"
                    ng-show="!album">

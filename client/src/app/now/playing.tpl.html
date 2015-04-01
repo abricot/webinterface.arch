@@ -11,11 +11,8 @@
             </div>
         </div>
         <div class="span3">
-            <div class="md-action" ng-click="xbmc.togglePlay()" ng-show="!player.speed">
-                <i class="icon-play"></i>
-            </div>
-            <div class="md-action" ng-click="xbmc.togglePlay()"  ng-show="player.speed">
-                <i class="icon-pause"></i>
+            <div class="md-action" ng-click="xbmc.togglePlay()">
+                <i ng-class="{'icon-play' : !player.speed, 'icon-pause' : player.speed}"></i>
             </div>
         </div>
         <div class="span3">
@@ -78,15 +75,16 @@
         </div>
 
         <div class="span3">
-            <div class="md-action" ng-click="toggleRemote()">
+            <div class="md-action more">
                 <i class="icon icon-ellipsis-vertical"></i>
+                 <div class="remote-menu buttons"
+                      ng-include src="'remote/remote.tpl.html'"></div>
             </div>
         </div>
     </div>
 </div>
 
- <div class="remote-menu buttons" ng-class="{visible : showRemote}"
-      ng-include src="'remote/remote.tpl.html'"></div>
+
 
 <form role="dialog" data-type="action" class="chooser" onsubmit="return false;" ng-show="showAudioSelect">
     <div class="content">
