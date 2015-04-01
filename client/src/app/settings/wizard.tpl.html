@@ -7,11 +7,6 @@
         </div>
     </div>
     <div class="settings">
-        <p class="name">
-            <label>Display name:</label>
-            <input type="text" placeholder="Ex : HTPC" required="" ng-model="host.displayName" tabindex="1">
-            <button type="reset" class="icon-remove"></button>
-        </p>
         <div class="row">
             <p class="span7 host">
                 <label>Host IP:</label>
@@ -29,18 +24,5 @@
             <input type="text" placeholder="Ex : 8080" required="" ng-model="host.httpPort" tabindex="3"/>
             <button type="reset" class="icon-remove"></button>
         </p>
-        <p class="username">
-            <label>Webserver username</label>
-            <input type="text" placeholder="Ex : Kodi" ng-model="host.username" tabindex="4"/>
-            <button type="reset" class="icon-remove"></button>
-        </p>
-        <p class="password">
-            <label>Webserver password</label>
-            <input type="password" ng-model="host.password" tabindex="5"/>
-            <button type="reset" class="icon-remove"></button>
-        </p>
-    </div>
-    <div class="md-action md-action-danger" ng-click="delete()" ng-show="hosts.length > 1 && hostIndex !== null">
-        <i class="icon-trash"></i>
     </div>
 </form>

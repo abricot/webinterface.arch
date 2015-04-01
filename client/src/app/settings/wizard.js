@@ -25,46 +25,12 @@ angular.module('app')
       username : 'kodi',
       password : ''
     };
-    $scope.hostIndex = null;
-    if(typeof $stateParams.hostIndex !== 'undefined') {
-      $scope.hostIndex = parseInt($stateParams.hostIndex);
-      $scope.host = $scope.hosts[$scope.hostIndex];
-    }
 
     $scope.save = function () {
       if(this.wizard.$valid) {
-        if($scope.hosts.length === 0) {
-          $scope.host.default = true;
-        }
-        if($scope.hostIndex !== null) {
-          $scope.hosts[$scope.hostIndex] = $scope.host;
-        } else {
-          $scope.hosts.push($scope.host);
-        }
+        $scope.hosts.splice(0,1,$scope.host);
         storage.setItem('hosts', $scope.hosts);
-        if($scope.host.default) {
-          $scope.initialize($scope.host);
-        }
-        if($scope.hosts.length > 1) {
-          $scope.go('/hosts');
-        } else {
-          $scope.go('/');
-        }
-      }
-    };
-
-    $scope.delete = function () {
-      if($scope.hostIndex !== null) {
-        var spliced = $scope.hosts.splice($scope.hostIndex, 1);
-        var splicedHost = spliced[0];
-        if(splicedHost.default) {
-          var firstHost = $scope.hosts[0];
-          firstHost.default=true;
-          $scope.xbmc.disconnect();
-          $scope.xbmc.connect(firstHost.ip, firstHost.port);
-        }
-        storage.setItem('hosts', $scope.hosts);
-        $scope.go('/hosts');
+        $scope.initialize($scope.host);
       }
     };
 
@@ -74,7 +40,7 @@ angular.module('app')
       }
       var filtered = $scope.hosts.filter(filterDefault);
       if(filtered.length ===1) {
-        $scope.host = filtered[0];
+        angular.copy(filtered[0], $scope.host);
       }
     });
   }

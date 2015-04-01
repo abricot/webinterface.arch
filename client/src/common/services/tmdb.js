@@ -19,7 +19,7 @@ angular.module('services.tmdb', [])
       return $http.get(url, httpConfig);
     };
 
-    factory.similar = function (id, page) {
+    factory.similarMovie = function (id, page) {
       var url = interpolateFn({
         action : 'movie/'+id+'/similar',
         apiKey : apiKey,
@@ -28,7 +28,17 @@ angular.module('services.tmdb', [])
       return $http.get(url, httpConfig);
     };
 
-     factory.tv = function (id) {
+    factory.popularTvshows = function (numberOfPage, firstAirDateGte, voteAverageGte) {
+
+      var url = interpolateFn({
+        action : 'discover/tv',
+        apiKey : apiKey,
+        parameters : '&first_air_date.gte='+firstAirDateGte+'&sort_by=popularity.desc&vote_average.gte='+voteAverageGte
+      });
+      return $http.get(url, httpConfig);
+    };
+
+     factory.tvshow = function (id) {
       var url = interpolateFn({
         action : 'tv/'+id,
         apiKey : apiKey,
@@ -37,7 +47,7 @@ angular.module('services.tmdb', [])
       return $http.get(url, httpConfig);
     };
 
-    factory.tvSeason = function (id, season) {
+    factory.seasons = function (id, season) {
       var url = interpolateFn({
         action : 'tv/'+id+'/season/'+season,
         apiKey : apiKey,

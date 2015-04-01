@@ -430,7 +430,7 @@ angular.module('services.xbmc', ['services.io'])
       }, true, 'result.seasons').then(cb);
     };
 
-    var episodesProperties = ['file', 'title', 'rating', 'runtime', 'season', 
+    var episodesProperties = ['file', 'title', 'rating', 'runtime', 'season',
     'episode', 'thumbnail', 'fanart','art', 'playcount', 'resume', 'tvshowid',
     'plot'];
     factory.getEpisodes = function(tvShowId, season, cb) {
