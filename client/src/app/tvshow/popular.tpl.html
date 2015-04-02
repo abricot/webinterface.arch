@@ -3,18 +3,9 @@
     <ul data-type="list">
         <li class="card tvshow repeat-animation" ng-repeat="show in tvshows">
             <div class="poster" image image-source="getImageURL(show.poster_path) | fallback:'img/icons/awe-512.png'">
-                <flipper>
-                    <div class="front">
-                        <div rating rating-value="show.vote_average" rating-max="10"></div>
-                    </div>
-                    <div class="back">
-                        <div class="md-circle rating">
-                           <img class="studio" image image-source="studioFn({studio : show.studio[0]})"
-                                ng-show="show.studio.length"
-                                onerror="this.src='img/icons/default-studio.png';"/>
-                        </div>
-                    </div>
-                </flipper>
+                <div class="rating-wrapper">
+                    <div rating rating-value="show.vote_average" rating-max="10"></div>
+                </div>
             </div>
             <div class="description">
                 <h3>{{show.name}}</h3>

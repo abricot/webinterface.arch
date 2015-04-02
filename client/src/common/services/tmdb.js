@@ -1,6 +1,6 @@
 angular.module('services.tmdb', [])
-.factory('tmdb', ['$http', '$interpolate',
-  function($http, $interpolate) {
+.factory('tmdb', ['$q', '$http', '$interpolate',
+  function($q, $http, $interpolate) {
     var apiKey = 'a76cc8ff9e26a5f688544d73c90e4807';
     var factory = {};
     var interpolateFn = $interpolate('http://api.themoviedb.org/3/{{action}}?api_key={{apiKey}}{{parameters}}');
@@ -29,13 +29,16 @@ angular.module('services.tmdb', [])
     };
 
     factory.popularTvshows = function (numberOfPage, firstAirDateGte, voteAverageGte) {
-
-      var url = interpolateFn({
-        action : 'discover/tv',
-        apiKey : apiKey,
-        parameters : '&first_air_date.gte='+firstAirDateGte+'&sort_by=popularity.desc&vote_average.gte='+voteAverageGte
-      });
-      return $http.get(url, httpConfig);
+      var chain = [];
+      for (var i = 0; i <numberOfPage; i++) {
+         var url = interpolateFn({
+          action : 'discover/tv',
+          apiKey : apiKey,
+          parameters : '&page='+(i+1)+'&first_air_date.gte='+firstAirDateGte+'&sort_by=popularity.desc&vote_average.gte='+voteAverageGte
+        });
+        chain.push($http.get(url, httpConfig));
+      }
+      return $q.all(chain);
     };
 
      factory.tvshow = function (id) {

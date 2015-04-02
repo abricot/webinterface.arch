@@ -6,10 +6,8 @@ angular.module('app')
 
     var now = new Date();
     var firstAirDate = (now.getFullYear()-2)+'-01-01';
-    $scope.tmdb.popularTvshows(2, firstAirDate, 5).then(function(result){
-      $scope.tvshows = result.data.results.filter(function(show){
-        return show.vote_average > 0;
-      }).sort(function(show1, show2) {
+    var cleanUpResults = function(results) {
+      return results.sort(function(show1, show2) {
         if(show1.vote_average < show2.vote_average) {
           return 1;
         } else if (show1.vote_average > show2.vote_average) {
@@ -17,7 +15,20 @@ angular.module('app')
         } else {
           return 0;
         }
+      }).filter(function(show){
+        return show.vote_average > 0;
       });
+    };
+
+    $scope.tmdb.popularTvshows(2, firstAirDate, 5).then(function(result){
+      var  tvshows = [];
+      if(!angular.isArray(result)) {
+        result = [result];
+      }
+      result.forEach(function(response){
+          tvshows = tvshows.concat(cleanUpResults(response.data.results));
+      });
+      $scope.tvshows = tvshows;
     });
 
     $scope.getImageURL = function (path) {
