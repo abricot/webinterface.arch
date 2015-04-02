@@ -17,8 +17,8 @@ angular.module('app')
       controller: 'EpisodesCtrl'
     }).state('tvshows.popular', {
       url : '/popular',
-      templateUrl: 'tvshow/popular.tpl.html',
-      controller: 'PopularTVShowsCtrl'
+      templateUrl: 'tvshow/shows.tpl.html',
+      controller: 'PopularShowsCtrl'
     });
   }
 ])

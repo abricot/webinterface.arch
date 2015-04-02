@@ -7,14 +7,14 @@ angular.module('app')
         header: {templateUrl: 'layout/headers/navigation.tpl.html', controller : 'HeaderNavController'},
         body: {
           templateUrl: 'tvshow/details.tpl.html',
-          controller: 'TvShowDetailsCtrl'
+          controller: 'ShowDetailsCtrl'
         }
       }
     });
   }
 ])
-.controller('TvShowDetailsCtrl', ['$scope', '$stateParams', '$location',
-  function TvShowDetailsCtrl($scope, $stateParams, $location) {
+.controller('ShowDetailsCtrl', ['$scope', '$stateParams', '$location',
+  function ShowDetailsCtrl($scope, $stateParams, $location) {
     $scope.loading = true;
     $scope.updating = false;
     $scope.tvshowid = parseInt($stateParams.tvshowid);

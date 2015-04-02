@@ -1,4 +1,4 @@
-angular.module('filters.xbmc.fallback', [])
+angular.module('filters.fallback', [])
 .filter('fallback', function () {
   return function (input, fallback) {
     fallback = fallback || '';

@@ -15,6 +15,8 @@ angular.module('app', [
   'directives.streamdetails',
   'directives.spinner',
   'filters.xbmc',
+  'filters.tmdb',
+  'filters.fallback',
   'services.xbmc',
   'services.tmdb',
   'services.storage',

@@ -1,6 +1,6 @@
 angular.module('app')
-.controller('ShowsCtrl', ['$scope',
-  function ShowsCtrl($scope) {
+.controller('ShowsCtrl', ['$scope', '$filter',
+  function ShowsCtrl($scope, $filter) {
     $scope.loading = true;
     $scope.fetching = false;
 
@@ -43,7 +43,36 @@ angular.module('app')
         $scope.xbmc.getTVShows(onTvShowsFromSource, limits);
       }
     };
+
+    $scope.isLocal = function () {
+      return true;
+    };
+
+    $scope.getEpisodesPath = function(show) {
+      return '#/tvshow/'+show.tvshowid;
+    };
+
+    $scope.getExtra = function (show) {
+      return show.episode + ' espisodes';
+    };
+
+    $scope.getName = function (show) {
+      return show.title;
+    }
+
+    $scope.getPoster = function (show) {
+      var url = $filter('asset')(show.thumbnail, $scope.host);
+      return $filter('fallback')(url, 'img/icons/awe-512.png');
+    };
+
+    $scope.getRating = function(show){
+      return show.rating;
+    };
     
+    $scope.getStudio = function(show) {
+      return $scope.studioFn({studio : show.studio[0]});
+    };
+
     $scope.remove = function (index, show) {
       var onTVShowRemoved = function(){
         $scope.tvshows.splice(index, 1);

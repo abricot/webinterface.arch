@@ -1,4 +1,3 @@
-"use strict";
 angular.module('filters.xbmc.episode', [])
 .filter('episode', function () {
   return function (input, season) {

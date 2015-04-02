@@ -1,6 +1,6 @@
 angular.module('app')
-.controller('PopularTVShowsCtrl', ['$scope',
-  function PopularTVShowsCtrl($scope) {
+.controller('PopularShowsCtrl', ['$scope', '$filter',
+  function PopularShowsCtrl($scope, $filter) {
     $scope.loading = true;
     $scope.tvshows = [];
 
@@ -31,12 +31,33 @@ angular.module('app')
       $scope.tvshows = tvshows;
     });
 
-    $scope.getImageURL = function (path) {
-      var url = 'http://image.tmdb.org/t/p/original';
-      if(typeof path  === 'undefined' || path === null) {
-        return '';
-      }
-      return url + path;
+    $scope.isLocal = function () {
+      return false;
+    };
+
+    $scope.getEpisodesPath = function(show) {
+      return '';
+    };
+
+    $scope.getExtra = function (show) {
+      return 'First aired ' + show.first_air_date;
+    };
+
+    $scope.getName = function (show) {
+      return show.name;
+    }
+
+    $scope.getPoster = function (show) {
+      var url = $filter('image')(show.poster_path);
+      return $filter('fallback')(url, 'img/icons/awe-512.png');
+    };
+
+    $scope.getRating = function(show){
+      return show.vote_average;
+    };
+    
+    $scope.getStudio = function(show) {
+      return 'img/icons/default-studio.png';
     };
 
   }]

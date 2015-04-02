@@ -2,16 +2,15 @@
     <div class="kodi" ng-hide="tvshows.length"></div>
     <ul data-type="list" lr-infinite-scroll="loadMore">
         <li class="card tvshow repeat-animation" ng-repeat="show in tvshows">
-            <a href="#/tvshow/{{show.tvshowid}}">
-                <div class="poster" image image-source="show.thumbnail | asset:host | fallback:'img/icons/awe-512.png'">
+            <a href="getEpisodesPath(show)">
+                <div class="poster" image image-source="getPoster(show)">
                     <flipper>
                         <div class="front">
-                            <div rating rating-value="show.rating" rating-max="10"></div>
+                            <div rating rating-value="getRating(show)" rating-max="10"></div>
                         </div>
                         <div class="back">
                             <div class="md-circle rating">
-                               <img class="studio" image image-source="studioFn({studio : show.studio[0]})"
-                                    ng-show="show.studio.length"
+                               <img class="studio" image image-source="getStudio(show)"
                                     onerror="this.src='img/icons/default-studio.png';"/>
                             </div>
                         </div>
@@ -21,19 +20,21 @@
                     </div>
                 </div>
                 <div class="description">
-                    <h3>{{show.title}}</h3>
-                    <p>{{show.episode}} episodes</p>
-                    <p class="clock">&nbsp;</p>
-                    <seekbar seekbar-value="show.watchedepisodes" seekbar-max="show.episode"
-                             seekbar-read-only="true">
-                    </seekbar>
-                    <div class="controls" >
-                        <i ng-class="{'icon-eye-open':!show.playcount, 'icon-eye-close':show.playcount}"
-                           ng-click="toggleWatched(show); $event.preventDefault();"
-                        ></i>
-                        <i class="icon-trash"
-                           ng-click="remove($index, show); $event.preventDefault();"
-                        ></i>
+                    <h3>{{getName(show)}}</h3>
+                    <p>{{getExtra(show)}}</p>
+                    <div ng-show="isLocal()">
+                        <p class="clock">&nbsp;</p>
+                        <seekbar seekbar-value="show.watchedepisodes" seekbar-max="show.episode"
+                                 seekbar-read-only="true">
+                        </seekbar>
+                        <div class="controls">
+                            <i ng-class="{'icon-eye-open':!show.playcount, 'icon-eye-close':show.playcount}"
+                               ng-click="toggleWatched(show); $event.preventDefault();"
+                            ></i>
+                            <i class="icon-trash"
+                               ng-click="remove($index, show); $event.preventDefault();"
+                            ></i>
+                        </div>
                     </div>
                 </div>
             </a>
