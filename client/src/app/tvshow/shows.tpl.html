@@ -2,7 +2,7 @@
     <div class="kodi" ng-hide="tvshows.length"></div>
     <ul data-type="list" lr-infinite-scroll="loadMore">
         <li class="card tvshow repeat-animation" ng-repeat="show in tvshows">
-            <a href="getEpisodesPath(show)">
+            <a href="{{getEpisodesPath(show)}}">
                 <div class="poster" image image-source="getPoster(show)">
                     <flipper>
                         <div class="front">

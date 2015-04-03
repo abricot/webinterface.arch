@@ -10,13 +10,77 @@ angular.module('services.tmdb', [])
       }
     };
 
+    var transform = function (tmdbResponse) {
+      var fn = function(el){
+        var transformed = {};
+        for(var key in mapping) {
+          if(el.hasOwnProperty(key)) {
+            var transformedKey = mapping[key];
+            if(angular.isObject(transformedKey)) {
+              transformed[transformedKey.key] = transformedKey.transformFn(el[key]);
+            } else {
+              transformed[transformedKey] = el[key];
+            }
+          }
+        }
+        return transformed;
+      };
+      if(!angular.isArray(tmdbResponse)) {
+        return fn(tmdbResponse)
+      } else {
+        return tmdbResponse.map(fn);
+      }
+    };
+
+    var flatten = function (objects) {
+      objects = objects || [];
+      return objects.map(function(object) {
+        return object.name;
+      });
+    };
+
+    var mapping = {
+      'backdrop_path' : 'fanart',
+      'genres' : {
+        key : 'genres',
+        transformFn : flatten
+      },
+      'id' : 'id',
+      'poster_path' : 'poster',
+      'name' : 'label',
+      'networks' :  {
+        key : 'studios',
+        transformFn : flatten
+      },
+      'seasons' : {
+        key : 'seasons',
+        transformFn : transform
+      },
+      'season_number' : 'season',
+      'episode_count' : 'episode',
+      'title' : 'title',
+      'vote_average' : 'rating'
+    };
+
     factory.find = function (source, id) {
+      var defer = $q.defer();
       var url = interpolateFn({
         action : 'find/'+id,
         apiKey : apiKey,
         parameters : '&external_source='+source
       });
-      return $http.get(url, httpConfig);
+
+      $http.get(url, httpConfig).then(function(result) {
+        var data = result.data;
+        defer.resolve({
+          movies : transform(data.movie_results),
+          persons : transform(data.person_results),
+          tvShows : transform(data.tv_results),
+          tvShowEpisodes : transform(data.tv_episode_results),
+          tvShowSeasons : transform(data.tv_season_results)
+        });
+      });
+      return defer.promise;
     };
 
     factory.similarMovie = function (id, page) {
@@ -41,13 +105,18 @@ angular.module('services.tmdb', [])
       return $q.all(chain);
     };
 
-     factory.tvshow = function (id) {
+    factory.tvshow = function (id) {
+      var defer = $q.defer();
       var url = interpolateFn({
         action : 'tv/'+id,
         apiKey : apiKey,
         parameters : ''
       });
-      return $http.get(url, httpConfig);
+      $http.get(url, httpConfig).then(function(result) {
+        var data = result.data;
+        defer.resolve(transform(result.data));
+      });
+      return defer.promise;
     };
 
     factory.seasons = function (id, season) {

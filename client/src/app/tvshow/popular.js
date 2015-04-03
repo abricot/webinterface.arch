@@ -48,14 +48,14 @@ angular.module('app')
     }
 
     $scope.getPoster = function (show) {
-      var url = $filter('image')(show.poster_path);
+      var url = $filter('tmdbImage')(show.poster_path);
       return $filter('fallback')(url, 'img/icons/awe-512.png');
     };
 
     $scope.getRating = function(show){
       return show.vote_average;
     };
-    
+
     $scope.getStudio = function(show) {
       return 'img/icons/default-studio.png';
     };

@@ -1,5 +1,5 @@
 angular.module('filters.tmdb.image', [])
-.filter('image', function () {
+.filter('tmdbImage', function () {
   return function (subpath, size) {
     size = size || 'original';
     var url = 'http://image.tmdb.org/t/p/'+size;

@@ -13,15 +13,20 @@ angular.module('app')
     });
   }
 ])
-.controller('ShowDetailsCtrl', ['$scope', '$stateParams', '$location',
-  function ShowDetailsCtrl($scope, $stateParams, $location) {
+.controller('ShowDetailsCtrl', ['$scope', '$stateParams', '$location', '$filter',
+  function ShowDetailsCtrl($scope, $stateParams, $location, $filter) {
     $scope.loading = true;
     $scope.updating = false;
     $scope.tvshowid = parseInt($stateParams.tvshowid);
-    $scope.selectedSeason = '';
+
+    $scope.show = null;
     $scope.seasons = [];
-    $scope.queue = [];
+    $scope.selectedSeason = '';
+
+    $scope.episodes = [];
     $scope.nextAiringEpisode = null;
+
+    $scope.queue = [];
 
     var onPlaylistAdd = function () {
       if($scope.queue.length > 0) {
@@ -64,12 +69,11 @@ angular.module('app')
         $scope.loading = false;
       }
 
-      $scope.tmdb.find('tvdb_id', $scope.library.item.imdbnumber).then(function(result){
-        var shows = result.data.tv_results;
+      $scope.tmdb.find('tvdb_id', $scope.show.imdbnumber).then(function(result){
+        var shows = result.tvShows;
         if(shows.length === 1) {
-          $scope.tmdb.tvshow(shows[0].id).then(function(result) {
-            var tv = result.data;
-            $scope.tmdb.seasons(tv.id, tv.number_of_seasons).then(function(result){
+          $scope.tmdb.tvshow(shows[0].id).then(function(tv) {
+            $scope.tmdb.seasons(tv.id, tv.season).then(function(result){
               var nextAiringEpisodes = getNextAiringEpisodes(result.data.episodes);
               if(nextAiringEpisodes.length>0) {
                 $scope.nextAiringEpisode = nextAiringEpisodes[0];
@@ -80,9 +84,8 @@ angular.module('app')
       });
     };
 
-    function onTvShowRetrieved(item) {
-      item.type = 'tvshow';
-      $scope.library.item = item;
+    function onTvShowRetrieved(show) {
+      $scope.show = show;
       $scope.xbmc.getSeasons($scope.tvshowid, onSeasonsRetrieved);
     };
 
@@ -102,17 +105,11 @@ angular.module('app')
         scope: this
       });
     }
+
     $scope.changeSeason = function (season) {
       $scope.xbmc.getEpisodes($scope.tvshowid, season.season, onEpisodesRetrieved);
     };
 
-    $scope.getImageURL = function (stillPath) {
-      var url = 'http://image.tmdb.org/t/p/original';
-      if(typeof stillPath  === 'undefined' || stillPath === null) {
-        return '';
-      }
-      return url + stillPath;
-    };
 
     $scope.queueAll = function () {
       $scope.xbmc.queue({episodeid : $scope.episodes[0].episodeid});

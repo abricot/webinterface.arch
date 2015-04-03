@@ -2,16 +2,16 @@
     <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
     <div ng-switch-when="false">
         <div class="row wrapper">
-            <div class="fanart" image image-source="library.item.fanart | asset:host"></div>
+            <div class="fanart" image image-source="show.fanart | asset:host"></div>
             <div class="offset2 span8 clearfix" style="position:relative;">
                 <div class="poster-wrapper">
-                    <img class=" poster" image image-source="library.item.thumbnail | asset:host | fallback:'img/icons/awe-512.png'"/>
+                    <img class=" poster" image image-source="show.thumbnail | asset:host | fallback:'img/icons/awe-512.png'"/>
                 </div>
                 <div class="details">
-                    <h1>{{library.item.title}}</h1>
-                    <h3>{{library.item.genre.join(', ')}}</h3>
-                    <p>{{library.item.year}}</p>
-                    <p class="plot">{{library.item.plot}}</p>
+                    <h1>{{show.title}}</h1>
+                    <h3>{{show.genre.join(', ')}}</h3>
+                    <p>{{show.year}}</p>
+                    <p class="plot">{{show.plot}}</p>
                 </div>
             </div>
             <div class="actions">
@@ -31,7 +31,7 @@
                           Next Episode
                         </h1>
                         <div class="row next-episode">
-                            <div class="thumbnail span3" image image-source="getImageURL(nextAiringEpisode.still_path) | fallback:'img/icons/awe-512.png'">
+                            <div class="thumbnail span3" image image-source="nextAiringEpisode.still_path | tmdbImage | fallback:'img/icons/awe-512.png'">
                             </div>
                             <div class="span9">
                                 <p>
