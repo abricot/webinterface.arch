@@ -2,10 +2,10 @@
     <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
     <div ng-switch-when="false">
         <div class="row wrapper">
-            <div class="fanart" image image-source="show.fanart | asset:host"></div>
+            <div class="fanart" image image-source="getImage(show.fanart)"></div>
             <div class="offset2 span8 clearfix" style="position:relative;">
                 <div class="poster-wrapper">
-                    <img class=" poster" image image-source="show.thumbnail | asset:host | fallback:'img/icons/awe-512.png'"/>
+                    <img class=" poster" image image-source="getImage(show.thumbnail || show.poster, 'w500')"/>
                 </div>
                 <div class="details">
                     <h1>{{show.title}}</h1>
@@ -14,7 +14,7 @@
                     <p class="plot">{{show.plot}}</p>
                 </div>
             </div>
-            <div class="actions">
+            <div class="actions" ng-show="hasControls()">
               <div class="md-action md-action-primary"
                     ng-click="queueAll()"
                     ng-show="episodes.length">
@@ -31,14 +31,14 @@
                           Next Episode
                         </h1>
                         <div class="row next-episode">
-                            <div class="thumbnail span3" image image-source="nextAiringEpisode.still_path | tmdbImage | fallback:'img/icons/awe-512.png'">
+                            <div class="thumbnail span3" image image-source="nextAiringEpisode.thumbnail | tmdbImage:'w300' | fallback:'img/icons/awe-512.png'">
                             </div>
                             <div class="span9">
                                 <p>
-                                    {{nextAiringEpisode.episode_number | episode:nextAiringEpisode.season_number}} -
-                                    {{nextAiringEpisode.name}} airs {{nextAiringEpisode.air_date | date : 'fullDate'}}
+                                    {{nextAiringEpisode.episode | episode:nextAiringEpisode.season}} -
+                                    {{nextAiringEpisode.title}} airs {{nextAiringEpisode.firstaired | date : 'fullDate'}}
                                 </p>
-                                <p>{{nextAiringEpisode.overview}}</p>
+                                <p>{{nextAiringEpisode.plot}}</p>
                             </div>
                         </div>
                     </div>
@@ -47,22 +47,22 @@
                           Episodes
                           <i class="icon-chevron-right"></i>
                           <span class="season">
-                            <span class="md-circle fanart" image image-source="season.thumbnail | asset:host | fallback:'img/icons/awe-512.png'">
+                            <span class="md-circle fanart" image image-source="getImage(season.thumbnail || season.poster, 'w500')">
                             </span>
-                            {{season.label}}
+                            {{seasonName(season)}}
                             <i class="icon-chevron-down" ng-show="seasons.length>1"></i>
-                            <select ng-options="season.label for season in seasons"
+                            <select ng-options="season as seasonName(season) for season in seasons"
                                     ng-model="season"
                                     ng-change="changeSeason(season)"
                                     ng-show="seasons.length>1"></select>
-                            {{selectedSeason}}
                           </span>
                         </h1>
                     </div>
                     <ul data-type="list">
                         <li class="row episode" ng-repeat="episode in episodes"
-                            ng-click="xbmc.open({'episodeid': episode.episodeid})">
-                            <div class="thumbnail span3" image image-source="episode.thumbnail | asset:host">
+                            ng-class="{playable : hasControls()}"
+                            ng-click="play(episode)">
+                            <div class="thumbnail span3" image image-source="getImage(episode.thumbnail, 'w300')">
                                 <div class="md-action md-action-primary">
                                     <i class="icon-play"></i>
                                 </div>
@@ -77,7 +77,7 @@
                                 </p>
                                 <p><span class="runtime">{{episode.runtime | time | date:'HH:mm'}}</span></p>
                                 <p>{{episode.plot}}</p>
-                                <div class="controls">
+                                <div class="controls" ng-show="hasControls()">
                                     <i class="icon-plus" ng-click="xbmc.queue({'episodeid' : episode.episodeid}); $event.stopPropagation();"
                                        ng-show="player.active"></i>
                                     <i ng-class="{'icon-eye-open':!episode.playcount, 'icon-eye-close':episode.playcount}"
@@ -96,4 +96,3 @@
         </div>
     </div>
 </div>
-

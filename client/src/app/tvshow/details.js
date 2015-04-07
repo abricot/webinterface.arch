@@ -1,31 +1,60 @@
+var BaseDetailsCtrl = function ($scope, $stateParams) {
+  $scope.loading = true;
+  $scope.tvshowid = parseInt($stateParams.tvshowid);
+
+  $scope.show = null;
+  $scope.seasons = [];
+  $scope.selectedSeason = '';
+
+  $scope.episodes = [];
+  $scope.nextAiringEpisode = null;
+
+  $scope.seasonName = function (season) {
+    return 'Season '+season.season;
+  };
+
+  $scope.setNextAiringEpisode = function(episodes) {
+    episodes = episodes || [];
+    var now = Date.now();
+    var futureEpisode = episodes.filter(function(episode){
+      var airDate = new Date(episode.firstaired);
+      return airDate.getTime() > now;
+    });
+    if(futureEpisode.length>0) {
+      $scope.nextAiringEpisode  = futureEpisode[0];
+    }
+  };
+};
+
 angular.module('app')
 .config(['$stateProvider',
   function($stateProvider) {
-    $stateProvider.state('seasons', {
+    $stateProvider.state('XBMCSeasons', {
       url: '/tvshow/:tvshowid',
       views: {
         header: {templateUrl: 'layout/headers/navigation.tpl.html', controller : 'HeaderNavController'},
         body: {
           templateUrl: 'tvshow/details.tpl.html',
-          controller: 'ShowDetailsCtrl'
+          controller: 'XBMCShowDetailsCtrl'
+        }
+      }
+    }).state('TMDBSeasons', {
+      url: '/tmdbshow/:tvshowid',
+      views: {
+        header: {templateUrl: 'layout/headers/navigation.tpl.html', controller : 'HeaderNavController'},
+        body: {
+          templateUrl: 'tvshow/details.tpl.html',
+          controller: 'TMDBShowDetailsCtrl'
         }
       }
     });
   }
 ])
-.controller('ShowDetailsCtrl', ['$scope', '$stateParams', '$location', '$filter',
-  function ShowDetailsCtrl($scope, $stateParams, $location, $filter) {
-    $scope.loading = true;
+.controller('XBMCShowDetailsCtrl', ['$scope', '$injector', '$stateParams', '$filter',
+  function XBMCShowDetailsCtrl($scope, $injector, $stateParams, $filter) {
+    $injector.invoke(BaseDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
+    
     $scope.updating = false;
-    $scope.tvshowid = parseInt($stateParams.tvshowid);
-
-    $scope.show = null;
-    $scope.seasons = [];
-    $scope.selectedSeason = '';
-
-    $scope.episodes = [];
-    $scope.nextAiringEpisode = null;
-
     $scope.queue = [];
 
     var onPlaylistAdd = function () {
@@ -37,19 +66,6 @@ angular.module('app')
         }
       }
     };
-
-    $scope.$watch('playlist', function () {
-      onPlaylistAdd();
-    }, true);
-
-    function getNextAiringEpisodes(episodes) {
-      episodes = episodes || [];
-      var now = Date.now();
-      return episodes.filter(function(episode){
-        var airDate = new Date(episode['air_date']);
-        return airDate.getTime() > now;
-      });
-    }
 
     function isCurrentlyPlaying(episodeid) {
       return $scope.player.active && episodeid === $scope.library.item.episodeid;
@@ -70,16 +86,12 @@ angular.module('app')
       }
 
       $scope.tmdb.find('tvdb_id', $scope.show.imdbnumber).then(function(result){
-        var shows = result.tvShows;
+        var shows = result.data.tvShows;
         if(shows.length === 1) {
-          $scope.tmdb.tvshow(shows[0].id).then(function(tv) {
-            $scope.tmdb.seasons(tv.id, tv.season).then(function(result){
-              var nextAiringEpisodes = getNextAiringEpisodes(result.data.episodes);
-              if(nextAiringEpisodes.length>0) {
-                $scope.nextAiringEpisode = nextAiringEpisodes[0];
-              }
-            });
-          });
+          $scope.tmdb.getEpisodes(shows[0].id).then(function(result){
+            var episodes = result.data.episodes;
+            $scope.setNextAiringEpisode(episodes);
+          })
         }
       });
     };
@@ -106,10 +118,26 @@ angular.module('app')
       });
     }
 
+    $scope.$watch('playlist', function () {
+      onPlaylistAdd();
+    }, true);
+
     $scope.changeSeason = function (season) {
       $scope.xbmc.getEpisodes($scope.tvshowid, season.season, onEpisodesRetrieved);
     };
 
+    $scope.getImage = function (path) {
+      var url = $filter('asset')(path, $scope.host);
+      return $filter('fallback')(url, 'img/icons/awe-512.png');
+    };
+
+    $scope.hasControls = function () {
+      return true;
+    };
+    
+    $scope.play = function(episode){
+      $scope.xbmc.open({'episodeid': episode.episodeid})
+    };
 
     $scope.queueAll = function () {
       $scope.xbmc.queue({episodeid : $scope.episodes[0].episodeid});
@@ -133,6 +161,63 @@ angular.module('app')
           episode.playcount = newValue;
         }
       })
+    };
+  }
+]).controller('TMDBShowDetailsCtrl', ['$scope', '$injector', '$stateParams', '$location', '$filter', '$http', '$interpolate',
+  function TMDBShowDetailsCtrl($scope, $injector, $stateParams, $location, $filter, $http, $interpolate) {
+    $injector.invoke(BaseDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
+    $scope.tvdbid = null;
+    var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
+    function onEpisodesRetrieved(result) {
+      $scope.loading = false;
+      var now = new Date();
+      var episodes = result.data.episodes;
+      $scope.setNextAiringEpisode(episodes);
+      $scope.episodes = episodes.filter(function(episode){
+        var airDate = new Date(episode.firstaired);
+        return airDate.getTime() < now;
+      }).reverse();
+
+    };
+
+    function onTvShowRetrieved(result) {
+      $scope.show = result.data;
+
+      if($scope.show.seasons.length > 0) {
+        $scope.seasons = $scope.show.seasons;
+        $scope.season = $scope.show.seasons[$scope.show.seasons.length-1];
+        $scope.tmdb.seasons($scope.tvshowid, $scope.season.season).then(onEpisodesRetrieved);
+      } else {
+        $scope.loading = false;
+      }
+    };
+
+    function onExternalIDsRetrieved (result) {
+      $scope.tvdbid = result.data.tvdbid;
+    };
+
+    $scope.tmdb.tvshow($scope.tvshowid).then(onTvShowRetrieved);
+    $scope.tmdb.tvshowExternalIDs($scope.tvshowid).then(onExternalIDsRetrieved);
+
+    $scope.changeSeason = function (season) {
+      $scope.tmdb.seasons($scope.tvshowid, season.season).then(onEpisodesRetrieved);
+    };
+
+    $scope.getImage = function (path, size) {
+      var url = $filter('tmdbImage')(path, size || 'original');
+      return $filter('fallback')(url, 'img/icons/awe-512.png');
+    };
+
+    $scope.play = function(episode){
+      var path = '/show/'+$scope.tvdbid+'/season/'+episode.season+'/episode/'+episode.episode+'/play';
+      var url = 'http://'+$scope.host.ip
+      var url = playFn({
+        ip : $scope.host.ip,
+        port : $scope.host.httpPort,
+        path : 'plugin://plugin.video.pulsar' + path,
+        uid : Date.now()
+      })
+      $http.get(url);
     };
   }
 ]);

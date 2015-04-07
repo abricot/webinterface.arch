@@ -44,7 +44,7 @@ angular.module('app')
       }
     };
 
-    $scope.isLocal = function () {
+    $scope.hasControls = function () {
       return true;
     };
 

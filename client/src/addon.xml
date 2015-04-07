@@ -3,7 +3,7 @@
   id="webinterface.arc"
   version="0.1.0"
   name="Arc"
-  provider-name="jez500">
+  provider-name="moi">
   <requires>
     <import addon="xbmc.json" version="6.0.0" />
   </requires>

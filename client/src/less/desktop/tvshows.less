@@ -39,8 +39,9 @@
   border-bottom: 1px solid @regionBgColor;
   margin-bottom: 0.5rem;
   padding-bottom: 0.5rem;
-  cursor: pointer;
 }
+
+.detail .episode.playable { cursor: pointer;}
 .detail .episode:last-child {
   border-bottom: 0;
 }
@@ -60,7 +61,7 @@
   display: none;
   transform: translateX(-50%) translateY(-50%);
 }
-.detail .episode:hover .md-action{
+.detail .episode.playable:hover .md-action{
   display: block;
 }
 

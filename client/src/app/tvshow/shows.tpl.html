@@ -6,7 +6,7 @@
                 <div class="poster" image image-source="getPoster(show)">
                     <flipper>
                         <div class="front">
-                            <div rating rating-value="getRating(show)" rating-max="10"></div>
+                            <div rating rating-value="show.rating" rating-max="10"></div>
                         </div>
                         <div class="back">
                             <div class="md-circle rating">
@@ -20,9 +20,9 @@
                     </div>
                 </div>
                 <div class="description">
-                    <h3>{{getName(show)}}</h3>
+                    <h3>{{show.title}}</h3>
                     <p>{{getExtra(show)}}</p>
-                    <div ng-show="isLocal()">
+                    <div ng-show="hasControls()">
                         <p class="clock">&nbsp;</p>
                         <seekbar seekbar-value="show.watchedepisodes" seekbar-max="show.episode"
                                  seekbar-read-only="true">

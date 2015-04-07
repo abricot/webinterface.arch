@@ -250,10 +250,15 @@ angular.module('services.xbmc', ['services.io'])
       }, true, 'result.items').then(cb);
     };
 
-    factory.queue = function(item) {
-      if (activePlaylist > -1) {
+    factory.getPlaylists = function (cb) {
+      io.send('Playlist.GetPlaylists', null, true, 'result').then(cb);
+    };
+
+    factory.queue = function(item, playlistid) {
+      playlistid = playlistid || activePlaylist;
+      if (playlistid > -1) {
         io.send('Playlist.Add', {
-          'playlistid': activePlaylist,
+          'playlistid': playlistid,
           'item': item
         });
       } else{
@@ -491,6 +496,10 @@ angular.module('services.xbmc', ['services.io'])
     factory.scan = function (library) {
       io.send(library+'.scan');
     };
+
+    factory.executeAddon = function (params) {
+      io.send('Addons.ExecuteAddon', params);
+    }
 
     return factory;
   }
