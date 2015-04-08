@@ -33,13 +33,13 @@ angular.module('app')
     };
 
     $scope.getHashForItem = function () {
-      if($scope.player.type === 'video') {
+      if($scope.player.type === 'video' && $scope.player.item) {
         if( $scope.player.item.tvshowid === -1) {
           return '/movie/'+ $scope.player.item.id;
         } else {
           return '/tvshow/'+ $scope.player.item.tvshowid
         }
-      } else if($scope.player.type === 'audio') {
+      } else if($scope.player.type === 'audio' && $scope.player.item) {
         return '/musics/songs/albumid/'+ $scope.player.item.albumid;
       }
       return '';

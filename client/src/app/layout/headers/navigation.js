@@ -12,7 +12,7 @@ angular.module('app')
       hash: '/tvshows/recents',
       icon: 'icon-facetime-video',
       label: 'TV Shows',
-      matchRegExp : /tvshow.*$/
+      matchRegExp : /.*show.*$/
     }, {
       hash: '/musics/artists/all',
       icon: 'icon-music',
