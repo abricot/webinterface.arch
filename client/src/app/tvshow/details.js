@@ -1,4 +1,4 @@
-var BaseDetailsCtrl = function ($scope, $stateParams) {
+var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
   $scope.loading = true;
   $scope.tvshowid = parseInt($stateParams.tvshowid);
 
@@ -52,8 +52,8 @@ angular.module('app')
 ])
 .controller('XBMCShowDetailsCtrl', ['$scope', '$injector', '$stateParams', '$filter',
   function XBMCShowDetailsCtrl($scope, $injector, $stateParams, $filter) {
-    $injector.invoke(BaseDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
-    
+    $injector.invoke(BaseTVShowDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
+
     $scope.updating = false;
     $scope.queue = [];
 
@@ -134,7 +134,7 @@ angular.module('app')
     $scope.hasControls = function () {
       return true;
     };
-    
+
     $scope.play = function(episode){
       $scope.xbmc.open({'episodeid': episode.episodeid})
     };
@@ -165,7 +165,7 @@ angular.module('app')
   }
 ]).controller('TMDBShowDetailsCtrl', ['$scope', '$injector', '$stateParams', '$location', '$filter', '$http', '$interpolate',
   function TMDBShowDetailsCtrl($scope, $injector, $stateParams, $location, $filter, $http, $interpolate) {
-    $injector.invoke(BaseDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
+    $injector.invoke(BaseTVShowDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
     $scope.tvdbid = null;
     var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
     function onEpisodesRetrieved(result) {

@@ -9,7 +9,7 @@
           return object.name;
         });
       };
-      
+
       var year = function (dateStr) {
         var parts = dateStr.split('-');
         return parseInt(parts[0], 10);
@@ -36,7 +36,7 @@
           return tmdbResponse.map(fn);
         }
       };
-      
+
       var mapping = {
         'backdrop_path' : 'fanart',
         'genres' : {
@@ -92,7 +92,8 @@
         'release_date' : {
           key : 'year',
           transformFn : year
-        }
+        },
+        'imdb_id' : 'imdbnumber',
       };
       return factory;
     }

@@ -35,26 +35,25 @@
         return $http(getConfig(url, 'GET'));
       };
 
-      factory.similarMovie = function (id, page) {
-        var url = interpolateFn({
-          action : 'movie/'+id+'/similar',
-          apiKey : apiKey,
-          parameters : '&page='+page
+      factory.getEpisodes = function(id) {
+        var defer = $q.defer();
+        factory.tvshow(id).then(function(result) {
+          var tv = result.data;
+          var latestSeason = tv.seasons[tv.seasons.length-1];
+          factory.seasons(tv.id, latestSeason.season).then(function(result){
+            defer.resolve(result);
+          });
         });
-        return $http.get(url, httpConfig);
+        return defer.promise;
       };
 
-      factory.popularTvshows = function (numberOfPage, firstAirDateGte, voteAverageGte) {
-        var chain = [];
-        for (var i = 0; i <numberOfPage; i++) {
-           var url = interpolateFn({
-            action : 'discover/tv',
-            apiKey : apiKey,
-            parameters : '&page='+(i+1)+'&first_air_date.gte='+firstAirDateGte+'&sort_by=popularity.desc&vote_average.gte='+voteAverageGte
-          });
-          chain.push($http(getConfig(url, 'GET')));
-        }
-        return $q.all(chain);
+       factory.movie = function (id) {
+        var url = interpolateFn({
+          action : 'movie/'+id,
+          apiKey : apiKey,
+          parameters : ''
+        });
+        return $http(getConfig(url, 'GET'));
       };
 
       factory.popularTvshows = function (numberOfPage, firstAirDateGte, voteAverageGte) {
@@ -110,16 +109,13 @@
         return $http(getConfig(url, 'GET'));
       };
 
-      factory.getEpisodes = function(id) {
-        var defer = $q.defer();
-        factory.tvshow(id).then(function(result) {
-          var tv = result.data;
-          var latestSeason = tv.seasons[tv.seasons.length-1];
-          factory.seasons(tv.id, latestSeason.season).then(function(result){
-            defer.resolve(result);
-          });
+      factory.similarMovie = function (id, page) {
+        var url = interpolateFn({
+          action : 'movie/'+id+'/similar',
+          apiKey : apiKey,
+          parameters : '&page='+page
         });
-        return defer.promise;
+        return $http(getConfig(url, 'GET'));
       };
 
       return factory;

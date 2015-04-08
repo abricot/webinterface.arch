@@ -1,3 +1,22 @@
+var BaseMovieDetailsCtrl = function ($scope, $stateParams) {
+  $scope.movieid = parseInt($stateParams.movieid);
+  $scope.loading = true;
+  $scope.isCurrentlyPlaying = false;
+
+  $scope.seeMoreActors = false;
+  $scope.similars = [];
+
+  $scope.movie  = null;
+
+  $scope.findSimilars = function (movieid) {
+    $scope.tmdb.similarMovie(movieid, 1).then(function(result){
+      $scope.similars = result.data.results.filter(function(similar) {
+        return typeof similar.poster !== 'undefined' && similar.poster !== null;
+      });
+    })
+  };
+};
+
 angular.module('app')
 .config(['$stateProvider', function ($stateProvider) {
   $stateProvider.state('moviedetails', {
@@ -9,33 +28,34 @@ angular.module('app')
         controller: 'MovieDetailsCtrl'
       }
     }
-  });
+  }).state('TMDBMovie', {
+      url: '/tmdbmovie/:movieid',
+      views: {
+        header: {templateUrl: 'layout/headers/navigation.tpl.html', controller : 'HeaderNavController'},
+        body: {
+          templateUrl: 'movie/details.tpl.html',
+          controller: 'TMDBMovieDetailsCtrl'
+        }
+      }
+    });;
 }])
-.controller('MovieDetailsCtrl', ['$scope', '$stateParams', '$location',
-  function MovieDetailsCtrl($scope, $stateParams, $location, utilities) {
-    $scope.movieid = parseInt($stateParams.movieid);
-    $scope.loading = true;
-    $scope.isCurrentlyPlaying = false;
+.controller('MovieDetailsCtrl', ['$scope', '$stateParams', '$injector',
+  function MovieDetailsCtrl($scope, $stateParams, $injector) {
+    $injector.invoke(BaseMovieDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
 
-    $scope.seeMoreActors = false;
-    $scope.similars = [];
     function isCurrentlyPlaying() {
-      return $scope.player.active && $scope.player.item.id === $scope.library.item.movieid;
+      return $scope.player.active && $scope.player.item.id === $scope.movie.movieid;
     };
 
     function onMovieRetrieved (item) {
       item.type = 'movie';
-      $scope.library.item = item;
+      $scope.movie = item;
       $scope.isCurrentlyPlaying = isCurrentlyPlaying();
       $scope.loading = false;
       $scope.tmdb.find('imdb_id', item.imdbnumber).then(function(result){
         var movies = result.data.movie_results;
         if(movies.length === 1) {
-          $scope.tmdb.similar(movies[0].id, 1).then(function(result){
-            $scope.similars = result.data.results.filter(function(similar) {
-              return typeof similar.poster_path !== 'undefined' && similar.poster_path !== null;
-            });
-          })
+          $scope.findSimilars(movies[0].id);
         }
       });
     };
@@ -53,16 +73,14 @@ angular.module('app')
     };
 
     $scope.getActors = function () {
-      return $scope.library.item.cast.filter(function(actor) {
+      return $scope.movie.cast.filter(function(actor) {
         return actor.role !== '' && typeof actor.thumbnail !== 'undefined';
       })
     };
 
-
-
     $scope.getAudio = function () {
-      if($scope.library.item.streamdetails.audio.length > 0) {
-        return $scope.library.item.streamdetails.audio.map(function(audio) {
+      if($scope.movie.streamdetails.audio.length > 0) {
+        return $scope.movie.streamdetails.audio.map(function(audio) {
           return audio.language;
         }).join(', ');
       } else {
@@ -71,8 +89,8 @@ angular.module('app')
     };
 
     $scope.getVideoDefinition = function () {
-      if($scope.library.item.streamdetails.audio.length > 0) {
-        var video = $scope.library.item.streamdetails.video[0];
+      if($scope.movie.streamdetails.audio.length > 0) {
+        var video = $scope.movie.streamdetails.video[0];
         return video.width + 'x' + video.height;
       } else {
         return '-';
@@ -87,4 +105,15 @@ angular.module('app')
       $scope.isCurrentlyPlaying = isCurrentlyPlaying();
     });
   }
-  ]);
+])
+.controller('TMDBMovieDetailsCtrl', ['$scope', '$stateParams', '$injector',
+  function TMDBMovieDetailsCtrl($scope, $stateParams, $injector) {
+    $injector.invoke(BaseMovieDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
+
+    $scope.tmdb.movie($scope.movieid).then(function(result) {
+      $scope.movie = result.data;
+      $scope.findSimilars($scope.movieid);
+      $scope.loading = false;
+    })
+  }
+]);

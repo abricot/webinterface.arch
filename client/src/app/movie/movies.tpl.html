@@ -2,21 +2,24 @@
     <div class="kodi" ng-hide="movies.length"></div>
     <ul data-type="list" lr-infinite-scroll="loadMore">
         <li class="card movie repeat-animation" ng-repeat="movie in movies">
-            <a href="getMoviesPath(movie)">
+            <a href="{{getMoviesPath(movie)}}">
                 <div class="poster" image image-source="getPoster(movie)">
-                    <flipper>
+                    <flipper ng-show="hasControls()">
                         <div class="front">
                             <div rating rating-value="movie.rating" rating-max="10"></div>
                         </div>
                         <div class="back">
                             <div class="md-circle rating">
-                                <i class="icon-play" ng-click="xbmc.open({'movieid' : movie.movieid}); $event.preventDefault();"
+                                <i class="icon-play" ng-click="play(movie); $event.preventDefault();"
                                    ng-show="!player.active"></i>
-                                <i class="icon-plus" ng-click="xbmc.queue({'movieid' : movie.movieid}); $event.preventDefault();"
+                                <i class="icon-plus" ng-click="queue(movie); $event.preventDefault();"
                                    ng-show="player.active"></i>
                             </div>
                         </div>
                     </flipper>
+                    <div class="rating-wrapper" ng-show="!hasControls()">
+                        <div rating rating-value="movie.rating" rating-max="10"></div>
+                    </div>
                     <div class="playcount" ng-show="movie.playcount">
                          <i class="icon-ok"></i>
                     </div>

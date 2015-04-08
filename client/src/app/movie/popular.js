@@ -38,18 +38,13 @@ angular.module('app')
       return false;
     };
 
-    $scope.getMoviesPath = function(show) {
-      return '#/tmdbshow/'+show.id;
+    $scope.getMoviesPath = function(movie) {
+      return '#/tmdbmovie/'+movie.id;
     };
 
     $scope.getPoster = function (show) {
       var url = $filter('tmdbImage')(show.poster, 'w500');
       return $filter('fallback')(url, 'img/icons/awe-512.png');
     };
-
-    $scope.getStudio = function(show) {
-      return 'img/icons/default-studio.png';
-    };
-
   }]
 );

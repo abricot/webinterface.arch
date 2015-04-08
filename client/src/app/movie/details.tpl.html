@@ -2,28 +2,28 @@
     <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
     <div ng-switch-when="false">
         <div class="row wrapper">
-            <div class="fanart" image image-source="library.item.fanart | asset:host"></div>
+            <div class="fanart" image image-source="movie.fanart | asset:host"></div>
             <div class="offset2 span8 clearfix">
                 <div class="poster-wrapper">
-                    <img class=" poster" image image-source="library.item.thumbnail | asset:host | fallback:'img/icons/awe-512.png'"/>
+                    <img class=" poster" image image-source="movie.thumbnail | asset:host | fallback:'img/icons/awe-512.png'"/>
                 </div>
                 <div class="details">
-                    <h1>{{library.item.title}}</h1>
-                    <h3>{{library.item.genre.join(', ')}}</h3>
-                    <p>{{library.item.year}}</p>
+                    <h1>{{movie.title}}</h1>
+                    <h3>{{movie.genre.join(', ')}}</h3>
+                    <p>{{movie.year}}</p>
                     <div class="row properties clearfix">
                         <div class="md-circle clock">
-                            <i>{{library.item.runtime | time | date:'HH:mm'}}</i>
+                            <i>{{movie.runtime | time | date:'HH:mm'}}</i>
                         </div>
-                        <div rating rating-value="library.item.rating" rating-max="10"></div>
+                        <div rating rating-value="movie.rating" rating-max="10"></div>
                         <div class="md-circle movie genre">
-                            <i class="genre-{{library.item.genre.join(' genre-').toLowerCase()}}"></i>
+                            <i class="genre-{{movie.genre.join(' genre-').toLowerCase()}}"></i>
                         </div>
-                        <div class="md-circle cast" image image-source="library.item.cast[0].thumbnail | asset:host | fallback:'img/icons/awe-512.png'">
+                        <div class="md-circle cast" image image-source="movie.cast[0].thumbnail | asset:host | fallback:'img/icons/awe-512.png'">
                         </div>
                         <div class="md-circle studio">
-                            <img image image-source="studioFn({studio : library.item.studio[0]})"
-                                 ng-show="library.item.studio.length"
+                            <img image image-source="studioFn({studio : movie.studio[0]})"
+                                 ng-show="movie.studio.length"
                                  onerror="this.src='img/icons/default-studio.png';"/>
                         </div>
                     </div>
@@ -31,11 +31,11 @@
             </div>
             <div class="actions">
                 <div class="md-action md-action-primary"
-                     ng-click="xbmc.open({'movieid': library.item.movieid})" ng-show="!player.active">
+                     ng-click="xbmc.open({'movieid': movie.movieid})" ng-show="!player.active">
                     <i class="icon-play"></i>
                 </div>
                 <div class="md-action md-action-primary"
-                     ng-click="xbmc.queue({'movieid': library.item.movieid})" ng-show="player.active && !isCurrentlyPlaying">
+                     ng-click="xbmc.queue({'movieid': movie.movieid})" ng-show="player.active && !isCurrentlyPlaying">
                     <i class="icon-plus"></i>
                 </div>
                 <div class="md-action md-action-primary"
@@ -49,11 +49,11 @@
             <div class="row">
                 <div class="offset2 span5">
                     <h1>Synopsis</h1>
-                    <p class="plot">{{library.item.plot}}</p>
+                    <p class="plot">{{movie.plot}}</p>
                 </div>
                 <div  class="span3">
-                    <div class="fanart" image image-source="library.item.fanart | asset:host | fallback:'img/icons/awe-512.png'">
-                        <div class="preview"  ng-click="xbmc.open({'file': library.item.trailer})">
+                    <div class="fanart" image image-source="movie.fanart | asset:host | fallback:'img/icons/awe-512.png'">
+                        <div class="preview"  ng-click="xbmc.open({'file': movie.trailer})">
                             <i class="icon-film"></i>
                         </div>
                     </div>
@@ -83,15 +83,15 @@
                     <ul>
                         <li class="row credit">
                             <b class="span3">Directors</b>
-                            <div class="span9">{{library.item.director.join(', ')}}</div>
+                            <div class="span9">{{movie.director.join(', ')}}</div>
                         </li>
                         <li class="row credit">
                             <b class="span3">Writers</b>
-                            <div class="span9">{{library.item.writer.join(', ')}}</div>
+                            <div class="span9">{{movie.writer.join(', ')}}</div>
                         </li>
                         <li class="row credit">
                             <b class="span3">Studio</b>
-                            <div class="span9">{{library.item.studio.join(', ')}}</div>
+                            <div class="span9">{{movie.studio.join(', ')}}</div>
                         </li>
                     </ul>
                 </div>
@@ -122,9 +122,9 @@
                             <b class="span3">Audio languages</b>
                             <div class="span9">{{getAudio()}}</div>
                         </li>
-                        <li class="row info" ng-show="library.item.mpaa !==''">
+                        <li class="row info" ng-show="movie.mpaa !==''">
                             <b class="span3">MPAA</b>
-                            <div class="span9">{{library.item.mpaa}}</div>
+                            <div class="span9">{{movie.mpaa}}</div>
                         </li>
                     </ul>
                 </div>
