@@ -210,7 +210,6 @@ angular.module('app')
 
     $scope.play = function(episode){
       var path = '/show/'+$scope.tvdbid+'/season/'+episode.season+'/episode/'+episode.episode+'/play';
-      var url = 'http://'+$scope.host.ip
       var url = playFn({
         ip : $scope.host.ip,
         port : $scope.host.httpPort,

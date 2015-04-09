@@ -47,9 +47,18 @@
         return defer.promise;
       };
 
-       factory.movie = function (id) {
+      factory.movie = function (id) {
         var url = interpolateFn({
           action : 'movie/'+id,
+          apiKey : apiKey,
+          parameters : ''
+        });
+        return $http(getConfig(url, 'GET'));
+      };
+
+      factory.movieCredits = function (id) {
+        var url = interpolateFn({
+          action : 'movie/'+id+'/credits',
           apiKey : apiKey,
           parameters : ''
         });

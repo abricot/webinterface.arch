@@ -15,6 +15,10 @@
         return parseInt(parts[0], 10);
       };
 
+      var runtime = function (runtime) {
+        return runtime * 60;
+      }
+
       factory.translate = function (tmdbResponse) {
         var fn = function(el){
           var transformed = {};
@@ -40,13 +44,13 @@
       var mapping = {
         'backdrop_path' : 'fanart',
         'genres' : {
-          key : 'genres',
+          key : 'genre',
           transformFn : flatten
         },
         'id' : 'id',
         'tvdb_id' : 'tvdbid',
         'poster_path' : 'poster',
-        'name' : 'title',
+        'name' : 'name',
         'networks' :  {
           key : 'studios',
           transformFn : flatten
@@ -94,6 +98,25 @@
           transformFn : year
         },
         'imdb_id' : 'imdbnumber',
+        'cast' : {
+          key : 'cast',
+          transformFn : factory.translate
+        },
+        'profile_path' : 'thumbnail',
+        'character' : 'role',
+        'runtime' : {
+          key : 'runtime',
+          transformFn : runtime
+        },
+        'production_companies' : {
+          key : 'studio',
+          transformFn : flatten
+        },
+        'crew' : {
+          key : 'crew',
+          transformFn : factory.translate
+        },
+        'job' : 'job'
       };
       return factory;
     }

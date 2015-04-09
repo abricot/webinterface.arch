@@ -2,10 +2,10 @@
     <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
     <div ng-switch-when="false">
         <div class="row wrapper">
-            <div class="fanart" image image-source="movie.fanart | asset:host"></div>
+            <div class="fanart" image image-source="getImage(movie.fanart)"></div>
             <div class="offset2 span8 clearfix">
                 <div class="poster-wrapper">
-                    <img class=" poster" image image-source="movie.thumbnail | asset:host | fallback:'img/icons/awe-512.png'"/>
+                    <img class=" poster" image image-source="getImage(movie.thumbnail || movie.poster, 'w185')"/>
                 </div>
                 <div class="details">
                     <h1>{{movie.title}}</h1>
@@ -19,7 +19,7 @@
                         <div class="md-circle movie genre">
                             <i class="genre-{{movie.genre.join(' genre-').toLowerCase()}}"></i>
                         </div>
-                        <div class="md-circle cast" image image-source="movie.cast[0].thumbnail | asset:host | fallback:'img/icons/awe-512.png'">
+                        <div class="md-circle cast" image image-source="getImage(movie.cast[0].thumbnail)">
                         </div>
                         <div class="md-circle studio">
                             <img image image-source="studioFn({studio : movie.studio[0]})"
@@ -31,11 +31,11 @@
             </div>
             <div class="actions">
                 <div class="md-action md-action-primary"
-                     ng-click="xbmc.open({'movieid': movie.movieid})" ng-show="!player.active">
+                     ng-click="play(movie)" ng-show="!player.active">
                     <i class="icon-play"></i>
                 </div>
                 <div class="md-action md-action-primary"
-                     ng-click="xbmc.queue({'movieid': movie.movieid})" ng-show="player.active && !isCurrentlyPlaying">
+                     ng-click="queue(movie)" ng-show="player.active && !isCurrentlyPlaying">
                     <i class="icon-plus"></i>
                 </div>
                 <div class="md-action md-action-primary"
@@ -52,7 +52,7 @@
                     <p class="plot">{{movie.plot}}</p>
                 </div>
                 <div  class="span3">
-                    <div class="fanart" image image-source="movie.fanart | asset:host | fallback:'img/icons/awe-512.png'">
+                    <div class="fanart" image image-source="getImage(movie.fanart, 'w300')">
                         <div class="preview"  ng-click="xbmc.open({'file': movie.trailer})">
                             <i class="icon-film"></i>
                         </div>
@@ -69,7 +69,7 @@
                     </h1>
                     <ul class="actors" ng-class="{collapsed : !seeMoreActors}">
                         <li class="actor" ng-repeat="actor in getActors()">
-                            <div class="poster" image image-source="actor.thumbnail | asset:host | fallback:'img/icons/awe-512.png'">
+                            <div class="poster" image image-source="getImage(actor.thumbnail)">
                             </div>
                             <div class="name">{{actor.name}}</div>
                             <div class="role">{{actor.role}}</div>
@@ -102,15 +102,18 @@
                     <h1>Similars</h1>
                     <ul class="similars collapsed">
                         <li class="similar" ng-repeat="similar in similars">
-                            <div class="poster" image image-source="getPosterURL(similar) | fallback:'img/icons/awe-512.png'">
-                            </div>
+                            <a href="#/tmdbmovie/{{similar.id}}">
+                                <div class="poster" image 
+                                     image-source="similar.poster | tmdbImage:'w500' | fallback:'img/icons/awe-512.png'">
+                                </div>
+                            </a>
                             <div class="title">{{similar.title}}</div>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" ng-show="hasAdditionalInfo()">
                 <div class="offset2 span8">
                     <h1>Additional information</h1>
                     <ul>

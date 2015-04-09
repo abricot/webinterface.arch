@@ -15,6 +15,12 @@ var BaseMovieDetailsCtrl = function ($scope, $stateParams) {
       });
     })
   };
+
+  $scope.getActors = function () {
+    return $scope.movie.cast.filter(function(actor) {
+      return actor.role !== '' && typeof actor.thumbnail !== 'undefined';
+    })
+  };
 };
 
 angular.module('app')
@@ -39,8 +45,8 @@ angular.module('app')
       }
     });;
 }])
-.controller('MovieDetailsCtrl', ['$scope', '$stateParams', '$injector',
-  function MovieDetailsCtrl($scope, $stateParams, $injector) {
+.controller('MovieDetailsCtrl', ['$scope', '$stateParams', '$injector', '$filter',
+  function MovieDetailsCtrl($scope, $stateParams, $injector, $filter) {
     $injector.invoke(BaseMovieDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
 
     function isCurrentlyPlaying() {
@@ -53,7 +59,7 @@ angular.module('app')
       $scope.isCurrentlyPlaying = isCurrentlyPlaying();
       $scope.loading = false;
       $scope.tmdb.find('imdb_id', item.imdbnumber).then(function(result){
-        var movies = result.data.movie_results;
+        var movies = result.data.movies;
         if(movies.length === 1) {
           $scope.findSimilars(movies[0].id);
         }
@@ -68,14 +74,13 @@ angular.module('app')
       $scope.xbmc.register('Websocket.OnConnected', { fn : onLoad, scope : this});
     }
 
-    $scope.imdb = function (imdbnumber) {
-      window.open('http://www.imdb.com/title/' + imdbnumber + '/', '_blank');
+    $scope.getImage = function (path) {
+      var url = $filter('asset')(path, $scope.host);
+      return $filter('fallback')(url, 'img/icons/awe-512.png');
     };
 
-    $scope.getActors = function () {
-      return $scope.movie.cast.filter(function(actor) {
-        return actor.role !== '' && typeof actor.thumbnail !== 'undefined';
-      })
+    $scope.imdb = function (imdbnumber) {
+      window.open('http://www.imdb.com/title/' + imdbnumber + '/', '_blank');
     };
 
     $scope.getAudio = function () {
@@ -97,23 +102,70 @@ angular.module('app')
       }
     };
 
-    $scope.getPosterURL = function(similar) {
-      return 'https://image.tmdb.org/t/p/w185' + similar.poster_path;
-    }
+    $scope.hasAdditionalInfo = function () {
+      return true;
+    };
+
+    $scope.play = function(movie) {
+      xbmc.open({'movieid': movie.movieid});
+    };
+
+    $scope.queue = function(movie) {
+      xbmc.queue({'movieid': movie.movieid});
+    };
 
     $scope.$watch('player.item', function (newVal, oldVal) {
       $scope.isCurrentlyPlaying = isCurrentlyPlaying();
     });
   }
 ])
-.controller('TMDBMovieDetailsCtrl', ['$scope', '$stateParams', '$injector',
-  function TMDBMovieDetailsCtrl($scope, $stateParams, $injector) {
+.controller('TMDBMovieDetailsCtrl', ['$scope', '$stateParams', '$injector', '$filter', '$http', '$interpolate',
+  function TMDBMovieDetailsCtrl($scope, $stateParams, $injector, $filter, $http, $interpolate) {
     $injector.invoke(BaseMovieDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
-
+    var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
+    
     $scope.tmdb.movie($scope.movieid).then(function(result) {
       $scope.movie = result.data;
-      $scope.findSimilars($scope.movieid);
-      $scope.loading = false;
-    })
+      $scope.tmdb.movieCredits($scope.movieid).then(function(result){
+        $scope.movie.cast = result.data.cast;
+        var crew = result.data.crew;
+        $scope.movie.director = crew.filter(function(member){
+          return member.job.toLowerCase() === 'director';
+        }).map(function(obj) {
+          return obj.name;
+        });
+        $scope.movie.writer = crew.filter(function(member){
+          return member.job.toLowerCase() === 'writer';
+        }).map(function(obj) {
+          return obj.name;
+        });
+        $scope.loading = false;
+      });
+    });
+    $scope.findSimilars($scope.movieid);
+
+    $scope.getImage = function (path, size) {
+      var url = $filter('tmdbImage')(path, size || 'original');
+      return $filter('fallback')(url, 'img/icons/awe-512.png');
+    };
+
+    $scope.hasAdditionalInfo = function () {
+      return false;
+    };
+
+    $scope.play = function(movie) {
+      var path = '/movie/'+$scope.movie.imdbnumber+'/play';
+      var url = playFn({
+        ip : $scope.host.ip,
+        port : $scope.host.httpPort,
+        path : 'plugin://plugin.video.pulsar' + path,
+        uid : Date.now()
+      })
+      $http.get(url);
+    };
+
+    $scope.queue = function(movie) {
+      xbmc.queue({'movieid': movie.movieid});
+    };
   }
 ]);

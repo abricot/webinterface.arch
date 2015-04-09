@@ -59,8 +59,7 @@
                         </h1>
                     </div>
                     <ul data-type="list">
-                        <li class="row episode" ng-repeat="episode in episodes"
-                            ng-class="{playable : hasControls()}"
+                        <li class="row episode playable" ng-repeat="episode in episodes"
                             ng-click="play(episode)">
                             <div class="thumbnail span3" image image-source="getImage(episode.thumbnail, 'w300')">
                                 <div class="md-action md-action-primary">
