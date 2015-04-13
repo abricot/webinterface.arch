@@ -2,43 +2,33 @@ angular.module('app')
 .controller('PopularShowsCtrl', ['$scope', '$filter',
   function PopularShowsCtrl($scope, $filter) {
     $scope.loading = true;
+    $scope.fetching = false;
     $scope.tvshows = [];
-
+    $scope.pages = 1;
+    $scope.total = Infinity;
     var now = new Date();
-    var firstAirDate = (now.getFullYear()-2)+'-01-01';
+    var firstAirDate = (now.getFullYear()-5)+'-01-01';
     var cleanUpResults = function(results) {
       return results.filter(function(show){
         return show.rating > 0;
       });
     };
 
-    $scope.tmdb.popularTvshows(2, firstAirDate, 5).then(function(results){
-      var  tvshows = [];
-      if(!angular.isArray(results)) {
-        results = [results];
-      }
-      results.forEach(function(response){
-          tvshows = tvshows.concat(cleanUpResults(response.data.results));
-      });
-      var sortFn = function(show1, show2) {
-        if(show1.rating < show2.rating) {
-          return 1;
-        } else if (show1.rating > show2.rating) {
-          return -1;
-        } else {
-          return 0;
-        }
-      };
-      $scope.tvshows = tvshows.sort(sortFn);
+    function onTvShowsFromSource(response) {
+      $scope.total = response.data.totalPages;
+      $scope.tvshows = $scope.tvshows.concat(cleanUpResults(response.data.results));
+      $scope.fetching = false;
       $scope.loading = false;
-    });
+    };
+
+    $scope.tmdb.popularTvshows(firstAirDate, 5, $scope.pages).then(onTvShowsFromSource);
 
     $scope.hasControls = function () {
       return false;
     };
 
     $scope.getEpisodesPath = function(show) {
-      return '#/tmdbshow/'+show.id;
+      return '#/tvshows/tmdb/'+show.id;
     };
 
     $scope.getExtra = function (show) {
@@ -53,6 +43,13 @@ angular.module('app')
 
     $scope.getStudio = function(show) {
       return 'img/icons/default-studio.png';
+    };
+
+    $scope.loadMore = function () {
+      if( $scope.pages < $scope.total) {
+        $scope.fetching = true;
+        $scope.tmdb.popularTvshows(firstAirDate, 5, ++$scope.pages).then(onTvShowsFromSource);
+      }
     };
 
   }]

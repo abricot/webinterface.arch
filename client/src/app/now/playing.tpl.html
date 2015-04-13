@@ -1,21 +1,17 @@
 <div class="row buttons">
     <div class="actions-wrapper row">
-        <div class="span3">
+        <div class="span4">
             <div class="md-action" ng-click="xbmc.previous()" >
                 <i class="icon icon-fast-backward"></i>
             </div>
         </div>
-        <div class="span3">
-            <div class="md-action" ng-click="xbmc.stop()">
-                <i class="icon icon-stop"></i>
-            </div>
-        </div>
-        <div class="span3">
-            <div class="md-action" ng-click="xbmc.togglePlay()">
+        
+        <div class="span4">
+            <div class="md-action primary" ng-click="xbmc.togglePlay()">
                 <i ng-class="{'icon-play' : !player.speed, 'icon-pause' : player.speed}"></i>
             </div>
         </div>
-        <div class="span3">
+        <div class="span4">
             <div class="md-action" ng-click="xbmc.next()"  >
                 <i class="icon icon-fast-forward"></i>
             </div>
@@ -31,13 +27,17 @@
             class="seekbar"></seekbar>
             <div class="player row">
                 <a href="#{{getHashForItem()}}" class="poster-wrapper" >
-                    <div class="poster" image image-source="player.item.thumbnail | asset:host | fallback:'img/icons/awe-512.png'"></div>
+                    <div class="poster" image image-source="player.item.thumbnail | asset:host | fallback:'img/icons/awe-512.png'"
+                         ng-class="{show : player.item.tvshowid}"></div>
                 </a>
                 <div class="label">{{player.item.label}}</div>
                 <div class="label times" ng-click="toggleTimePicker()">
                     {{player.seek.time | time | date:'HH:mm:ss'}}/
                     {{player.seek.totaltime | time | date:'HH:mm:ss'}}
                     [-{{(player.seek.totaltime - player.seek.time)  | time | date:'HH:mm:ss'}}]
+                </div>
+                <div class="md-action stop" ng-click="xbmc.stop()">
+                    <i class="icon icon-stop"></i>
                 </div>
                 <div class="md-action more">
                     <i class="icon icon-ellipsis-vertical" ng-show="isTypeVideo()"></i>

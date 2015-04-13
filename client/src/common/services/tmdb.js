@@ -65,30 +65,24 @@
         return $http(getConfig(url, 'GET'));
       };
 
-      factory.popularTvshows = function (numberOfPage, firstAirDateGte, voteAverageGte) {
-        var chain = [];
-        for (var i = 0; i <numberOfPage; i++) {
-           var url = interpolateFn({
-            action : 'discover/tv',
-            apiKey : apiKey,
-            parameters : '&page='+(i+1)+'&first_air_date.gte='+firstAirDateGte+'&sort_by=popularity.desc&vote_average.gte='+voteAverageGte
-          });
-          chain.push($http(getConfig(url, 'GET')));
-        }
-        return $q.all(chain);
+      factory.popularTvshows = function (firstAirDateGte, voteAverageGte, page) {
+        page = page || 1;
+        var url = interpolateFn({
+          action : 'discover/tv',
+          apiKey : apiKey,
+          parameters : '&page='+page+'&first_air_date.gte='+firstAirDateGte+'&sort_by=popularity.desc&vote_average.gte='+voteAverageGte
+        });
+        return $http(getConfig(url, 'GET'));
       };
 
-      factory.popularMovies = function (numberOfPage, primaryReleaseDate, voteAverageGte) {
-        var chain = [];
-        for (var i = 0; i <numberOfPage; i++) {
-           var url = interpolateFn({
-            action : 'discover/movie',
-            apiKey : apiKey,
-            parameters : '&page='+(i+1)+'&primary_release_date.gte='+primaryReleaseDate+'&sort_by=popularity.desc&vote_average.gte='+voteAverageGte
-          });
-          chain.push($http(getConfig(url, 'GET')));
-        }
-        return $q.all(chain);
+      factory.popularMovies = function (primaryReleaseDate, voteAverageGte, page) {
+        page = page || 1;
+        var url = interpolateFn({
+          action : 'discover/movie',
+          apiKey : apiKey,
+          parameters : '&page='+page+'&primary_release_date.gte='+primaryReleaseDate+'&sort_by=popularity.desc&vote_average.gte='+voteAverageGte
+        });
+        return $http(getConfig(url, 'GET'));
       };
 
       factory.tvshow = function (id) {

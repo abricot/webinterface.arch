@@ -1,8 +1,8 @@
-<div class="fill-height">
+<div class="cards fill-height">
     <div class="kodi" ng-hide="episodes.length"></div>
     <ul data-type="list" lr-infinite-scroll="loadMore">
         <li class="card tvshow repeat-animation" ng-repeat="episode in episodes">
-            <a href="#/tvshow/{{episode.tvshowid}}">
+            <a href="#/tvshows/{{episode.tvshowid}}">
                 <div class="poster" image image-source="episode.art['tvshow.poster'] | asset:host | fallback:'img/icons/awe-512.png'">
                     <flipper>
                         <div class="front">

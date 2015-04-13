@@ -24,27 +24,6 @@ var BaseMovieDetailsCtrl = function ($scope, $stateParams) {
 };
 
 angular.module('app')
-.config(['$stateProvider', function ($stateProvider) {
-  $stateProvider.state('moviedetails', {
-    url: '/movie/:movieid',
-    views: {
-      header: {templateUrl: 'layout/headers/navigation.tpl.html', controller : 'HeaderNavController'},
-      body: {
-        templateUrl: 'movie/details.tpl.html',
-        controller: 'MovieDetailsCtrl'
-      }
-    }
-  }).state('TMDBMovie', {
-      url: '/tmdbmovie/:movieid',
-      views: {
-        header: {templateUrl: 'layout/headers/navigation.tpl.html', controller : 'HeaderNavController'},
-        body: {
-          templateUrl: 'movie/details.tpl.html',
-          controller: 'TMDBMovieDetailsCtrl'
-        }
-      }
-    });;
-}])
 .controller('MovieDetailsCtrl', ['$scope', '$stateParams', '$injector', '$filter',
   function MovieDetailsCtrl($scope, $stateParams, $injector, $filter) {
     $injector.invoke(BaseMovieDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});

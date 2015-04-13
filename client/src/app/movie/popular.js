@@ -2,49 +2,45 @@ angular.module('app')
 .controller('PopularMoviesCtrl', ['$scope', '$filter',
   function PopularMoviesCtrl($scope, $filter) {
     $scope.loading = true;
+    $scope.fetching = false;
+
+    $scope.pages = 1;
+    $scope.total = Infinity;
     $scope.movies = [];
 
     var now = new Date();
     var firstReleaseDate = (now.getFullYear()-2)+'-01-01';
     var cleanUpResults = function(results) {
-      return results.filter(function(movie){
-        var now = new Date();
-        return movie.year <= now.getFullYear();
-      });
+      return results;
     };
 
-    $scope.tmdb.popularMovies(2, firstReleaseDate, 5).then(function(results){
-      var  movies = [];
-      if(!angular.isArray(results)) {
-        results = [results];
-      }
-      results.forEach(function(response){
-          movies = movies.concat(cleanUpResults(response.data.results));
-      });
-      var sortFn = function(show1, show2) {
-        if(show1.rating < show2.rating) {
-          return 1;
-        } else if (show1.rating > show2.rating) {
-          return -1;
-        } else {
-          return 0;
-        }
-      };
-      $scope.movies = movies.sort(sortFn);
+    function onMoviesFromSource(response) {
+      $scope.total = response.data.totalPages;
+      $scope.movies = $scope.movies.concat(cleanUpResults(response.data.results));
+      $scope.fetching = false;
       $scope.loading = false;
-    });
+    };
+
+    $scope.tmdb.popularMovies(firstReleaseDate, 5, $scope.pages).then(onMoviesFromSource);
 
     $scope.hasControls = function () {
       return false;
     };
 
     $scope.getMoviesPath = function(movie) {
-      return '#/tmdbmovie/'+movie.id;
+      return '#/movies/tmdb/'+movie.id;
     };
 
     $scope.getPoster = function (show) {
       var url = $filter('tmdbImage')(show.poster, 'w500');
       return $filter('fallback')(url, 'img/icons/awe-512.png');
+    };
+
+    $scope.loadMore = function () {
+      if( $scope.pages < $scope.total) {
+        $scope.fetching = true;
+        $scope.tmdb.popularMovies(firstReleaseDate, 5, ++$scope.pages).then(onMoviesFromSource);
+      }
     };
   }]
 );

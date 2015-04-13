@@ -8,7 +8,7 @@
                     <img class=" poster" image image-source="getImage(show.thumbnail || show.poster, 'w500')"/>
                 </div>
                 <div class="details">
-                    <h1>{{show.title}}</h1>
+                    <h1>{{show.title || show.name}}</h1>
                     <h3>{{show.genre.join(', ')}}</h3>
                     <p>{{show.year}}</p>
                     <p class="plot">{{show.plot}}</p>
@@ -36,7 +36,7 @@
                             <div class="span9">
                                 <p>
                                     {{nextAiringEpisode.episode | episode:nextAiringEpisode.season}} -
-                                    {{nextAiringEpisode.title}} airs {{nextAiringEpisode.firstaired | date : 'fullDate'}}
+                                    {{nextAiringEpisode.title || nextAiringEpisode.name}} airs {{nextAiringEpisode.firstaired | date : 'fullDate'}}
                                 </p>
                                 <p>{{nextAiringEpisode.plot}}</p>
                             </div>
@@ -72,7 +72,7 @@
                             <div class="span9">
                                 <p>
                                     {{episode.episode | episode:episode.season}} -
-                                    {{episode.title}}
+                                    {{episode.title || episode.name}}
                                 </p>
                                 <p><span class="runtime">{{episode.runtime | time | date:'HH:mm'}}</span></p>
                                 <p>{{episode.plot}}</p>

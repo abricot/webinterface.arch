@@ -3,7 +3,7 @@
   bottom: 0;
   right : 0;
   left : 0;
-  background: @secondaryBgColor;
+  background: @playerBgColor;
   border-top : 1px solid @borderColor;
   z-index: 4;
 }
@@ -14,12 +14,26 @@
   float : left;
   text-align: center;
   position: relative;
+  background: lighten(@playerBgColor, 25%);
+}
+
+.playing .buttons .md-action i {
+  line-height: 6rem;
+  font-size: 2.5rem;
+}
+
+.playing .buttons .actions-wrapper > .md-action {
+  width : 100%;
+}
+
+.playing .buttons .actions-wrapper .md-action.primary i{
+  font-size: 4rem;
 }
 
 .playing .player-wrapper {
   min-height: 1px;
   position: relative;
-  background: lighten(@secondaryBgColor, 10%);
+  background: @playerBgColor;
   min-height: 6rem;
   margin: 0;
   width: 66%;
@@ -56,6 +70,10 @@
   background-position: center;
 }
 
+.player .poster-wrapper .poster.show {
+  background-size: auto 100%;
+}
+
 .buttons .md-action{
   position: relative;
   right: 0;
@@ -66,22 +84,23 @@
 }
 
 
-section[role="region"] .buttons .md-action:active,
-section[role="region"] .buttons .md-action:hover {
+.remote-menu.buttons .md-action:active,
+.remote-menu.buttons .md-action:hover {
   background-color : #009688;
   color : #f1f1f1 !important;
 }
 
-section[role="region"] .buttons i {
+.remote-menu.buttons i {
   font-size: 2.5rem;
   text-shadow:none;
   line-height: 6rem;
 }
 
-section[role="region"] .buttons i {
+.remote-menu.buttons i {
   text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
 }
 .buttons .md-action.more,
+.buttons .md-action.stop,
 .player-wrapper .times {
   position: absolute;
   right : 0;
@@ -90,9 +109,10 @@ section[role="region"] .buttons i {
   max-width: 30%;
 }
 
+.buttons .md-action.stop {right : 4rem;}
 
 .player-wrapper .times  {
-  right: 6rem;
+  right: 10rem;
   width : auto;
   text-align: center;
   cursor: pointer;
@@ -207,9 +227,88 @@ section[role="region"] .buttons i {
   text-align: left;
 }
 
+.remote-menu .banner {
+  background: #03a9f4 url(../img/backgrounds/banner.png) no-repeat center;
+  background-size: 100% auto;
+}
+.remote-menu .buttons {padding-top: 3rem;}
+.remote-menu.buttons .md-action{
+  position: relative;
+  right: 0;
+  box-shadow: none;
+  transition: all 0.25s ease;
+  color : #666 !important;
+  background: @primaryBgColor;
+  border-radius: 50%;
+  width: 5rem;
+  height: 5rem;
+  margin-bottom: 1rem;
+}
+
+.remote-menu.buttons .md-action-primary {
+  position: absolute;
+  right: 2.5rem;
+  bottom: -3rem;
+}
+
+.remote-menu.buttons .md-action:active {
+  background-color : #009688;
+  color : #f1f1f1 !important;
+}
+
+.remote-menu.buttons .md-action i {
+  font-size: 2.5rem; 
+  text-shadow:none;
+  line-height: 5rem;
+}
+
+.remote-menu .buttons .direction{
+  background: #8c9eff;
+  color : #f1f1f1 !important;
+  text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
+}
+
+.remote-menu .buttons .direction:active{
+  background: #3f51b5;
+}
+
+.remote-menu .buttons .select{
+  background: #ffab91;
+  color : #f1f1f1 !important;
+  text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
+}
+.remote-menu .buttons .select:active{
+  background: #ff5722;
+}
+.remote-menu .buttons .md-action:active i {
+  text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
+}
+.remote-menu .buttons .action{
+  width : 100/3%;
+}
+
+.remote-menu .buttons .action {
+  text-align: center;
+  color: white;
+  height: 100%;
+  float: left;
+  position: relative;
+  .box-sizing;
+}
+
+
+.remote-menu .buttons .row {
+  display: inline-table;
+}
+
+.remote-menu .buttons .row {
+  display : block;
+  height : 100/5%;
+}
+
 @media screen and (max-width: 1024px) {
     .playing .actions-wrapper{width:25%;}
     .playing .player-wrapper{width:50%;}
     .player-wrapper .times {display: none;}
-    .player .label {max-width: 80%;}
+    .player .label {max-width: 70%;}
 }

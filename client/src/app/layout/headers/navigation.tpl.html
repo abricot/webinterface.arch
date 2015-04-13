@@ -1,7 +1,7 @@
 <nav class="row">
     <div class="clearfix tabs span8 offset2">
         <a href="#{{item.hash}}" ng-repeat="item in medias" ng-class="{selected : isCurrent(item.matchRegExp)}"
-            class="tab">
+            class="tab span{{12/medias.length}}">
             <div class="label">{{item.label}}</div>
         </a>
     </div>

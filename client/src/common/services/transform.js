@@ -116,7 +116,8 @@
           key : 'crew',
           transformFn : factory.translate
         },
-        'job' : 'job'
+        'job' : 'job',
+        'total_pages' : 'totalPages'
       };
       return factory;
     }

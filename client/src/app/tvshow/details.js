@@ -27,29 +27,6 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
 };
 
 angular.module('app')
-.config(['$stateProvider',
-  function($stateProvider) {
-    $stateProvider.state('XBMCSeasons', {
-      url: '/tvshow/:tvshowid',
-      views: {
-        header: {templateUrl: 'layout/headers/navigation.tpl.html', controller : 'HeaderNavController'},
-        body: {
-          templateUrl: 'tvshow/details.tpl.html',
-          controller: 'XBMCShowDetailsCtrl'
-        }
-      }
-    }).state('TMDBSeasons', {
-      url: '/tmdbshow/:tvshowid',
-      views: {
-        header: {templateUrl: 'layout/headers/navigation.tpl.html', controller : 'HeaderNavController'},
-        body: {
-          templateUrl: 'tvshow/details.tpl.html',
-          controller: 'TMDBShowDetailsCtrl'
-        }
-      }
-    });
-  }
-])
 .controller('XBMCShowDetailsCtrl', ['$scope', '$injector', '$stateParams', '$filter',
   function XBMCShowDetailsCtrl($scope, $injector, $stateParams, $filter) {
     $injector.invoke(BaseTVShowDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});

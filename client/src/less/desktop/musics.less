@@ -6,8 +6,12 @@
   bottom: 0;
 }
 
-.music .tabs{background: lighten(@secondaryBgColor, 10%);}
-.music .tabs .tab{padding: 1rem 0 0.5rem 0;}
+.music .tabs{background: @secondaryTabsBgColor;}
+.music .tabs .tab.selected {border-color: @secondaryTabsBorderColor;}
+.music .tabs .tab{
+  padding: 1rem 0 0.5rem 0;
+}
+
 
 [data-type="list"] .card.artist,
 [data-type="list"] .card.album {width :18rem;}
