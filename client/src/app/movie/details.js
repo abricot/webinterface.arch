@@ -86,11 +86,11 @@ angular.module('app')
     };
 
     $scope.play = function(movie) {
-      xbmc.open({'movieid': movie.movieid});
+      $scope.xbmc.open({'movieid': movie.movieid});
     };
 
     $scope.queue = function(movie) {
-      xbmc.queue({'movieid': movie.movieid});
+      $scope.xbmc.queue({'movieid': movie.movieid});
     };
 
     $scope.$watch('player.item', function (newVal, oldVal) {
