@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="webinterface.arch"
-  version="0.0.2"
+  version="0.1.0"
   name="Arc"
   provider-name="icolala">
   <requires>
