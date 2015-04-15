@@ -14,7 +14,7 @@ module.exports = function (grunt) {
     // Project configuration.
     grunt.initConfig({
         distdir: 'dist',
-        releasedir: 'dist/webinterface.arc',
+        releasedir: 'dist/webinterface.arch',
         pkg: grunt.file.readJSON('package.json'),
         banner:
             '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +

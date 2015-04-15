@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
-  id="webinterface.arc"
-  version="0.1.0"
+  id="webinterface.arch"
+  version="0.0.2"
   name="Arc"
-  provider-name="moi">
+  provider-name="icolala">
   <requires>
     <import addon="xbmc.json" version="6.0.0" />
   </requires>
   <extension
     point="xbmc.gui.webinterface"/>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">Arc Dev</summary>
+    <summary lang="en">Arch</summary>
     <description lang="en">Only use this version for dev, see dist folder for production ready</description>
     <platform>all</platform>
     <language>en</language>

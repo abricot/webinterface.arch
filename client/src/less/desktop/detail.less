@@ -59,7 +59,6 @@
   position: absolute;
   top : 1rem;
   right : 0;
-  transform: translateX(-50%);
 }
 
 .detail .actions .md-action i {
@@ -147,9 +146,17 @@
 }
 
 .detail .thumbnail {
-  height : 10rem;
+  height : 9rem;
   background-position: center;
   background-size : 100% auto;
   margin : 0.5rem 0;
   position : relative;
+}
+
+@media screen and (max-width: 820px) {
+  .detail .poster-wrapper {width: 12rem;height: 18rem;}
+  .detail .actions {right : 10%;}
+  .detail .thumbnail {height: 6rem;}
+  .detail .properties .md-circle {margin-right:1.5rem;}
+
 }

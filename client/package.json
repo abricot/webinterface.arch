@@ -1,8 +1,8 @@
 {
-    "name": "webinterface.arc",
+    "name": "webinterface.arch",
     "version": "0.0.2",
     "author": "Nicolas ABRIC",
-    "description": "Yet another XBMC remote for firefox os",
+    "description": "Arch",
     "contributors": [
         {
             "name": "Nicolas ABRIC",
