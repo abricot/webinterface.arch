@@ -40,14 +40,5 @@
       <div ng-include src="'now/playing.tpl.html'" ng-controller="NowPlayingCtrl"
            class="playing"></div>
     </section>
-
-    <div ng-switch on="initialized">
-      <div ng-switch-when="true">
-        <iframe src="{{webserverURL | trust}}" style="display:none;"></iframe>
-      </div>
-      <div ng-switch-when="false">
-        <iframe src="{{"about:blank" | trust}}" style="display:none;"></iframe>
-      </div>
-    </div>
   </body>
 </html>
