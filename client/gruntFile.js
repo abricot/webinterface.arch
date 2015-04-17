@@ -69,7 +69,7 @@ module.exports = function (grunt) {
             }
         },
         concat:{
-             dist:{
+            dist:{
                 options: {
                     banner: "<%= banner %>"
                 },
