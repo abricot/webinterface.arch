@@ -20,13 +20,14 @@ angular.module('app', [
   'services.xbmc',
   'services.tmdb',
   'services.storage',
+  'templates.abricot',
   'templates.app',
   'lrInfiniteScroll'
   ]);
 
 // this is where our app definition is
 angular.module('app')
-.config(['$stateProvider', '$urlRouterProvider',
+.config(['$stateProvider', '$urlRouterProvider' ,
   function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/movies/recents");
   }

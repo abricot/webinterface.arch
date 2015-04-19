@@ -9,7 +9,9 @@
     "angular-touch": "~1.2.25",
     "font-awesome": "~3.2.0",
     "mousetrap": "~1.2.0",
-    "chrome-platform-analytic": "git://github.com/GoogleChrome/chrome-platform-analytics",
+    "abricot-directives": "git://github.com/abricot/directives.common",
+    "abricot-filters": "git://github.com/abricot/filters.xbmc",
+    "abricot-services": "git://github.com/abricot/services.xbmc",
     "lrInfiniteScroll" : "git://github.com/lorenzofox3/lrInfiniteScroll"
   }
 }

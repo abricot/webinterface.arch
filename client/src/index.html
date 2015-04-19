@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/yang.css" ng-disabled="theme==='yin'"></link>
     <script type="text/javascript" src="js/lib/angular.js"></script>
     <script type="text/javascript" src="js/lib/third.js"></script>
+    <script type="text/javascript" src="js/lib/abricot.js"></script>
     <script type="text/javascript" src="js/<%= grunt.config.get('pkg.name') %>.js"></script>
   </head>
   <body role="application" ng-swipe-right="showDrawer()" ng-swipe-left="hideDrawer()">
@@ -37,7 +38,7 @@
       <header  ui-view="header"></header>
       <div role="main" ui-view="body" class="row">
       </div>
-      <div ng-include src="'now/playing.tpl.html'" ng-controller="NowPlayingCtrl"
+      <div ng-include src="'modules/now/playing.tpl.html'" ng-controller="NowPlayingCtrl"
            class="playing"></div>
     </section>
   </body>

@@ -22,7 +22,7 @@ module.exports = function (grunt) {
                 ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>;\n' +
                 ' * Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %>\n */\n',
         src: {
-            js: [ 'src/assets/**/*.js', 'src/common/**/*.js', 'src/app/**/*.js', '<%= releasedir %>/js/templates/**/*.js'],
+            js: [ 'src/assets/**/*.js', 'src/app/**/*.js', '<%= releasedir %>/js/templates/**/*.js'],
             html: ['src/index.html'],
             manifests : ['src/manifest.*'],
             tpl: {
@@ -66,6 +66,14 @@ module.exports = function (grunt) {
                 src: ['<%= src.tpl.app %>'],
                 dest: '<%= releasedir %>/js/app.js',
                 module: 'templates.app'
+            },
+            abricot: {
+                options: {
+                    base: 'vendor/abricot-directives/src/app'
+                },
+                src: ['vendor/abricot-directives/src/app/**/*.html'],
+                dest: '<%= releasedir %>/js/abricot.js',
+                module: 'templates.abricot'
             }
         },
         concat:{
@@ -94,12 +102,20 @@ module.exports = function (grunt) {
             },
             thirdparty: {
                 src:[
-
                     'vendor/lrInfiniteScroll/lrInfiniteScroll.js',
                     'vendor/mousetrap/mousetrap.js',
                     'vendor/chrome-platform-analytic/google-analytics-bundle.js'
                 ],
                 dest: '<%= releasedir %>/js/lib/third.js'
+            },
+            abricot: {
+                src:[
+                    'vendor/abricot-directives/**/*.js',
+                    'vendor/abricot-filters/**/*.js',
+                    'vendor/abricot-services/**/*.js',
+                    '<%= releasedir %>/js/abricot.js'
+                ],
+                dest: '<%= releasedir %>/js/lib/abricot.js'
             }
         },
         uglify: {
