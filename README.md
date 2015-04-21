@@ -3,6 +3,8 @@
 Arch is a webinterface plugin for XBMC/KODI,
 built using [AngularJS](http://angularjs.org/) and [Grunt](http://gruntjs.com/). Browse all your movies, tv shows and musics. See what's currently playing. Discover new movies and tv shows. All from your modern browser desktop or tablets.
 
+<iframe class="imgur-album" width="100%" height="500" frameborder="0" src="http://imgur.com/a/5rg7D/embed"></iframe>
+
 ***
 
 ## Stack
