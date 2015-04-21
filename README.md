@@ -1,13 +1,9 @@
-# Foxmote
+# Arch
 
-Yet another XBMC remote for firefox os,
-built using [AngularJS](http://angularjs.org/), [Node](http://nodejs.org/) and [Grunt](http://gruntjs.com/).
+Arch is a webinterface plugin for XBMC/KODI,
+built using [AngularJS](http://angularjs.org/) and [Grunt](http://gruntjs.com/). Browse all your movies, tv shows and musics. See what's currently playing. Discover new movies and tv shows. All from your modern browser desktop or tablets.
 
 ***
-
-## Purpose
-
-Foxmote is an XBMC remote that let you control XBMC with your firefox os phone. It is powered with some of the most trendy, popular frameworks around.
 
 ## Stack
 
@@ -82,7 +78,7 @@ Your browser should automatically open at the following URL [http://localhost:80
 
 ## Development
 ### Folders structure
-At the top level, the repository is split into a client folder and a server folder.  The client folder contains all the client-side AngularJS application.  The server folder contains a very basic webserver that delivers and supports the application while using a desktop browse (not needed when app is added to the firefox os emulator).
+At the top level, the repository is split into a client folder and a server folder.  The client folder contains all the client-side AngularJS application.  The server folder contains a very basic webserver that delivers and supports the application while using a desktop browse (not needed when plugin is added to KODI).
 Within the client folder you have the following structure:
 * `dist` contains build results
 * `src` contains application's sources
@@ -104,20 +100,10 @@ The watch grunt task will monitor the source files and run the default build tas
     grunt watch
     ```
 
-### Building release code, aka create a zip file ready for firefox os marketplace upload
+### Building release code, aka create a zip file ready for KODI marketplace upload
 You can build a zipped release version of the app, with minified files using a dedicated grunt task.
 
     ```
     cd client
-    grunt marketplace
+    grunt release
     ```
-
-### Using Firefox OS Simulator
-
-Once application is build you can add it to firefox os simulator. To do so :
-* Be sure firefox os simulator is installed. Instruction [here](https://addons.mozilla.org/en/firefox/addon/firefox-os-simulator/)
-* Open firefox and navigate to Firefox > Web Developer >  Firefox os Simulator
-* On the Firefox os Simulator page click on add directory
-* Navigate to the dist folder under client directory
-* Select manifest.webapp
-* Emulator should start and application run
