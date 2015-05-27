@@ -54,11 +54,8 @@ module.exports = function (grunt) {
             manifests : {
               files: [{ dest: '<%= releasedir %>', src : 'manifest.*', expand: true, cwd: 'src'}]
             },
-            xml : {
-              files: [{ dest: '<%= releasedir %>', src : '*.xml', expand: true, cwd: 'src'}]
-            },
-            images : {
-              files: [{ dest: '<%= releasedir %>', src : ['*.jpg','*.png'], expand: true, cwd: 'src'}]
+            addon : {
+              files: [{ dest: '<%= releasedir %>', src : ['*.jpg','*.png','*.xml','*.txt'], expand: true, cwd: 'src'}]
             }
         },
         html2js: {

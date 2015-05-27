@@ -2,7 +2,7 @@
 <addon
   id="webinterface.arch"
   version="0.1.0"
-  name="Arc"
+  name="Arch"
   provider-name="icolala">
   <requires>
     <import addon="xbmc.json" version="6.0.0" />
@@ -10,8 +10,8 @@
   <extension
     point="xbmc.gui.webinterface"/>
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">Arch</summary>
-    <description lang="en">Only use this version for dev, see dist folder for production ready</description>
+    <summary lang="en">A modern web interface for KODI</summary>
+    <description lang="en">A modern web interface for KODI. Browse all your movies, tv shows and musics. See what's currently playing. Discover new movies and tv shows. All from your browser, desktop or tablets.</description>
     <platform>all</platform>
     <language>en</language>
   </extension>
