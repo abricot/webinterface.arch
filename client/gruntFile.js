@@ -56,6 +56,9 @@ module.exports = function (grunt) {
             },
             xml : {
               files: [{ dest: '<%= releasedir %>', src : '*.xml', expand: true, cwd: 'src'}]
+            },
+            images : {
+              files: [{ dest: '<%= releasedir %>', src : ['*.jpg','*.png'], expand: true, cwd: 'src'}]
             }
         },
         html2js: {
