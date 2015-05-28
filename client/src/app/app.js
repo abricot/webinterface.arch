@@ -69,6 +69,8 @@ angular.module('app')
       criteria: ''
     };
 
+    $scope.isPulsarAvailable = false;
+
     $scope.hosts = [];
     $scope.host = null;
     $scope.webserverURL = 'about:blank';
@@ -240,6 +242,12 @@ angular.module('app')
       xbmc.setActivePlaylist(-1);
     };
 
+    var onPulsarAddonRetrieved = function (result) {
+      if(result && typeof result !== 'undefined' && result.addon) {
+        $scope.isPulsarAvailable = result.addon.enabled;
+      }
+    };
+
     xbmc.register('Player.OnPause', {
       fn: onPlayerPause,
       scope: this
@@ -271,10 +279,11 @@ angular.module('app')
       });
       xbmc.getApplicationProperties(onApplicationPropertiesRetrieved);
       xbmc.getActivePlayers(onPlayersRetrieved);
+      xbmc.getAddonDetails('plugin.video.pulsar', onPulsarAddonRetrieved);
     }
     var onDisconnect = function() {
       $scope.connected = false;
-      $scope.initialized = true;
+      $scope.initialized = true; 
     };
 
     if (xbmc.isConnected()) {
