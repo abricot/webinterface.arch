@@ -1,6 +1,6 @@
 <div class="cards fill-height">
     <div class="kodi" ng-hide="movies.length"></div>
-    <ul data-type="list" lr-infinite-scroll="loadMore">
+    <ul data-type="list" lr-infinite-scroll="loadMore" scroll-threshold="200">
         <li class="card movie repeat-animation" ng-repeat="movie in movies">
             <a href="{{getMoviesPath(movie)}}">
                 <div class="poster" image image-source="getPoster(movie)">

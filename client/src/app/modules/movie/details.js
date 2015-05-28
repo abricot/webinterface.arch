@@ -85,6 +85,10 @@ angular.module('app')
       return true;
     };
 
+    $scope.isUsingPulsar = function () {
+      return false;
+    };
+
     $scope.play = function(movie) {
       $scope.xbmc.open({'movieid': movie.movieid});
     };
@@ -136,6 +140,10 @@ angular.module('app')
 
     $scope.hasAdditionalInfo = function () {
       return false;
+    };
+
+    $scope.isUsingPulsar = function () {
+      return true;
     };
 
     $scope.play = function(movie) {

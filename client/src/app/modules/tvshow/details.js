@@ -48,6 +48,10 @@ angular.module('app')
       return $scope.player.active && episodeid === $scope.library.item.episodeid;
     };
 
+    $scope.isUsingPulsar = function () {
+      return false;
+    };
+
     function onEpisodesRetrieved(episodes) {
       $scope.loading = false;
       $scope.episodes = episodes;
@@ -183,6 +187,10 @@ angular.module('app')
     $scope.getImage = function (path, size) {
       var url = $filter('tmdbImage')(path, size || 'original');
       return $filter('fallback')(url, 'img/icons/awe-512.png');
+    };
+
+    $scope.isUsingPulsar = function () {
+      return true;
     };
 
     $scope.play = function(episode){

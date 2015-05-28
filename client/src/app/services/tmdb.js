@@ -38,18 +38,6 @@
         return $http(getConfig(url, 'GET'));
       };
 
-      factory.tv.episodes = function(id) {
-        var defer = $q.defer();
-        factory.tvshow(id).then(function(result) {
-          var tv = result.data;
-          var latestSeason = tv.seasons[tv.seasons.length-1];
-          factory.seasons(tv.id, latestSeason.season).then(function(result){
-            defer.resolve(result);
-          });
-        });
-        return defer.promise;
-      };
-
       factory.movies.details = function (id) {
         var url = interpolateFn({
           action : 'movie/'+id,
@@ -97,6 +85,15 @@
         return $http(getConfig(url, 'GET'));
       };
 
+      factory.movies.similars = function (id, page) {
+        var url = interpolateFn({
+          action : 'movie/'+id+'/similar',
+          apiKey : apiKey,
+          parameters : '&page='+page
+        });
+        return $http(getConfig(url, 'GET'));
+      };
+
       factory.tv.details = function (id) {
         var url = interpolateFn({
           action : 'tv/'+id,
@@ -124,13 +121,16 @@
         return $http(getConfig(url, 'GET'));
       };
 
-      factory.movies.similars = function (id, page) {
-        var url = interpolateFn({
-          action : 'movie/'+id+'/similar',
-          apiKey : apiKey,
-          parameters : '&page='+page
+      factory.tv.episodes = function(id) {
+        var defer = $q.defer();
+        factory.tv.details(id).then(function(result) {
+          var tv = result.data;
+          var latestSeason = tv.seasons[tv.seasons.length-1];
+          factory.tv.seasons(tv.id, latestSeason.season).then(function(result){
+            defer.resolve(result);
+          });
         });
-        return $http(getConfig(url, 'GET'));
+        return defer.promise;
       };
 
       return factory;
