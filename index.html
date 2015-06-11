@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="app" ng-csp  ng-controller="AppCtrl">
+  <head>
+    <title>Arch</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"></meta>
+    <meta charset="UTF-8"></meta>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"></link>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon"></link>
+    <link rel="stylesheet" type="text/css" href="css/angular-csp.css" ></link>
+    <link rel="stylesheet" type="text/css" href="css/yin.css" ng-disabled="theme==='yang'"></link>
+    <link rel="stylesheet" type="text/css" href="css/yang.css" ng-disabled="theme==='yin'"></link>
+
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/gnnijdffhlpgckpcfpmmamfjaacelbfd"></link>
+
+    <script type="text/javascript" src="js/lib/angular.js"></script>
+    <script type="text/javascript" src="js/lib/third.js"></script>
+    <script type="text/javascript" src="js/lib/abricot.js"></script>
+    <script type="text/javascript" src="js/webinterface.arch.js"></script>
+  </head>
+  <body role="application" ng-swipe-right="showDrawer()" ng-swipe-left="hideDrawer()">
+    <keybinding on="up" invoke="xbmc.up()"></keybinding>
+    <keybinding on="left" invoke="xbmc.left()"></keybinding>
+    <keybinding on="enter" invoke="xbmc.select()"></keybinding>
+    <keybinding on="right" invoke="xbmc.right()"></keybinding>
+    <keybinding on="backspace" invoke="xbmc.back()"></keybinding>
+    <keybinding on="down" invoke="xbmc.down()"></keybinding>
+    <keybinding on="space" invoke="xbmc.togglePlay()"></keybinding>
+    <keybinding on="ctrl+i" invoke="xbmc.info()"></keybinding>
+    <keybinding on="ctrl+m" invoke="xbmc.mute()"></keybinding>
+    <keybinding on="ctrl+o" invoke="xbmc.showOSD()"></keybinding>
+    <keybinding on="pageup" invoke="xbmc.increaseVolume()"></keybinding>
+    <keybinding on="pagedown" invoke="xbmc.decreaseVolume()"></keybinding>
+    <keybinding on="ctrl+s" invoke="xbmc.toggleSubtitles()"></keybinding>
+    <keybinding on="ctrl+left" invoke="xbmc.previous()"></keybinding>
+    <keybinding on="ctrl+right" invoke="xbmc.next()"></keybinding>
+
+    <keybinding on="home" invoke="xbmc.home()"></keybinding>
+    <keybinding on="end" invoke="xbmc.stop()"></keybinding>
+
+    <section id="page" role="region" ng-show="initialized">
+      <header  ui-view="header"></header>
+      <div role="main" ui-view="body" class="row">
+      </div>
+      <div ng-include src="'modules/now/playing.tpl.html'" ng-controller="NowPlayingCtrl"
+           class="playing"></div>
+    </section>
+  </body>
+</html>
