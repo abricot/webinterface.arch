@@ -1,4 +1,4 @@
-/*! webinterface.arch - v1.0.0 - 2015-06-11
+/*! webinterface.arch - v1.0.0 - 2015-06-28
  * Copyright (c) 2015 Nicolas ABRIC;
  * Licensed MIT
  */
@@ -734,7 +734,7 @@ angular.module('app')
       criteria: ''
     };
 
-    $scope.isPulsarAvailable = false;
+    $scope.isExternalAddonAvailable = false;
 
     $scope.hosts = [];
     $scope.host = null;
@@ -907,9 +907,9 @@ angular.module('app')
       xbmc.setActivePlaylist(-1);
     };
 
-    var onPulsarAddonRetrieved = function (result) {
+    var onExternalAddonRetrieved = function (result) {
       if(result && typeof result !== 'undefined' && result.addon) {
-        $scope.isPulsarAvailable = result.addon.enabled;
+        $scope.isExternalAddonAvailable = result.addon.enabled;
       }
     };
 
@@ -944,7 +944,7 @@ angular.module('app')
       });
       xbmc.getApplicationProperties(onApplicationPropertiesRetrieved);
       xbmc.getActivePlayers(onPlayersRetrieved);
-      xbmc.getAddonDetails('plugin.video.pulsar', onPulsarAddonRetrieved);
+      xbmc.getAddonDetails($scope.host.videoAddon, onExternalAddonRetrieved);
     }
     var onDisconnect = function() {
       $scope.connected = false;
@@ -976,7 +976,8 @@ angular.module('app')
             displayName: 'localhost',
             httpPort: window.location.port === '' ? '80': window.location.port,
             ip: window.location.hostname,
-            port: '9090'
+            port: '9090',
+            videoAddon : 'plugin.video.youtube'
           }];
         }
         var defaultHost = $scope.hosts.filter(filterDefault)[0];
@@ -1053,10 +1054,7 @@ angular.module('app')
     };
 
     $scope.toggleWizard = function () {
-      var hostname = window.location.hostname;
-      if(hostname === 'localhost' || hostname === '127.0.0.1') {
-        $scope.showWizard = !$scope.showWizard;
-      }
+      $scope.showWizard = !$scope.showWizard;
     }
   }
 ]);
@@ -1148,7 +1146,7 @@ angular.module('app')
       return true;
     };
 
-    $scope.isUsingPulsar = function () {
+    $scope.isUsingExternalAddon = function () {
       return false;
     };
 
@@ -1205,19 +1203,23 @@ angular.module('app')
       return false;
     };
 
-    $scope.isUsingPulsar = function () {
+    $scope.isUsingExternalAddon = function () {
       return true;
     };
 
     $scope.play = function(movie) {
-      var path = '/movie/'+$scope.movie.imdbnumber+'/play';
-      var url = playFn({
-        ip : $scope.host.ip,
-        port : $scope.host.httpPort,
-        path : 'plugin://plugin.video.pulsar' + path,
-        uid : Date.now()
-      })
-      $http.get(url);
+      if($scope.host.videoAddon.toLowerCase().indexOf('youtube')>-1) {
+        $scope.xbmc.open({'file': movie.trailer});
+      } else {
+        var path = '/movie/'+$scope.movie.imdbnumber+'/play';
+        var url = playFn({
+          ip : $scope.host.ip,
+          port : $scope.host.httpPort,
+          path : 'plugin://'+$scope.host.videoAddon + path,
+          uid : Date.now()
+        });
+        $http.get(url);
+      }
     };
 
     $scope.queue = function(movie) {
@@ -1856,7 +1858,8 @@ angular.module('app')
       displayName: '',
       default : false,
       username : 'kodi',
-      password : ''
+      password : '',
+      videoAddon : 'plugin.video.youtube'
     };
 
     $scope.save = function () {
@@ -1928,7 +1931,7 @@ angular.module('app')
       return $scope.player.active && episodeid === $scope.library.item.episodeid;
     };
 
-    $scope.isUsingPulsar = function () {
+    $scope.isUsingExternalAddon = function () {
       return false;
     };
 
@@ -2069,19 +2072,30 @@ angular.module('app')
       return $filter('fallback')(url, 'img/icons/awe-512.png');
     };
 
-    $scope.isUsingPulsar = function () {
+    $scope.isUsingExternalAddon = function () {
       return true;
     };
 
     $scope.play = function(episode){
-      var path = '/show/'+$scope.tvdbid+'/season/'+episode.season+'/episode/'+episode.episode+'/play';
-      var url = playFn({
-        ip : $scope.host.ip,
-        port : $scope.host.httpPort,
-        path : 'plugin://plugin.video.pulsar' + path,
-        uid : Date.now()
-      })
-      $http.get(url);
+      if($scope.host.videoAddon.toLowerCase().indexOf('youtube') > -1) {  
+        $scope.tmdb.tv.videos(
+          $scope.tvshowid, 
+          episode.season, 
+          episode.episode).then(function(result){
+            var videos = result.data.results;
+            var pluginURL = 'plugin://'+$scope.host.videoAddon+'/?action=play_video&videoid='+videos[0].key;
+            $scope.xbmc.open({file: pluginURL});
+        });
+      } else {
+        var path = '/show/'+$scope.tvdbid+'/season/'+episode.season+'/episode/'+episode.episode+'/play';
+        var url = playFn({
+          ip : $scope.host.ip,
+          port : $scope.host.httpPort,
+          path : 'plugin://plugin.video.pulsar' + path,
+          uid : Date.now()
+        })
+        $http.get(url);
+      }
     };
   }
 ]);
@@ -2530,6 +2544,14 @@ angular.module('services.storage', [])
         return defer.promise;
       };
 
+      factory.tv.videos = function (id, season, episode) {
+        var url = interpolateFn({
+          action : 'tv/'+id+'/season/'+season+'/episode/'+episode+'/videos',
+          apiKey : apiKey,
+          parameters : ''
+        });
+        return $http(getConfig(url, 'GET'));
+      };
       return factory;
     }
   ]);
@@ -2682,10 +2704,10 @@ angular.module("modules/movie/details.tpl.html", []).run(["$templateCache", func
     "<div ng-switch on=\"loading\" class=\"movie detail fill-height\" ng-class=\"{loading : loading}\">\n" +
     "    <div ng-switch-when=\"true\" class=\"loading\"><div class=\"kodi\"></div></div>\n" +
     "    <div ng-switch-when=\"false\">\n" +
-    "        <div class=\"experimental row\" ng-show=\"!isPulsarAvailable && isUsingPulsar()\">\n" +
+    "        <div class=\"experimental row\" ng-show=\"!isExternalAddonAvailable && isUsingExternalAddon()\">\n" +
     "            <div class=\"offset2 span8\">\n" +
     "                <i class=\"icon icon-beaker\"></i>\n" +
-    "                <a href=\"https://github.com/steeve/plugin.video.pulsar\" target=\"_blank\">Pulsar</a> plugin needs to be installed and enabled to play discoverable content.\n" +
+    "                {{host.videoAddon}} needed to preview discoverable content.\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"row wrapper\">\n" +
@@ -2740,7 +2762,8 @@ angular.module("modules/movie/details.tpl.html", []).run(["$templateCache", func
     "                </div>\n" +
     "                <div  class=\"span3\">\n" +
     "                    <div class=\"fanart\" image image-source=\"getImage(movie.fanart, 'w300')\">\n" +
-    "                        <div class=\"preview\"  ng-click=\"xbmc.open({'file': movie.trailer})\">\n" +
+    "                        <div class=\"preview\"  ng-click=\"xbmc.open({'file': movie.trailer})\"\n" +
+    "                             ng-show=\"!isUsingExternalAddon()\">\n" +
     "                            <i class=\"icon-film\"></i>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
@@ -3390,6 +3413,11 @@ angular.module("modules/settings/wizard.tpl.html", []).run(["$templateCache", fu
     "            <input type=\"text\" placeholder=\"Ex : 8080\" required=\"\" ng-model=\"host.httpPort\" tabindex=\"3\"/>\n" +
     "            <button type=\"reset\" class=\"icon-remove\"></button>\n" +
     "        </p>\n" +
+    "        <p>\n" +
+    "            <label>External video add-on</label>\n" +
+    "             <input type=\"text\" placeholder=\"Ex : plugin.video.youtube\" required=\"\" ng-model=\"host.videoAddon\" tabindex=\"3\"/>\n" +
+    "            <button type=\"reset\" class=\"icon-remove\"></button>\n" +
+    "        </p>\n" +
     "    </div>\n" +
     "</form>");
 }]);
@@ -3399,10 +3427,10 @@ angular.module("modules/tvshow/details.tpl.html", []).run(["$templateCache", fun
     "<div ng-switch on=\"loading\" class=\"tvshow detail fill-height\" ng-class=\"{loading : loading}\">\n" +
     "    <div ng-switch-when=\"true\" class=\"loading\"><div class=\"kodi\"></div></div>\n" +
     "    <div ng-switch-when=\"false\">\n" +
-    "        <div class=\"experimental row\" ng-show=\"!isPulsarAvailable && isUsingPulsar()\">\n" +
+    "        <div class=\"experimental row\" ng-show=\"!isExternalAddonAvailable && isUsingExternalAddon()\">\n" +
     "            <div class=\"offset2 span8\">\n" +
     "                <i class=\"icon icon-beaker\"></i>\n" +
-    "                <a href=\"https://github.com/steeve/plugin.video.pulsar\" target=\"_blank\">Pulsar</a> plugin needs to be installed and enabled to play discoverable content.\n" +
+    "                {{host.videoAddon}} needed to preview discoverable content.\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"row wrapper\">\n" +

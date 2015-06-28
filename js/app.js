@@ -22,10 +22,10 @@ angular.module("modules/movie/details.tpl.html", []).run(["$templateCache", func
     "<div ng-switch on=\"loading\" class=\"movie detail fill-height\" ng-class=\"{loading : loading}\">\n" +
     "    <div ng-switch-when=\"true\" class=\"loading\"><div class=\"kodi\"></div></div>\n" +
     "    <div ng-switch-when=\"false\">\n" +
-    "        <div class=\"experimental row\" ng-show=\"!isPulsarAvailable && isUsingPulsar()\">\n" +
+    "        <div class=\"experimental row\" ng-show=\"!isExternalAddonAvailable && isUsingExternalAddon()\">\n" +
     "            <div class=\"offset2 span8\">\n" +
     "                <i class=\"icon icon-beaker\"></i>\n" +
-    "                <a href=\"https://github.com/steeve/plugin.video.pulsar\" target=\"_blank\">Pulsar</a> plugin needs to be installed and enabled to play discoverable content.\n" +
+    "                {{host.videoAddon}} needed to preview discoverable content.\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"row wrapper\">\n" +
@@ -80,7 +80,8 @@ angular.module("modules/movie/details.tpl.html", []).run(["$templateCache", func
     "                </div>\n" +
     "                <div  class=\"span3\">\n" +
     "                    <div class=\"fanart\" image image-source=\"getImage(movie.fanart, 'w300')\">\n" +
-    "                        <div class=\"preview\"  ng-click=\"xbmc.open({'file': movie.trailer})\">\n" +
+    "                        <div class=\"preview\"  ng-click=\"xbmc.open({'file': movie.trailer})\"\n" +
+    "                             ng-show=\"!isUsingExternalAddon()\">\n" +
     "                            <i class=\"icon-film\"></i>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
@@ -730,6 +731,11 @@ angular.module("modules/settings/wizard.tpl.html", []).run(["$templateCache", fu
     "            <input type=\"text\" placeholder=\"Ex : 8080\" required=\"\" ng-model=\"host.httpPort\" tabindex=\"3\"/>\n" +
     "            <button type=\"reset\" class=\"icon-remove\"></button>\n" +
     "        </p>\n" +
+    "        <p>\n" +
+    "            <label>External video add-on</label>\n" +
+    "             <input type=\"text\" placeholder=\"Ex : plugin.video.youtube\" required=\"\" ng-model=\"host.videoAddon\" tabindex=\"3\"/>\n" +
+    "            <button type=\"reset\" class=\"icon-remove\"></button>\n" +
+    "        </p>\n" +
     "    </div>\n" +
     "</form>");
 }]);
@@ -739,10 +745,10 @@ angular.module("modules/tvshow/details.tpl.html", []).run(["$templateCache", fun
     "<div ng-switch on=\"loading\" class=\"tvshow detail fill-height\" ng-class=\"{loading : loading}\">\n" +
     "    <div ng-switch-when=\"true\" class=\"loading\"><div class=\"kodi\"></div></div>\n" +
     "    <div ng-switch-when=\"false\">\n" +
-    "        <div class=\"experimental row\" ng-show=\"!isPulsarAvailable && isUsingPulsar()\">\n" +
+    "        <div class=\"experimental row\" ng-show=\"!isExternalAddonAvailable && isUsingExternalAddon()\">\n" +
     "            <div class=\"offset2 span8\">\n" +
     "                <i class=\"icon icon-beaker\"></i>\n" +
-    "                <a href=\"https://github.com/steeve/plugin.video.pulsar\" target=\"_blank\">Pulsar</a> plugin needs to be installed and enabled to play discoverable content.\n" +
+    "                {{host.videoAddon}} needed to preview discoverable content.\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"row wrapper\">\n" +
