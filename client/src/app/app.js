@@ -69,7 +69,7 @@ angular.module('app')
       criteria: ''
     };
 
-    $scope.isPulsarAvailable = false;
+    $scope.isExternalAddonAvailable = false;
 
     $scope.hosts = [];
     $scope.host = null;
@@ -242,9 +242,9 @@ angular.module('app')
       xbmc.setActivePlaylist(-1);
     };
 
-    var onPulsarAddonRetrieved = function (result) {
+    var onExternalAddonRetrieved = function (result) {
       if(result && typeof result !== 'undefined' && result.addon) {
-        $scope.isPulsarAvailable = result.addon.enabled;
+        $scope.isExternalAddonAvailable = result.addon.enabled;
       }
     };
 
@@ -279,7 +279,7 @@ angular.module('app')
       });
       xbmc.getApplicationProperties(onApplicationPropertiesRetrieved);
       xbmc.getActivePlayers(onPlayersRetrieved);
-      xbmc.getAddonDetails('plugin.video.pulsar', onPulsarAddonRetrieved);
+      xbmc.getAddonDetails($scope.host.videoAddon, onExternalAddonRetrieved);
     }
     var onDisconnect = function() {
       $scope.connected = false;
@@ -311,7 +311,8 @@ angular.module('app')
             displayName: 'localhost',
             httpPort: window.location.port === '' ? '80': window.location.port,
             ip: window.location.hostname,
-            port: '9090'
+            port: '9090',
+            videoAddon : 'plugin.video.youtube'
           }];
         }
         var defaultHost = $scope.hosts.filter(filterDefault)[0];

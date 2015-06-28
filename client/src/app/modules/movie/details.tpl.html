@@ -1,10 +1,10 @@
 <div ng-switch on="loading" class="movie detail fill-height" ng-class="{loading : loading}">
     <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
     <div ng-switch-when="false">
-        <div class="experimental row" ng-show="!isPulsarAvailable && isUsingPulsar()">
+        <div class="experimental row" ng-show="!isExternalAddonAvailable && isUsingExternalAddon()">
             <div class="offset2 span8">
                 <i class="icon icon-beaker"></i>
-                <a href="https://github.com/steeve/plugin.video.pulsar" target="_blank">Pulsar</a> plugin needs to be installed and enabled to play discoverable content.
+                {{host.videoAddon}} needed to preview discoverable content.
             </div>
         </div>
         <div class="row wrapper">
@@ -59,7 +59,8 @@
                 </div>
                 <div  class="span3">
                     <div class="fanart" image image-source="getImage(movie.fanart, 'w300')">
-                        <div class="preview"  ng-click="xbmc.open({'file': movie.trailer})">
+                        <div class="preview"  ng-click="xbmc.open({'file': movie.trailer})"
+                             ng-show="!isUsingExternalAddon()">
                             <i class="icon-film"></i>
                         </div>
                     </div>

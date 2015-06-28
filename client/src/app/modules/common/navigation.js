@@ -25,10 +25,7 @@ angular.module('app')
     };
 
     $scope.toggleWizard = function () {
-      var hostname = window.location.hostname;
-      if(hostname === 'localhost' || hostname === '127.0.0.1') {
-        $scope.showWizard = !$scope.showWizard;
-      }
+      $scope.showWizard = !$scope.showWizard;
     }
   }
 ]);

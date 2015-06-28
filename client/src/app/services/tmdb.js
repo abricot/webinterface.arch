@@ -133,6 +133,14 @@
         return defer.promise;
       };
 
+      factory.tv.videos = function (id, season, episode) {
+        var url = interpolateFn({
+          action : 'tv/'+id+'/season/'+season+'/episode/'+episode+'/videos',
+          apiKey : apiKey,
+          parameters : ''
+        });
+        return $http(getConfig(url, 'GET'));
+      };
       return factory;
     }
   ]);

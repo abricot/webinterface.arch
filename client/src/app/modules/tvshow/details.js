@@ -48,7 +48,7 @@ angular.module('app')
       return $scope.player.active && episodeid === $scope.library.item.episodeid;
     };
 
-    $scope.isUsingPulsar = function () {
+    $scope.isUsingExternalAddon = function () {
       return false;
     };
 
@@ -189,19 +189,30 @@ angular.module('app')
       return $filter('fallback')(url, 'img/icons/awe-512.png');
     };
 
-    $scope.isUsingPulsar = function () {
+    $scope.isUsingExternalAddon = function () {
       return true;
     };
 
     $scope.play = function(episode){
-      var path = '/show/'+$scope.tvdbid+'/season/'+episode.season+'/episode/'+episode.episode+'/play';
-      var url = playFn({
-        ip : $scope.host.ip,
-        port : $scope.host.httpPort,
-        path : 'plugin://plugin.video.pulsar' + path,
-        uid : Date.now()
-      })
-      $http.get(url);
+      if($scope.host.videoAddon.toLowerCase().indexOf('youtube') > -1) {  
+        $scope.tmdb.tv.videos(
+          $scope.tvshowid, 
+          episode.season, 
+          episode.episode).then(function(result){
+            var videos = result.data.results;
+            var pluginURL = 'plugin://'+$scope.host.videoAddon+'/?action=play_video&videoid='+videos[0].key;
+            $scope.xbmc.open({file: pluginURL});
+        });
+      } else {
+        var path = '/show/'+$scope.tvdbid+'/season/'+episode.season+'/episode/'+episode.episode+'/play';
+        var url = playFn({
+          ip : $scope.host.ip,
+          port : $scope.host.httpPort,
+          path : 'plugin://plugin.video.pulsar' + path,
+          uid : Date.now()
+        })
+        $http.get(url);
+      }
     };
   }
 ]);

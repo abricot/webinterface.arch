@@ -85,7 +85,7 @@ angular.module('app')
       return true;
     };
 
-    $scope.isUsingPulsar = function () {
+    $scope.isUsingExternalAddon = function () {
       return false;
     };
 
@@ -142,19 +142,23 @@ angular.module('app')
       return false;
     };
 
-    $scope.isUsingPulsar = function () {
+    $scope.isUsingExternalAddon = function () {
       return true;
     };
 
     $scope.play = function(movie) {
-      var path = '/movie/'+$scope.movie.imdbnumber+'/play';
-      var url = playFn({
-        ip : $scope.host.ip,
-        port : $scope.host.httpPort,
-        path : 'plugin://plugin.video.pulsar' + path,
-        uid : Date.now()
-      })
-      $http.get(url);
+      if($scope.host.videoAddon.toLowerCase().indexOf('youtube')>-1) {
+        $scope.xbmc.open({'file': movie.trailer});
+      } else {
+        var path = '/movie/'+$scope.movie.imdbnumber+'/play';
+        var url = playFn({
+          ip : $scope.host.ip,
+          port : $scope.host.httpPort,
+          path : 'plugin://'+$scope.host.videoAddon + path,
+          uid : Date.now()
+        });
+        $http.get(url);
+      }
     };
 
     $scope.queue = function(movie) {

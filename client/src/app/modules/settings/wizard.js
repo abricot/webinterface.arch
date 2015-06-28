@@ -8,7 +8,8 @@ angular.module('app')
       displayName: '',
       default : false,
       username : 'kodi',
-      password : ''
+      password : '',
+      videoAddon : 'plugin.video.youtube'
     };
 
     $scope.save = function () {
