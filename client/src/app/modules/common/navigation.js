@@ -5,19 +5,20 @@ angular.module('app')
 
     $scope.medias = [{
       hash: '/movies/recents',
-      icon: 'icon-film',
       label: 'Movies',
       matchRegExp : /movie.*$/
     }, {
       hash: '/tvshows/recents',
-      icon: 'icon-facetime-video',
       label: 'TV Shows',
       matchRegExp : /.*show.*$/
     }, {
       hash: '/musics/artists/all',
-      icon: 'icon-music',
       label: 'Musics',
       matchRegExp : /music.*$/
+    }, {
+      hash: '/settings',
+      label: 'Settings',
+      matchRegExp : /settings.*$/
     }];
 
     $scope.isCurrent = function (matchRegExp) {

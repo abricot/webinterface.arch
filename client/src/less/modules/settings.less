@@ -23,45 +23,47 @@
 .wizard .banner,
 .hosts .banner {
   background: #03a9f4 url(../img/backgrounds/banner.png) no-repeat center;
-  background-size: 100% auto;
+  height : 12.5rem;
+  background-size: auto 100%;
 }
-
+.wizard .panel {
+  border : 1px solid @borderColor;
+  margin : 1rem 0;
+  font-size: 1.5rem;
+  background : @primaryBgColor;
+  box-sizing: border-box;
+  margin : 1rem 17%;
+}
 .wizard h1 {
-  color: @primaryTextColor;
-  text-align: center;
-  font-size: 2.5rem;
+  color: white;
+  font-size: 2rem;
   position: relative;
-  margin-top: 0;
+  background: lighten(@playerBgColor, 25%);
+  padding : 0.5rem;
+  margin : 0;
+  font-family: 'Roboto';
+}
+.wizard h1 .icon{ padding : 0 0.5rem;}
+.wizard .icon-trakt:before {
+  background : transparent url(https://trakt.tv/assets/logos/header@2x-7eadb5555cf21dbe5f791e9638b175f7.png) no-repeat center;
+  background-size: auto 100%;
+  content: "";
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  position: relative;
+  top: 0.25rem;
 }
 
-.wizard .settings {
-  position: absolute;
-  top: 10rem;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: scroll;
-}
+
 
 .wizard p {
-  padding : 1rem;
+  padding : .5rem 1rem;
 }
 
 .wizard label {
-  font-size: 1.5rem;
+  line-height: 4rem;
   color: @primaryTextColor;
-}
-
-.wizard input {
-  color: @primaryTextColor;
-  border: 0;
-  border-bottom: 1px solid @primaryBgColor;
-  background: transparent;
-  .inner-shadow(0, 0, 0, 0);}
-
-.wizard input:focus {
-  outline-width: 0;
-  border-bottom: 1px solid @outlineColor;
 }
 
 .wizard p input:focus + button[type="reset"] {
@@ -72,10 +74,6 @@
   top: auto;
 }
 
-.wizard p {
-  margin-bottom :  1rem;
-}
-
 .wizard .message {
   color : white;
   background : rgba(255,0,0,0.5);
@@ -84,3 +82,63 @@
 }
 
 .wizard .md-action.md-action-danger {bottom: 2rem;}
+.wizard .pin-instruction {
+  text-align : center;
+  padding-top : 1rem;
+}
+
+.wizard .qr-code {
+  margin-top : 1rem;
+  width: 128px;
+  height: 128px;
+  border: solid 1px @borderColor;
+}
+
+.wizard .separator-with-text {
+  font-weight: bold;
+  padding : 1rem 0;
+}
+
+.wizard .separator-with-text:before,
+.wizard .separator-with-text:after {
+  content: '';
+  display: inline-block;
+  position: relative;
+  height: 1px;
+  width: 50%;
+  background-color: @borderColor;
+  vertical-align: middle;
+}
+
+.wizard .separator-with-text:before {
+  right: 0.5em;
+  margin-left: -50%;
+}
+
+
+.wizard .separator-with-text:after {
+  left: 0.5em;
+  margin-right: -50%;
+}
+
+.wizard .settings {
+  overflow: auto;
+  position: absolute;
+  bottom: 0;
+  top: 12.5rem;
+  left: 0;
+  right: 0;
+}
+
+.wizard .arts .md-action {
+  width: 10rem;
+  height: 10rem;
+  position: absolute;
+  top: 1rem;
+  right: 17%;
+}
+
+.wizard .arts .md-action i {
+  font-size: 4rem;
+  line-height: 10rem;
+}

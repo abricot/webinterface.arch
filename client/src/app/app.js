@@ -101,15 +101,6 @@ angular.module('app')
         $scope.xbmc.disconnect();
       }
       $scope.xbmc.connect(host.ip, host.port);
-      if(host.username !== '' && host.password !== '') {
-        //Let RAL knows that we should use credentials
-        RAL.authorization = {
-          username : host.username,
-          password : host.password
-        };
-        var authentificationPrefix = host.username + ':' + host.password + '@';
-        $scope.webserverURL = 'http://'+authentificationPrefix+host.ip+':'+host.httpPort;
-      }
       $scope.initialized = true;
       var hash = window.location.hash;
       var path = hash.replace('#', '');
@@ -283,7 +274,7 @@ angular.module('app')
     }
     var onDisconnect = function() {
       $scope.connected = false;
-      $scope.initialized = true; 
+      $scope.initialized = true;
     };
 
     if (xbmc.isConnected()) {

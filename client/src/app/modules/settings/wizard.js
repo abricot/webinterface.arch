@@ -1,4 +1,13 @@
 angular.module('app')
+.config(['$stateProvider', function ($stateProvider) {
+  $stateProvider.state('settings', {
+    url: '/settings',
+    views: {
+      header: {templateUrl: 'modules/common/navigation.tpl.html', controller : 'HeaderNavController'},
+      body: {templateUrl: 'modules/settings/wizard.tpl.html', controller: 'WizardCtrl'}
+    }
+  });
+}])
 .controller('WizardCtrl', ['$scope', 'storage', '$stateParams',
   function WizardCtrl($scope, storage, $stateParams) {
     $scope.host = {
@@ -17,6 +26,7 @@ angular.module('app')
         $scope.hosts.splice(0,1,$scope.host);
         storage.setItem('hosts', $scope.hosts);
         $scope.initialize($scope.host);
+        $scope.go('/');
       }
     };
 
@@ -26,7 +36,9 @@ angular.module('app')
       }
       var filtered = $scope.hosts.filter(filterDefault);
       if(filtered.length ===1) {
-        angular.copy(filtered[0], $scope.host);
+        var host = filtered[0];
+        host.videoAddon = host.videoAddon || 'plugin.video.youtube';
+        angular.copy(host, $scope.host);
       }
     });
   }
