@@ -18,7 +18,8 @@ angular.module('app')
       default : false,
       username : 'kodi',
       password : '',
-      videoAddon : 'plugin.video.youtube'
+      videoAddon : 'plugin.video.youtube',
+      traktPin : ''
     };
 
     $scope.save = function () {
@@ -29,6 +30,11 @@ angular.module('app')
         $scope.go('/');
       }
     };
+    $scope.$watch('host.traktPin', function(newVal, oldVal) {
+      if(newVal) {
+        $scope.oauth.getToken(newVal);
+      }
+    });
 
     $scope.$watch('hosts', function(newVal, oldVal) {
       var filterDefault = function(el) {

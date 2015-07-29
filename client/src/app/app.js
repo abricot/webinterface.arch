@@ -19,6 +19,7 @@ angular.module('app', [
   'filters.fallback',
   'services.xbmc',
   'services.tmdb',
+  'services.oauth',
   'services.storage',
   'templates.abricot',
   'templates.app',
@@ -33,8 +34,8 @@ angular.module('app')
   }
 ])
 .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter',
-  '$interpolate', 'xbmc', 'storage', 'tmdb',
-  function($scope, $rootScope, $state, $location, $filter, $interpolate, xbmc, storage, tmdb) {
+  '$interpolate', 'xbmc', 'storage', 'tmdb', 'oauth',
+  function($scope, $rootScope, $state, $location, $filter, $interpolate, xbmc, storage, tmdb, oauth) {
     var asChromeApp = window.chrome && window.chrome.storage;
     var analyticsService, analyticsTracker;
     if(asChromeApp) {
@@ -76,6 +77,7 @@ angular.module('app')
     $scope.webserverURL = 'about:blank';
     $scope.xbmc = xbmc;
     $scope.tmdb = tmdb;
+    $scope.oauth = oauth;
     $scope.studioFn = $interpolate('https://cdn.rawgit.com/ccMatrix/StudioLogos/master/161x109_mono_png/{{studio}}.png');
     $scope.languageFn = $interpolate('https://cdn.rawgit.com/BigNoid/Aeon-Nox/master/media/flags/subtitles/flags/{{language}}.png')
     $scope.back = function() {
