@@ -11,18 +11,15 @@
             <h1>  <i class="icon icon-info-sign"></i> General information</h1>
             <p class="host row">
                 <label class="span4">Host IP</label>
-                <input class="span4" name="ip" type="text" placeholder="Ex : 192.16.0.1, hostname" required="" ng-model="host.ip" tabindex="2"/>
-                <button type="reset" class="icon-remove"></button>
+                <input class="span5" name="ip" type="text" placeholder="Ex : 192.16.0.1, hostname" required="" ng-model="host.ip" tabindex="2"/>
             </p>
             <p class="row httpport">
                 <label class="span4">Webserver port</label>
-                <input  class="span4" type="text" placeholder="Ex : 8080" required="" ng-model="host.httpPort" tabindex="3"/>
-                <button type="reset" class="icon-remove"></button>
+                <input  class="span5" type="text" placeholder="Ex : 8080" required="" ng-model="host.httpPort" tabindex="3"/>
             </p>
             <p class="row wsport">
                 <label class="span4">Api port</label>
-                <input class="span4" type="text" placeholder="Ex : 9090" required="" ng-model="host.port" tabindex="3"/>
-                <button type="reset" class="icon-remove"></button>
+                <input class="span5" type="text" placeholder="Ex : 9090" required="" ng-model="host.port" tabindex="3"/>
             </p>
         </div>
         <div class="panel">
@@ -32,21 +29,30 @@
             </p>
             <p class="row">
                 <label class="span4">External video add-on</label>
-                <input class="span4" type="text" placeholder="Ex : plugin.video.youtube" required="" ng-model="host.videoAddon" tabindex="4"/>
-                <button type="reset" class="icon-remove"></button>
+                <input class="span5" type="text" placeholder="Ex : plugin.video.youtube" required="" ng-model="host.videoAddon" tabindex="4"/>
             </p>
         </div>
         <div class="panel">
             <h1>  <i class="icon icon-trakt"></i> Trakt</h1>
+            <div class="row trakt-status" style="padding : .5rem 1rem;">
+                <div class="span4">Authentication status</div>
+                <div class="span5" ng-if="authentication">
+                    Last authentication <b>{{ authentication.created_at | date : 'dd/MM/yyyy HH:mm'}}</b>
+                    <a href="javascript:void(0);" ng-click="refreshToken()">refresh</a>
+                </div>
+                <div class="span4" ng-if="!authentication">
+                    Not yet authenticated.
+                </div>
+            </div>
             <p class="row">
                 <label class="span4">Pin code from Trakt</label>
-                <input class="span4" type="text" placeholder="Ex : 73F75D39" ng-model="host.traktPin" tabindex="4"/>
-                <button type="reset" class="icon-remove"></button>
+                <input class="span5" type="text" placeholder="Ex : 73F75D39" ng-model="pin" tabindex="4"/>
             </p>
+           
             <div class="row" style="padding : .5rem 1rem;">
                 <div class="span4">How do I get my PIN</div>
-                <div class="span4 pin-instruction">
-                   Visit the followin url
+                <div class="span5 pin-instruction">
+                    Visit the following url
                     <a href="https://trakt.tv/pin/5615" target="_blank">https://trakt.tv/pin/5615</a>
                     <div class="separator-with-text">or</div>
                     Scan the follwing QR code </br>

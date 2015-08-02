@@ -10,6 +10,8 @@ angular.module('app')
 }])
 .controller('WizardCtrl', ['$scope', 'storage', '$stateParams',
   function WizardCtrl($scope, storage, $stateParams) {
+    $scope.authentication = null;
+    $scope.pin = null;
     $scope.host = {
       ip: '',
       port: '9090',
@@ -18,8 +20,13 @@ angular.module('app')
       default : false,
       username : 'kodi',
       password : '',
-      videoAddon : 'plugin.video.youtube',
-      traktPin : ''
+      videoAddon : 'plugin.video.youtube'
+    };
+
+    var setToken = function(data){
+      if(data) {
+        $scope.authentication = data;
+      }
     };
 
     $scope.save = function () {
@@ -30,9 +37,14 @@ angular.module('app')
         $scope.go('/');
       }
     };
-    $scope.$watch('host.traktPin', function(newVal, oldVal) {
+
+    $scope.refreshToken = function() {
+      $scope.trakt.getToken($scope.authentication.refresh_token, 'refresh_token').then(setToken);
+    }
+
+    $scope.$watch('pin', function(newVal, oldVal) {
       if(newVal) {
-        $scope.oauth.getToken(newVal);
+        $scope.trakt.getToken(newVal).then(setToken);
       }
     });
 
@@ -47,5 +59,7 @@ angular.module('app')
         angular.copy(host, $scope.host);
       }
     });
+
+    storage.getItem('trakt-authentication').then(setToken);
   }
 ]);

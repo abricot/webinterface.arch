@@ -22,7 +22,7 @@
             return transform.translate(value);
           })
         };
-      }
+      };
 
       var appendTransform = function(defaults, transform) {
         defaults = angular.isArray(defaults) ? defaults : [defaults];
