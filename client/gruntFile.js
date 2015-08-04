@@ -104,7 +104,8 @@ module.exports = function (grunt) {
                 src:[
                     'vendor/lrInfiniteScroll/lrInfiniteScroll.js',
                     'vendor/mousetrap/mousetrap.js',
-                    'vendor/chrome-platform-analytic/google-analytics-bundle.js'
+                    'vendor/chrome-platform-analytic/google-analytics-bundle.js',
+                    'vendor/moment/moment.js'
                 ],
                 dest: '<%= releasedir %>/js/lib/third.js'
             },

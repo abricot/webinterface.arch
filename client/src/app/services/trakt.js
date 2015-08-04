@@ -17,7 +17,7 @@ angular.module('services.trakt', [])
       };
 
     var interpolateFn = $interpolate('https://api-v2launch.trakt.tv/{{action}}');
-      
+
 
     var getConfig = function (url, method, data) {
       headers['X-Proxy-URL'] = url;
@@ -59,6 +59,10 @@ angular.module('services.trakt', [])
         defer.resolve(data);
       });
       return defer.promise;;
+    };
+
+    factory.isAuthenticated = function () {
+      return authentication !== null;
     };
 
     factory.calendar.myShows = function (startDate, days) {

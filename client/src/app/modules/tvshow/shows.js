@@ -19,6 +19,10 @@ angular.module('app')
       url : '/popular',
       templateUrl: 'modules/tvshow/list.tpl.html',
       controller: 'PopularShowsCtrl'
+    }).state('tvshows.calendar', {
+      url: '/calendar',
+      templateUrl: 'modules/tvshow/calendar.tpl.html',
+      controller: 'ShowsCalendarCtrl'
     }).state('tvshows.seasons', {
       url: '/:tvshowid',
       templateUrl: 'modules/tvshow/details.tpl.html',
