@@ -16,7 +16,7 @@ angular.module('services.trakt', [])
         'trakt-api-key' : client.id
       };
 
-    var interpolateFn = $interpolate('https://api-v2launch.trakt.tv/{{action}}');
+    var interpolateFn = $interpolate('https://api-v2launch.trakt.tv/{{action}}?extended=images,full');
 
 
     var getConfig = function (url, method, data) {

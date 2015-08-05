@@ -86,3 +86,52 @@
 .detail .episode .controls i:hover{
   opacity : 1;
 }
+
+.cal-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.cal-grid .cal-day {
+  flex: 0 1 calc(100%/7);
+  max-width: calc(100%/7);
+  border : 1px solid transparent;
+  box-sizing: border-box;
+  text-align: left;
+  margin : 0;
+}
+
+.cal-grid .cal-day header {
+  background: lighten(@regionBgColor, 25%);
+  background : @tabsBgColor;
+  color : #fff;
+}
+
+.cal-grid .cal-day .today {
+  background : @secondaryTabsBgColor;
+}
+
+.cal-grid .cal-day .date{
+  float: left;
+  font-family: "Roboto";
+  font-size: 3rem;
+  padding: 0rem 1rem;
+  font-weight: bold;
+}
+
+.cal-grid .cal-day .day {
+  padding-top : 0.5rem;
+  font-size: 1.5rem;
+}
+
+.cal-grid .cal-day .poster {
+  background-image: url(https://walter.trakt.us/images/episodes/001/766/215/screenshots/thumb/74cf002649.jpg);
+  height: 12rem;
+  width: 100%;
+  background-size: 100% auto;
+}

@@ -1,5 +1,23 @@
-<div>
-  <div ng-repeat="date in dates">
-  {{date.format('D MMM')}}
-  </div>
+<div class="cards fill-height">
+    <div class="kodi" ng-if="loading"></div>
+    <ul data-type="list" ng-if="!loading" class="cal-grid">
+        <li ng-repeat="date in dates" class="card repeat-animation cal-day ">
+            <header ng-class="{today : isToday(date)}">
+                <div class="date">{{date.format('D')}}</div>
+                <div class="day">{{date.format('ddd')}}</div>
+                <div class="month">{{date.format('MMM')}}</div>
+            </header>
+            <div ng-repeat="show in getTVShowsFor(date)">
+                <div class="poster" image image-source="getPoster(show)">
+                    <div class="rating-wrapper">
+                        <div rating rating-value="show.episode.rating" rating-max="10"></div>
+                    </div>
+                </div>
+                <div class="description">
+                    <h3>{{show.episode.title}}</h3>
+                    <p>{{show.episode.number | episode:show.episode.season}}</p>
+                </div>
+            </div>
+        </li>
+    </ul>
 </div>
