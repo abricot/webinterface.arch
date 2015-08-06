@@ -14,6 +14,7 @@ angular.module('app', [
   'directives.seekbar',
   'directives.streamdetails',
   'directives.spinner',
+  'directives.onlastrepeat',
   'filters.xbmc',
   'filters.tmdb',
   'filters.fallback',

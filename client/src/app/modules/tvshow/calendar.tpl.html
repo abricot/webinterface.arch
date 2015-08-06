@@ -1,12 +1,11 @@
 <div class="cards fill-height">
     <div class="kodi" ng-hide="dates.length"></div>
     <ul data-type="list" class="cal-grid">
-        <li ng-repeat="date in dates" class=" repeat-animation cal-day ">
+        <li ng-repeat="date in dates" class=" repeat-animation cal-day " on-last-repeat>
             <header ng-class="{today : isToday(date), past: isPast(date), future: isFuture(date)}">
                 <div class="date">{{date.format('D')}}</div>
                 <div class="day">{{date.format('ddd')}}</div>
                 <div class="month">{{date.format('MMM')}}</div>
-                <a id="today" ng-if="isToday(date)"></a>
             </header>
             <div ng-repeat="show in getTVShowsFor(date)" class="card repeat-animation">
                 <a href="#/tvshows/tmdb/{{show.show.ids.tmdb}}">
@@ -23,9 +22,17 @@
                         </flipper>
                     </div>
                     <div class="description">
-                        <h3>{{show.episode.title || 'TBA'}}</h3>
-                        <div><b>{{show.episode.number | episode:show.episode.season}}</b></div>
+                        <h3>{{show.episode.number | episode:show.episode.season}} - {{show.episode.title || 'TBA'}}</h3>
                         <div>{{show.show.title}}</div>
+                        <div class="controls">
+                            <i class="icon-check"></i>
+                            <i class="icon-list"></i>
+                            <i class="icon-bookmark-empty"></i>
+                            <i class="icon-trash"
+                               ng-click="remove($index, show); $event.preventDefault();"
+                            ></i>
+                            <img src="https://cdn.rawgit.com/ccMatrix/StudioLogos/master/161x109_mono_png/{{show.show.network}}.png" style="filter: invert(1);"/>
+                        </div>
                     </div>
                 </a>
             </div>

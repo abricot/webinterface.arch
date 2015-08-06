@@ -2,6 +2,7 @@ angular.module('services.trakt', [])
 .factory('trakt', ['$q', '$http', '$filter', '$interpolate', 'storage',
   function($q, $http, $filter, $interpolate, storage) {
     var $date = $filter('date');
+    var notifications = {};
     var factory = {
       calendar : {}
     };
@@ -65,6 +66,11 @@ angular.module('services.trakt', [])
       return authentication !== null;
     };
 
+    factory.register = function(method, callback) {
+      notifications[method] = notifications[method] || [];
+      notifications[method].push(callback);
+    };
+
     factory.calendar.myShows = function (startDate, days) {
       var action = 'calendars/my/shows/'+$date(startDate, 'yyyy-MM-dd') + '/'+days;
       var url = interpolateFn({
@@ -77,6 +83,11 @@ angular.module('services.trakt', [])
       if(data) {
         authentication = data;
         headers.Authorization = 'Bearer '+data.access_token;
+        var onConnectedCallbacks = notifications['Trakt.OnConnected'] || [];
+        for (var i = 0; i < onConnectedCallbacks.length; i++) {
+          var cb = onConnectedCallbacks[i];
+          cb.fn.call(cb.scope);
+        }
       };
     });
 

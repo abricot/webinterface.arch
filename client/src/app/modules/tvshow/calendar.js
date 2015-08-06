@@ -2,7 +2,7 @@ angular.module('app')
 .controller('ShowsCalendarCtrl', ['$scope', '$filter', '$interpolate', '$anchorScroll',
   function ShowsCalendarCtrl($scope, $filter, $interpolate, $anchorScroll) {
     var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
-    
+
     $scope.loading = true;
     $scope.tvshows = [];
     var iterator = moment().startOf('month');
@@ -23,7 +23,6 @@ angular.module('app')
       $scope.tvshows = result.data;
       $scope.dates = dates;
       $scope.loading = false;
-      $anchorScroll('today');
     };
 
     function onLoad() {
@@ -34,7 +33,10 @@ angular.module('app')
     if ($scope.trakt.isAuthenticated()) {
       onLoad();
     } else {
-      $scope.go('/settings');
+      $scope.trakt.register('Trakt.OnConnected', {
+        fn: onLoad,
+        scope: this
+      });
     }
 
     $scope.isFuture = function(date){
@@ -62,10 +64,10 @@ angular.module('app')
     };
 
     $scope.play = function(episode){
-      if($scope.host.videoAddon.toLowerCase().indexOf('youtube') > -1) {  
+      if($scope.host.videoAddon.toLowerCase().indexOf('youtube') > -1) {
         $scope.tmdb.tv.videos(
-          episode.ids.tvdb, 
-          episode.season, 
+          episode.ids.tvdb,
+          episode.season,
           episode.number).then(function(result){
             var videos = result.data.results;
             var pluginURL = 'plugin://'+$scope.host.videoAddon+'/?action=play_video&videoid='+videos[0].key;
@@ -82,5 +84,11 @@ angular.module('app')
         $http.get(url);
       }
     };
+
+    $scope.$on('onRepeatLast', function(scope, element, attrs){
+      var today = document.querySelector('.today');
+      var grid = document.querySelector('.cal-grid');
+      grid.scrollTop = today.offsetTop;
+    });
   }
 ]);
