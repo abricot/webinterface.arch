@@ -100,7 +100,6 @@
 .cal-grid .cal-day {
   flex: 0 1 calc(100%/7);
   max-width: calc(100%/7);
-  border : 1px solid transparent;
   box-sizing: border-box;
   text-align: left;
   margin : 0;
@@ -112,9 +111,9 @@
   color : #fff;
 }
 
-.cal-grid .cal-day .today {
-  background : @secondaryTabsBgColor;
-}
+.cal-grid .cal-day header.past,
+.cal-grid .cal-day header.future {opacity:0.25;}
+.cal-grid .cal-day .today {background : @secondaryTabsBgColor;}
 
 .cal-grid .cal-day .date{
   float: left;
@@ -128,10 +127,19 @@
   padding-top : 0.5rem;
   font-size: 1.5rem;
 }
-
+.cal-grid .cal-day .card {
+  width : 100%;
+  border : 1px solid @borderColor;
+  margin : 0;
+}
 .cal-grid .cal-day .poster {
   background-image: url(https://walter.trakt.us/images/episodes/001/766/215/screenshots/thumb/74cf002649.jpg);
   height: 12rem;
   width: 100%;
   background-size: 100% auto;
+}
+
+.cal-grid .cal-day .description {
+  text-align: center;
+  border-radius : 0;
 }

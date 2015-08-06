@@ -1,22 +1,33 @@
 <div class="cards fill-height">
-    <div class="kodi" ng-if="loading"></div>
-    <ul data-type="list" ng-if="!loading" class="cal-grid">
-        <li ng-repeat="date in dates" class="card repeat-animation cal-day ">
-            <header ng-class="{today : isToday(date)}">
+    <div class="kodi" ng-hide="dates.length"></div>
+    <ul data-type="list" class="cal-grid">
+        <li ng-repeat="date in dates" class=" repeat-animation cal-day ">
+            <header ng-class="{today : isToday(date), past: isPast(date), future: isFuture(date)}">
                 <div class="date">{{date.format('D')}}</div>
                 <div class="day">{{date.format('ddd')}}</div>
                 <div class="month">{{date.format('MMM')}}</div>
+                <a id="today" ng-if="isToday(date)"></a>
             </header>
-            <div ng-repeat="show in getTVShowsFor(date)">
-                <div class="poster" image image-source="getPoster(show)">
-                    <div class="rating-wrapper">
-                        <div rating rating-value="show.episode.rating" rating-max="10"></div>
+            <div ng-repeat="show in getTVShowsFor(date)" class="card repeat-animation">
+                <a href="#/tvshows/tmdb/{{show.show.ids.tmdb}}">
+                    <div class="poster" image image-source="getPoster(show)">
+                        <flipper>
+                            <div class="front">
+                                <div rating rating-value="show.episode.rating || show.show.rating" rating-max="10"></div>
+                            </div>
+                            <div class="back">
+                                <div class="md-circle rating">
+                                    <i class="icon-play" ng-click="play(show.episode); $event.preventDefault();"></i>
+                                </div>
+                            </div>
+                        </flipper>
                     </div>
-                </div>
-                <div class="description">
-                    <h3>{{show.episode.title}}</h3>
-                    <p>{{show.episode.number | episode:show.episode.season}}</p>
-                </div>
+                    <div class="description">
+                        <h3>{{show.episode.title || 'TBA'}}</h3>
+                        <div><b>{{show.episode.number | episode:show.episode.season}}</b></div>
+                        <div>{{show.show.title}}</div>
+                    </div>
+                </a>
             </div>
         </li>
     </ul>
