@@ -41,8 +41,10 @@ var BaseMovieDetailsCtrl = function ($scope, $stateParams) {
             return 0;
           }
         };
-        var comments = result.data.sort(sortFn);
-        $scope.comments = comments.slice(0, Math.min(comments.length, 3));
+        if(result.data && angular.isArray(result.data)) {
+          var comments = result.data.sort(sortFn);
+          $scope.comments = comments.slice(0, Math.min(comments.length, 3));
+        }
       });
     }
   };
@@ -53,7 +55,7 @@ var BaseMovieDetailsCtrl = function ($scope, $stateParams) {
 
   var detail = document.querySelector('.movie.detail');
   detail.onscroll = function () {
-    if(detail.scrollTop > 250) {
+    if(detail.scrollTop > 200) {
       if(!detail.classList.contains('affixable')) {
         detail.classList.add('affixable');
       }

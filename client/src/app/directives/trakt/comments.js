@@ -9,6 +9,11 @@ angular.module('directives.traktComments', ['filters.unit'])
       comments: '='
     },
     link: function (scope, elem, attrs) {
+      scope.$watch('comments', function (newVal, oldVal) {
+        if (newVal) {
+          scope.comments = newVal;
+        }
+      });
     }
   };
 }); 

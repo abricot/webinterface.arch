@@ -29,6 +29,7 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
 
   $scope.getTraktAdditionalInfo = function (season) {
     if($scope.show) {
+      $scope.comments =[];
       var name = $scope.show.name || $scope.show.title;
       var traktSlug = name.replace(/ /gi, '-').replace(/\./gi, '').toLowerCase();
       $scope.trakt.seasons.stats(traktSlug, season.season).then(function(result){
@@ -47,8 +48,10 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
             return 0;
           }
         };
-        var comments = result.data.sort(sortFn);
-        $scope.comments = comments.slice(0, Math.min(comments.length, 3));
+        if(result.data &&  angular.isArray(result.data)) {
+          var comments = result.data.sort(sortFn);
+          $scope.comments = comments.slice(0, Math.min(comments.length, 3));
+        }
       });
     }
   };
@@ -75,7 +78,7 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
 
   var detail = document.querySelector('.tvshow.detail');
   detail.onscroll = function () {
-    if(detail.scrollTop > 250) {
+    if(detail.scrollTop > 200) {
       if(!detail.classList.contains('affixable')) {
         detail.classList.add('affixable');
       }

@@ -74,7 +74,7 @@ angular.module('app')
 
     var detail = document.querySelector('.songs-wrapper.detail');
     detail.onscroll = function () {
-      if(detail.scrollTop > 300) {
+      if(detail.scrollTop > 250) {
         if(!detail.classList.contains('affixable')) {
           detail.classList.add('affixable');
         }

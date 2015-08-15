@@ -77,9 +77,11 @@
                 </ul>
             </div>
             <div class="span7 content">
-                <h1>Synopsis</h1>
-                <p>{{show.plot}}</p>
-                <div ng-if="nextAiringEpisode">
+                <div  class="details-section">
+                    <h1>Synopsis</h1>
+                    <p>{{show.plot}}</p>
+                </div>
+                <div  class="details-section" ng-if="nextAiringEpisode">
                     <h1>
                       <i class="icon-time"></i>
                       Next Episode
@@ -96,7 +98,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-show="seasons.length">
+                <div  class="details-section" ng-show="seasons.length">
                     <h1>
                         <span class="season">
                             <span class="md-circle fanart" image image-source="getImage(season.thumbnail || season.poster, 'w500')">
@@ -142,7 +144,7 @@
                     </li>
                 </ul>
                 <div ng-show="!episodes.length" class="empty list">Oops! nothing here</div>
-                <div ng-if="comments.length">
+                <div  class="details-section" ng-if="comments.length">
                     <h1>Popular comments</h1>
                     <trakt-comments comments="comments"></trakt-comments>
                 </div>

@@ -1,11 +1,18 @@
 
+.details-section {
+  border-top : 1px solid @borderColor;
+  margin-top: 1rem;
+}
+
+.details-section:first-child {border:0;}
+
 .detail ul {
   margin: 0;
   padding: 0;
 }
 
 .detail li {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: @primaryTextColor;
 }
 
@@ -25,13 +32,13 @@
   color: @primaryTextColor;
   font-size: 1.5rem;
   text-align: justify;
-  margin: 1rem 0.5rem 0.5rem 0.5rem;
+  margin: 1rem 0 0.5rem 0;
   padding : 0.5rem;
   .box-sizing;
 }
 
-.detail .title,
-.detail .stats {
+.detail .wrapper > .title,
+.detail .wrapper > .stats {
   position : absolute;
   bottom : 4.5rem;
   margin : 0 25%;
@@ -40,11 +47,11 @@
   overflow : hidden;
 }
 
-.detail .stats {
+.detail .wrapper > .stats {
   bottom:0;
   margin:0;
   padding : 1rem 0;
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-family: "Roboto";
 }
 
@@ -176,14 +183,14 @@
   position: relative;
   padding-bottom: 2rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  min-height: 40rem;
+  min-height: 35rem;
 }
 .detail .wrapper .fanart,
 .detail.wrapper .fanart{
   position: absolute;
   top: 0;
   left: 0;
-  background-position: center;
+  background-position: center 20%;
   background-size: 100% auto;
   height: 100%;
   width: 100%;
@@ -191,22 +198,18 @@
 }
 
 .detail .poster {
-  width: 100%;
-  height: 19rem;
   background-size: 100%;
   border: 0.25rem solid white;
   .box-sizing;
   background : white;
+  max-width: 15rem;
 }
 
 .detail .poster-wrapper {
   width : 100%;
   position : relative;
   margin-bottom: 1rem;
-}
-
-.detail .poster-wrapper .poster{
-  height : 100%;
+  text-align: center;
 }
 
 .detail .actions {
@@ -244,11 +247,12 @@
 
 .detail h1,
 .detail h3 {
-  font-family: Roboto;
-  font-size : 2.5rem;
-  text-align: left;
-  padding : 0 1rem 1rem 1rem;
   position: relative;
+  padding: 1rem 0;
+  font-family: Roboto;
+  font-size: 2.5rem;
+  text-align: left;
+  margin: 0;
 }
 .detail h3 .se {
   color : @actionBgColor;
@@ -312,7 +316,7 @@
 
 .detail .actor .name,
 .detail .actor .role,
-.detail .similar .title, {
+.detail .similar .title {
   overflow: hidden;;
   text-overflow : ellipsis;
   white-space: nowrap;

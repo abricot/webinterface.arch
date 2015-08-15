@@ -42,9 +42,6 @@
                     <div class="preview"  ng-click="xbmc.open({'file': movie.trailer})">
                         <i class="icon-film"></i>
                     </div>
-                    <div class="playcount" ng-show="movie.playcount">
-                         <i class="icon-ok"></i>
-                    </div>
                 </div>
                 <ul class="nav sections">
                     <li style="text-align: center">
@@ -108,11 +105,11 @@
                 </div>
             </div>
             <div class="span7 content">
-                <div>
+                <div class="details-section">
                     <h1>Synopsis</h1>
                     <p class="plot">{{movie.plot}}</p>
                 </div>
-                <div>
+                <div class="details-section">
                     <h1>
                         Actors
                         <a href="javascript:void(0);" ng-click="seeMoreActors=true;" class="more" ng-class="{hidden : seeMoreActors}">
@@ -128,7 +125,7 @@
                         </li>
                     </ul>
                 </div>
-                <div>
+                <div class="details-section">
                     <h1>Credits</h1>
                     <ul>
                         <li class="row credit">
@@ -146,7 +143,7 @@
                     </ul>
                 </div>
                 
-                <div ng-if="similars.length">
+                <div class="details-section" ng-if="similars.length">
                     <h1>Similars</h1>
                     <ul class="similars collapsed">
                         <li class="similar" ng-repeat="similar in similars">
@@ -155,11 +152,12 @@
                                      image-source="similar.poster | tmdbImage:'w185' | fallback:'img/icons/awe-512.png'">
                                 </div>
                             </a>
+                            <div class="title">{{similar.title}}</div>
                         </li>
                     </ul>
                 </div>
 
-                <div ng-if="hasAdditionalInfo()">
+                <div class="details-section" ng-if="hasAdditionalInfo()">
                     <h1>Additional information</h1>
                     <ul>
                         <li class="row info">
@@ -176,7 +174,7 @@
                         </li>
                     </ul>
                 </div>
-                <div ng-if="comments.length">
+                <div class="details-section" ng-if="comments.length">
                     <h1>Popular comments</h1>
                     <trakt-comments comments="comments"></trakt-comments>
                 </div>
