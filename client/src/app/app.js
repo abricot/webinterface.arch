@@ -15,12 +15,15 @@ angular.module('app', [
   'directives.streamdetails',
   'directives.spinner',
   'directives.onlastrepeat',
+  'directives.traktComments',
+  'directives.traktStats',
   'filters.xbmc',
   'filters.tmdb',
   'filters.fallback',
   'services.xbmc',
   'services.tmdb',
   'services.trakt',
+  'services.helper',
   'services.storage',
   'templates.abricot',
   'templates.app',
@@ -35,14 +38,16 @@ angular.module('app')
   }
 ])
 .controller('AppCtrl', ['$scope', '$rootScope', '$state', '$location', '$filter',
-  '$interpolate', 'xbmc', 'storage', 'tmdb', 'trakt',
-  function($scope, $rootScope, $state, $location, $filter, $interpolate, xbmc, storage, tmdb, trakt) {
-    var asChromeApp = window.chrome && window.chrome.storage;
-    var analyticsService, analyticsTracker;
-    if(asChromeApp) {
-      analyticsService  = analytics.getService('Foxmote');
-      analyticsTracker = analyticsService.getTracker('UA-55050807-1');
-    }
+  '$interpolate', 'helper', 'xbmc', 'storage', 'tmdb', 'trakt',
+  function($scope, $rootScope, $state, $location, $filter, $interpolate, helper, xbmc, storage, tmdb, trakt) {
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-66170707-1', 'auto');
+    ga('set', 'checkProtocolTask', function(){}); // Removes failing protocol check. @see: http://stackoverflow.com/a/22152353/1958200
+    ga('require', 'displayfeatures');
 
     $scope.theme = 'yang';
     storage.getItem('theme', function(theme) {
@@ -79,6 +84,9 @@ angular.module('app')
     $scope.xbmc = xbmc;
     $scope.tmdb = tmdb;
     $scope.trakt = trakt;
+    $scope.helper = helper;
+    $scope.helper.setProviders({xbmc : $scope.xbmc, tmdb : $scope.tmdb});
+    
     $scope.studioFn = $interpolate('https://cdn.rawgit.com/ccMatrix/StudioLogos/master/161x109_mono_png/{{studio}}.png');
     $scope.languageFn = $interpolate('https://cdn.rawgit.com/BigNoid/Aeon-Nox/master/media/flags/subtitles/flags/{{language}}.png')
     $scope.back = function() {
@@ -90,9 +98,6 @@ angular.module('app')
         $scope.isMaximized = !$scope.isMaximized;
       }
       $location.path(path);
-      if(asChromeApp) {
-        analyticsTracker.sendAppView(path);
-      }
     };
 
     $scope.hasFooter = function() {
@@ -159,6 +164,7 @@ angular.module('app')
         $scope.playlist = properties.playlistid;
         xbmc.setActivePlaylist(properties.playlistid);
         if (properties.speed === 1) {
+          
           window.clearInterval($scope.player.intervalId);
           $scope.player.intervalId = window.setInterval(updateSeek, 1000);
         }
@@ -167,6 +173,20 @@ angular.module('app')
 
     function onPlayerItemRetrieved(item) {
       $scope.player.item = item;
+      if($scope.trakt.isAuthenticated() && $scope.trakt.autoScrobble()) {
+        if(item.showtitle && item.season && item.episode) {
+          $scope.player.item.type = 'episode';
+          $scope.trakt.episodes.summary(item.showtitle.replace(/ /gi, '-').toLowerCase(), item.season, item.episode).then(function(result){
+            $scope.player.item.trakt = result.data;
+            $scope.trakt.scrobble.start($scope.player.item.type, $scope.player.item.trakt, $scope.player.seek.percentage || 0);
+          });
+        } else if(item.imdbnumber) {
+          $scope.trakt.movies.summary($scope.player.item.imdbnumber).then(function(result){
+            $scope.player.item.trakt = result.data;
+            $scope.trakt.scrobble.start($scope.player.item.type, $scope.player.item.trakt, $scope.player.seek.percentage || 0);
+          });
+        }
+      }
       xbmc.getPlayerProperties(onPlayerPropertiesRetrieved);
     };
 
@@ -201,6 +221,9 @@ angular.module('app')
     var onPlayerPause = function() {
       $scope.player.speed = 0;
       window.clearInterval($scope.player.intervalId);
+      if($scope.trakt.isAuthenticated() &&  $scope.trakt.autoScrobble() && $scope.player.item.trakt) {
+        $scope.trakt.scrobble.pause($scope.player.item.type, $scope.player.item.trakt, $scope.player.seek.percentage);
+      }
     };
 
     var onPlayerPlay = function(obj) {
@@ -209,7 +232,6 @@ angular.module('app')
         $scope.player.id = player.playerid;
         $scope.player.active = true;
         xbmc.setActivePlayer(player.playerid);
-
         xbmc.getPlayerItem(onPlayerItemRetrieved);
       });
     };
@@ -220,6 +242,9 @@ angular.module('app')
       $scope.player.seek.percentage = 100;
       $scope.player.seek.lastUpdate = Date.now();
       $scope.player.active = false;
+      if($scope.trakt.isAuthenticated() &&  $scope.trakt.autoScrobble() && $scope.player.item.trakt) {
+        $scope.trakt.scrobble.stop($scope.player.item.type, $scope.player.item.trakt, $scope.player.seek.percentage);
+      }
     };
 
     var onPlayerSeek = function(obj) {
@@ -229,6 +254,9 @@ angular.module('app')
       var seek = $scope.player.seek;
       seek.time = timeFilter(time);
       seek.percentage = seek.time / seek.totaltime * 100;
+      if($scope.trakt.isAuthenticated() &&  $scope.trakt.autoScrobble() && $scope.player.item.trakt) {
+        $scope.trakt.scrobble.start($scope.player.item.type, $scope.player.item.trakt, $scope.player.seek.percentage);
+      }
     };
 
     var onPlaylistClear = function() {
@@ -315,14 +343,10 @@ angular.module('app')
 
     }
 
-    $scope.previousState = null;
     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-      var hash = fromState.url;
-      angular.forEach(fromParams, function(value, key) {
-        hash = hash.replace(':' + key, value);
-      });
-      $scope.previousHash = hash;
+      ga('send', 'pageview', $location.path());
     });
+
     $scope.$watch('hosts', function(newVal, oldVal) {
       var filterDefault = function(el) {
         return el.default;

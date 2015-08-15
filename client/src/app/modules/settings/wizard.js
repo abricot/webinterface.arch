@@ -22,7 +22,10 @@ angular.module('app')
       password : '',
       videoAddon : 'plugin.video.youtube'
     };
-
+    $scope.autoScrobble = true;
+    var setAutoScrobble = function(data) {
+      $scope.autoScrobble = data
+    };
     var setToken = function(data){
       if(data) {
         $scope.authentication = data;
@@ -35,6 +38,7 @@ angular.module('app')
         storage.setItem('hosts', $scope.hosts);
         $scope.initialize($scope.host);
         $scope.go('/');
+        $scope.trakt.autoScrobble($scope.autoScrobble);
       }
     };
 
@@ -61,5 +65,6 @@ angular.module('app')
     });
 
     storage.getItem('trakt-authentication').then(setToken);
+    storage.getItem('trakt-autoscrobble').then(setAutoScrobble);
   }
 ]);

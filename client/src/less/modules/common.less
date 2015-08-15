@@ -151,15 +151,29 @@ section[role="region"] header h2.disconnected {
   right: -.75rem;
   color: white;
   font-size: 1rem;
-  background: @secondaryBgColor;
   line-height: 1rem;
   height: 1rem;
   width: 1rem;
   padding: 0.5rem;
   z-index: 2;
   font-weight: bold;
-  border-radius: 50%;
+  background-color: @actionBgColor;
+  top : 0;
+  right: 1rem;
 }
+
+.playcount:after {
+  width: 0;
+  height: 0;
+  border-top: .75rem solid @actionBgColor;
+  border-right: 1rem solid transparent;
+  border-left: 1rem solid transparent;
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -.7rem;
+}
+
 .font-loader {display : none;}
 .font-loader .movieGenre{font-family: moviegenre;}
 
@@ -336,4 +350,17 @@ section[role="region"] header h2.disconnected {
   font-size: 1.5em;
   padding: 0.5em 0;
   margin-bottom: 0.5rem;
+  position : absolute;
+  z-index: 9;
+}
+
+.icon-trakt:before {
+  background : transparent url(https://trakt.tv/assets/logos/header@2x-7eadb5555cf21dbe5f791e9638b175f7.png) no-repeat center;
+  background-size: auto 100%;
+  content: "";
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  position: relative;
+  top: 0.25rem;
 }

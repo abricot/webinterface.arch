@@ -1,25 +1,65 @@
 var BaseMovieDetailsCtrl = function ($scope, $stateParams) {
   $scope.movieid = parseInt($stateParams.movieid);
   $scope.loading = true;
+  $scope.affixable = false;
   $scope.isCurrentlyPlaying = false;
 
   $scope.seeMoreActors = false;
   $scope.similars = [];
-
+  $scope.stats = [];
+  $scope.comments = [];
   $scope.movie  = null;
 
   $scope.findSimilars = function (movieid) {
     $scope.tmdb.movies.similars(movieid, 1).then(function(result){
-      $scope.similars = result.data.results.filter(function(similar) {
+      var similars = result.data.results.filter(function(similar) {
         return typeof similar.poster !== 'undefined' && similar.poster !== null;
       });
-    })
+      $scope.similars = similars.slice(0, Math.min(similars.length, 8));
+    });
   };
 
   $scope.getActors = function () {
-    return $scope.movie.cast.filter(function(actor) {
+    var actors = $scope.movie.cast.filter(function(actor) {
       return actor.role !== '' && typeof actor.thumbnail !== 'undefined';
-    })
+    });
+    return actors.slice(0, Math.min(actors.length, 10));
+  };
+
+  $scope.getTraktAdditionalInfo = function (movie) {
+    if(movie) {
+      $scope.trakt.movies.stats(movie.imdbnumber).then(function(result){
+        $scope.stats = result.data;
+      });
+      $scope.trakt.movies.comments(movie.imdbnumber).then(function(result){
+        var sortFn = function(o1, o2) {
+          if(o1.likes > o2.likes) {
+            return -1;
+          } else if(o1.likes < o2.likes) {
+            return 1;
+          } else {
+            return 0;
+          }
+        };
+        var comments = result.data.sort(sortFn);
+        $scope.comments = comments.slice(0, Math.min(comments.length, 3));
+      });
+    }
+  };
+
+  $scope.$watch('movie', function () {
+    $scope.getTraktAdditionalInfo($scope.movie);
+  });
+
+  var detail = document.querySelector('.movie.detail');
+  detail.onscroll = function () {
+    if(detail.scrollTop > 250) {
+      if(!detail.classList.contains('affixable')) {
+        detail.classList.add('affixable');
+      }
+    } else {
+      detail.classList.remove('affixable');
+    };
   };
 };
 
@@ -90,7 +130,7 @@ angular.module('app')
     };
 
     $scope.play = function(movie) {
-      $scope.xbmc.open({'movieid': movie.movieid});
+      $scope.helper.local.movies.play(movie);
     };
 
     $scope.queue = function(movie) {
@@ -147,18 +187,7 @@ angular.module('app')
     };
 
     $scope.play = function(movie) {
-      if($scope.host.videoAddon.toLowerCase().indexOf('youtube')>-1) {
-        $scope.xbmc.open({'file': movie.trailer});
-      } else {
-        var path = '/movie/'+$scope.movie.imdbnumber+'/play';
-        var url = playFn({
-          ip : $scope.host.ip,
-          port : $scope.host.httpPort,
-          path : 'plugin://'+$scope.host.videoAddon + path,
-          uid : Date.now()
-        });
-        $http.get(url);
-      }
+      $scope.helper.foreign.movies.play($scope.host, movie);
     };
 
     $scope.queue = function(movie) {

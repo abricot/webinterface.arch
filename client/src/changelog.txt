@@ -1,2 +1,9 @@
+v1.1.0
+- New details view
+- Trakt integration
+  * Stats and comments in details view
+  * TV show calendar
+  * Auto scrobbling
+- Dedicated settings screen
 v1.0.0
 - Initial version

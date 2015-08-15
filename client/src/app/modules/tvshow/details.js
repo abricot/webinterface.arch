@@ -3,11 +3,13 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
   $scope.tvshowid = parseInt($stateParams.tvshowid);
 
   $scope.show = null;
+  $scope.season = null;
   $scope.seasons = [];
   $scope.selectedSeason = '';
 
   $scope.episodes = [];
   $scope.nextAiringEpisode = null;
+  $scope.comments = []; 
 
   $scope.seasonName = function (season) {
     return 'Season '+season.season;
@@ -23,6 +25,63 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
     if(futureEpisode.length>0) {
       $scope.nextAiringEpisode  = futureEpisode[0];
     }
+  };
+
+  $scope.getTraktAdditionalInfo = function (season) {
+    if($scope.show) {
+      var name = $scope.show.name || $scope.show.title;
+      var traktSlug = name.replace(/ /gi, '-').replace(/\./gi, '').toLowerCase();
+      $scope.trakt.seasons.stats(traktSlug, season.season).then(function(result){
+        $scope.stats = result.data;
+      });
+      $scope.trakt.seasons.watching(traktSlug, season.season).then(function(result){
+        $scope.watching = result.data;
+      });
+      $scope.trakt.seasons.comments(traktSlug, season.season).then(function(result){
+        var sortFn = function(o1, o2) {
+          if(o1.likes > o2.likes) {
+            return -1;
+          } else if(o1.likes < o2.likes) {
+            return 1;
+          } else {
+            return 0;
+          }
+        };
+        var comments = result.data.sort(sortFn);
+        $scope.comments = comments.slice(0, Math.min(comments.length, 3));
+      });
+    }
+  };
+  
+  $scope.$watch('season', function () {
+    $scope.getTraktAdditionalInfo($scope.season);
+  });
+
+  $scope.previousSeason = function () {
+    var index = $scope.seasons.indexOf($scope.season);
+    if(index - 1 > -1) {
+      $scope.season = $scope.seasons[index-1];
+      $scope.changeSeason($scope.season);
+    }
+  };
+
+  $scope.nextSeason = function () {
+    var index = $scope.seasons.indexOf($scope.season);
+    if(index + 1 < $scope.seasons.length) {
+      $scope.season = $scope.seasons[index+1];
+      $scope.changeSeason($scope.season);
+    }
+  };
+
+  var detail = document.querySelector('.tvshow.detail');
+  detail.onscroll = function () {
+    if(detail.scrollTop > 250) {
+      if(!detail.classList.contains('affixable')) {
+        detail.classList.add('affixable');
+      }
+    } else {
+      detail.classList.remove('affixable');
+    };
   };
 };
 
@@ -105,6 +164,7 @@ angular.module('app')
 
     $scope.changeSeason = function (season) {
       $scope.xbmc.getEpisodes($scope.tvshowid, season.season, onEpisodesRetrieved);
+      $scope.getTraktAdditionalInfo(season);
     };
 
     $scope.getImage = function (path) {
@@ -117,7 +177,7 @@ angular.module('app')
     };
 
     $scope.play = function(episode){
-      $scope.xbmc.open({'episodeid': episode.episodeid})
+      $scope.helper.local.shows.play(episode);
     };
 
     $scope.queueAll = function () {
@@ -163,11 +223,12 @@ angular.module('app')
 
     function onTvShowRetrieved(result) {
       $scope.show = result.data;
-
+      $scope.show.year = moment($scope.show.firstaired).format('YYYY');
       if($scope.show.seasons.length > 0) {
         $scope.seasons = $scope.show.seasons;
         $scope.season = $scope.show.seasons[$scope.show.seasons.length-1];
         $scope.tmdb.tv.seasons($scope.tvshowid, $scope.season.season).then(onEpisodesRetrieved);
+        $scope.tmdb.tv.externalIDs($scope.tvshowid).then(onExternalIDsRetrieved);
       } else {
         $scope.loading = false;
       }
@@ -175,13 +236,14 @@ angular.module('app')
 
     function onExternalIDsRetrieved (result) {
       $scope.tvdbid = result.data.tvdbid;
+      $scope.show.ids = result.data;
     };
 
     $scope.tmdb.tv.details($scope.tvshowid).then(onTvShowRetrieved);
-    $scope.tmdb.tv.externalIDs($scope.tvshowid).then(onExternalIDsRetrieved);
-
+    
     $scope.changeSeason = function (season) {
       $scope.tmdb.tv.seasons($scope.tvshowid, season.season).then(onEpisodesRetrieved);
+      $scope.getTraktAdditionalInfo(season);
     };
 
     $scope.getImage = function (path, size) {
@@ -194,25 +256,7 @@ angular.module('app')
     };
 
     $scope.play = function(episode){
-      if($scope.host.videoAddon.toLowerCase().indexOf('youtube') > -1) {  
-        $scope.tmdb.tv.videos(
-          $scope.tvshowid, 
-          episode.season, 
-          episode.episode).then(function(result){
-            var videos = result.data.results;
-            var pluginURL = 'plugin://'+$scope.host.videoAddon+'/?action=play_video&videoid='+videos[0].key;
-            $scope.xbmc.open({file: pluginURL});
-        });
-      } else {
-        var path = '/show/'+$scope.tvdbid+'/season/'+episode.season+'/episode/'+episode.episode+'/play';
-        var url = playFn({
-          ip : $scope.host.ip,
-          port : $scope.host.httpPort,
-          path : 'plugin://plugin.video.pulsar' + path,
-          uid : Date.now()
-        })
-        $http.get(url);
-      }
+      $scope.helper.foreign.shows.play($scope.host, $scope.show, episode);
     };
   }
 ]);

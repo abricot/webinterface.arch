@@ -10,7 +10,7 @@
                         </div>
                         <div class="back">
                             <div class="md-circle rating">
-                                <i class="icon-play" ng-click="play(movie); $event.preventDefault();"
+                                <i class="icon-play" ng-click="helper.local.movies.play(movie); $event.preventDefault();"
                                    ng-show="!player.active"></i>
                                 <i class="icon-plus" ng-click="queue(movie); $event.preventDefault();"
                                    ng-show="player.active"></i>

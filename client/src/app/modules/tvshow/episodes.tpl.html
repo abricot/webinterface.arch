@@ -10,7 +10,7 @@
                         </div>
                         <div class="back">
                             <div class="md-circle rating">
-                                <i class="icon-play" ng-click="xbmc.open({'episodeid' : episode.episodeid}); $event.preventDefault();"
+                                <i class="icon-play" ng-click="helper.local.shows.play(episode); $event.preventDefault();"
                                    ng-show="!player.active"></i>
                                 <i class="icon-plus" ng-click="xbmc.queue({'episodeid' : episode.episodeid}); $event.preventDefault();"
                                    ng-show="player.active"></i>

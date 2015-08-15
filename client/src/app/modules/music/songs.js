@@ -71,5 +71,16 @@ angular.module('app')
          $scope.xbmc.getSongs(filter, onSongsFromSource, limits);
       }
     };
+
+    var detail = document.querySelector('.songs-wrapper.detail');
+    detail.onscroll = function () {
+      if(detail.scrollTop > 300) {
+        if(!detail.classList.contains('affixable')) {
+          detail.classList.add('affixable');
+        }
+      } else {
+        detail.classList.remove('affixable');
+      };
+    };
   }
 ]);

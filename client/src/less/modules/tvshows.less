@@ -2,7 +2,7 @@
 .tvshows .tabs{background: @secondaryTabsBgColor;}
 .tvshows .tabs .tab.selected {border-color: @secondaryTabsBorderColor;}
 .tvshows .tabs .tab{padding: 1rem 0 0.5rem 0;}
-
+.tvshows .detail [data-type="list"] {padding-top:1rem;}
 .detail h1 .season {
   padding-left : 1rem;
   display: inline-block;
@@ -14,7 +14,7 @@
   padding-left: 1rem;
 }
 
-
+.detail .progress-wrapper {padding-top : 0.5rem;}
 .detail .season {
   padding-left:1rem;
   position: relative;
@@ -59,7 +59,11 @@
   margin: .5rem 0 0 0;
 }
 
-.detail .episode .runtime {font-family: Roboto;font-size: 1.25rem;}
+.detail .episode .runtime,
+.detail .episode .firstaired {
+  font-family: Roboto;font-size: 1.25rem;
+}
+
 .detail .episode .md-action {
   top: 50%;
   right: auto;
@@ -87,6 +91,24 @@
   opacity : 1;
 }
 
+.detail .next,
+.detail .previous {
+  font-size : 4rem;
+  opacity : 0.5;
+  position : fixed;
+  top : 40%;
+  z-index : 9;
+  cursor : pointer;
+}
+
+.detail .next:hover,
+.detail .previous:hover {
+  opacity : 1;
+}
+
+.detail .next {right : 2rem;}
+.detail .previous {left : 2rem;}
+
 .cal-grid {
   display: flex;
   flex-wrap: wrap;
@@ -101,6 +123,8 @@
   display: flex;
   flex-direction: column;
   float : left;
+  background: transparent url(../img/icons/loading.png) no-repeat center 5rem ;
+  background-size: 50%;
 }
 
 .cal-grid .cal-day header {
@@ -108,18 +132,29 @@
   background : @tabsBgColor;
   color : #fff;
   border-top: 1px solid transparent;
+  .box-sizing;
+  transition: all 750ms ease;
 }
+.cal-grid .cal-day:hover header {
+  background : @secondaryTabsBgColor;
+  color : #fff;
+}
+
 .cal-grid .cal-day h3 {margin-bottom: 0;}
 
 .cal-grid .cal-day header.past,
 .cal-grid .cal-day header.future {opacity:0.25;}
-.cal-grid .cal-day .today {background : @secondaryTabsBgColor;}
+.cal-grid .cal-day .today {
+  color : @secondaryTabsBgColor;
+}
 
 .cal-grid .cal-day .date{
   float: left;
-  font-family: "Roboto";
   font-size: 3rem;
   padding: 0rem 1rem;
+}
+
+.cal-grid .cal-day .today .date {
   font-weight: bold;
 }
 
@@ -129,13 +164,17 @@
 }
 .cal-grid .cal-day .card {
   width : 100%;
-  border-right: 1px solid @borderColor;
-  border-left: 1px solid @borderColor;
-  margin : 0 0 0.5rem 0;
+  border : 0;
+  border: .2rem solid transparent;
+  margin : 0;
+  border-radius: 0;
+  .box-sizing;
 }
+.cal-grid .cal-day .card:hover{box-shadow: none;}
+
 .cal-grid .cal-day .poster {
   background-image: url(https://walter.trakt.us/images/episodes/001/766/215/screenshots/thumb/74cf002649.jpg);
-  height: 12rem;
+  height: 9.5rem;
   width: 100%;
   background-size: 100% auto;
 }
@@ -143,6 +182,7 @@
 .cal-grid .cal-day .description {
   text-align: center;
   border-radius : 0;
+  padding-bottom: 1rem;
 }
 
 .cal-grid .cal-day .actions-wrapper {
@@ -157,7 +197,8 @@
 
 .cal-grid .cal-day .network {
   width : 5rem;
-  float : right;
-  -webkit-filter: invert(.5);
-  filter: invert(.5);
+  position : absolute;
+  top : 0rem;
+  right : 0rem;
+  opacity : 0.75
 }

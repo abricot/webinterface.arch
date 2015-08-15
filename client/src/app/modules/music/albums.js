@@ -84,5 +84,18 @@ angular.module('app')
          $scope.xbmc.getAlbums(filter, onAlbumsFromSource, limits);
       }
     };
+
+    var detail = document.querySelector('.songs-wrapper.detail');
+    if(detail) {
+      detail.onscroll = function () {
+        if(detail.scrollTop > 300) {
+          if(!detail.classList.contains('affixable')) {
+            detail.classList.add('affixable');
+          }
+        } else {
+          detail.classList.remove('affixable');
+        };
+      };
+    }
   }
 ]);

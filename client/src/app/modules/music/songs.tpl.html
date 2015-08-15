@@ -1,40 +1,77 @@
-<div class="fill-height songs-wrapper">
+<div class="fill-height songs-wrapper detail" lr-infinite-scroll="loadMore">
     <div class="kodi" ng-hide="songs.length"></div>
-    <div class="fill-height">
-        <div class="detail wrapper row">
-            <div class="fanart" image image-source="album.fanart | asset:host | fallback:'img/backgrounds/vinyls.jpg'"></div>
-            <div class="offset2 span8 card artist">
-                <div class="poster-wrapper">
-                    <div class="poster" image image-source="album.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
-                    </div>
-                </div>
-                <div class="details">
-                    <h1>{{album.label | fallback:'Songs'}}</h1>
-                    <h3>{{album.genre.join(', ')}}</h3>
-                    <p ng-show="album">{{album.year}}</p>
-                    <p ng-show="!album">{{total}} songs in your library</p>
-                </div>
+    <div class="wrapper row">
+        <div class="fanart" image image-source="album.fanart | asset:host | fallback:'img/backgrounds/vinyls.jpg'"></div>
+        <div class="actions">
+            <div class="md-action md-action-primary"
+               ng-click="xbmc.open({'file' : undefined})"
+               ng-show="!album">
+                <i class="icon-random"></i>
             </div>
-            <div class="actions">
-                <div class="md-action md-action-primary"
-                   ng-click="xbmc.open({'file' : undefined})"
-                   ng-show="!album">
-                    <i class="icon-random"></i>
-                </div>
-                <div class="md-action md-action-primary"
-                     ng-click="xbmc.queue({'albumid': album.albumid})"
-                     ng-show="album && player.active">
-                    <i class="icon-plus"></i>
-                </div>
-                <div class="md-action md-action-primary"
-                     ng-click="xbmc.open({'albumid': album.albumid})"
-                     ng-show="album && !player.active">
-                    <i class="icon-play"></i>
-                </div>
+            <div class="md-action md-action-primary"
+                 ng-click="xbmc.queue({'albumid': album.albumid})"
+                 ng-show="album && player.active">
+                <i class="icon-plus"></i>
+            </div>
+            <div class="md-action md-action-primary"
+                 ng-click="xbmc.open({'albumid': album.albumid})"
+                 ng-show="album && !player.active">
+                <i class="icon-play"></i>
             </div>
         </div>
-        <div class="row songs">
-            <ul data-type="list" lr-infinite-scroll="loadMore">
+    </div>
+    <div class="description row">
+        <div class="offset1 span2 sidebar">
+            <div class="poster-wrapper">
+                <img class="poster" image image-source="album.thumbnail | asset:host | fallback:'img/backgrounds/album.png'"/>
+            </div>
+            <ul class="nav sections">
+                <li style="text-align: center">
+                    {{album.label | fallback:'Library'}}
+                </li>
+                <li class="row" ng-if="album">
+                    <div class="span6 label">Artist</div>
+                    <div class="span6 value">
+                        {{album.displayartist}}
+                    </div>
+                </li>
+                <li class="row" ng-if="album">
+                    <div class="span6 label">Genre</div>
+                    <div class="span6 value">
+                        {{album.genre.join(', ')}}
+                    </div>
+                </li>
+                <li class="row" ng-if="album">
+                    <div class="span6 label">Year</div>
+                    <div class="span6 value">
+                        {{album.year}}
+                    </div>
+                </li>
+                <li class="row" ng-if="!album">
+                    <div class="span6 label"># Songs</div>
+                    <div class="span6 value">
+                        {{total}}
+                    </div>
+                </li>
+            </ul>
+            <button class="recommend" class="md-action md-action-primary"
+                    ng-click="xbmc.open({'file' : undefined})"
+                    ng-show="!album">
+                <i class="icon-random"></i> Shuffle
+            </button>
+            <button class="recommend"
+                 ng-click="xbmc.queue({'albumid': album.albumid})"
+                 ng-show="album && player.active">
+                <i class="icon-plus"></i> Queue
+            </button>
+            <button class="recommend"
+                 ng-click="xbmc.open({'albumid': album.albumid})"
+                 ng-show="album && !player.active">
+                <i class="icon-play"></i> Play
+            </button>
+        </div>
+        <div class="span7 content">
+            <ul data-type="list">
                 <li class="row song repeat-animation" ng-repeat="song in songs"
                     ng-click="xbmc.open({songid : song.songid})">
                     <div class="span5 track">

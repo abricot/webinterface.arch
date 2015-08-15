@@ -89,7 +89,7 @@ a[role="button"],
   white-space: nowrap;
   overflow: hidden;
   .gradient(@primaryBgColor, @primaryBgColor, @primaryBgColor) ;
-  border: 0;
+  border: 1px solid @borderColor;
   font-size: 1.6rem;
   line-height: 3.8rem;
   color: #333;
@@ -103,7 +103,17 @@ a[role="button"],
 button.recommend,
 a[role="button"].recommend,
 .button.recommend {
-  .gradient(@secondaryBgColor, @secondaryBgColor, @secondaryBgColor);
+  .gradient(@actionBgColor, @actionBgColor, @actionBgColor);
+  color : white;
+  border: 1px solid @actionBgColor;
+}
+
+button.danger,
+a[role="button"].danger,
+.button.danger {
+  .gradient(@dangerBgColor, @dangerBgColor, @dangerBgColor);
+  color : white;
+  border: 1px solid @dangerBgColor;
 }
 
 /* Press (default & recommend) */

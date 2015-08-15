@@ -1,6 +1,6 @@
 angular.module('app')
 .controller('MusicArtistsCtrl', ['$scope', 'storage',
-  function MusicAlbumsCtrl($scope, storage) {
+  function MusicArtistsCtrl($scope, storage) {
     $scope.loading = true;
     $scope.fetching = false;
 

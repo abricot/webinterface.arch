@@ -103,9 +103,17 @@
         return $http(getConfig(url, 'GET'));
       };
 
-      factory.tv.externalIDs = function (id) {
+      factory.tv.externalIDs = function (id, season, episode) {
+        var path = 'tv/'+id;
+        if(season) {
+          path += '/season/'+season;
+        }
+        if(episode) {
+          path += '/episode/'+episode;
+        }
+        path += '/external_ids';
         var url = interpolateFn({
-          action : 'tv/'+id+'/external_ids',
+          action : path,
           apiKey : apiKey,
           parameters : ''
         });

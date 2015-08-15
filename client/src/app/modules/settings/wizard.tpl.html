@@ -34,6 +34,10 @@
         </div>
         <div class="panel">
             <h1>  <i class="icon icon-trakt"></i> Trakt</h1>
+            <p class="row">
+                <label class="span4"> Auto scrobble</label>
+                <input class="span5" type="checkbox" ng-model="autoScrobble"/>
+            </p>
             <div class="row trakt-status" style="padding : .5rem 1rem;">
                 <div class="span4">Authentication status</div>
                 <div class="span5" ng-if="authentication">

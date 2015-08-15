@@ -60,10 +60,6 @@ angular.module('app')
       }
     };
 
-    $scope.play = function (movie) {
-      $scope.xbmc.open({'movieid' : movie.movieid});
-    };
-
     $scope.queue = function (movie) {
       $scope.xbmc.queue({'movieid' : movie.movieid})
     };

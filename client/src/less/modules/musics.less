@@ -1,17 +1,35 @@
-.music .content {
+.music .kodi {
   position: absolute;
-  left: 0;
+  top: 0;
   right: 0;
-  top: 3.5rem;
   bottom: 0;
+  left: 0;
+  background: @regionBgColor url(../img/icons/loading.png) no-repeat center center;
+  background-size: 12.5%;
+  z-index: 4;
 }
 
+.music .kodi:after {
+  content: "Loading";
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: @primaryTextColor;
+  font-family: Roboto;
+}
+
+.music .content {height: calc(100% - 4rem);position:relative;}
 .music .tabs{background: @secondaryTabsBgColor;}
 .music .tabs .tab.selected {border-color: @secondaryTabsBorderColor;}
 .music .tabs .tab{
   padding: 1rem 0 0.5rem 0;
 }
 
+.music .detail .sidebar {margin-top: -10rem;}
+.music .detail.affixable .sidebar {margin-top: 0;}
 
 [data-type="list"] .card.artist,
 [data-type="list"] .card.album {width :18rem;}
@@ -38,8 +56,6 @@
   height: calc(100% - 24.5rem);
   overflow: auto;
 }
-
-.songs [data-type="list"]{padding : 0 17%;}
 
 .song {
   font-size : 1.2rem;

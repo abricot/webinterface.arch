@@ -1,6 +1,6 @@
 angular.module('app')
-.controller('ShowsCalendarCtrl', ['$scope', '$filter', '$interpolate', '$anchorScroll',
-  function ShowsCalendarCtrl($scope, $filter, $interpolate, $anchorScroll) {
+.controller('ShowsCalendarCtrl', ['$scope', '$filter', '$interpolate', '$anchorScroll', '$http',
+  function ShowsCalendarCtrl($scope, $filter, $interpolate, $anchorScroll, $http) {
     var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
     var autoscroll = true;
     $scope.loading = true;
@@ -42,15 +42,20 @@ angular.module('app')
     if ($scope.trakt.isAuthenticated()) {
       onLoad();
     } else {
-      $scope.trakt.register('Trakt.OnConnected', {
-        fn: onLoad,
-        scope: this
+      $scope.trakt.connect().then(function(){
+        onLoad();
+      }, function() {
+        $scope.go('/settings');
       });
     }
 
     $scope.getPoster = function (show) {
       return show.episode.images.screenshot.thumb || show.show.images.fanart.thumb;
     };
+
+    $scope.getRandomImage = function () {
+      return Math.floor(Math.random()*100)%11 + 1;
+    }
 
     $scope.getTVShowsFor = function(date) {
       return $scope.tvshows.filter(function(show){
@@ -82,26 +87,8 @@ angular.module('app')
       }
     };
 
-    $scope.play = function(episode){
-      if($scope.host.videoAddon.toLowerCase().indexOf('youtube') > -1) {
-        $scope.tmdb.tv.videos(
-          episode.ids.tvdb,
-          episode.season,
-          episode.number).then(function(result){
-            var videos = result.data.results;
-            var pluginURL = 'plugin://'+$scope.host.videoAddon+'/?action=play_video&videoid='+videos[0].key;
-            $scope.xbmc.open({file: pluginURL});
-        });
-      } else {
-        var path = '/show/'+episode.ids.tvdb+'/season/'+episode.season+'/episode/'+episode.number+'/play';
-        var url = playFn({
-          ip : $scope.host.ip,
-          port : $scope.host.httpPort,
-          path : 'plugin://plugin.video.pulsar' + path,
-          uid : Date.now()
-        })
-        $http.get(url);
-      }
+    $scope.play = function(show){
+      $scope.helper.foreign.shows.play($scope.host, show.show, show.episode);
     };
 
     $scope.$on('onRepeatLast', function(scope, element, attrs){

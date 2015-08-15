@@ -1,51 +1,62 @@
-<div class="fill-height songs-wrapper">
+<div class="fill-height songs-wrapper detail">
     <div class="kodi" ng-hide="songs.length"></div>
-    <div class="fill-height">
-        <div class="detail wrapper row">
+        <div class="wrapper row">
             <div class="fanart" image image-source="artist.fanart | asset:host"></div>
-            <div class="offset2 span8 card artist">
-                <div class="poster-wrapper">
-                    <div class="poster" image image-source="artist.thumbnail | asset:host | fallback:'img/backgrounds/vinyls.jpg'">
-                    </div>
-                </div>
-                <div class="details">
-                    <h1>{{artist.artist}}</h1>
-                    <h3>{{artist.genre.join(', ')}}</h3>
-                    <p>{{artist.formed}}</p>
-                </div>
-            </div>
         </div>
-        <div class="row songs">
-            <div class="album repeat-animation" ng-repeat="album in albums">
-                <div class="row">
-                  <div class="offset2 span8 detail">
-                    <div class="poster" image image-source="album.thumbnail | asset:host | fallback:'img/backgrounds/vinyls.jpg'"
-                         >
-                    </div>
-                    <h1>{{album.label}}</h1>
-                    <h3>{{album.year}}</h3>
-                    <div class="md-action md-action-primary" ng-click="xbmc.open({albumid : album.albumid})">
-                          <i class="icon-play"></i>
-                      </div>
-                  </div>
+        <div class="description row">
+            <div class="offset1 span2 sidebar">
+                <div class="poster-wrapper">
+                    <img class="poster" image image-source="artist.thumbnail | asset:host | fallback:'img/backgrounds/vinyls.jpg'"/>
                 </div>
-                <ul data-type="list">
-                  <li class="row song" ng-repeat="song in songs | filter:isPartOf(album) | orderBy:song.trac"
-                      ng-click="xbmc.open({songid : song.songid})">
-                      <div class="span5 track">
-                          <span class="thumbnail" image image-source="song.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
-                            <i class="icon-play"></i>
-                          </span>
-                          {{song.label}}
-                          <img class="equalizer" src="img/backgrounds/equalizer.gif" ng-show="isPlaying(song.songid)"/>
-                      </div>
-                      <div class="span3">{{song.album}}</div>
-                      <div class="span3">{{song.artist.join(', ')}}</div>
-                      <div class="span1 duration">{{song.duration | time | date :'mm:ss'}}</div>
-                  </li>
+                <ul class="nav sections">
+                    <li style="text-align: center">
+                        {{artist.artist}}
+                    </li>
+                    <li class="row">
+                        <div class="span6 label">Genre</div>
+                        <div class="span6 value">
+                            {{artist.genre.join(', ')}}
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="span6 label">Active</div>
+                        <div class="span6 value">
+                            <span ng-repeat="active in artist.yearsactive">{{active}}</span>
+                        </div>
+                    </li>
                 </ul>
             </div>
-            <div ng-show="!albums.length" class="empty list">Oops! nothing here</div>
+            <div class="span7 content songs">
+                <div class="album repeat-animation" ng-repeat="album in albums">
+                    <div class="detail">
+                        <div class="poster" image image-source="album.thumbnail | asset:host | fallback:'img/backgrounds/vinyls.jpg'"
+                             >
+                        </div>
+                        <h1>{{album.label}}</h1>
+                        <h3>{{album.year}}</h3>
+                        <div class="md-action md-action-primary" 
+                             ng-click="xbmc.open({albumid : album.albumid})">
+                            <i class="icon-play"></i>
+                        </div>
+                    </div>
+                    <ul data-type="list">
+                        <li class="row song" ng-repeat="song in songs | filter:isPartOf(album) | orderBy:song.trac"
+                          ng-click="xbmc.open({songid : song.songid})">
+                            <div class="span5 track">
+                                <span class="thumbnail" image image-source="song.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
+                                    <i class="icon-play"></i>
+                                </span>
+                                {{song.label}}
+                                <img class="equalizer" src="img/backgrounds/equalizer.gif" ng-show="isPlaying(song.songid)"/>
+                            </div>
+                            <div class="span3">{{song.album}}</div>
+                            <div class="span3">{{song.artist.join(', ')}}</div>
+                            <div class="span1 duration">{{song.duration | time | date :'mm:ss'}}</div>
+                        </li>
+                    </ul>
+                </div>
+                <div ng-show="!albums.length" class="empty list">Oops! nothing here</div>
+            </div>
         </div>
     </div>
 </div>
