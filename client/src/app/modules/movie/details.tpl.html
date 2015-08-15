@@ -24,6 +24,12 @@
                     <i class="icon-pause" ng-show="player.speed"></i>
                 </div>
             </div>
+            <div class="actions" ng-if="!hasAdditionalInfo()">
+                <div class="md-action md-action-primary"
+                     ng-click="play(movie)">
+                    <i class="icon-play"></i>
+                </div>
+            </div>
             <div class="title">
                 <h1>{{movie.title}}</h1>
             </div>
@@ -33,8 +39,7 @@
             <div class="offset1 span2 sidebar">
                 <div class="poster-wrapper">
                     <img class=" poster" image image-source="getImage(movie.thumbnail || movie.poster, 'w185')"/>
-                    <div class="preview"  ng-click="xbmc.open({'file': movie.trailer})"
-                         ng-show="!isUsingExternalAddon()">
+                    <div class="preview"  ng-click="xbmc.open({'file': movie.trailer})">
                         <i class="icon-film"></i>
                     </div>
                     <div class="playcount" ng-show="movie.playcount">
@@ -93,6 +98,12 @@
                         <i class="icon-pause" ng-show="player.speed"></i>
                         <span ng-show="!player.speed">Resume</span>
                         <span ng-show="player.speed">Pause</span>
+                    </button>
+                </div>
+                <div ng-if="!hasAdditionalInfo()">
+                    <button class="recommend" class="md-action md-action-primary"
+                         ng-click="play(movie)">
+                        <i class="icon-play"></i> Play
                     </button>
                 </div>
             </div>

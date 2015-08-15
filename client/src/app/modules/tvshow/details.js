@@ -236,6 +236,7 @@ angular.module('app')
 
     function onExternalIDsRetrieved (result) {
       $scope.tvdbid = result.data.tvdbid;
+      result.data.tmdbid = $scope.tvshowid;
       $scope.show.ids = result.data;
     };
 

@@ -38,7 +38,7 @@ angular.module('services.helper', ['services.storage'])
     factory.foreign.movies.play = function (host, movie) {
       var title = movie.name || movie.title;
       if(host.videoAddon.toLowerCase().indexOf('youtube')>-1) {
-        $scope.xbmc.open({'file': movie.trailer});
+        xbmc.open({'file': movie.trailer});
       } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1) {
         xbmc.executeAddon({
           addonid : 'plugin.video.genesis',
@@ -67,9 +67,9 @@ angular.module('services.helper', ['services.storage'])
       var firstaired = episode.hasOwnProperty('firstaired') ?  moment(episode.firstaired) :  moment(episode.first_aired);
 
       if(host.videoAddon.toLowerCase().indexOf('youtube') > -1) {
-        tmdb.tv.videos(tvdb, season, number).then(function(result){
+        tmdb.tv.videos(show.ids.tmdbid, season, number).then(function(result){
             var videos = result.data.results;
-            var pluginURL = 'plugin://'+videoAddon+'/?action=play_video&videoid='+videos[0].key;
+            var pluginURL = 'plugin://'+host.videoAddon+'/?action=play_video&videoid='+videos[0].key;
             xbmc.open({file: pluginURL});
         });
       } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1) {
@@ -85,7 +85,7 @@ angular.module('services.helper', ['services.storage'])
                    '&date='+firstaired.format('YYYY-MM-DD')
         });
       } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1) {
-        var path = '/show/'+ids.tvdb+'/season/'+season+'/episode/'+episode+'/play';
+        var path = '/show/'+tvdb+'/season/'+season+'/episode/'+number+'/play';
         var url = playFn({
           ip : host.ip,
           port : host.httpPort,
