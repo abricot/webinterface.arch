@@ -32,7 +32,7 @@ angular.module('app')
     };
 
     $scope.getExtra = function (show) {
-      return 'First aired ' + show.firstaired;
+      return moment(show.firstaired).format('YYYY');
     };
 
     $scope.getPoster = function (show) {

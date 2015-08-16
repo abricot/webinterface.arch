@@ -20,7 +20,8 @@ nav .tab.selected{
   border-color : @secondaryBgColor;
 }
 
-nav .status {
+nav .status,
+nav .search .btn {
   display: inline-block;
   width : 4rem;
   height: 4rem;
@@ -31,9 +32,39 @@ nav .status {
   right: 0;
   cursor : pointer;
   top : 0;
+  transition: all 0.25s ease;
 }
 
-nav .status i {line-height: 4rem;}
+nav .status i ,
+nav .search .btn i {line-height: 4rem;}
+
+nav .search .btn{
+  position : relative;
+  font-size: 1.5rem;
+  float : left;
+}
+nav .search:hover .btn,
+nav .search.open .btn {
+  background: lighten(@playerBgColor, 25%) !important;
+  border-color: lighten(@playerBgColor, 25%)!important;
+  
+}
+
+nav .search input[type="text"] {
+  width : 0%;
+  float : left;
+  transition: all 0.25s ease;
+  padding : 0;
+  border : 0;
+}
+
+nav .search.open input[type="text"] {
+  width : 80%;
+  display : block;
+  padding : 0 1.2rem;
+  border : 1px solid @borderColor;
+}
+
 nav .status.connected{
   background-color: #259b24!important;
   border-color: #259b24!important;

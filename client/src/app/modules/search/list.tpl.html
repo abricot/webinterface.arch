@@ -1,0 +1,37 @@
+<div class="search fill-height">
+    <div class="tabs row">
+        <a class="span4 tab" ng-click="filter.mediaType=''"
+           ng-class="{selected : filter.mediaType==='' }">
+           All
+        </a>
+        <a class="span4 tab" ng-click="filter.mediaType='movie'"
+           ng-class="{selected :  filter.mediaType==='movie'}">
+           Movies
+        </a>
+        <a class="span4 tab" ng-click="filter.mediaType='tv'"
+           ng-class="{selected :  filter.mediaType==='tv'}">
+           TV shows
+        </a>
+    </div>
+    <div class="content">
+        <div class="cards fill-height">
+            <div class="kodi" ng-hide="results.length"></div>
+            <ul data-type="list" lr-infinite-scroll="loadMore">
+                <li class="card result repeat-animation" ng-repeat="result in results | filter:filter">
+                    <a href="{{getPath(result)}}">
+                        <div class="poster" image image-source="result.poster | tmdbImage:'w500' | fallback:'img/icons/awe-512.png'">
+                            <div class="rating-wrapper">
+                                <div rating rating-value="result.rating" rating-max="10"></div>
+                            </div>
+                        </div>
+                        <div class="description">
+                            <h3>{{result.label || result.title || result.name}}</h3>
+                            <h4>{{result.year || '-'}}</h4>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <div ng-show="!result.length" class="empty list">Oops! nothing here</div>
+        </div>
+    </div>
+</div>s

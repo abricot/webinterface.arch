@@ -1,5 +1,11 @@
 <nav class="row">
-    <div class="clearfix tabs span8 offset2">
+    <form class="span3 clearfix search" ng-submit="search()" ng-class="{open : isOpen}">
+        <div class="btn" ng-click="open()">
+            <i class="icon-search"></i>
+        </div>
+        <input type="text" placeholder="What are you looking for" ng-model="query"/>
+    </form>
+    <div class="clearfix tabs span6">
         <a href="#{{item.hash}}" ng-repeat="item in medias" ng-class="{selected : isCurrent(item.matchRegExp)}"
             class="tab span{{12/medias.length}}">
             <div class="label">{{item.label}}</div>

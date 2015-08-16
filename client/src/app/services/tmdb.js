@@ -38,6 +38,15 @@
         return $http(getConfig(url, 'GET'));
       };
 
+      factory.search = function (query, page) {
+        var url = interpolateFn({
+          action : 'search/multi',
+          apiKey : apiKey,
+          parameters : '&query='+query+'&page='+page
+        });
+        return $http(getConfig(url, 'GET'));
+      };
+
       factory.movies.details = function (id) {
         var url = interpolateFn({
           action : 'movie/'+id,

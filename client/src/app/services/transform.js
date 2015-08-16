@@ -11,8 +11,12 @@
       };
 
       var year = function (dateStr) {
-        var parts = dateStr.split('-');
-        return parseInt(parts[0], 10);
+        var year = null;
+        if(dateStr) {
+          var parts = dateStr.split('-');
+          year = parseInt(parts[0], 10);
+        }
+        return year;
       };
 
       var runtime = function (runtime) {
@@ -118,7 +122,8 @@
         },
         'job' : 'job',
         'total_pages' : 'totalPages',
-        'key' : 'key'
+        'key' : 'key',
+        'media_type' : 'mediaType'
       };
       return factory;
     }
