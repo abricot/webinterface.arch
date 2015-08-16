@@ -370,7 +370,7 @@ angular.module('filters.xbmc.asset', [])
       var regExp = new RegExp('image://([^/]*)');
       var matches = input.match(regExp);
       if(matches.length === 2) {
-        return 'http://' + securityPrefix + host.ip + ':'+host.httpPort+'/image/image://' + encodeURIComponent(matches[1])+'/';
+        return 'http://' + securityPrefix + host.ip + ':'+host.httpPort+'/image/' + encodeURIComponent('image://'+matches[1]+'/');
       }  
     } 
     return '';
@@ -442,7 +442,7 @@ angular.module('filters.xbmc', [
 ]);
 angular.module('services.io', ['services.websocket'])
 .factory('io', ['$rootScope', '$q', '$parse', 'websocket',
-  function($rootScope, $q, $parse, websocket) {
+  function($rootScope, $q, $parse, transport) {
     var factory = {};
     var callbacks = {};
     var currentCallbackId = 0;
@@ -471,7 +471,7 @@ angular.module('services.io', ['services.websocket'])
     };
 
     function onConnected() {
-      websocket.subscribe(onMessage.bind(this));
+      transport.subscribe(onMessage.bind(this));
       var onConnectedCallbacks = notifications['Websocket.OnConnected'] || [];
       for (var i = 0; i < onConnectedCallbacks.length; i++) {
         var cb = onConnectedCallbacks[i];
@@ -498,7 +498,11 @@ angular.module('services.io', ['services.websocket'])
             obj = getter(data);
           }
           console.log(data);
-          $rootScope.$apply(callbacks[data.id].cb.resolve(obj));
+          if(!$rootScope.$$phase) {
+            $rootScope.$apply(callbacks[data.id].cb.resolve(obj));
+          } else {
+            callbacks[data.id].cb.resolve(obj);
+          }
           delete callbacks[data.id];
         } else if (notifications[data.method] && notifications[data.method].length > 0) {
           for (var i = 0; i < notifications[data.method].length; i++) {
@@ -524,13 +528,13 @@ angular.module('services.io', ['services.websocket'])
         request.id = getCallbackId();
         var defer = getDefer(request.id, method, pathExpr);
       }
-      websocket.send(request);
+      transport.send(request);
       return shouldDefer ? defer.promise : 0;
     };
 
 
     factory.isConnected = function() {
-      return websocket.isConnected();
+      return transport.isConnected();
     };
 
     factory.register = function(method, callback) {
@@ -547,11 +551,59 @@ angular.module('services.io', ['services.websocket'])
     };
 
     factory.connect = function(url, port) {
-      websocket.connect('ws://' + url + ':' + port + '/jsonrpc', onConnected, onDiconnected);
+      transport.connect( url + ':' + port + '/jsonrpc', onConnected, onDiconnected);
     };
 
     factory.disconnect = function () {
-      websocket.disconnect();
+      transport.disconnect();
+    };
+
+    return factory;
+  }
+]);
+"use strict";
+angular.module('services.jsonp', [])
+.factory('jsonp', ['$rootScope', '$q', '$http', '$parse', '$interpolate',
+  function ($rootScope, $q, $http, $parse, $interpolate) {
+    // We return this object to anything injecting our service
+    var factory = {};
+    var isConnected = false;
+    var urlFn;
+    var msgCallback;
+    factory.isConnected = function () {
+      return isConnected;
+    };
+
+    factory.register = function (method, callback) {
+    };
+
+    factory.send = function (request) {
+      var defer = $q.defer();
+      var req = {
+       method: 'POST',
+       url: urlFn,
+       headers: {
+         'Content-Type': 'application/json'
+       },
+       data: request
+      };
+      $http(req).success(function (data) {
+        msgCallback({data:JSON.stringify(data)});
+      });
+      return defer.promise;
+    };
+
+    factory.unregister = function (method, callback) {
+    };
+
+    factory.connect = function (partial, connectCallback, disconnectCallback) {
+      urlFn = 'http://'+partial;
+      isConnected = true;
+      connectCallback();
+    };
+
+    factory.subscribe = function (callback) {
+      msgCallback = callback
     };
 
     return factory;
@@ -629,6 +681,7 @@ angular.module('services.websocket', [])
   }
 
   factory.connect = function (url, connectCallback, disconnectCallback) {
+    url = 'ws://' + url;
     ws = new WebSocket(url);
     ws.onopen = function () {
       attempts = 1;
@@ -980,7 +1033,7 @@ angular.module('services.xbmc', ['services.io'])
       io.send('VideoLibrary.GetMovieDetails', {
         'properties': ['title', 'genre', 'rating', 'thumbnail', 'plot', 'streamdetails',
         'studio', 'director', 'fanart', 'runtime', 'trailer', 'imdbnumber','mpaa','cast',
-        'writer', 'year','plotoutline', 'tagline', 'art', 'showlink'
+        'writer', 'year','plotoutline', 'tagline', 'art', 'showlink', 'playcount', 'resume'
         ],
         'movieid': movieId
       }, true, 'result.moviedetails').then(cb);
@@ -1042,7 +1095,9 @@ angular.module('services.xbmc', ['services.io'])
     factory.getArtistDetails = function(artistid, cb) {
       io.send('AudioLibrary.GetArtistDetails', {
         'artistid' : artistid,
-        'properties': ['formed', 'description', 'genre', 'thumbnail', 'fanart']
+        'properties': ['instrument', 'style', 'mood', 'born', 'formed', 
+                       'description', 'genre', 'died', 'disbanded', 
+                       'yearsactive', 'musicbrainzartistid', 'fanart', 'thumbnail']
       }, true, 'result.artistdetails').then(cb);
 
     };
@@ -1089,7 +1144,7 @@ angular.module('services.xbmc', ['services.io'])
         'tvshowid': tvShowId,
         'properties': ['title', 'genre', 'rating', 'thumbnail', 'plot', 'episode',
         'studio', 'fanart', 'episodeguide', 'season', 'imdbnumber','mpaa','cast',
-        'year' ],
+        'year',  'watchedepisodes'],
       }, true, 'result.tvshowdetails').then(cb);
     };
 
