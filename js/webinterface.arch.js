@@ -1,4 +1,4 @@
-/*! webinterface.arch - v1.1.0 - 2015-08-16
+/*! webinterface.arch - v1.1.0 - 2015-08-17
  * Copyright (c) 2015 Nicolas ABRIC;
  * Licensed MIT
  */
@@ -841,7 +841,8 @@ angular.module('app')
       if($scope.trakt.isAuthenticated() && $scope.trakt.autoScrobble()) {
         if(item.showtitle && item.season && item.episode) {
           $scope.player.item.type = 'episode';
-          $scope.trakt.episodes.summary(item.showtitle.replace(/ /gi, '-').toLowerCase(), item.season, item.episode).then(function(result){
+          var traktSlug = item.showtitle.replace(/ /gi, '-').replace(/\./gi, '').toLowerCase()
+          $scope.trakt.episodes.summary(traktSlug.toLowerCase(), item.season, item.episode).then(function(result){
             $scope.player.item.trakt = result.data;
             $scope.trakt.scrobble.start($scope.player.item.type, $scope.player.item.trakt, $scope.player.seek.percentage || 0);
           });
@@ -3965,11 +3966,11 @@ angular.module("modules/now/playing.tpl.html", []).run(["$templateCache", functi
     "                    <i class=\"icon icon-stop\"></i>\n" +
     "                </div>\n" +
     "                <div class=\"md-action more\">\n" +
-    "                    <i class=\"icon icon-ellipsis-vertical\" ng-show=\"isTypeVideo()\"></i>\n" +
-    "                    <ul class=\"dropdown-menu\" ng-show=\"isTypeVideo()\">\n" +
+    "                    <i class=\"icon icon-ellipsis-vertical\"></i>\n" +
+    "                    <ul class=\"dropdown-menu\">\n" +
     "                        <li ng-click=\"xbmc.showOSD()\">OSD</li>\n" +
-    "                        <li ng-click=\"toggleAudioStreams()\">Switch audio</li>\n" +
-    "                        <li ng-click=\"toggleSubtitles()\">Switch subtitles</li>\n" +
+    "                        <li ng-click=\"toggleAudioStreams()\" ng-show=\"isTypeVideo()\">Switch audio</li>\n" +
+    "                        <li ng-click=\"toggleSubtitles()\" ng-show=\"isTypeVideo()\">Switch subtitles</li>\n" +
     "                    </ul>\n" +
     "                </div>\n" +
     "            </div>\n" +

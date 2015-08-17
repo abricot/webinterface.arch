@@ -547,11 +547,11 @@ angular.module("modules/now/playing.tpl.html", []).run(["$templateCache", functi
     "                    <i class=\"icon icon-stop\"></i>\n" +
     "                </div>\n" +
     "                <div class=\"md-action more\">\n" +
-    "                    <i class=\"icon icon-ellipsis-vertical\" ng-show=\"isTypeVideo()\"></i>\n" +
-    "                    <ul class=\"dropdown-menu\" ng-show=\"isTypeVideo()\">\n" +
+    "                    <i class=\"icon icon-ellipsis-vertical\"></i>\n" +
+    "                    <ul class=\"dropdown-menu\">\n" +
     "                        <li ng-click=\"xbmc.showOSD()\">OSD</li>\n" +
-    "                        <li ng-click=\"toggleAudioStreams()\">Switch audio</li>\n" +
-    "                        <li ng-click=\"toggleSubtitles()\">Switch subtitles</li>\n" +
+    "                        <li ng-click=\"toggleAudioStreams()\" ng-show=\"isTypeVideo()\">Switch audio</li>\n" +
+    "                        <li ng-click=\"toggleSubtitles()\" ng-show=\"isTypeVideo()\">Switch subtitles</li>\n" +
     "                    </ul>\n" +
     "                </div>\n" +
     "            </div>\n" +
