@@ -176,7 +176,8 @@ angular.module('app')
       if($scope.trakt.isAuthenticated() && $scope.trakt.autoScrobble()) {
         if(item.showtitle && item.season && item.episode) {
           $scope.player.item.type = 'episode';
-          $scope.trakt.episodes.summary(item.showtitle.replace(/ /gi, '-').toLowerCase(), item.season, item.episode).then(function(result){
+          var traktSlug = item.showtitle.replace(/ /gi, '-').replace(/\./gi, '').toLowerCase()
+          $scope.trakt.episodes.summary(traktSlug.toLowerCase(), item.season, item.episode).then(function(result){
             $scope.player.item.trakt = result.data;
             $scope.trakt.scrobble.start($scope.player.item.type, $scope.player.item.trakt, $scope.player.seek.percentage || 0);
           });

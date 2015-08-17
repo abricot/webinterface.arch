@@ -40,11 +40,11 @@
                     <i class="icon icon-stop"></i>
                 </div>
                 <div class="md-action more">
-                    <i class="icon icon-ellipsis-vertical" ng-show="isTypeVideo()"></i>
-                    <ul class="dropdown-menu" ng-show="isTypeVideo()">
+                    <i class="icon icon-ellipsis-vertical"></i>
+                    <ul class="dropdown-menu">
                         <li ng-click="xbmc.showOSD()">OSD</li>
-                        <li ng-click="toggleAudioStreams()">Switch audio</li>
-                        <li ng-click="toggleSubtitles()">Switch subtitles</li>
+                        <li ng-click="toggleAudioStreams()" ng-show="isTypeVideo()">Switch audio</li>
+                        <li ng-click="toggleSubtitles()" ng-show="isTypeVideo()">Switch subtitles</li>
                     </ul>
                 </div>
             </div>
