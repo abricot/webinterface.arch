@@ -868,6 +868,7 @@ section[role="region"] header h2.disconnected {
 }
 
 .tabs {
+  position: relative;
   z-index: 4;
   background: #31474f;
 }
@@ -890,6 +891,26 @@ section[role="region"] header h2.disconnected {
 
 .tabs .tab.selected {
   border-bottom: 0.5rem solid #12b2e7;
+}
+
+.tabs .scan {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: inline-block;
+  width: 4rem;
+  font-size: 2rem;
+  line-height: 4rem;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  opacity: 1;
+  transition: all 0.25s ease;
+}
+
+.tabs .scan:hover {
+  background: #628e9e !important;
 }
 
 .experimental {
@@ -1414,6 +1435,7 @@ nav {
 }
 
 nav .tab {
+  position: relative;
   float: left;
   width: calc(33.333333333333336%);
   height: 4rem;
@@ -1453,7 +1475,7 @@ nav .search .btn {
   font-size: 1.5rem;
 }
 
-nav .search:hover .btn,
+nav .search .btn:hover,
 nav .search.open .btn {
   background: #628e9e !important;
   border-color: #628e9e !important;
@@ -1599,19 +1621,19 @@ nav .dropdown-menu .settings {
   transition: all 0.25s ease;
 }
 
-.remote-menu.buttons .md-action:active,
-.remote-menu.buttons .md-action:hover {
+.remote-menu .buttons .md-action:active,
+.remote-menu .buttons .md-action:hover {
   color: #f1f1f1 !important;
   background-color: #009688;
 }
 
-.remote-menu.buttons i {
+.remote-menu .buttons i {
   font-size: 2.5rem;
   line-height: 6rem;
   text-shadow: none;
 }
 
-.remote-menu.buttons i {
+.remote-menu .buttons i {
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
 
@@ -1768,11 +1790,11 @@ nav .dropdown-menu .settings {
   background-size: 100% auto;
 }
 
-.remote-menu .buttons {
-  padding-top: 3rem;
+.remote-menu .arts {
+  margin-bottom: 2rem;
 }
 
-.remote-menu.buttons .md-action {
+.remote-menu .buttons .md-action {
   position: relative;
   right: 0;
   width: 5rem;
@@ -1785,18 +1807,18 @@ nav .dropdown-menu .settings {
   transition: all 0.25s ease;
 }
 
-.remote-menu.buttons .md-action-primary {
+.remote-menu .buttons .md-action-primary {
   position: absolute;
   right: 2.5rem;
   bottom: -3rem;
 }
 
-.remote-menu.buttons .md-action:active {
+.remote-menu .buttons .md-action:active {
   color: #f1f1f1 !important;
   background-color: #009688;
 }
 
-.remote-menu.buttons .md-action i {
+.remote-menu .buttons .md-action i {
   font-size: 2.5rem;
   line-height: 5rem;
   text-shadow: none;
@@ -1851,6 +1873,103 @@ nav .dropdown-menu .settings {
   height: 20%;
 }
 
+.remote-menu .empty.list {
+  padding: 0;
+  text-align: center;
+}
+
+.remote-menu .playlist {
+  position: relative;
+  height: 21rem;
+  overflow: hidden;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.remote-menu .md-action-primary,
+.remote-menu .buttons .md-action-primary {
+  color: white !important;
+  background: #cddc39 !important;
+}
+
+/* List items */
+
+.playlist [data-type="list"] li {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  min-height: 6rem;
+  margin: 0;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+          box-sizing: border-box;
+  transition: transform 0.3s ease, padding 0.3s ease;
+}
+
+.playlist [data-type="list"] li:hover,
+.playlist [data-type="list"] li:active {
+  background: #222326;
+}
+
+.playlist [data-type="list"] li:last-child {
+  border: none;
+}
+
+/* Text content */
+
+.playlist [data-type="list"] li p {
+  display: block;
+  margin: 0;
+  overflow: hidden;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: #cbcbcb;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: none;
+}
+
+.playlist [data-type="list"] li p:first-of-type {
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+}
+
+.playlist [data-type="list"] li p time {
+  margin-right: 0.3rem;
+  text-transform: uppercase;
+}
+
+.playlist .poster {
+  border: 0.25rem solid #cddc39;
+}
+
+.playlist .kodi {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  background: url(../img/icons/loading.png) no-repeat center 25%;
+  background-size: 25%;
+}
+
+.playlist .kodi:after {
+  position: absolute;
+  top: 55%%;
+  left: 50%;
+  font-family: Roboto;
+  font-size: 2rem;
+  color: white;
+  text-transform: uppercase;
+  content: "Loading";
+  transform: translateX(-50%);
+}
+
 @media screen and (max-width: 1024px) {
   .playing .actions-wrapper {
     width: 25%;
@@ -1892,6 +2011,11 @@ nav .dropdown-menu .settings {
   text-transform: uppercase;
   content: "Loading";
   transform: translateX(-50%);
+}
+
+[data-type="list"] li {
+  position: relative;
+  overflow: visible;
 }
 
 [data-type="list"] .card {
@@ -2034,6 +2158,33 @@ nav .dropdown-menu .settings {
   margin: 0;
   font-size: 1.25rem;
   text-align: right;
+}
+
+[data-type="list"] .more {
+  text-align: center;
+}
+
+[data-type="list"] .more .dropdown-menu {
+  top: auto;
+  bottom: 0;
+  width: auto;
+  min-width: 10rem;
+  padding: 0 1rem;
+  text-align: left;
+  transform: translateY(100%);
+}
+
+[data-type="list"] .more .dropdown-menu li {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+[data-type="list"] .more .dropdown-menu li:hover {
+  opacity: 1;
+}
+
+[data-type="list"] .more .dropdown-menu li i {
+  padding-right: 0.5rem;
 }
 
 .repeat-animation.ng-enter {
@@ -2617,6 +2768,7 @@ nav .dropdown-menu .settings {
 
 .detail .next-episode {
   cursor: default;
+  border: 0;
 }
 
 .detail .episode:hover {
@@ -2667,6 +2819,19 @@ nav .dropdown-menu .settings {
   opacity: 1;
 }
 
+.detail .episode .more {
+  position: absolute;
+  top: 0.1rem;
+  right: 0.75rem;
+  width: 3rem;
+  height: 3rem;
+  line-height: 3rem;
+}
+
+.detail .episode .more .dropdown-menu {
+  min-width: 15rem;
+}
+
 .detail .next,
 .detail .previous {
   position: fixed;
@@ -2691,6 +2856,7 @@ nav .dropdown-menu .settings {
 }
 
 .cal-grid {
+  position: relative;
   display: flex;
   overflow-x: hidden;
   flex-wrap: wrap;

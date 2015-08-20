@@ -7,7 +7,7 @@ angular.module("modules/common/navigation.tpl.html", []).run(["$templateCache", 
     "        <div class=\"btn\" ng-click=\"open()\">\n" +
     "            <i class=\"icon-search\"></i>\n" +
     "        </div>\n" +
-    "        <input type=\"text\" placeholder=\"What are you looking for\" ng-model=\"query\"/>\n" +
+    "        <input type=\"text\" placeholder=\"Search movies and shows\" ng-model=\"query\"/>\n" +
     "    </form>\n" +
     "    <div class=\"clearfix tabs span6\">\n" +
     "        <a href=\"#{{item.hash}}\" ng-repeat=\"item in medias\" ng-class=\"{selected : isCurrent(item.matchRegExp)}\"\n" +
@@ -15,6 +15,7 @@ angular.module("modules/common/navigation.tpl.html", []).run(["$templateCache", 
     "            <div class=\"label\">{{item.label}}</div>\n" +
     "        </a>\n" +
     "    </div>\n" +
+    "    \n" +
     "    <div class=\"status\" ng-class=\"{connected : connected, disconnected : !connected}\">\n" +
     "        <i ng-class=\"{'icon-ok' : connected, 'icon-remove' : !connected}\"></i>\n" +
     "    </div>\n" +
@@ -271,6 +272,9 @@ angular.module("modules/movie/movies.tpl.html", []).run(["$templateCache", funct
     "        <a class=\"span4 tab\" href=\"#/movies/popular\" ng-class=\"{selected :isSelected('movies.popular')}\">Discover</a>\n" +
     "        <a class=\"span4 tab\" href=\"#/movies/recents\" ng-class=\"{selected :isSelected('movies.recents')}\">Recently added</a>\n" +
     "        <a class=\"span4 tab\" href=\"#/movies/all\"  ng-class=\"{selected :isSelected('movies.all')}\">All movies</a>\n" +
+    "        <div class=\"scan\" ng-click=\"xbmc.scan('VideoLibrary')\">\n" +
+    "            <i class=\"icon-barcode\" title=\"Scan video library\"></i>\n" +
+    "        </div>\n" +
     "    </div>\n" +
     "    <div ui-view class=\"content\">\n" +
     "        \n" +
@@ -348,7 +352,7 @@ angular.module("modules/music/artist.albums.tpl.html", []).run(["$templateCache"
     "                    <ul data-type=\"list\">\n" +
     "                        <li class=\"row song\" ng-repeat=\"song in songs | filter:isPartOf(album) | orderBy:song.trac\"\n" +
     "                          ng-click=\"xbmc.open({songid : song.songid})\">\n" +
-    "                            <div class=\"span5 track\">\n" +
+    "                            <div class=\"span4 track\">\n" +
     "                                <span class=\"thumbnail\" image image-source=\"song.thumbnail | asset:host | fallback:'img/backgrounds/album.png'\">\n" +
     "                                    <i class=\"icon-play\"></i>\n" +
     "                                </span>\n" +
@@ -358,6 +362,15 @@ angular.module("modules/music/artist.albums.tpl.html", []).run(["$templateCache"
     "                            <div class=\"span3\">{{song.album}}</div>\n" +
     "                            <div class=\"span3\">{{song.artist.join(', ')}}</div>\n" +
     "                            <div class=\"span1 duration\">{{song.duration | time | date :'mm:ss'}}</div>\n" +
+    "                            <div class=\"span1 more\">\n" +
+    "                                <i class=\"icon icon-ellipsis-vertical\"></i>\n" +
+    "                                <ul class=\"dropdown-menu\">\n" +
+    "                                    <li ng-click=\"xbmc.queue({'songid':song.songid});$event.stopPropagation();\">\n" +
+    "                                        <i class=\"icon-plus\"></i>\n" +
+    "                                        Queue\n" +
+    "                                    </li>\n" +
+    "                                </ul>\n" +
+    "                            </div>\n" +
     "                        </li>\n" +
     "                    </ul>\n" +
     "                </div>\n" +
@@ -400,6 +413,9 @@ angular.module("modules/music/musics.tpl.html", []).run(["$templateCache", funct
     "        <a class=\"span4 tab\" href=\"#/musics/albums/all\" ng-class=\"{selected : isSelected('music.*albums$')}\">Albums</a>\n" +
     "        <a class=\"span4 tab\" href=\"#/musics/artists/all\" ng-class=\"{selected : isSelected('music.*artists$')}\">Artists</a>\n" +
     "        <a class=\"span4 tab\" href=\"#/musics/songs/all\" ng-class=\"{selected : isSelected('music.*songs')}\">Songs</a>\n" +
+    "        <div class=\"scan\" ng-click=\"xbmc.scan('AudioLibrary')\">\n" +
+    "            <i class=\"icon-barcode\" title=\"Scan audio library\"></i>\n" +
+    "        </div>\n" +
     "    </div>\n" +
     "    <div ui-view class=\"content\">\n" +
     "        \n" +
@@ -485,16 +501,25 @@ angular.module("modules/music/songs.tpl.html", []).run(["$templateCache", functi
     "            <ul data-type=\"list\">\n" +
     "                <li class=\"row song repeat-animation\" ng-repeat=\"song in songs\"\n" +
     "                    ng-click=\"xbmc.open({songid : song.songid})\">\n" +
-    "                    <div class=\"span5 track\">\n" +
+    "                    <div class=\"span4 track\">\n" +
     "                        <span class=\"thumbnail\" image image-source=\"song.thumbnail | asset:host | fallback:'img/backgrounds/album.png'\">\n" +
     "                            <i class=\"icon-play\"></i>\n" +
     "                        </span>\n" +
     "                        {{song.label}}\n" +
     "                        <img class=\"equalizer\" src=\"img/backgrounds/equalizer.gif\" ng-show=\"isPlaying(song.songid)\"/>\n" +
     "                    </div>\n" +
-    "                    <div class=\"span3\">{{song.album}}</div>\n" +
-    "                    <div class=\"span3\">{{song.artist.join(', ')}}</div>\n" +
+    "                    <div class=\"span3\">{{song.album || '&nbsp;'}}</div>\n" +
+    "                    <div class=\"span3\">{{song.artist.join(', ') || '&nbsp;'}}</div>\n" +
     "                    <div class=\"span1 duration\">{{song.duration | time | date :'mm:ss'}}</div>\n" +
+    "                    <div class=\"span1 more\">\n" +
+    "                        <i class=\"icon icon-ellipsis-vertical\"></i>\n" +
+    "                        <ul class=\"dropdown-menu\">\n" +
+    "                            <li ng-click=\"xbmc.queue({'songid':song.songid});$event.stopPropagation();\">\n" +
+    "                                <i class=\"icon-plus\"></i>\n" +
+    "                                Queue\n" +
+    "                            </li>\n" +
+    "                        </ul>\n" +
+    "                    </div>\n" +
     "                </li>\n" +
     "            </ul>\n" +
     "            <div ng-show=\"!songs.length\" class=\"empty list\">Oops! nothing here</div>\n" +
@@ -584,8 +609,16 @@ angular.module("modules/now/playing.tpl.html", []).run(["$templateCache", functi
     "        <div class=\"span3\">\n" +
     "            <div class=\"md-action more\">\n" +
     "                <i class=\"icon icon-ellipsis-vertical\"></i>\n" +
-    "                 <div class=\"remote-menu buttons\"\n" +
-    "                      ng-include src=\"'modules/remote/remote.tpl.html'\"></div>\n" +
+    "                <div class=\"remote-menu\">\n" +
+    "                    <div class=\"buttons\" ng-if=\"view==='remote'\"\n" +
+    "                        ng-include src=\"'modules/remote/remote.tpl.html'\"></div>\n" +
+    "                    <div class=\"buttons\" ng-if=\"view==='playlist'\"\n" +
+    "                        ng-include src=\"'modules/now/playlist.tpl.html'\"></div>\n" +
+    "                    <div class=\"tabs row\">\n" +
+    "                        <a ng-click=\"view = 'remote'\" class=\"tab span6\" ng-class=\"{selected : view === 'remote'}\">Remote</a>\n" +
+    "                        <a ng-click=\"view = 'playlist'\" href=\"javascript:void(0);\" class=\"tab span6\" ng-class=\"{selected : view === 'playlist'}\">Queue</a>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -680,28 +713,20 @@ angular.module("modules/now/playing.tpl.html", []).run(["$templateCache", functi
 
 angular.module("modules/now/playlist.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("modules/now/playlist.tpl.html",
-    "<div ng-switch on=\"loading\" class=\"now\" ng-class=\"{loading : loading}\">\n" +
-    "    <div ng-switch-when=\"true\" class=\"loading\"><div class=\"kodi\"></div></div>\n" +
-    "    <div ng-switch-when=\"false\">\n" +
-    "        <div class=\"arts\">\n" +
-    "            <div class=\"banner\" image image-source=\"items[0].fanart | asset:host  | fallback:'img/backgrounds/banner.png'\">\n" +
-    "            </div>\n" +
-    "            <div class=\"md-action md-action-primary\" ng-click=\"xbmc.next()\">\n" +
-    "                    <i class=\"icon-fast-forward\"></i>\n" +
-    "            </div>\n" +
+    "<div class=\"now\">\n" +
+    "    <div class=\"arts\">\n" +
+    "        <div class=\"banner\" image image-source=\"player.item.fanart | asset:host | fallback:'img/backgrounds/banner.png'\"></div>\n" +
+    "        <seekbar seekbar-value=\"player.seek.percentage\" seekbar-max=\"100\" seekbar-read-only=\"true\"></seekbar>\n" +
+    "        <div class=\"label\">{{player.item.label}}</div>\n" +
+    "        <div class=\"md-action md-action-primary\" ng-click=\"xbmc.next()\">\n" +
+    "                <i class=\"icon-fast-forward\"></i>\n" +
     "        </div>\n" +
-    "        <ul data-type=\"list\" class=\"view songs\">\n" +
+    "    </div>\n" +
+    "    <div class=\"playlist\">\n" +
+    "        <ul data-type=\"list\" class=\"view\" ng-if=\"!loading && items.length\">\n" +
     "            <li class=\"row \" ng-repeat=\"item in items\"\n" +
-    "                ng-click=\"xbmc.goTo($index)\">\n" +
-    "                <div class=\"span3 flip-container\" ng-show=\"item.rating\">\n" +
-    "                    <flipper>\n" +
-    "                        <div class=\"front\">\n" +
-    "                            <div class=\"md-circle poster\" image image-source=\"item.art | thumb | asset:host | fallback:'img/icons/awe-512.png'\"></div>\n" +
-    "                        </div>\n" +
-    "                        <div class=\"back\" rating rating-value=\"item.rating\" rating-max=\"10\"></div>\n" +
-    "                    </flipper>\n" +
-    "                </div>\n" +
-    "                <div class=\"span3 wrapper\" ng-show=\"!item.rating\">\n" +
+    "                ng-click=\"goTo($index)\">\n" +
+    "                <div class=\"span3 wrapper\">\n" +
     "                    <div class=\"md-circle poster\" image image-source=\"item.art | thumb | asset:host | fallback:'img/icons/awe-512.png'\"></div>\n" +
     "                </div>\n" +
     "                <div class=\"span8\">\n" +
@@ -712,7 +737,8 @@ angular.module("modules/now/playlist.tpl.html", []).run(["$templateCache", funct
     "                </div>\n" +
     "            </li>\n" +
     "        </ul>\n" +
-    "        <div ng-show=\"!items.length\" class=\"empty list\">Oops! nothing here</div>\n" +
+    "        <div ng-if=\"!loading &&!items.length\" class=\"empty list\">Oops! nothing here</div>\n" +
+    "        <div ng-if=\"loading\" class=\"loading\"><div class=\"kodi\"></div></div>\n" +
     "    </div>\n" +
     "</div>");
 }]);
@@ -1086,15 +1112,23 @@ angular.module("modules/tvshow/details.tpl.html", []).run(["$templateCache", fun
     "                                <span class=\"runtime\" ng-if=\"episode.runtime\">{{episode.runtime | time | date:'HH:mm'}}</span>\n" +
     "                            </div>\n" +
     "                            <p>{{episode.plot}}</p>\n" +
-    "                            <div class=\"controls\" ng-show=\"hasControls()\">\n" +
-    "                                <i class=\"icon-plus\" ng-click=\"xbmc.queue({'episodeid' : episode.episodeid}); $event.stopPropagation();\"\n" +
-    "                                   ng-show=\"player.active\"></i>\n" +
-    "                                <i ng-class=\"{'icon-eye-open':!episode.playcount, 'icon-eye-close':episode.playcount}\"\n" +
-    "                                   ng-click=\"toggleWatched(episode); $event.stopPropagation();\"\n" +
-    "                                ></i>\n" +
-    "                                <i class=\"icon-trash\"\n" +
-    "                                   ng-click=\"remove($index, episode); $event.stopPropagation();\"\n" +
-    "                                ></i>\n" +
+    "                            <div class=\"more\" ng-show=\"hasControls()\">\n" +
+    "                                <i class=\"icon icon-ellipsis-vertical\"></i>\n" +
+    "                                <ul class=\"dropdown-menu\">\n" +
+    "                                    <li ng-click=\"xbmc.queue({'episodeid' : episode.episodeid}); $event.stopPropagation();\"\n" +
+    "                                        ng-show=\"player.active\">\n" +
+    "                                        <i class=\"icon-plus\"></i>\n" +
+    "                                        Queue\n" +
+    "                                    </li>\n" +
+    "                                    <li ng-click=\"toggleWatched(episode); $event.stopPropagation();\">\n" +
+    "                                        <i ng-class=\"{'icon-eye-open':!episode.playcount, 'icon-eye-close':episode.playcount}\"></i>\n" +
+    "                                        Toggle watch\n" +
+    "                                    </li>\n" +
+    "                                    <li ng-click=\"remove($index, episode); $event.stopPropagation();\">\n" +
+    "                                        <i class=\"icon-trash\"></i>\n" +
+    "                                        Remove\n" +
+    "                                    </li>\n" +
+    "                                </ul>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </li>\n" +
@@ -1230,6 +1264,9 @@ angular.module("modules/tvshow/shows.tpl.html", []).run(["$templateCache", funct
     "           ng-class=\"{selected :  isSelected('tvshows.all')}\">\n" +
     "           All shows\n" +
     "        </a>\n" +
+    "        <div class=\"scan\" ng-click=\"xbmc.scan('VideoLibrary')\">\n" +
+    "            <i class=\"icon-barcode\" title=\"Scan video library\"></i>\n" +
+    "        </div>\n" +
     "    </div>\n" +
     "    <div ui-view class=\"content\">\n" +
     "    </div>\n" +
@@ -1242,7 +1279,7 @@ angular.module("modules/tvshow/shows.tpl.html", []).run(["$templateCache", funct
 
 angular.module("template/comments/comments.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/comments/comments.tpl.html",
-    "<div ng-repeat=\"comment in comments\" class=\"row comment-wrapper\">\n" +
+    "<div ng-repeat=\"comment in comments\" class=\"row comment-wrapper\" ng-if=\"comment.comment\">\n" +
     "    <div class=\"caret\"></div>\n" +
     "    <p class=\"comment\" ng-class=\"{spoiler : comment.spoiler, revealed: comment.revealed}\"\n" +
     "        ng-click=\"comment.revealed = true;\">\n" +
