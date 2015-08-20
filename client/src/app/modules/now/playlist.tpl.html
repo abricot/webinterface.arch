@@ -1,25 +1,17 @@
-<div ng-switch on="loading" class="now" ng-class="{loading : loading}">
-    <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
-    <div ng-switch-when="false">
-        <div class="arts">
-            <div class="banner" image image-source="items[0].fanart | asset:host  | fallback:'img/backgrounds/banner.png'">
-            </div>
-            <div class="md-action md-action-primary" ng-click="xbmc.next()">
-                    <i class="icon-fast-forward"></i>
-            </div>
+<div class="now">
+    <div class="arts">
+        <div class="banner" image image-source="player.item.fanart | asset:host | fallback:'img/backgrounds/banner.png'"></div>
+        <seekbar seekbar-value="player.seek.percentage" seekbar-max="100" seekbar-read-only="true"></seekbar>
+        <div class="label">{{player.item.label}}</div>
+        <div class="md-action md-action-primary" ng-click="xbmc.next()">
+                <i class="icon-fast-forward"></i>
         </div>
-        <ul data-type="list" class="view songs">
+    </div>
+    <div class="playlist">
+        <ul data-type="list" class="view" ng-if="!loading && items.length">
             <li class="row " ng-repeat="item in items"
-                ng-click="xbmc.goTo($index)">
-                <div class="span3 flip-container" ng-show="item.rating">
-                    <flipper>
-                        <div class="front">
-                            <div class="md-circle poster" image image-source="item.art | thumb | asset:host | fallback:'img/icons/awe-512.png'"></div>
-                        </div>
-                        <div class="back" rating rating-value="item.rating" rating-max="10"></div>
-                    </flipper>
-                </div>
-                <div class="span3 wrapper" ng-show="!item.rating">
+                ng-click="goTo($index)">
+                <div class="span3 wrapper">
                     <div class="md-circle poster" image image-source="item.art | thumb | asset:host | fallback:'img/icons/awe-512.png'"></div>
                 </div>
                 <div class="span8">
@@ -30,6 +22,7 @@
                 </div>
             </li>
         </ul>
-        <div ng-show="!items.length" class="empty list">Oops! nothing here</div>
+        <div ng-if="!loading &&!items.length" class="empty list">Oops! nothing here</div>
+        <div ng-if="loading" class="loading"><div class="kodi"></div></div>
     </div>
 </div>

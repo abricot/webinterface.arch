@@ -17,6 +17,9 @@
            ng-class="{selected :  isSelected('tvshows.all')}">
            All shows
         </a>
+        <div class="scan" ng-click="xbmc.scan('VideoLibrary')">
+            <i class="icon-barcode" title="Scan video library"></i>
+        </div>
     </div>
     <div ui-view class="content">
     </div>

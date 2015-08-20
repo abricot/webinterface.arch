@@ -38,5 +38,14 @@ angular.module('app')
     $scope.toggleWizard = function () {
       $scope.showWizard = !$scope.showWizard;
     };
+
+    $scope.scan = function() {
+      var hash = window.location.hash;
+      if(hash.indexOf('movies')>-1 || hash.indexOf('tvshows') > -1) {
+        $scope.xbmc.scan('VideoLibrary');
+      } else if (hash.indexOf('musics')>-1 ) {
+        $scope.xbmc.scan('AudioLibrary');
+      }
+    };
   }
 ]);

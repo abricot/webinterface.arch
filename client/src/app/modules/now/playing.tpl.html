@@ -77,8 +77,16 @@
         <div class="span3">
             <div class="md-action more">
                 <i class="icon icon-ellipsis-vertical"></i>
-                 <div class="remote-menu buttons"
-                      ng-include src="'modules/remote/remote.tpl.html'"></div>
+                <div class="remote-menu">
+                    <div class="buttons" ng-if="view==='remote'"
+                        ng-include src="'modules/remote/remote.tpl.html'"></div>
+                    <div class="buttons" ng-if="view==='playlist'"
+                        ng-include src="'modules/now/playlist.tpl.html'"></div>
+                    <div class="tabs row">
+                        <a ng-click="view = 'remote'" class="tab span6" ng-class="{selected : view === 'remote'}">Remote</a>
+                        <a ng-click="view = 'playlist'" href="javascript:void(0);" class="tab span6" ng-class="{selected : view === 'playlist'}">Queue</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

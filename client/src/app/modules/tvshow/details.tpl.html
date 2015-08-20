@@ -130,15 +130,23 @@
                                 <span class="runtime" ng-if="episode.runtime">{{episode.runtime | time | date:'HH:mm'}}</span>
                             </div>
                             <p>{{episode.plot}}</p>
-                            <div class="controls" ng-show="hasControls()">
-                                <i class="icon-plus" ng-click="xbmc.queue({'episodeid' : episode.episodeid}); $event.stopPropagation();"
-                                   ng-show="player.active"></i>
-                                <i ng-class="{'icon-eye-open':!episode.playcount, 'icon-eye-close':episode.playcount}"
-                                   ng-click="toggleWatched(episode); $event.stopPropagation();"
-                                ></i>
-                                <i class="icon-trash"
-                                   ng-click="remove($index, episode); $event.stopPropagation();"
-                                ></i>
+                            <div class="more" ng-show="hasControls()">
+                                <i class="icon icon-ellipsis-vertical"></i>
+                                <ul class="dropdown-menu">
+                                    <li ng-click="xbmc.queue({'episodeid' : episode.episodeid}); $event.stopPropagation();"
+                                        ng-show="player.active">
+                                        <i class="icon-plus"></i>
+                                        Queue
+                                    </li>
+                                    <li ng-click="toggleWatched(episode); $event.stopPropagation();">
+                                        <i ng-class="{'icon-eye-open':!episode.playcount, 'icon-eye-close':episode.playcount}"></i>
+                                        Toggle watch
+                                    </li>
+                                    <li ng-click="remove($index, episode); $event.stopPropagation();">
+                                        <i class="icon-trash"></i>
+                                        Remove
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </li>

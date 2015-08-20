@@ -83,20 +83,19 @@
   height : 100%;
 }
 
-
-.remote-menu.buttons .md-action:active,
-.remote-menu.buttons .md-action:hover {
+.remote-menu .buttons .md-action:active,
+.remote-menu .buttons .md-action:hover {
   background-color : #009688;
   color : #f1f1f1 !important;
 }
 
-.remote-menu.buttons i {
+.remote-menu .buttons i {
   font-size: 2.5rem;
   text-shadow:none;
   line-height: 6rem;
 }
 
-.remote-menu.buttons i {
+.remote-menu .buttons i {
   text-shadow : 1px 1px 1px rgba(0,0,0,0.5);
 }
 .buttons .md-action.more,
@@ -231,8 +230,8 @@
   background: #03a9f4 url(../img/backgrounds/banner.png) no-repeat center;
   background-size: 100% auto;
 }
-.remote-menu .buttons {padding-top: 3rem;}
-.remote-menu.buttons .md-action{
+.remote-menu .arts {margin-bottom: 2rem;}
+.remote-menu .buttons .md-action{
   position: relative;
   right: 0;
   box-shadow: none;
@@ -245,18 +244,18 @@
   margin-bottom: 2rem;
 }
 
-.remote-menu.buttons .md-action-primary {
+.remote-menu .buttons .md-action-primary {
   position: absolute;
   right: 2.5rem;
   bottom: -3rem;
 }
 
-.remote-menu.buttons .md-action:active {
+.remote-menu .buttons .md-action:active {
   background-color : #009688;
   color : #f1f1f1 !important;
 }
 
-.remote-menu.buttons .md-action i {
+.remote-menu .buttons .md-action i {
   font-size: 2.5rem; 
   text-shadow:none;
   line-height: 5rem;
@@ -304,6 +303,99 @@
 .remote-menu .buttons .row {
   display : block;
   height : 100/5%;
+}
+
+.remote-menu .empty.list {
+  padding : 0;
+  text-align: center;
+}
+
+.remote-menu .playlist {
+  height: 21rem;
+  overflow: hidden;
+  overflow-y : auto;
+  text-align : left;
+  position : relative;
+}
+
+.remote-menu .md-action-primary,
+.remote-menu .buttons .md-action-primary {
+    background: #cddc39 !important;
+    color : white !important;
+}
+
+
+/* List items */
+.playlist [data-type="list"] li {
+  width: 100%;
+  min-height: @listMinHeight;
+  .box-sizing(border-box);
+  transition: transform 0.3s ease, padding 0.3s ease;
+  margin: 0;
+  display: block;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  cursor : pointer;
+}
+
+.playlist [data-type="list"] li:hover,
+.playlist [data-type="list"] li:active {
+  background: @primaryBgColor;
+}
+
+.playlist [data-type="list"] li:last-child {
+  border: none;
+}
+
+/* Text content */
+.playlist [data-type="list"] li p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: none;
+  display: block;
+  margin: 0;
+  color: @subListTextColor;
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.playlist [data-type="list"] li p:first-of-type {
+  font-size: 1.8rem;
+  line-height: 2.2rem;
+}
+
+.playlist [data-type="list"] li p time {
+  margin-right: 0.3rem;
+  text-transform: uppercase;
+}
+
+.playlist .poster {
+  border: 0.25rem solid #cddc39;
+}
+
+.playlist .kodi {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url(../img/icons/loading.png) no-repeat center 25%;
+  background-size: 25%;
+  z-index : 4;
+}
+
+.playlist .kodi:after {
+  content: "Loading";
+  position: absolute;
+  top: 55%%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: white;
+  font-family: Roboto;
 }
 
 @media screen and (max-width: 1024px) {

@@ -3,6 +3,9 @@
         <a class="span4 tab" href="#/musics/albums/all" ng-class="{selected : isSelected('music.*albums$')}">Albums</a>
         <a class="span4 tab" href="#/musics/artists/all" ng-class="{selected : isSelected('music.*artists$')}">Artists</a>
         <a class="span4 tab" href="#/musics/songs/all" ng-class="{selected : isSelected('music.*songs')}">Songs</a>
+        <div class="scan" ng-click="xbmc.scan('AudioLibrary')">
+            <i class="icon-barcode" title="Scan audio library"></i>
+        </div>
     </div>
     <div ui-view class="content">
         

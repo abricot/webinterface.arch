@@ -42,7 +42,7 @@
                     <ul data-type="list">
                         <li class="row song" ng-repeat="song in songs | filter:isPartOf(album) | orderBy:song.trac"
                           ng-click="xbmc.open({songid : song.songid})">
-                            <div class="span5 track">
+                            <div class="span4 track">
                                 <span class="thumbnail" image image-source="song.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
                                     <i class="icon-play"></i>
                                 </span>
@@ -52,6 +52,15 @@
                             <div class="span3">{{song.album}}</div>
                             <div class="span3">{{song.artist.join(', ')}}</div>
                             <div class="span1 duration">{{song.duration | time | date :'mm:ss'}}</div>
+                            <div class="span1 more">
+                                <i class="icon icon-ellipsis-vertical"></i>
+                                <ul class="dropdown-menu">
+                                    <li ng-click="xbmc.queue({'songid':song.songid});$event.stopPropagation();">
+                                        <i class="icon-plus"></i>
+                                        Queue
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>

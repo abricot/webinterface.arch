@@ -14,6 +14,7 @@ nav .tab {
   box-sizing: border-box;
   border-bottom: .5rem solid transparent;
   height : 4rem;
+  position : relative;
 }
 
 nav .tab.selected{
@@ -21,7 +22,7 @@ nav .tab.selected{
 }
 
 nav .status,
-nav .search .btn {
+nav .search .btn, {
   display: inline-block;
   width : 4rem;
   height: 4rem;
@@ -35,6 +36,7 @@ nav .search .btn {
   transition: all 0.25s ease;
 }
 
+
 nav .status i ,
 nav .search .btn i {line-height: 4rem;}
 
@@ -43,7 +45,8 @@ nav .search .btn{
   font-size: 1.5rem;
   float : left;
 }
-nav .search:hover .btn,
+
+nav .search .btn:hover,
 nav .search.open .btn {
   background: lighten(@playerBgColor, 25%) !important;
   border-color: lighten(@playerBgColor, 25%)!important;

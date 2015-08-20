@@ -321,7 +321,8 @@ section[role="region"] header h2.disconnected {
 
 .tabs{
   background: @tabsBgColor;
-  z-index : 4
+  z-index : 4;
+  position : relative;
 }
 
 .tabs .tab{
@@ -342,6 +343,27 @@ section[role="region"] header h2.disconnected {
 
 .tabs .tab.selected {
   border-bottom: 0.5rem solid @tabsBorderColor;
+}
+
+.tabs .scan {
+  display: inline-block;
+  width : 4rem;
+  color : white;
+  line-height: 4rem;
+  text-align: center;
+  position: absolute;
+  right: 0;
+  cursor : pointer;
+  top : 0;
+  transition: all 0.25s ease;
+  cursor : pointer;
+  font-size: 2rem;
+  opacity : 1;
+  bottom : 0;
+}
+
+.tabs .scan:hover {
+  background: lighten(@playerBgColor, 25%) !important;
 }
 
 .experimental {

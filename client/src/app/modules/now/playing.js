@@ -1,6 +1,9 @@
 angular.module('app')
 .controller('NowPlayingCtrl', ['$scope', '$filter',
   function NowPlayingCtrl($scope, $filter) {
+    $scope.loading = false;
+    $scope.view = 'remote';
+
     $scope.showAudioSelect = false;
     $scope.showSubtitleSelect = false;
     $scope.showTimePicker = false;
@@ -23,6 +26,12 @@ angular.module('app')
         }
       }
     });
+    
+    $scope.$watch('playlist', function (newVal, oldVal) {
+      if(newVal > -1) {
+        getItems();
+      }
+    });
 
     var timeFilter = $filter('time');
     $scope.seekTime = timeFilter($scope.player.seek.time);
@@ -43,7 +52,16 @@ angular.module('app')
         return '/musics/songs/albumid/'+ $scope.player.item.albumid;
       }
       return '';
-    },
+    };
+
+    $scope.goTo = function(index) {
+      document.querySelector('.playlist [data-type="list"]').scrollTop = 0;
+      $scope.xbmc.goTo(index);
+    };
+
+    $scope.isPlaying = function (id) {
+      return  $scope.player.item.id === id;
+    };
 
     $scope.isTypeVideo = function() {
       return $scope.player.type === 'video' ||
@@ -133,6 +151,29 @@ angular.module('app')
       newValue = Math.min(newValue, 100);
       newValue = Math.max(newValue, 0);
       $scope.xbmc.seek(newValue);
-    }
+    };
+
+    var getItems = function () {
+      $scope.loading = true;
+      $scope.xbmc.getPlaylistItems(function (items) {
+        $scope.items = items;
+        $scope.loading = false;
+      });
+    };
+    
+    var onPlaylistAdd = function (obj) {
+      getItems();
+    };
+
+    var onPlaylistRemove = function (obj) {
+      var data = obj.params.data;
+      if (!$scope.loading && $scope.playlist === data.playlistid && typeof $scope.items !== 'undefined') {
+        $scope.items.splice(data.position);
+      }
+    };
+
+    $scope.xbmc.register('Playlist.OnAdd', { fn: onPlaylistAdd, scope: this});
+    $scope.xbmc.register('Playlist.OnRemove', { fn: onPlaylistRemove, scope: this});
+
   }
 ]);
