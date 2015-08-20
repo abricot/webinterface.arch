@@ -1,4 +1,4 @@
-<div ng-repeat="comment in comments" class="row comment-wrapper">
+<div ng-repeat="comment in comments" class="row comment-wrapper" ng-if="comment.comment">
     <div class="caret"></div>
     <p class="comment" ng-class="{spoiler : comment.spoiler, revealed: comment.revealed}"
         ng-click="comment.revealed = true;">

@@ -93,9 +93,17 @@ angular.module('app')
 
     $scope.$on('onRepeatLast', function(scope, element, attrs){
       if($scope.tvshows.length && autoscroll) {
+        var header =  document.querySelector('#page > header');
+        var tabs = document.querySelector('.tvshows > .tabs');
         var today = document.querySelector('.today');
         var grid = document.querySelector('.cal-grid');
-        grid.scrollTop = Math.max(today.offsetTop-1,0);
+        if(today && grid) {
+          var headerDim = header.getBoundingClientRect();
+          var tabsDim = tabs.getBoundingClientRect();
+          var todayDim = today.getBoundingClientRect();
+          var scrollTo = todayDim.top - tabsDim.height - headerDim.height -1;
+          grid.scrollTop = Math.max( scrollTo,0);
+        }
         autoscroll = false;
       }
     }.bind(this));
