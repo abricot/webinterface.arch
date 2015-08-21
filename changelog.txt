@@ -1,3 +1,5 @@
+v2.0.0
+- Isengard compatibility
 v1.2.0
 - Add search functionnality for movies and shows 
 - Add scan button
