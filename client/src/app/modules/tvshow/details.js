@@ -56,6 +56,16 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
     }
   };
   
+  $scope.getYear = function (show, season){
+    var year = parseInt(show.year);
+    var number = parseInt(season.season);
+    if(!isNaN(year) && !isNaN(number)) {
+      return year + number - 1;
+    } else {
+      return year;
+    }
+  };
+
   $scope.$watch('season', function () {
     $scope.getTraktAdditionalInfo($scope.season);
   });

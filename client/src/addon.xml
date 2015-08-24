@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="webinterface.arch"
-  version="1.2.0"
+  version="2.0.0"
   name="Arch"
   provider-name="icolala">
   <requires>
     <import addon="xbmc.json" version="6.0.0" />
   </requires>
   <extension
-    point="xbmc.gui.webinterface"/>
+    point="xbmc.webinterface"/>
   <extension point="xbmc.addon.metadata">
     <summary lang="en">A modern web interface for KODI</summary>
     <description lang="en">A modern web interface for KODI. Browse all your movies, tv shows and musics. See what's currently playing. Discover new movies and tv shows. All from your browser, desktop or tablets.</description>
