@@ -46,7 +46,7 @@
                 <ul class="nav sections">
                     <li style="text-align: center">
                         {{movie.title}}
-                        <seekbar seekbar-value="movie.resume.position" seekbar-max="movie.resume.total"
+                        <seekbar seekbar-value="movie.resume.position || 0" seekbar-max="movie.resume.total || 100"
                                  seekbar-read-only="true" class="progress-wrapper"
                                  ng-if="hasAdditionalInfo()">
                         </seekbar>
@@ -119,7 +119,7 @@
                     <ul class="actors" ng-class="{collapsed : !seeMoreActors}">
                         <li class="actor" ng-repeat="actor in getActors()">
                             <img class="poster" image image-source="getImage(actor.thumbnail)"/>
-                            
+
                             <div class="name">{{actor.name}}</div>
                             <div class="role">{{actor.role}}</div>
                         </li>
@@ -142,13 +142,13 @@
                         </li>
                     </ul>
                 </div>
-                
+
                 <div class="details-section" ng-if="similars.length">
                     <h1>Similars</h1>
                     <ul class="similars collapsed">
                         <li class="similar" ng-repeat="similar in similars">
                             <a href="#/movies/tmdb/{{similar.id}}">
-                                <div class="poster" image 
+                                <div class="poster" image
                                      image-source="similar.poster | tmdbImage:'w185' | fallback:'img/icons/awe-512.png'">
                                 </div>
                             </a>

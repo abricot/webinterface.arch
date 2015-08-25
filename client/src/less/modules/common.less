@@ -275,11 +275,16 @@ section[role="region"] header h2.disconnected {
 /* entire container, keeps perspective */
 .flip-container {
   perspective: 1000;
+  transform-style: preserve-3d;
   text-align: center;
 }
   /* flip the pane when hovered */
-.row:hover .flip-container .flipper,
-.flipper.flipped {
+[data-type="list"] .card:hover .flipper .back,
+.flipper.flipped .back{
+  transform: rotateY(0deg);
+}
+[data-type="list"] .card:hover .flipper .front,
+.flipper.flipped .front{
   transform: rotateY(180deg);
 }
 
@@ -293,7 +298,31 @@ section[role="region"] header h2.disconnected {
 
 /* hide back of pane during swap */
 .front, .back {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
   backface-visibility: hidden;
+
+  -webkit-transition: 0.6s;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transform: rotateY(0deg);
+
+  -moz-transition: 0.6s;
+  -moz-transform-style: preserve-3d;
+  -moz-transform: rotateY(0deg);
+
+  -o-transition: 0.6s;
+  -o-transform-style: preserve-3d;
+  -o-transform: rotateY(0deg);
+
+  -ms-transition: 0.6s;
+  -ms-transform-style: preserve-3d;
+  -ms-transform: rotateY(0deg);
+
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+
   position: relative;
 }
 
@@ -301,11 +330,17 @@ section[role="region"] header h2.disconnected {
 .front {
   z-index: 2;
   transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
+  -ms-transform: rotateY(0deg);
 }
 
 /* back, initially hidden pane */
 .back {
-  transform: rotateY(180deg);
+  -webkit-transform: rotateY(-180deg);
+  -moz-transform: rotateY(-180deg);
+  -o-transform: rotateY(-180deg);
+  -ms-transform: rotateY(-180deg);
+  transform: rotateY(-180deg);
 }
 
 [data-type="list"]  .poster,

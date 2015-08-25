@@ -86,7 +86,7 @@ angular.module('app')
     $scope.trakt = trakt;
     $scope.helper = helper;
     $scope.helper.setProviders({xbmc : $scope.xbmc, tmdb : $scope.tmdb});
-    
+
     $scope.studioFn = $interpolate('https://cdn.rawgit.com/ccMatrix/StudioLogos/master/161x109_mono_png/{{studio}}.png');
     $scope.languageFn = $interpolate('https://cdn.rawgit.com/BigNoid/Aeon-Nox/master/media/flags/subtitles/flags/{{language}}.png')
     $scope.back = function() {
@@ -164,7 +164,7 @@ angular.module('app')
         $scope.playlist = properties.playlistid;
         xbmc.setActivePlaylist(properties.playlistid);
         if (properties.speed === 1) {
-          
+
           window.clearInterval($scope.player.intervalId);
           $scope.player.intervalId = window.setInterval(updateSeek, 1000);
         }
@@ -335,7 +335,9 @@ angular.module('app')
             httpPort: window.location.port === '' ? '80': window.location.port,
             ip: window.location.hostname,
             port: '9090',
-            videoAddon : 'plugin.video.youtube'
+            videoAddon : 'plugin.video.youtube',
+            username : '',
+            password : ''
           }];
         }
         var defaultHost = $scope.hosts.filter(filterDefault)[0];

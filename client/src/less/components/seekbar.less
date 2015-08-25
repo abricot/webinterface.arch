@@ -15,21 +15,40 @@ div[role="slider"] > div {
   position: relative;
 }
 
-div[role="slider"] progress {
+progress {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+
   width: 100%;
-  background: #000;
+
   border: none;
   height: @seekbarHeight;
   display: block;
   border-radius: 0;
+  color: @seekbarColor;
+  background-size: auto;
 }
 
+progress {
+   background: @regionBgColor  !important;
+}
 progress::-webkit-progress-bar {
     background: @regionBgColor;
 }
+/* IE10 */
+progress {
+    color:  @seekbarColor;
+}
 
+/* Firefox */
+progress::-moz-progress-bar {
+    background:  @seekbarColor;
+}
+
+/* Chrome */
 progress::-webkit-progress-value {
-    background: @seekbarColor;
+    background:  @seekbarColor;
 }
 
 div[role="slider"] > label {

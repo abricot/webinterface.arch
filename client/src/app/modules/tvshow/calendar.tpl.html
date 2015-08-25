@@ -1,6 +1,6 @@
 <div class="cards fill-height">
     <div class="kodi" ng-hide="dates.length"></div>
-    <ul data-type="list" class="cal-grid" lr-infinite-scroll="loadMore" scroll-threshold="200">
+    <ul data-type="list" class="cal-grid">
         <li ng-repeat="date in dates" class=" repeat-animation cal-day " on-last-repeat>
             <header ng-class="{today : isToday(date), past: isPast(date), future: isFuture(date)}">
                 <div class="date">{{date.format('D')}}</div>
@@ -28,7 +28,7 @@
                     <div class="description">
                         <h3>{{show.episode.number | episode:show.episode.season}} - {{show.episode.title || 'TBA'}}</h3>
                         <div>{{show.show.title}}</div>
-                        
+
                     </div>
                 </a>
             </div>
