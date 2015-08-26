@@ -14,8 +14,7 @@
             </div>
         </div>
         <div class="row wrapper">
-            
-            <div class="fanart" image image-source="getImage(show.fanart)"></div>
+            <tmdb-fanarts fanarts="fanarts" delay="15000" primary="show.fanart"></tmdb-fanarts>
             <div class="title">
                 <h2>{{show.title || show.name}}</h2>
                 <h1>{{seasonName(season)}}</h1>
@@ -27,10 +26,10 @@
                 <div class="poster-wrapper">
                     <img class=" poster" image image-source="getImage(season.thumbnail || season.poster, 'w500')"/>
                 </div>
-                
+
                 <ul class="nav sections">
                     <li style="text-align: center">
-                        {{show.title || show.name}} 
+                        {{show.title || show.name}}
                         <seekbar seekbar-value="show.watchedepisodes" seekbar-max="show.episode"
                                  seekbar-read-only="true" class="progress-wrapper"
                                  ng-if="show.watchedepisodes">

@@ -47,6 +47,7 @@
 
       var mapping = {
         'backdrop_path' : 'fanart',
+        'backdrops' : 'fanarts',
         'genres' : {
           key : 'genre',
           transformFn : flatten
@@ -54,6 +55,7 @@
         'id' : 'id',
         'tvdb_id' : 'tvdbid',
         'poster_path' : 'poster',
+        'posters' : 'posters',
         'name' : 'name',
         'networks' :  {
           key : 'studios',

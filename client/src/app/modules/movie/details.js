@@ -19,6 +19,12 @@ var BaseMovieDetailsCtrl = function ($scope, $stateParams) {
     });
   };
 
+  $scope.additionalImages = function (movieid) {
+    $scope.tmdb.movies.images(movieid).then(function(result){
+      $scope.fanarts = result.data.fanarts || [];
+    });
+  };
+
   $scope.getActors = function () {
     var actors = $scope.movie.cast.filter(function(actor) {
       return actor.role !== '' && typeof actor.thumbnail !== 'undefined';
@@ -57,11 +63,17 @@ var BaseMovieDetailsCtrl = function ($scope, $stateParams) {
   detail.onscroll = function () {
     if(detail.scrollTop > 200) {
       if(!detail.classList.contains('affixable')) {
+        var sidebar = detail.querySelector('.description > .sidebar');
+        var dimension = sidebar.getBoundingClientRect();
         detail.classList.add('affixable');
+        sidebar.style.marginLeft = dimension.left + 'px';
+        sidebar.style.width = dimension.width + 'px';
       }
     } else {
+      var sidebar = detail.querySelector('.description > .sidebar');
       detail.classList.remove('affixable');
-    };
+      sidebar.removeAttribute('style');
+    }
   };
 };
 
@@ -82,7 +94,9 @@ angular.module('app')
       $scope.tmdb.find('imdb_id', item.imdbnumber).then(function(result){
         var movies = result.data.movies;
         if(movies.length === 1) {
-          $scope.findSimilars(movies[0].id);
+          var movieid = movies[0].id;
+          $scope.findSimilars(movieid);
+          $scope.additionalImages(movieid);
         }
       });
     };
@@ -148,7 +162,7 @@ angular.module('app')
   function TMDBMovieDetailsCtrl($scope, $stateParams, $injector, $filter, $http, $interpolate) {
     $injector.invoke(BaseMovieDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
     var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
-    
+
     $scope.tmdb.movies.details($scope.movieid).then(function(result) {
       $scope.movie = result.data;
       $scope.tmdb.movies.credits($scope.movieid).then(function(result){
@@ -174,6 +188,7 @@ angular.module('app')
       })
     });
     $scope.findSimilars($scope.movieid);
+    $scope.additionalImages($scope.movieid);
 
     $scope.getImage = function (path, size) {
       var url = $filter('tmdbImage')(path, size || 'original');

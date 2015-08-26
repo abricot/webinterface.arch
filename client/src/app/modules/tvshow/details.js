@@ -9,7 +9,7 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
 
   $scope.episodes = [];
   $scope.nextAiringEpisode = null;
-  $scope.comments = []; 
+  $scope.comments = [];
 
   $scope.seasonName = function (season) {
     return 'Season '+season.season;
@@ -25,6 +25,12 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
     if(futureEpisode.length>0) {
       $scope.nextAiringEpisode  = futureEpisode[0];
     }
+  };
+
+  $scope.additionalImages = function (tvshowid) {
+    $scope.tmdb.tv.images(tvshowid).then(function(result){
+      $scope.fanarts = result.data.fanarts || [];
+    });
   };
 
   $scope.getTraktAdditionalInfo = function (season) {
@@ -55,7 +61,7 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
       });
     }
   };
-  
+
   $scope.getYear = function (show, season){
     var year = parseInt(show.year);
     var number = parseInt(season.season);
@@ -90,11 +96,17 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
   detail.onscroll = function () {
     if(detail.scrollTop > 200) {
       if(!detail.classList.contains('affixable')) {
+        var sidebar = detail.querySelector('.description > .sidebar');
+        var dimension = sidebar.getBoundingClientRect();
         detail.classList.add('affixable');
+        sidebar.style.marginLeft = dimension.left + 'px';
+        sidebar.style.width = dimension.width + 'px';
       }
     } else {
+      var sidebar = detail.querySelector('.description > .sidebar');
       detail.classList.remove('affixable');
-    };
+      sidebar.removeAttribute('style');
+    }
   };
 };
 
@@ -133,6 +145,7 @@ angular.module('app')
       $scope.seasons = seasons || [];
       if($scope.seasons.length > 0) {
         $scope.season = seasons[seasons.length-1];
+
         $scope.xbmc.getEpisodes($scope.tvshowid, $scope.season.season, onEpisodesRetrieved);
       } else {
         $scope.loading = false;
@@ -141,6 +154,7 @@ angular.module('app')
       $scope.tmdb.find('tvdb_id', $scope.show.imdbnumber).then(function(result){
         var shows = result.data.tvShows;
         if(shows.length === 1) {
+          $scope.additionalImages(shows[0].id);
           $scope.tmdb.tv.episodes(shows[0].id).then(function(result){
             var episodes = result.data.episodes;
             $scope.setNextAiringEpisode(episodes);
@@ -242,6 +256,7 @@ angular.module('app')
         $scope.season = $scope.show.seasons[$scope.show.seasons.length-1];
         $scope.tmdb.tv.seasons($scope.tvshowid, $scope.season.season).then(onEpisodesRetrieved);
         $scope.tmdb.tv.externalIDs($scope.tvshowid).then(onExternalIDsRetrieved);
+        $scope.additionalImages($scope.tvshowid);
       } else {
         $scope.loading = false;
       }
@@ -254,7 +269,7 @@ angular.module('app')
     };
 
     $scope.tmdb.tv.details($scope.tvshowid).then(onTvShowRetrieved);
-    
+
     $scope.changeSeason = function (season) {
       $scope.tmdb.tv.seasons($scope.tvshowid, season.season).then(onEpisodesRetrieved);
       $scope.getTraktAdditionalInfo(season);

@@ -74,6 +74,15 @@
         return $http(getConfig(url, 'GET'));
       };
 
+      factory.movies.images = function (id) {
+        var url = interpolateFn({
+          action : 'movie/'+id+'/images',
+          apiKey : apiKey,
+          parameters : ''
+        });
+        return $http(getConfig(url, 'GET'));
+      };
+
       factory.tv.populars = function (firstAirDateGte, voteAverageGte, page) {
         page = page || 1;
         var url = interpolateFn({
@@ -121,6 +130,23 @@
           path += '/episode/'+episode;
         }
         path += '/external_ids';
+        var url = interpolateFn({
+          action : path,
+          apiKey : apiKey,
+          parameters : ''
+        });
+        return $http(getConfig(url, 'GET'));
+      };
+
+      factory.tv.images = function (id, season, episode) {
+        var path = 'tv/'+id;
+        if(season) {
+          path += '/season/'+season;
+        }
+        if(episode) {
+          path += '/episode/'+episode;
+        }
+        path += '/images';
         var url = interpolateFn({
           action : path,
           apiKey : apiKey,
