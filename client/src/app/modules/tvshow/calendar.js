@@ -10,7 +10,6 @@ angular.module('app')
     $scope.shows = {};
 
     function getDates(date, ref) {
-      console.log(date.format('YYYY-MM-DD'),ref.format('YYYY-MM-DD'));
       var dates = [];
       var days = ref.diff(date, 'days');
       for(var i=0; i< days; i++){
@@ -90,11 +89,11 @@ angular.module('app')
     };
 
     $scope.isFuture = function(date){
-      return date.month()> moment().month();
+      return date.month()> $scope.refDate.month();
     };
 
     $scope.isPast = function(date){
-      return date.month()< moment().month();
+      return date.month()< $scope.refDate.month();
     };
 
     $scope.isToday = function(date){
@@ -109,6 +108,7 @@ angular.module('app')
     $scope.previousMonth = function () {
       if(!$scope.fetching) {
         $scope.fetching = true;
+        document.querySelector('.cal-grid').scrollTop = 0;
         var startOfMonth = $scope.refDate.startOf('month');
         var date = moment(startOfMonth).subtract(1, 'd').startOf('month');
         $scope.refDate = moment(date);
@@ -120,10 +120,11 @@ angular.module('app')
     $scope.nextMonth = function() {
       if(!$scope.fetching) {
         $scope.fetching = true;
+        document.querySelector('.cal-grid').scrollTop = 0;
         var startOfMonth = $scope.refDate.startOf('month').add(1, 'month');
         $scope.refDate = moment(startOfMonth);
-        startOfMonth.subtract(startOfMonth.day(), 'd');
-        load(startOfMonth, $scope.refDate);
+        var date = moment(startOfMonth).subtract(startOfMonth.day(), 'd');
+        load(date, startOfMonth.add(1, 'month'));
       }
     };
 
