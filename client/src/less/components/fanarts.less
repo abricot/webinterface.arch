@@ -18,7 +18,24 @@
 .fanarts .fx:first-child + img ~ img  {
     z-index:-1;
 }
+.fanarts img  {
+    transform-origin: center center;
+}
+.fanarts :nth-child(2n+1) {
+    transform-origin: 25% 75%;
+}
+.fanarts :nth-child(3n+1) {
+    transform-origin: 25% 25%;
+}
+.fanarts :nth-child(4n+1) {
+    transform-origin: 75% 75%;
+}
+
+.fanarts .fx:first-child + img ~ img  {
+    z-index:-1;
+}
 
 .fanarts .fx {
-  opacity:1;
+    opacity:1;
+    transform: translateX(-50%) translateY(-20%) scale(1.1);
 }

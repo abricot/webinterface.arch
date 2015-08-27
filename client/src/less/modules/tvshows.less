@@ -2,6 +2,11 @@
 .tvshows .tabs{background: @secondaryTabsBgColor;}
 .tvshows .tabs .tab.selected {border-color: @secondaryTabsBorderColor;}
 .tvshows .tabs .tab{padding: 1rem 0 0.5rem 0;}
+.tvshows .tabs .tab .icon-trakt:before{
+  width : 1.5rem;
+  height : 1.5rem;
+  margin-right: .5rem;
+}
 .tvshows .detail [data-type="list"] {padding-top:1rem;}
 .detail h1 .season {
   padding-left : 1rem;
@@ -122,11 +127,87 @@
 .detail .next {right : 2rem;}
 .detail .previous {left : 2rem;}
 
+.cal-summary {
+  position : absolute;
+  top : 0;
+  bottom : 0;
+  width : 17%;
+  background : @primaryBgColor;
+  text-align: left;
+  .box-sizing;
+}
+
+.cal-summary h1 {
+  text-align: center;
+  position : relative;
+  color : @actionBgColor;
+}
+
+.cal-summary h1 .previous,
+.cal-summary h1 .next {
+  position : absolute;
+  top : 1.5rem;
+  font-size: 2rem;
+  font-style: normal;
+  font-family: arial;
+  font-weight: normal;
+  color : @primaryTextColor;
+  opacity : 0.5;
+  z-index: 1;
+}
+.cal-summary h1 .previous:hover,
+.cal-summary h1 .next:hover {
+  opacity : 1;
+}
+
+.cal-summary h1 .previous {left : 1rem;}
+.cal-summary h1 .next {right:1rem;}
+.cal-summary .banner{
+  width:100%;
+  background-size: 100% auto;
+  background-position: bottom;
+  height : 5rem;
+}
+
+.cal-summary h3 {
+  text-align: right;
+  margin-right : .5rem;
+}
+.cal-summary li {
+  position:relative;
+  margin-bottom: 0.25rem;
+}
+.cal-summary .counter {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5rem;
+  height: 5rem;
+  font-family: "Roboto";
+  font-size: 2.5rem;
+  line-height: 5rem;
+  text-align: center;
+  background-color: rgba(0,0,0,0.75);
+  color: white;
+}
+
+.cal-summary ul {
+  position : absolute;
+  bottom : 0;
+  left : 0;
+  right : 0;
+  top: 12rem;
+  background: @tabsBgColor;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
 .cal-grid {
   display: flex;
   flex-wrap: wrap;
   overflow-x: hidden;
   position: relative;
+  margin-left : 17%;
 }
 
 .cal-grid .cal-day {
@@ -139,6 +220,7 @@
   float : left;
   background: transparent url(../img/icons/loading.png) no-repeat center 5rem ;
   background-size: 50%;
+  border-left : 1px solid @primaryBgColor;
 }
 
 .cal-grid .cal-day header {

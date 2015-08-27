@@ -1,13 +1,30 @@
 <div class="cards fill-height">
-    <div class="kodi" ng-hide="dates.length"></div>
+    <div class="kodi" ng-show="!dates.length || fetching" ng-class="{fetching : fetching}"></div>
+    <div class="cal-summary detail">
+        <h1>
+            <i class="previous" ng-click="previousMonth()">&#8592;</i>
+            <i class="next" ng-click="nextMonth()">&#8594;</i>
+            {{refDate.format('MMMM')}}
+        </h1>
+        <p ng-show="showsCount()">
+            <b>{{getEpisodesFor(refDate, 'month').length}}</b> episodes from <b>{{showsCount()}}</b> shows airing this month.
+        </p>
+        <ul>
+            <li ng-repeat="(key, value) in shows" class="repeat-animation">
+                <div class="banner" image image-source="getBanner(value)"></div>
+                <div class="counter">{{value.hit}}</div>
+            </li>
+            <li ng-show="!showsCount()" class="empty list">Oops! nothing here</li>
+        </ul>
+    </div>
     <ul data-type="list" class="cal-grid">
-        <li ng-repeat="date in dates" class=" repeat-animation cal-day " on-last-repeat>
+        <li ng-repeat="date in dates" class="repeat-animation cal-day">
             <header ng-class="{today : isToday(date), past: isPast(date), future: isFuture(date)}">
                 <div class="date">{{date.format('D')}}</div>
                 <div class="day">{{date.format('ddd')}}</div>
                 <div class="month">{{date.format('MMM')}}</div>
             </header>
-            <div ng-repeat="show in getTVShowsFor(date)" class="card">
+            <div ng-repeat="show in getEpisodesFor(date)" class="card">
                 <a href="#/tvshows/tmdb/{{show.show.ids.tmdb}}">
                     <div class="poster" image image-source="getPoster(show)">
                         <flipper ng-if="!isFuture(date)">
