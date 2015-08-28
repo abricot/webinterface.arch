@@ -21,7 +21,13 @@
   font-family: Roboto;
 }
 
-.music .content {height: calc(100% - 4rem);position:relative;}
+.music > .content {
+  position: absolute;
+  top:4rem;
+  bottom: 0;
+  left : 0;
+  right : 0;
+}
 .music .tabs{background: @secondaryTabsBgColor;}
 .music .tabs .tab.selected {border-color: @secondaryTabsBorderColor;}
 .music .tabs .tab{

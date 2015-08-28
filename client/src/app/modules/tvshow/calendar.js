@@ -87,18 +87,6 @@ angular.module('app')
       });
     };
 
-    $scope.shouldDisplayAd = function (episodes) {
-      var res = false;
-      if($scope.tvshows.length) {
-        var random = Math.floor(Math.random()*4);
-        if(!episodes.length && random && !hasAds) {
-          res = true;
-          hasAds = true;
-        }
-      }
-      return res;
-    };
-
     $scope.showsCount = function () {
       return Object.keys($scope.shows).length;
     }
@@ -151,19 +139,10 @@ angular.module('app')
     };
 
     $scope.$on('onRepeatLast', function(scope, element, attrs){
-      if($scope.tvshows.length && autoscroll) {
-        var header =  document.querySelector('#page > header');
-        var tabs = document.querySelector('.tvshows > .tabs');
-        var today = document.querySelector('.today');
-        var grid = document.querySelector('.cal-grid');
-        if(today && grid) {
-          var headerDim = header.getBoundingClientRect();
-          var tabsDim = tabs.getBoundingClientRect();
-          var todayDim = today.getBoundingClientRect();
-          var scrollTo = todayDim.top - tabsDim.height - headerDim.height -1;
-          grid.scrollTop = Math.max( scrollTo,0);
-        }
-        autoscroll = false;
+      if($scope.tvshows.length) {
+        var ads =  document.querySelectorAll('.cal-grid .support');
+        var num = Math.round(Math.random()*ads.length);
+        ads[Math.min(num, ads.length-1)].style.display = 'block';
       }
     }.bind(this));
   }

@@ -42,8 +42,8 @@ angular.module('services.helper', ['services.storage'])
       } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1) {
         xbmc.executeAddon({
           addonid : 'plugin.video.genesis',
-          params : 'action=movies_search'+
-                   '&query='+title
+          params : 'action=movieSearch'+
+                   '&query='+title.replace(/:/gi, ' ')
         });
       } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1) {
         var path = '/movie/'+movie.imdbnumber+'/play';
@@ -59,6 +59,7 @@ angular.module('services.helper', ['services.storage'])
 
     factory.foreign.shows.play = function (host, show, episode) {
       var tvdb =  show.ids.tvdb || show.ids.tvdbid;
+      var tmdb = show.ids.tmdb || show.ids.tmdbid;
       var imdb =  show.ids.imdb || show.ids.imdbnumber;
       var number = episode.number || episode.episode;
       var season = episode.season;
@@ -75,14 +76,13 @@ angular.module('services.helper', ['services.storage'])
       } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1) {
         xbmc.executeAddon({
           addonid : 'plugin.video.genesis',
-          params : 'action=episodes2'+
-                   '&episode='+number+
+          params : 'action=episodes'+
                    '&imdb='+ imdb.replace('tt', '')+
                    '&season='+season+
-                   '&show='+title+
+                   '&tmdb='+tmdb+
                    '&tvdb='+tvdb+
-                   '&year='+year+
-                   '&date='+firstaired.format('YYYY-MM-DD')
+                   '&tvshowtitle='+title+
+                   '&year='+year
         });
       } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1) {
         var path = '/show/'+tvdb+'/season/'+season+'/episode/'+number+'/play';

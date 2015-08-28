@@ -1,4 +1,10 @@
-.tvshows .content {height: calc(100% - 4rem);position:relative;}
+.tvshows > .content {
+  position: absolute;
+  top:4rem;
+  bottom: 0;
+  left : 0;
+  right : 0;
+}
 .tvshows .tabs{background: @secondaryTabsBgColor;}
 .tvshows .tabs .tab.selected {border-color: @secondaryTabsBorderColor;}
 .tvshows .tabs .tab{padding: 1rem 0 0.5rem 0;}
@@ -203,7 +209,12 @@
   overflow-y: auto;
 }
 
-.support {position : relative;}
+.support {
+  position : relative;
+  display:none;
+  height : 16rem;
+  overflow : hidden;
+}
 .support h3 {
   position: absolute;
   top: 50%;
@@ -215,7 +226,7 @@
   font-family: "Roboto";
   transform: translateY(-50%);
 }
-.support button.recommend {margin-top : 2rem;}
+.support button.recommend {margin-top : 2rem;background:#0087D5;}
 .support button.recommend .fa{padding-right : 0.5rem;}
 
 .cal-grid {
@@ -286,7 +297,7 @@
 .cal-grid .cal-day .poster {
   height: 9.5rem;
   width: 100%;
-  background-size: 100% auto;
+  background-size: auto 100%;
 }
 
 .cal-grid .cal-day .description {

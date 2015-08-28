@@ -20,7 +20,7 @@
         </ul>
     </div>
     <ul data-type="list" class="cal-grid">
-        <li ng-repeat="date in dates" class="repeat-animation cal-day">
+        <li ng-repeat="date in dates" class="repeat-animation cal-day" on-last-repeat>
             <header ng-class="{today : isToday(date), past: isPast(date), future: isFuture(date)}">
                 <div class="date">{{date.format('D')}}</div>
                 <div class="day">{{date.format('ddd')}}</div>
@@ -52,7 +52,7 @@
                 </a>
             </div>
             <form action="https://www.paypal.com/cgi-bin/webscr"
-                  method="post" target="_top"
+                  method="post" target="blank"
                   ng-if="!episodes.length"
                   class="support">
                 <input type="hidden" name="cmd" value="_s-xclick">

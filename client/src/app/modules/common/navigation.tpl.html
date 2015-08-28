@@ -11,8 +11,16 @@
             <div class="label">{{item.label}}</div>
         </a>
     </div>
-
+    <form action="https://www.paypal.com/cgi-bin/webscr"
+          method="post" target="blank"
+          class="donate"> 
+        <input type="hidden" name="cmd" value="_s-xclick">
+        <input type="hidden" name="hosted_button_id" value="55CCWP2R8WCNU">
+        <button type="submit" class="recommend">
+            <i class="fa fa-paypal"></i>
+        </button>
+    </form>
     <div class="status" ng-class="{connected : connected, disconnected : !connected}">
-        <i class="fa" ng-class="{'fa-check' : connected, 'fa-clock-os' : !connected}"></i>
+        <i class="fa" ng-class="{'fa-check' : connected, 'fa-times' : !connected}"></i>
     </div>
 </nav>
