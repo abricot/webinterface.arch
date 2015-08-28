@@ -10,6 +10,7 @@ angular.module('app')
     $scope.shows = {};
 
     function getDates(date, ref) {
+      date.subtract(date.day(), 'd');
       var dates = [];
       var days = ref.diff(date, 'days');
       for(var i=0; i< days; i++){
@@ -40,12 +41,10 @@ angular.module('app')
 
     if ($scope.trakt.isAuthenticated()) {
       var iterator = moment().startOf('month');
-      iterator.subtract(iterator.day(), 'd');
       load(iterator, moment().startOf('month').add(1, 'month'));
     } else {
       $scope.trakt.connect().then(function(){
         var iterator = moment().startOf('month');
-        iterator.subtract(iterator.day(), 'd');
         load(iterator, moment().startOf('month').add(1, 'month'));
       }, function() {
         $scope.go('/settings');
@@ -112,7 +111,6 @@ angular.module('app')
         var startOfMonth = $scope.refDate.startOf('month');
         var date = moment(startOfMonth).subtract(1, 'd').startOf('month');
         $scope.refDate = moment(date);
-        date.subtract(date.day(), 'd');
         load(date, startOfMonth.subtract(1,'d'));
       }
     };
@@ -123,7 +121,7 @@ angular.module('app')
         document.querySelector('.cal-grid').scrollTop = 0;
         var startOfMonth = $scope.refDate.startOf('month').add(1, 'month');
         $scope.refDate = moment(startOfMonth);
-        var date = moment(startOfMonth).subtract(startOfMonth.day(), 'd');
+        var date = moment(startOfMonth);
         load(date, startOfMonth.add(1, 'month'));
       }
     };
