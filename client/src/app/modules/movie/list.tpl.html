@@ -10,9 +10,9 @@
                         </div>
                         <div class="back">
                             <div class="md-circle rating">
-                                <i class="icon-play" ng-click="helper.local.movies.play(movie); $event.preventDefault();"
+                                <i class="fa fa-play" ng-click="helper.local.movies.play(movie); $event.preventDefault();"
                                    ng-show="!player.active"></i>
-                                <i class="icon-plus" ng-click="queue(movie); $event.preventDefault();"
+                                <i class="fa fa-plus" ng-click="queue(movie); $event.preventDefault();"
                                    ng-show="player.active"></i>
                             </div>
                         </div>
@@ -21,7 +21,7 @@
                         <div rating rating-value="movie.rating" rating-max="10"></div>
                     </div>
                     <div class="playcount" ng-show="movie.playcount">
-                         <i class="icon-ok"></i>
+                         <i class="fa fa-ok"></i>
                     </div>
                 </div>
                 <div class="description">
@@ -35,10 +35,10 @@
                                  seekbar-read-only="true">
                         </seekbar>
                         <div class="controls">
-                            <i ng-class="{'icon-eye-open':!movie.playcount, 'icon-eye-close':movie.playcount}"
+                            <i class="fa" ng-class="{'fa-eye':!movie.playcount, 'fa-eye-slash':movie.playcount}"
                                ng-click="toggleWatched(movie); $event.preventDefault();"
                               ></i>
-                            <i class="icon-trash"
+                            <i class="fa fa-trash"
                                ng-click="remove($index, movie); $event.preventDefault();"
                             ></i>
                         </div>

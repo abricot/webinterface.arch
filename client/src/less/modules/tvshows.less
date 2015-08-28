@@ -1,8 +1,8 @@
-.tvshows .content {height: calc(100% - 6rem);position:relative;}
+.tvshows .content {height: calc(100% - 4rem);position:relative;}
 .tvshows .tabs{background: @secondaryTabsBgColor;}
 .tvshows .tabs .tab.selected {border-color: @secondaryTabsBorderColor;}
 .tvshows .tabs .tab{padding: 1rem 0 0.5rem 0;}
-.tvshows .tabs .tab .icon-trakt:before{
+.tvshows .tabs .tab .fa-trakt:before{
   width : 1.5rem;
   height : 1.5rem;
   margin-right: .5rem;
@@ -13,8 +13,8 @@
   display: inline-block;
 }
 
-.detail h1 .icon-chevron-down,
-.detail h1 .icon-chevron-right {
+.detail h1 .fa-chevron-down,
+.detail h1 .fa-chevron-right {
   font-size: 2rem;
   padding-left: 1rem;
 }
@@ -37,7 +37,7 @@
   top: 3rem;
   font-size: 2rem;
   left: 7.5rem;
-  width: calc(100% - 6rem);
+  width: calc(100% - 4rem);
   opacity: 0;
   cursor: pointer;
 }
@@ -202,6 +202,21 @@
   overflow: hidden;
   overflow-y: auto;
 }
+
+.support {position : relative;}
+.support h3 {
+  position: absolute;
+  top: 50%;
+  padding: 1rem;
+  font-size: 2rem;
+  color: white;
+  text-align: center;
+  font-weight: normal;
+  font-family: "Roboto";
+  transform: translateY(-50%);
+}
+.support button.recommend {margin-top : 2rem;}
+.support button.recommend .fa{padding-right : 0.5rem;}
 
 .cal-grid {
   display: flex;

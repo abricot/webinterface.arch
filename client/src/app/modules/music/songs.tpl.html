@@ -6,17 +6,17 @@
             <div class="md-action md-action-primary"
                ng-click="xbmc.open({'file' : undefined})"
                ng-show="!album">
-                <i class="icon-random"></i>
+                <i class="fa fa-random"></i>
             </div>
             <div class="md-action md-action-primary"
                  ng-click="xbmc.queue({'albumid': album.albumid})"
                  ng-show="album && player.active">
-                <i class="icon-plus"></i>
+                <i class="fa fa-plus"></i>
             </div>
             <div class="md-action md-action-primary"
                  ng-click="xbmc.open({'albumid': album.albumid})"
                  ng-show="album && !player.active">
-                <i class="icon-play"></i>
+                <i class="fa fa-play"></i>
             </div>
         </div>
     </div>
@@ -57,17 +57,17 @@
             <button class="recommend" class="md-action md-action-primary"
                     ng-click="xbmc.open({'file' : undefined})"
                     ng-show="!album">
-                <i class="icon-random"></i> Shuffle
+                <i class="fa fa-random"></i> Shuffle
             </button>
             <button class="recommend"
                  ng-click="xbmc.queue({'albumid': album.albumid})"
                  ng-show="album && player.active">
-                <i class="icon-plus"></i> Queue
+                <i class="fa fa-plus"></i> Queue
             </button>
             <button class="recommend"
                  ng-click="xbmc.open({'albumid': album.albumid})"
                  ng-show="album && !player.active">
-                <i class="icon-play"></i> Play
+                <i class="fa fa-play"></i> Play
             </button>
         </div>
         <div class="span7 content">
@@ -76,7 +76,7 @@
                     ng-click="xbmc.open({songid : song.songid})">
                     <div class="span4 track">
                         <span class="thumbnail" image image-source="song.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
-                            <i class="icon-play"></i>
+                            <i class="fa fa-play"></i>
                         </span>
                         {{song.label}}
                         <img class="equalizer" src="img/backgrounds/equalizer.gif" ng-show="isPlaying(song.songid)"/>
@@ -85,10 +85,10 @@
                     <div class="span3">{{song.artist.join(', ') || '&nbsp;'}}</div>
                     <div class="span1 duration">{{song.duration | time | date :'mm:ss'}}</div>
                     <div class="span1 more">
-                        <i class="icon icon-ellipsis-vertical"></i>
+                        <i class="fa fa-ellipsis-v"></i>
                         <ul class="dropdown-menu">
                             <li ng-click="xbmc.queue({'songid':song.songid});$event.stopPropagation();">
-                                <i class="icon-plus"></i>
+                                <i class="fa fa-plus"></i>
                                 Queue
                             </li>
                         </ul>

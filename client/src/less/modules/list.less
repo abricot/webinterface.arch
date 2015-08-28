@@ -79,7 +79,7 @@
 [data-type="list"] .card .poster{
   width : 18rem;
   height : 27rem;
-  background-size: 18rem;
+  background-size: auto 100%;
   background-position: center;
   box-sizing: border-box;
   box-shadow : 0 0 0 0;
@@ -125,7 +125,7 @@
 }
 
 [data-type="list"] .card .description .controls i {
-  padding-right:1rem;
+  padding-left:.5rem;
   opacity: 0.5;
 }
 
@@ -139,7 +139,6 @@
   left : auto;
   top : auto;
   border-color : lighten(@regionBgColor, 25%);
-  border : 0.25rem solid @secondaryBgColor;
   background-color: @secondaryBgColor;
   background-position: bottom;
 }
@@ -152,8 +151,6 @@
   transform : translateX(-50%);
   z-index: 2;
 }
-
-
 
 [data-type="list"] .card .flipper .back .md-circle i {
   font-size: 2rem;

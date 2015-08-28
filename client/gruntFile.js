@@ -4,8 +4,8 @@ module.exports = function (grunt) {
 
     // Default task.
     grunt.registerTask('default', ['build']);
-    grunt.registerTask('build', ['clean','html2js','concat','recess:build','copy']);
-    grunt.registerTask('release', ['clean','html2js','concat','recess:build','copy','compress']);
+    grunt.registerTask('build', ['clean','html2js','concat','less:build','copy']);
+    grunt.registerTask('release', ['clean','html2js','concat','less:build','copy','compress']);
     // Print a timestamp (useful for when watching)
     grunt.registerTask('timestamp', function() {
         grunt.log.subhead(Date());
@@ -38,7 +38,7 @@ module.exports = function (grunt) {
         copy: {
             assets: {
                 files: [{ dest: '<%= releasedir %>', src : '**', expand: true, cwd: 'src/assets/' },
-                        { dest: '<%= releasedir %>/font', src : '**', expand: true, cwd: 'vendor/font-awesome/font/' }]
+                        { dest: '<%= releasedir %>/fonts', src : '**', expand: true, cwd: 'vendor/font-awesome/fonts/' }]
             },
             csp : {
                 files: [{ dest : '<%= releasedir %>/css', src : '*csp.css', expand: true, cwd: 'vendor/angular/' }]
@@ -138,25 +138,13 @@ module.exports = function (grunt) {
                 dest: '<%= releasedir %>/js/lib/angular.js'
             }
         },
-        recess: {
+        less: {
             build: {
                 files: {
                     '<%= releasedir %>/css/yin.css':
                         ['<%= src.less.yin %>', 'vendor/font-awesome/less/font-awesome.less'],
                     '<%= releasedir %>/css/yang.css':
                         ['<%= src.less.yang %>', 'vendor/font-awesome/less/font-awesome.less']
-                },
-                options: {
-                    compile: true
-                }
-            },
-            min: {
-                files: {
-                    '<%= releasedir %>/css/yin.css': ['<%= src.less.yin %>', 'vendor/font-awesome/less/font-awesome.less'],
-                    '<%= releasedir %>/css/yang.css': ['<%= src.less.yang %>', 'vendor/font-awesome/less/font-awesome.less']
-                },
-                options: {
-                    compress: true
                 }
             }
         },

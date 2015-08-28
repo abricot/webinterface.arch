@@ -33,6 +33,10 @@ angular.module('directives.tmdbFanarts', [
         }
       };
 
+      scope.wideEnough = function(value, index, array) {
+        return value.width >= 1920;
+      };
+
       scope.$watch('fanarts', function(value) {
         if(value && value.length) {
           if(timeoutId) {

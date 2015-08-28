@@ -8,6 +8,7 @@ angular.module('app')
     $scope.refDate = moment();
     $scope.tvshows = [];
     $scope.shows = {};
+    var hasAds = false;
 
     function getDates(date, ref) {
       date.subtract(date.day(), 'd');
@@ -34,6 +35,7 @@ angular.module('app')
     };
 
     function load(date, ref) {
+      hasAds = false;
       dates = getDates(date, ref);
       var days = dates[dates.length-1].diff(dates[0], 'days');
       $scope.trakt.calendar.myShows(dates[0].toDate(), days).then(onTvShowsFromSource);
@@ -73,6 +75,28 @@ angular.module('app')
         shows[showIds.trakt].hit = shows[showIds.trakt].hit ? shows[showIds.trakt].hit+1 : 1;
       });
       return shows;
+    };
+
+    $scope.highlight = function (show) {
+      $scope.tvshows.forEach(function(tvshow){
+        if(tvshow.show.ids.trakt !== show.ids.trakt) {
+          tvshow.fade = true;
+        } else {
+          tvshow.fade = false;
+        }
+      });
+    };
+
+    $scope.shouldDisplayAd = function (episodes) {
+      var res = false;
+      if($scope.tvshows.length) {
+        var random = Math.floor(Math.random()*4);
+        if(!episodes.length && random && !hasAds) {
+          res = true;
+          hasAds = true;
+        }
+      }
+      return res;
     };
 
     $scope.showsCount = function () {

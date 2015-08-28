@@ -34,9 +34,9 @@
                         </div>
                         <h1>{{album.label}}</h1>
                         <h3>{{album.year}}</h3>
-                        <div class="md-action md-action-primary" 
+                        <div class="md-action md-action-primary"
                              ng-click="xbmc.open({albumid : album.albumid})">
-                            <i class="icon-play"></i>
+                            <i class="fa fa-play"></i>
                         </div>
                     </div>
                     <ul data-type="list">
@@ -44,7 +44,7 @@
                           ng-click="xbmc.open({songid : song.songid})">
                             <div class="span4 track">
                                 <span class="thumbnail" image image-source="song.thumbnail | asset:host | fallback:'img/backgrounds/album.png'">
-                                    <i class="icon-play"></i>
+                                    <i class="fa fa-play"></i>
                                 </span>
                                 {{song.label}}
                                 <img class="equalizer" src="img/backgrounds/equalizer.gif" ng-show="isPlaying(song.songid)"/>
@@ -53,10 +53,10 @@
                             <div class="span3">{{song.artist.join(', ')}}</div>
                             <div class="span1 duration">{{song.duration | time | date :'mm:ss'}}</div>
                             <div class="span1 more">
-                                <i class="icon icon-ellipsis-vertical"></i>
+                                <i class="fa fa-ellipsis-v"></i>
                                 <ul class="dropdown-menu">
                                     <li ng-click="xbmc.queue({'songid':song.songid});$event.stopPropagation();">
-                                        <i class="icon-plus"></i>
+                                        <i class="fa fa-plus"></i>
                                         Queue
                                     </li>
                                 </ul>

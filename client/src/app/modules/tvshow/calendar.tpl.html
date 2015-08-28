@@ -11,8 +11,10 @@
         </p>
         <ul>
             <li ng-repeat="(key, value) in shows" class="repeat-animation">
-                <div class="banner" image image-source="getBanner(value)"></div>
-                <div class="counter">{{value.hit}}</div>
+                <a href="#/tvshows/tmdb/{{value.ids.tmdb}}">
+                    <div class="banner" image image-source="getBanner(value)"></div>
+                    <div class="counter">{{value.hit}}</div>
+                </a>
             </li>
             <li ng-show="!showsCount()" class="empty list">Oops! nothing here</li>
         </ul>
@@ -24,7 +26,7 @@
                 <div class="day">{{date.format('ddd')}}</div>
                 <div class="month">{{date.format('MMM')}}</div>
             </header>
-            <div ng-repeat="show in getEpisodesFor(date)" class="card">
+            <div ng-repeat="show in getEpisodesFor(date) as episodes" class="card">
                 <a href="#/tvshows/tmdb/{{show.show.ids.tmdb}}">
                     <div class="poster" image image-source="getPoster(show)">
                         <flipper ng-if="!isFuture(date)">
@@ -33,7 +35,7 @@
                             </div>
                             <div class="back">
                                 <div class="md-circle rating">
-                                    <i class="icon-play" ng-click="play(show); $event.preventDefault();"></i>
+                                    <i class="fa fa-play" ng-click="play(show); $event.preventDefault();"></i>
                                 </div>
                             </div>
                         </flipper>
@@ -49,6 +51,21 @@
                     </div>
                 </a>
             </div>
+            <form action="https://www.paypal.com/cgi-bin/webscr"
+                  method="post" target="_top"
+                  ng-if="!episodes.length"
+                  class="support">
+                <input type="hidden" name="cmd" value="_s-xclick">
+                <input type="hidden" name="hosted_button_id" value="55CCWP2R8WCNU">
+                <img src="../img/backgrounds/support.png" width="100%"/>
+                <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
+                <h3>
+                    Enjoying Arch ? Support us!
+                    <button type="submit" class="recommend">
+                        <i class="fa fa-paypal"></i>Donate
+                    </button>
+                </h3>
+            </form>
         </li>
     </ul>
 </div>

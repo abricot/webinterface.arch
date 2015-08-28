@@ -3,7 +3,7 @@
     <div ng-switch-when="false">
         <div class="experimental row" ng-show="!isExternalAddonAvailable && isUsingExternalAddon()">
             <div class="offset2 span8">
-                <i class="icon icon-beaker"></i>
+                <i class="fa fa-flask"></i>
                 {{host.videoAddon}} needed to preview discoverable content.
             </div>
         </div>
@@ -12,22 +12,22 @@
             <div class="actions" ng-if="hasAdditionalInfo()">
                 <div class="md-action md-action-primary"
                      ng-click="play(movie)" ng-show="!player.active">
-                    <i class="icon-play"></i>
+                    <i class="fa fa-play"></i>
                 </div>
                 <div class="md-action md-action-primary"
                      ng-click="queue(movie)" ng-show="player.active && !isCurrentlyPlaying">
-                    <i class="icon-plus"></i>
+                    <i class="fa fa-plus"></i>
                 </div>
                 <div class="md-action md-action-primary"
                      ng-click="xbmc.togglePlay()" ng-show="player.active && isCurrentlyPlaying">
-                    <i class="icon-play" ng-show="!player.speed"></i>
-                    <i class="icon-pause" ng-show="player.speed"></i>
+                    <i class="fa fa-play" ng-show="!player.speed"></i>
+                    <i class="fa fa-pause" ng-show="player.speed"></i>
                 </div>
             </div>
             <div class="actions" ng-if="!hasAdditionalInfo()">
                 <div class="md-action md-action-primary"
                      ng-click="play(movie)">
-                    <i class="icon-play"></i>
+                    <i class="fa fa-play"></i>
                 </div>
             </div>
             <div class="title">
@@ -40,7 +40,7 @@
                 <div class="poster-wrapper">
                     <img class=" poster" image image-source="getImage(movie.thumbnail || movie.poster, 'w185')"/>
                     <div class="preview"  ng-click="xbmc.open({'file': movie.trailer})">
-                        <i class="icon-film"></i>
+                        <i class="fa fa-film"></i>
                     </div>
                 </div>
                 <ul class="nav sections">
@@ -53,14 +53,14 @@
                     </li>
                     <li class="row">
                         <div class="span6 label">
-                            <i class="icon-time"></i>
+                            <i class="fa fa-clock-o"></i>
                             Runtime
                         </div>
                         <div class="span6 value">{{movie.runtime | time | date:'HH:mm'}}</div>
                     </li>
                     <li class="row">
                         <div class="span6 label">
-                            <i class="icon-star"></i>
+                            <i class="fa fa-star"></i>
                             Rating
                         </div>
                         <div class="span6 value">{{movie.rating| number : 1}}</div>
@@ -74,7 +74,7 @@
                     </li>
                     <li class="row">
                         <div class="span6 label">
-                            <i class="icon-calendar"></i>
+                            <i class="fa fa-calendar"></i>
                             Released
                         </div>
                         <div class="span6 value">{{movie.year}}</div>
@@ -83,16 +83,16 @@
                 <div ng-if="hasAdditionalInfo()">
                     <button class="recommend"
                          ng-click="play(movie)" ng-show="!player.active">
-                        <i class="icon-play"></i> Play
+                        <i class="fa fa-play"></i> Play
                     </button>
                     <button class="recommend"
                          ng-click="queue(movie)" ng-show="player.active && !isCurrentlyPlaying">
-                        <i class="icon-plus"></i> Queue
+                        <i class="fa fa-plus"></i> Queue
                     </button>
                     <button class="recommend"
                          ng-click="xbmc.togglePlay()" ng-show="player.active && isCurrentlyPlaying">
-                        <i class="icon-play" ng-show="!player.speed"></i>
-                        <i class="icon-pause" ng-show="player.speed"></i>
+                        <i class="fa fa-play" ng-show="!player.speed"></i>
+                        <i class="fa fa-pause" ng-show="player.speed"></i>
                         <span ng-show="!player.speed">Resume</span>
                         <span ng-show="player.speed">Pause</span>
                     </button>
@@ -100,7 +100,7 @@
                 <div ng-if="!hasAdditionalInfo()">
                     <button class="recommend"
                          ng-click="play(movie)">
-                        <i class="icon-play"></i> Play
+                        <i class="fa fa-play"></i> Play
                     </button>
                 </div>
             </div>

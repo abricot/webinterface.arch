@@ -16,7 +16,7 @@
                         </div>
                     </flipper>
                     <div class="playcount" ng-show="show.playcount">
-                         <i class="icon-ok"></i>
+                         <i class="fa fa-ok"></i>
                     </div>
                 </div>
                 <div class="description">
@@ -28,10 +28,10 @@
                                  seekbar-read-only="true">
                         </seekbar>
                         <div class="controls">
-                            <i ng-class="{'icon-eye-open':!show.playcount, 'icon-eye-close':show.playcount}"
+                            <i class="fa" ng-class="{'fa-eye':!show.playcount, 'fa-eye-slash':show.playcount}"
                                ng-click="toggleWatched(show); $event.preventDefault();"
                             ></i>
-                            <i class="icon-trash"
+                            <i class="fa fa-trash"
                                ng-click="remove($index, show); $event.preventDefault();"
                             ></i>
                         </div>

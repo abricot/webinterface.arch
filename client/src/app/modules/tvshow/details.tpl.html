@@ -1,15 +1,15 @@
 <div ng-switch on="loading" class="tvshow detail fill-height" ng-class="{loading : loading}">
     <div ng-switch-when="true" class="loading"><div class="kodi"></div></div>
     <div ng-switch-when="false">
-        <i class="icon-chevron-left previous"
+        <i class="fa fa-chevron-left previous"
            ng-if="seasons.indexOf(season) > 0"
            ng-click="previousSeason()"></i>
-        <i class="icon-chevron-right next"
+        <i class="fa fa-chevron-right next"
            ng-if="seasons.indexOf(season) < seasons.length-1"
            ng-click="nextSeason()"></i>
         <div class="experimental row" ng-show="!isExternalAddonAvailable && isUsingExternalAddon()">
             <div class="offset2 span8">
-                <i class="icon icon-beaker"></i>
+                <i class="fa fa-flask"></i>
                 {{host.videoAddon}} needed to preview discoverable content.
             </div>
         </div>
@@ -17,14 +17,14 @@
             <tmdb-fanarts fanarts="fanarts" delay="15000" primary="show.fanart"></tmdb-fanarts>
             <div class="title">
                 <h2>{{show.title || show.name}}</h2>
-                <h1>{{seasonName(season)}}</h1>
+                <h1 ng-if="season">{{seasonName(season)}}</h1>
             </div>
             <trakt-stats stats="stats"></trakt-stats>
         </div>
         <div class="description row">
             <div class="offset1 span2 sidebar">
                 <div class="poster-wrapper">
-                    <img class=" poster" image image-source="getImage(season.thumbnail || season.poster, 'w500')"/>
+                    <img class=" poster" image image-source="getImage(season.thumbnail || season.poster || show.thumbnail, 'w500')"/>
                 </div>
 
                 <ul class="nav sections">
@@ -37,13 +37,14 @@
                     </li>
                     <li class="row">
                         <div class="span6 label">
+                            <i class="fa fa-television"></i>
                             Season
                         </div>
                         <div class="span6 value">{{season.season}}</div>
                     </li>
                     <li class="row">
                         <div class="span6 label">
-                             <i class="icon-star"></i>
+                             <i class="fa fa-star"></i>
                              Rating
                         </div>
                         <div class="span6 value">{{show.rating| number : 1}}</div>
@@ -57,14 +58,14 @@
                     </li>
                     <li class="row">
                         <div class="span6 label">
-                             <i class="icon-calendar"></i>
+                             <i class="fa fa-calendar"></i>
                              Released
                         </div>
                         <div class="span6 value">{{getYear(show, season)}}</div>
                     </li>
                     <li class="row">
                         <div class="span6 label">
-                             <i class="icon-trakt"></i>
+                             <i class="fa fa-trakt"></i>
                              Watching
                         </div>
                         <div class="span6 value">{{watching.length}}</div>
@@ -82,7 +83,7 @@
                 </div>
                 <div  class="details-section" ng-if="nextAiringEpisode">
                     <h1>
-                      <i class="icon-time"></i>
+                      <i class="fa fa-clock-o"></i>
                       Next Episode
                     </h1>
                     <div class="row next-episode">
@@ -97,14 +98,14 @@
                         </div>
                     </div>
                 </div>
-                <div  class="details-section" ng-show="seasons.length">
+                <div  class="details-section" ng-if="seasons.length">
                     <h1>
                         <span class="season">
                             <span class="md-circle fanart" image image-source="getImage(season.thumbnail || season.poster, 'w500')">
                             </span>
                             {{seasonName(season)}}
                         </span>
-                        <i class="icon-chevron-right"></i>
+                        <i class="fa fa-chevron-right"></i>
                         Episodes
                     </h1>
                 </div>
@@ -113,10 +114,10 @@
                         ng-click="play(episode)">
                         <div class="thumbnail span4" image image-source="getImage(episode.thumbnail, 'w300')">
                             <div class="md-action md-action-primary">
-                                <i class="icon-play"></i>
+                                <i class="fa fa-play"></i>
                             </div>
                             <div class="playcount" ng-show="episode.playcount">
-                                 <i class="icon-ok"></i>
+                                 <i class="fa fa-ok"></i>
                             </div>
                         </div>
                         <div class="span8">
@@ -130,19 +131,19 @@
                             </div>
                             <p>{{episode.plot}}</p>
                             <div class="more" ng-show="hasControls()">
-                                <i class="icon icon-ellipsis-vertical"></i>
+                                <i class="fa fa-ellipsis-v"></i>
                                 <ul class="dropdown-menu">
                                     <li ng-click="xbmc.queue({'episodeid' : episode.episodeid}); $event.stopPropagation();"
                                         ng-show="player.active">
-                                        <i class="icon-plus"></i>
+                                        <i class="fa fa-plus"></i>
                                         Queue
                                     </li>
                                     <li ng-click="toggleWatched(episode); $event.stopPropagation();">
-                                        <i ng-class="{'icon-eye-open':!episode.playcount, 'icon-eye-close':episode.playcount}"></i>
+                                        <i class="fa" ng-class="{'fa-eye':!episode.playcount, 'fa-eye-slash':episode.playcount}"></i>
                                         Toggle watch
                                     </li>
                                     <li ng-click="remove($index, episode); $event.stopPropagation();">
-                                        <i class="icon-trash"></i>
+                                        <i class="fa fa-trash"></i>
                                         Remove
                                     </li>
                                 </ul>

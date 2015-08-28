@@ -2,18 +2,18 @@
     <div class="actions-wrapper row">
         <div class="span4">
             <div class="md-action" ng-click="xbmc.previous()" >
-                <i class="icon icon-fast-backward"></i>
+                <i class="fa fa-fast-backward"></i>
             </div>
         </div>
-        
+
         <div class="span4">
             <div class="md-action primary" ng-click="xbmc.togglePlay()">
-                <i ng-class="{'icon-play' : !player.speed, 'icon-pause' : player.speed}"></i>
+                <i class="fa" ng-class="{'fa-play' : !player.speed, 'fa-pause' : player.speed}"></i>
             </div>
         </div>
         <div class="span4">
             <div class="md-action" ng-click="xbmc.next()"  >
-                <i class="icon icon-fast-forward"></i>
+                <i class="fa fa-fast-forward"></i>
             </div>
         </div>
 
@@ -37,10 +37,10 @@
                     [-{{(player.seek.totaltime - player.seek.time)  | time | date:'HH:mm:ss'}}]
                 </div>
                 <div class="md-action stop" ng-click="xbmc.stop()">
-                    <i class="icon icon-stop"></i>
+                    <i class="fa fa-stop"></i>
                 </div>
                 <div class="md-action more">
-                    <i class="icon icon-ellipsis-vertical"></i>
+                    <i class="fa fa-ellipsis-v"></i>
                     <ul class="dropdown-menu">
                         <li ng-click="xbmc.showOSD()">OSD</li>
                         <li ng-click="toggleAudioStreams()" ng-show="isTypeVideo()">Switch audio</li>
@@ -53,18 +53,18 @@
     <div class="actions-wrapper">
        <div class="span3">
            <div class="md-action" ng-click="xbmc.home()" >
-                <i class="icon-home"></i>
+                <i class="fa fa-home"></i>
             </div>
         </div>
         <div class="span3">
             <div class="md-action"  ng-click="xbmc.open({'file' : undefined})">
-                <i class="icon-headphones"></i>
+                <i class="fa fa-headphones"></i>
             </div>
         </div>
         <div class="span3">
             <div class="md-action">
-                <i class="icon-volume-up" ng-show="application.muted" ng-click="xbmc.mute()"></i>
-                <i class="icon-volume-off" ng-show="!application.muted" ng-click="xbmc.mute()"></i>
+                <i class="fa fa-volume-up" ng-show="application.muted" ng-click="xbmc.mute()"></i>
+                <i class="fa fa-volume-off" ng-show="!application.muted" ng-click="xbmc.mute()"></i>
                 <div class="volume-wrapper">
                     <seekbar seekbar-value="application.volume" seekbar-max="100"
                     on-seekbar-changed="onVolumeChanged(newValue)"
@@ -76,7 +76,7 @@
 
         <div class="span3">
             <div class="md-action more">
-                <i class="icon icon-ellipsis-vertical"></i>
+                <i class="fa fa-ellipsis-v"></i>
                 <div class="remote-menu">
                     <div class="buttons" ng-if="view==='remote'"
                         ng-include src="'modules/remote/remote.tpl.html'"></div>
