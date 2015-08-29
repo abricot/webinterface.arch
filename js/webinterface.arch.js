@@ -1,4 +1,4 @@
-/*! webinterface.arch - v1.1.0 - 2015-08-20
+/*! webinterface.arch - v2.0.1 - 2015-08-29
  * Copyright (c) 2015 Nicolas ABRIC;
  * Licensed MIT
  */
@@ -680,6 +680,7 @@ angular.module('app', [
   'directives.streamdetails',
   'directives.spinner',
   'directives.onlastrepeat',
+  'directives.tmdbFanarts',
   'directives.traktComments',
   'directives.traktStats',
   'filters.xbmc',
@@ -722,6 +723,7 @@ angular.module('app')
     $scope.connected = false;
     $scope.initialized = true;
     $scope.isMaximized = false;
+    $scope.isSupportVisible = false;
     $scope.application = {};
     $scope.player = {
       id: -1,
@@ -751,7 +753,7 @@ angular.module('app')
     $scope.trakt = trakt;
     $scope.helper = helper;
     $scope.helper.setProviders({xbmc : $scope.xbmc, tmdb : $scope.tmdb});
-    
+
     $scope.studioFn = $interpolate('https://cdn.rawgit.com/ccMatrix/StudioLogos/master/161x109_mono_png/{{studio}}.png');
     $scope.languageFn = $interpolate('https://cdn.rawgit.com/BigNoid/Aeon-Nox/master/media/flags/subtitles/flags/{{language}}.png')
     $scope.back = function() {
@@ -804,6 +806,13 @@ angular.module('app')
     $scope.showDrawer = function() {
       $scope.isMaximized = true;
     };
+    
+    $scope.hideSupport = function() {
+      $scope.isSupportVisible = false;
+    };
+    $scope.showSupport = function() {
+      $scope.isSupportVisible = true;
+    };
 
     function onApplicationPropertiesRetrieved(properties) {
       $scope.application = properties;
@@ -829,7 +838,7 @@ angular.module('app')
         $scope.playlist = properties.playlistid;
         xbmc.setActivePlaylist(properties.playlistid);
         if (properties.speed === 1) {
-          
+
           window.clearInterval($scope.player.intervalId);
           $scope.player.intervalId = window.setInterval(updateSeek, 1000);
         }
@@ -1000,7 +1009,9 @@ angular.module('app')
             httpPort: window.location.port === '' ? '80': window.location.port,
             ip: window.location.hostname,
             port: '9090',
-            videoAddon : 'plugin.video.youtube'
+            videoAddon : 'plugin.video.youtube',
+            username : '',
+            password : ''
           }];
         }
         var defaultHost = $scope.hosts.filter(filterDefault)[0];
@@ -1033,6 +1044,60 @@ angular.module('directives.onlastrepeat', [])
     }
   };
 });
+'use strict';
+angular.module('directives.tmdbFanarts', [
+  'directives.image',
+  'filters.tmdb.image',
+  'filters.fallback'
+]).directive('tmdbFanarts', ['$filter', '$interval', function ($filter, $interval) {
+  return {
+    restrict: 'E',
+    replace : true,
+    templateUrl: 'template/fanarts/fanarts.tpl.html',
+    scope: {
+      fanarts: '=',
+      fanartSize: '=',
+      delay : '=',
+      primary : '='
+    },
+    link: function (scope, elem, attrs) {
+      var timeoutId = null;
+      scope.getImage = function (path) {
+        var url = $filter('tmdbImage')(path, scope.fanartSize || 'original');
+        return $filter('fallback')(url, 'img/icons/awe-512.png');
+      };
+
+      var index = 1;
+      var kenBurns = function(){
+        var images = elem[0].querySelectorAll('img');
+        var length =images.length;
+        if(length) {
+          images[index-1].className = '';
+          if(index===length){ index = 0;}
+          images[index].className = 'fx';
+          index++;
+        }
+      };
+
+      scope.wideEnough = function(value, index, array) {
+        return value.width >= 1920;
+      };
+
+      scope.$watch('fanarts', function(value) {
+        if(value && value.length) {
+          if(timeoutId) {
+            $interval.cancel(timeoutId);
+          }
+          timeoutId  = $interval(kenBurns, parseInt(scope.delay) || 30000);
+        }
+      });
+
+      elem.on('$destroy', function() {
+        $interval.cancel(timeoutId);
+      });
+    }
+  };
+}]);
 "use strict";
 angular.module('directives.traktComments', ['filters.unit'])
 .directive('traktComments', function () {
@@ -1165,6 +1230,24 @@ angular.module('app')
   }
 ]);
 
+angular.module('app')
+.controller('DonationFormCtrl', ['$scope',
+  function DonationFormCtrl ($scope) {
+    $scope.donation = {
+      amount : 5,
+      currency : {value : 'USD', label : 'US Dollar'},
+      currencies : [
+        {value : 'USD', label : 'US Dollar'},
+        {value : 'EUR', label : 'Euro'},
+        {value : 'GBP', label : 'British Pound'},
+        {value : 'CAD', label : 'Canadian Dollar'},
+        {value : 'AUD', label : 'Australian Dollar'},
+        {value : 'JPY', label : 'Japanese Yen'}
+      ]
+    }
+  }
+]);
+
 var BaseMovieDetailsCtrl = function ($scope, $stateParams) {
   $scope.movieid = parseInt($stateParams.movieid);
   $scope.loading = true;
@@ -1183,6 +1266,12 @@ var BaseMovieDetailsCtrl = function ($scope, $stateParams) {
         return typeof similar.poster !== 'undefined' && similar.poster !== null;
       });
       $scope.similars = similars.slice(0, Math.min(similars.length, 8));
+    });
+  };
+
+  $scope.additionalImages = function (movieid) {
+    $scope.tmdb.movies.images(movieid).then(function(result){
+      $scope.fanarts = result.data.fanarts || [];
     });
   };
 
@@ -1224,11 +1313,17 @@ var BaseMovieDetailsCtrl = function ($scope, $stateParams) {
   detail.onscroll = function () {
     if(detail.scrollTop > 200) {
       if(!detail.classList.contains('affixable')) {
+        var sidebar = detail.querySelector('.description > .sidebar');
+        var dimension = sidebar.getBoundingClientRect();
         detail.classList.add('affixable');
+        sidebar.style.marginLeft = dimension.left + 'px';
+        sidebar.style.width = dimension.width + 'px';
       }
     } else {
+      var sidebar = detail.querySelector('.description > .sidebar');
       detail.classList.remove('affixable');
-    };
+      sidebar.removeAttribute('style');
+    }
   };
 };
 
@@ -1249,7 +1344,9 @@ angular.module('app')
       $scope.tmdb.find('imdb_id', item.imdbnumber).then(function(result){
         var movies = result.data.movies;
         if(movies.length === 1) {
-          $scope.findSimilars(movies[0].id);
+          var movieid = movies[0].id;
+          $scope.findSimilars(movieid);
+          $scope.additionalImages(movieid);
         }
       });
     };
@@ -1315,7 +1412,7 @@ angular.module('app')
   function TMDBMovieDetailsCtrl($scope, $stateParams, $injector, $filter, $http, $interpolate) {
     $injector.invoke(BaseMovieDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
     var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
-    
+
     $scope.tmdb.movies.details($scope.movieid).then(function(result) {
       $scope.movie = result.data;
       $scope.tmdb.movies.credits($scope.movieid).then(function(result){
@@ -1341,6 +1438,7 @@ angular.module('app')
       })
     });
     $scope.findSimilars($scope.movieid);
+    $scope.additionalImages($scope.movieid);
 
     $scope.getImage = function (path, size) {
       var url = $filter('tmdbImage')(path, size || 'original');
@@ -2125,18 +2223,18 @@ angular.module('app')
   function ShowsCalendarCtrl($scope, $filter, $interpolate, $anchorScroll, $http) {
     var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
     var autoscroll = true;
-    $scope.loading = true;
     $scope.fetching = false;
     $scope.tvshows = [];
-    var iterator = moment().startOf('month');
-    iterator.subtract(iterator.day(), 'd');
-    var dates = getDates(iterator, moment());
-    $scope.dates = [];
+    $scope.refDate = moment();
     $scope.tvshows = [];
+    $scope.shows = {};
+    var hasAds = false;
 
     function getDates(date, ref) {
+      date.subtract(date.day(), 'd');
       var dates = [];
-      while(date.month() <= ref.month()) {
+      var days = ref.diff(date, 'days');
+      for(var i=0; i< days; i++){
         dates.push(moment(date));
         date.add(1, 'd');
       }
@@ -2150,22 +2248,26 @@ angular.module('app')
 
     function onTvShowsFromSource(result) {
       var tvshows = result ? result.data : [];
-      $scope.tvshows = $scope.tvshows.concat(tvshows);
-      $scope.dates = $scope.dates.concat(dates);
-      $scope.loading = false;
+      $scope.tvshows = tvshows;
+      $scope.shows = $scope.getShows();
+      $scope.dates = dates;
       $scope.fetching = false;
     };
 
-    function onLoad() {
+    function load(date, ref) {
+      hasAds = false;
+      dates = getDates(date, ref);
       var days = dates[dates.length-1].diff(dates[0], 'days');
       $scope.trakt.calendar.myShows(dates[0].toDate(), days).then(onTvShowsFromSource);
     };
 
     if ($scope.trakt.isAuthenticated()) {
-      onLoad();
+      var iterator = moment().startOf('month');
+      load(iterator, moment().startOf('month').add(1, 'month'));
     } else {
       $scope.trakt.connect().then(function(){
-        onLoad();
+        var iterator = moment().startOf('month');
+        load(iterator, moment().startOf('month').add(1, 'month'));
       }, function() {
         $scope.go('/settings');
       });
@@ -2175,23 +2277,54 @@ angular.module('app')
       return show.episode.images.screenshot.thumb || show.show.images.fanart.thumb;
     };
 
+    $scope.getBanner = function (show) {
+      return show.images.banner.full || show.images.thumb.full;
+    };
+
     $scope.getRandomImage = function () {
       return Math.floor(Math.random()*100)%11 + 1;
     }
 
-    $scope.getTVShowsFor = function(date) {
+    $scope.getShows = function () {
+      var shows = {};
+      $scope.tvshows.forEach(function(tvshow){
+        var showIds = tvshow.show.ids;
+        if(!shows.hasOwnProperty(showIds.trakt)){
+          shows[showIds.trakt] = angular.copy(tvshow.show);
+        }
+        shows[showIds.trakt].hit = shows[showIds.trakt].hit ? shows[showIds.trakt].hit+1 : 1;
+      });
+      return shows;
+    };
+
+    $scope.highlight = function (show) {
+      $scope.tvshows.forEach(function(tvshow){
+        if(tvshow.show.ids.trakt !== show.ids.trakt) {
+          tvshow.fade = true;
+        } else {
+          tvshow.fade = false;
+        }
+      });
+    };
+
+    $scope.showsCount = function () {
+      return Object.keys($scope.shows).length;
+    }
+
+    $scope.getEpisodesFor = function(date, criteria) {
+      criteria = criteria || 'day';
       return $scope.tvshows.filter(function(show){
         var airDate = moment(show.first_aired);
-        return date.isSame(airDate, 'day');
+        return date.isSame(airDate, criteria);
       });
     };
 
     $scope.isFuture = function(date){
-      return date.month()> moment().month();
+      return date.month()> $scope.refDate.month();
     };
 
     $scope.isPast = function(date){
-      return date.month()< moment().month();
+      return date.month()< $scope.refDate.month();
     };
 
     $scope.isToday = function(date){
@@ -2199,34 +2332,37 @@ angular.module('app')
       return date.isSame(now, 'day');
     };
 
-    $scope.loadMore = function () {
-      if(!$scope.fetching) {
-        $scope.fetching = true;
-        var last = $scope.dates[$scope.dates.length-1];
-        var date = moment(last).add(1, 'd');
-        dates = getDates(date, moment(last).add(1, 'month'));
-        onLoad();
-      }
-    };
-
     $scope.play = function(show){
       $scope.helper.foreign.shows.play($scope.host, show.show, show.episode);
     };
 
+    $scope.previousMonth = function () {
+      if(!$scope.fetching) {
+        $scope.fetching = true;
+        document.querySelector('.cal-grid').scrollTop = 0;
+        var startOfMonth = $scope.refDate.startOf('month');
+        var date = moment(startOfMonth).subtract(1, 'd').startOf('month');
+        $scope.refDate = moment(date);
+        load(date, startOfMonth.subtract(1,'d'));
+      }
+    };
+
+    $scope.nextMonth = function() {
+      if(!$scope.fetching) {
+        $scope.fetching = true;
+        document.querySelector('.cal-grid').scrollTop = 0;
+        var startOfMonth = $scope.refDate.startOf('month').add(1, 'month');
+        $scope.refDate = moment(startOfMonth);
+        var date = moment(startOfMonth);
+        load(date, startOfMonth.add(1, 'month'));
+      }
+    };
+
     $scope.$on('onRepeatLast', function(scope, element, attrs){
-      if($scope.tvshows.length && autoscroll) {
-        var header =  document.querySelector('#page > header');
-        var tabs = document.querySelector('.tvshows > .tabs');
-        var today = document.querySelector('.today');
-        var grid = document.querySelector('.cal-grid');
-        if(today && grid) {
-          var headerDim = header.getBoundingClientRect();
-          var tabsDim = tabs.getBoundingClientRect();
-          var todayDim = today.getBoundingClientRect();
-          var scrollTo = todayDim.top - tabsDim.height - headerDim.height -1;
-          grid.scrollTop = Math.max( scrollTo,0);
-        }
-        autoscroll = false;
+      if($scope.tvshows.length) {
+        var ads =  document.querySelectorAll('.cal-grid .support');
+        var num = Math.round(Math.random()*ads.length);
+        ads[Math.min(num, ads.length-1)].style.display = 'block';
       }
     }.bind(this));
   }
@@ -2243,7 +2379,7 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
 
   $scope.episodes = [];
   $scope.nextAiringEpisode = null;
-  $scope.comments = []; 
+  $scope.comments = [];
 
   $scope.seasonName = function (season) {
     return 'Season '+season.season;
@@ -2259,6 +2395,12 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
     if(futureEpisode.length>0) {
       $scope.nextAiringEpisode  = futureEpisode[0];
     }
+  };
+
+  $scope.additionalImages = function (tvshowid) {
+    $scope.tmdb.tv.images(tvshowid).then(function(result){
+      $scope.fanarts = result.data.fanarts || [];
+    });
   };
 
   $scope.getTraktAdditionalInfo = function (season) {
@@ -2289,7 +2431,19 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
       });
     }
   };
-  
+
+  $scope.getYear = function (show, season){
+    var year = parseInt(show.year);
+    if(season) {
+      var number = parseInt(season.season);
+      if(!isNaN(year) && !isNaN(number)) {
+        return year + number - 1;
+      } else {
+        return year;
+      }
+    }
+  };
+
   $scope.$watch('season', function () {
     $scope.getTraktAdditionalInfo($scope.season);
   });
@@ -2314,11 +2468,17 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
   detail.onscroll = function () {
     if(detail.scrollTop > 200) {
       if(!detail.classList.contains('affixable')) {
+        var sidebar = detail.querySelector('.description > .sidebar');
+        var dimension = sidebar.getBoundingClientRect();
         detail.classList.add('affixable');
+        sidebar.style.marginLeft = dimension.left + 'px';
+        sidebar.style.width = dimension.width + 'px';
       }
     } else {
+      var sidebar = detail.querySelector('.description > .sidebar');
       detail.classList.remove('affixable');
-    };
+      sidebar.removeAttribute('style');
+    }
   };
 };
 
@@ -2357,6 +2517,7 @@ angular.module('app')
       $scope.seasons = seasons || [];
       if($scope.seasons.length > 0) {
         $scope.season = seasons[seasons.length-1];
+
         $scope.xbmc.getEpisodes($scope.tvshowid, $scope.season.season, onEpisodesRetrieved);
       } else {
         $scope.loading = false;
@@ -2365,6 +2526,7 @@ angular.module('app')
       $scope.tmdb.find('tvdb_id', $scope.show.imdbnumber).then(function(result){
         var shows = result.data.tvShows;
         if(shows.length === 1) {
+          $scope.additionalImages(shows[0].id);
           $scope.tmdb.tv.episodes(shows[0].id).then(function(result){
             var episodes = result.data.episodes;
             $scope.setNextAiringEpisode(episodes);
@@ -2466,6 +2628,7 @@ angular.module('app')
         $scope.season = $scope.show.seasons[$scope.show.seasons.length-1];
         $scope.tmdb.tv.seasons($scope.tvshowid, $scope.season.season).then(onEpisodesRetrieved);
         $scope.tmdb.tv.externalIDs($scope.tvshowid).then(onExternalIDsRetrieved);
+        $scope.additionalImages($scope.tvshowid);
       } else {
         $scope.loading = false;
       }
@@ -2478,7 +2641,7 @@ angular.module('app')
     };
 
     $scope.tmdb.tv.details($scope.tvshowid).then(onTvShowRetrieved);
-    
+
     $scope.changeSeason = function (season) {
       $scope.tmdb.tv.seasons($scope.tvshowid, season.season).then(onEpisodesRetrieved);
       $scope.getTraktAdditionalInfo(season);
@@ -2802,8 +2965,8 @@ angular.module('services.helper', ['services.storage'])
       } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1) {
         xbmc.executeAddon({
           addonid : 'plugin.video.genesis',
-          params : 'action=movies_search'+
-                   '&query='+title
+          params : 'action=movieSearch'+
+                   '&query='+title.replace(/:/gi, ' ')
         });
       } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1) {
         var path = '/movie/'+movie.imdbnumber+'/play';
@@ -2819,6 +2982,7 @@ angular.module('services.helper', ['services.storage'])
 
     factory.foreign.shows.play = function (host, show, episode) {
       var tvdb =  show.ids.tvdb || show.ids.tvdbid;
+      var tmdb = show.ids.tmdb || show.ids.tmdbid;
       var imdb =  show.ids.imdb || show.ids.imdbnumber;
       var number = episode.number || episode.episode;
       var season = episode.season;
@@ -2835,14 +2999,13 @@ angular.module('services.helper', ['services.storage'])
       } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1) {
         xbmc.executeAddon({
           addonid : 'plugin.video.genesis',
-          params : 'action=episodes2'+
-                   '&episode='+number+
+          params : 'action=episodes'+
                    '&imdb='+ imdb.replace('tt', '')+
                    '&season='+season+
-                   '&show='+title+
+                   '&tmdb='+tmdb+
                    '&tvdb='+tvdb+
-                   '&year='+year+
-                   '&date='+firstaired.format('YYYY-MM-DD')
+                   '&tvshowtitle='+title+
+                   '&year='+year
         });
       } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1) {
         var path = '/show/'+tvdb+'/season/'+season+'/episode/'+number+'/play';
@@ -2989,6 +3152,15 @@ angular.module('services.storage', [])
         return $http(getConfig(url, 'GET'));
       };
 
+      factory.movies.images = function (id) {
+        var url = interpolateFn({
+          action : 'movie/'+id+'/images',
+          apiKey : apiKey,
+          parameters : ''
+        });
+        return $http(getConfig(url, 'GET'));
+      };
+
       factory.tv.populars = function (firstAirDateGte, voteAverageGte, page) {
         page = page || 1;
         var url = interpolateFn({
@@ -3036,6 +3208,23 @@ angular.module('services.storage', [])
           path += '/episode/'+episode;
         }
         path += '/external_ids';
+        var url = interpolateFn({
+          action : path,
+          apiKey : apiKey,
+          parameters : ''
+        });
+        return $http(getConfig(url, 'GET'));
+      };
+
+      factory.tv.images = function (id, season, episode) {
+        var path = 'tv/'+id;
+        if(season) {
+          path += '/season/'+season;
+        }
+        if(episode) {
+          path += '/episode/'+episode;
+        }
+        path += '/images';
         var url = interpolateFn({
           action : path,
           apiKey : apiKey,
@@ -3343,6 +3532,7 @@ angular.module('services.trakt', [])
 
       var mapping = {
         'backdrop_path' : 'fanart',
+        'backdrops' : 'fanarts',
         'genres' : {
           key : 'genre',
           transformFn : flatten
@@ -3350,6 +3540,7 @@ angular.module('services.trakt', [])
         'id' : 'id',
         'tvdb_id' : 'tvdbid',
         'poster_path' : 'poster',
+        'posters' : 'posters',
         'name' : 'name',
         'networks' :  {
           key : 'studios',
@@ -3424,14 +3615,14 @@ angular.module('services.trakt', [])
       return factory;
     }
   ]);
-angular.module('templates.app', ['modules/common/navigation.tpl.html', 'modules/movie/details.tpl.html', 'modules/movie/list.tpl.html', 'modules/movie/movies.tpl.html', 'modules/music/albums.tpl.html', 'modules/music/artist.albums.tpl.html', 'modules/music/artists.tpl.html', 'modules/music/musics.tpl.html', 'modules/music/songs.tpl.html', 'modules/now/playing.tpl.html', 'modules/now/playlist.tpl.html', 'modules/remote/remote.tpl.html', 'modules/search/list.tpl.html', 'modules/settings/wizard.tpl.html', 'modules/tvshow/calendar.tpl.html', 'modules/tvshow/details.tpl.html', 'modules/tvshow/episodes.tpl.html', 'modules/tvshow/list.tpl.html', 'modules/tvshow/shows.tpl.html', 'template/comments/comments.tpl.html', 'template/stats/stats.tpl.html']);
+angular.module('templates.app', ['modules/common/navigation.tpl.html', 'modules/donation/form.tpl.html', 'modules/movie/details.tpl.html', 'modules/movie/list.tpl.html', 'modules/movie/movies.tpl.html', 'modules/music/albums.tpl.html', 'modules/music/artist.albums.tpl.html', 'modules/music/artists.tpl.html', 'modules/music/musics.tpl.html', 'modules/music/songs.tpl.html', 'modules/now/playing.tpl.html', 'modules/now/playlist.tpl.html', 'modules/remote/remote.tpl.html', 'modules/search/list.tpl.html', 'modules/settings/wizard.tpl.html', 'modules/tvshow/calendar.tpl.html', 'modules/tvshow/details.tpl.html', 'modules/tvshow/episodes.tpl.html', 'modules/tvshow/list.tpl.html', 'modules/tvshow/shows.tpl.html', 'template/comments/comments.tpl.html', 'template/fanarts/fanarts.tpl.html', 'template/stats/stats.tpl.html']);
 
 angular.module("modules/common/navigation.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("modules/common/navigation.tpl.html",
     "<nav class=\"row\">\n" +
     "    <form class=\"span3 clearfix search\" ng-submit=\"search()\" ng-class=\"{open : isOpen}\">\n" +
     "        <div class=\"btn\" ng-click=\"open()\">\n" +
-    "            <i class=\"icon-search\"></i>\n" +
+    "            <i class=\"fa fa-search\"></i>\n" +
     "        </div>\n" +
     "        <input type=\"text\" placeholder=\"Search movies and shows\" ng-model=\"query\"/>\n" +
     "    </form>\n" +
@@ -3441,11 +3632,64 @@ angular.module("modules/common/navigation.tpl.html", []).run(["$templateCache", 
     "            <div class=\"label\">{{item.label}}</div>\n" +
     "        </a>\n" +
     "    </div>\n" +
-    "    \n" +
+    "    <div class=\"donate\"> \n" +
+    "        <button class=\"recommend\" ng-click=\"showSupport()\">\n" +
+    "            <i class=\"fa fa-paypal\"></i>\n" +
+    "        </button>\n" +
+    "    </div>\n" +
     "    <div class=\"status\" ng-class=\"{connected : connected, disconnected : !connected}\">\n" +
-    "        <i ng-class=\"{'icon-ok' : connected, 'icon-remove' : !connected}\"></i>\n" +
+    "        <i class=\"fa\" ng-class=\"{'fa-check' : connected, 'fa-times' : !connected}\"></i>\n" +
     "    </div>\n" +
     "</nav>");
+}]);
+
+angular.module("modules/donation/form.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("modules/donation/form.tpl.html",
+    "<form role=\"dialog\" data-type=\"action\" class=\"chooser donation\" \n" +
+    "      action=\"https://www.paypal.com/cgi-bin/webscr\"\n" +
+    "      method=\"post\" ng-show=\"isSupportVisible\" target=\"_blank\"\n" +
+    "      ng-submit=\"hideSupport()\">\n" +
+    "    <div class=\"content\">\n" +
+    "        <img class=\"arch\" src=\"../img/icons/awe-512.png\"/>\n" +
+    "        <i class=\"fa fa-times\" ng-click=\"hideSupport()\"></i>\n" +
+    "        <div class=\"body\">\n" +
+    "            <input type=\"hidden\" name=\"business\" value=\"nicolas.abric@gmail.com\"/>\n" +
+    "            <input type=\"hidden\" name=\"cmd\" value=\"_xclick\"/>\n" +
+    "            <input type=\"hidden\" name=\"item_number\" value=\"DONATE\"/>\n" +
+    "            <input type=\"hidden\" name=\"item_name\" value=\"One time donation\"/>\n" +
+    "            <header>\n" +
+    "                One time donation\n" +
+    "            </header>\n" +
+    "            <p> \n" +
+    "                You are enjoying Arch and want to show us your support? Please consider making a donation.\n" +
+    "            </p>\n" +
+    "            <div class=\"input-wrapper\">\n" +
+    "                <i class=\"fa fa-gift\"></i>\n" +
+    "                <input type=\"number\" maxlength=\"30\" name=\"amount\" size=\"10\"\n" +
+    "                       value=\"5\"/>\n" +
+    "            </div>\n" +
+    "            <div class=\"input-wrapper\">\n" +
+    "                <i class=\"fa\" ng-class=\"{\n" +
+    "                    'fa-eur':donation.currency.value === 'EUR',\n" +
+    "                    'fa-gbp':donation.currency.value === 'GBP',\n" +
+    "                    'fa-jpy':donation.currency.value === 'JPY',\n" +
+    "                    'fa-dollar':donation.currency.value === 'USD' || donation.currency.value === 'CAD' || donation.currency.value === 'AUD'\n" +
+    "                }\"></i>\n" +
+    "                <input type=\"text\" ng-model=\"donation.currency.label\" readonly=\"true\"/>\n" +
+    "                <select name=\"currency_code\" ng-options=\"currency.label for currency in donation.currencies track by currency.value\" ng-model=\"donation.currency\"></select>\n" +
+    "            </div>\n" +
+    "            \n" +
+    "            <button class=\"recommend\" type=\"submit\">\n" +
+    "                <i class=\"fa fa-paypal\"></i> Donate\n" +
+    "            </button>\n" +
+    "            <p style=\"padding:2rem 0 0 0;\">\n" +
+    "                <i class=\"fa fa-info-circle\"></i>\n" +
+    "                Your donation will solely be used to maintain and improve Arch. \n" +
+    "                We remind you that features can be requested at any time on the <a href=\"https://github.com/abricot/webinterface.arch/issues\" traget=\"_blank\">Arch github</a>\n" +
+    "            </p>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</form>");
 }]);
 
 angular.module("modules/movie/details.tpl.html", []).run(["$templateCache", function($templateCache) {
@@ -3455,31 +3699,31 @@ angular.module("modules/movie/details.tpl.html", []).run(["$templateCache", func
     "    <div ng-switch-when=\"false\">\n" +
     "        <div class=\"experimental row\" ng-show=\"!isExternalAddonAvailable && isUsingExternalAddon()\">\n" +
     "            <div class=\"offset2 span8\">\n" +
-    "                <i class=\"icon icon-beaker\"></i>\n" +
+    "                <i class=\"fa fa-flask\"></i>\n" +
     "                {{host.videoAddon}} needed to preview discoverable content.\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"row wrapper\">\n" +
-    "            <div class=\"fanart\" image image-source=\"getImage(movie.fanart)\"></div>\n" +
+    "            <tmdb-fanarts fanarts=\"fanarts\" delay=\"10000\" primary=\"movie.fanart\"></tmdb-fanarts>\n" +
     "            <div class=\"actions\" ng-if=\"hasAdditionalInfo()\">\n" +
     "                <div class=\"md-action md-action-primary\"\n" +
     "                     ng-click=\"play(movie)\" ng-show=\"!player.active\">\n" +
-    "                    <i class=\"icon-play\"></i>\n" +
+    "                    <i class=\"fa fa-play\"></i>\n" +
     "                </div>\n" +
     "                <div class=\"md-action md-action-primary\"\n" +
     "                     ng-click=\"queue(movie)\" ng-show=\"player.active && !isCurrentlyPlaying\">\n" +
-    "                    <i class=\"icon-plus\"></i>\n" +
+    "                    <i class=\"fa fa-plus\"></i>\n" +
     "                </div>\n" +
     "                <div class=\"md-action md-action-primary\"\n" +
     "                     ng-click=\"xbmc.togglePlay()\" ng-show=\"player.active && isCurrentlyPlaying\">\n" +
-    "                    <i class=\"icon-play\" ng-show=\"!player.speed\"></i>\n" +
-    "                    <i class=\"icon-pause\" ng-show=\"player.speed\"></i>\n" +
+    "                    <i class=\"fa fa-play\" ng-show=\"!player.speed\"></i>\n" +
+    "                    <i class=\"fa fa-pause\" ng-show=\"player.speed\"></i>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "            <div class=\"actions\" ng-if=\"!hasAdditionalInfo()\">\n" +
     "                <div class=\"md-action md-action-primary\"\n" +
     "                     ng-click=\"play(movie)\">\n" +
-    "                    <i class=\"icon-play\"></i>\n" +
+    "                    <i class=\"fa fa-play\"></i>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "            <div class=\"title\">\n" +
@@ -3492,27 +3736,27 @@ angular.module("modules/movie/details.tpl.html", []).run(["$templateCache", func
     "                <div class=\"poster-wrapper\">\n" +
     "                    <img class=\" poster\" image image-source=\"getImage(movie.thumbnail || movie.poster, 'w185')\"/>\n" +
     "                    <div class=\"preview\"  ng-click=\"xbmc.open({'file': movie.trailer})\">\n" +
-    "                        <i class=\"icon-film\"></i>\n" +
+    "                        <i class=\"fa fa-film\"></i>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "                <ul class=\"nav sections\">\n" +
     "                    <li style=\"text-align: center\">\n" +
     "                        {{movie.title}}\n" +
-    "                        <seekbar seekbar-value=\"movie.resume.position\" seekbar-max=\"movie.resume.total\"\n" +
+    "                        <seekbar seekbar-value=\"movie.resume.position || 0\" seekbar-max=\"movie.resume.total || 100\"\n" +
     "                                 seekbar-read-only=\"true\" class=\"progress-wrapper\"\n" +
     "                                 ng-if=\"hasAdditionalInfo()\">\n" +
     "                        </seekbar>\n" +
     "                    </li>\n" +
     "                    <li class=\"row\">\n" +
     "                        <div class=\"span6 label\">\n" +
-    "                            <i class=\"icon-time\"></i>\n" +
+    "                            <i class=\"fa fa-clock-o\"></i>\n" +
     "                            Runtime\n" +
     "                        </div>\n" +
     "                        <div class=\"span6 value\">{{movie.runtime | time | date:'HH:mm'}}</div>\n" +
     "                    </li>\n" +
     "                    <li class=\"row\">\n" +
     "                        <div class=\"span6 label\">\n" +
-    "                            <i class=\"icon-star\"></i>\n" +
+    "                            <i class=\"fa fa-star\"></i>\n" +
     "                            Rating\n" +
     "                        </div>\n" +
     "                        <div class=\"span6 value\">{{movie.rating| number : 1}}</div>\n" +
@@ -3526,33 +3770,33 @@ angular.module("modules/movie/details.tpl.html", []).run(["$templateCache", func
     "                    </li>\n" +
     "                    <li class=\"row\">\n" +
     "                        <div class=\"span6 label\">\n" +
-    "                            <i class=\"icon-calendar\"></i>\n" +
+    "                            <i class=\"fa fa-calendar\"></i>\n" +
     "                            Released\n" +
     "                        </div>\n" +
     "                        <div class=\"span6 value\">{{movie.year}}</div>\n" +
     "                    </li>\n" +
     "                </ul>\n" +
     "                <div ng-if=\"hasAdditionalInfo()\">\n" +
-    "                    <button class=\"recommend\" class=\"md-action md-action-primary\"\n" +
+    "                    <button class=\"recommend\"\n" +
     "                         ng-click=\"play(movie)\" ng-show=\"!player.active\">\n" +
-    "                        <i class=\"icon-play\"></i> Play\n" +
+    "                        <i class=\"fa fa-play\"></i> Play\n" +
     "                    </button>\n" +
-    "                    <button class=\"recommend\" class=\"md-action md-action-primary\"\n" +
+    "                    <button class=\"recommend\"\n" +
     "                         ng-click=\"queue(movie)\" ng-show=\"player.active && !isCurrentlyPlaying\">\n" +
-    "                        <i class=\"icon-plus\"></i> Queue\n" +
+    "                        <i class=\"fa fa-plus\"></i> Queue\n" +
     "                    </button>\n" +
-    "                    <button class=\"recommend\" class=\"md-action md-action-primary\"\n" +
+    "                    <button class=\"recommend\"\n" +
     "                         ng-click=\"xbmc.togglePlay()\" ng-show=\"player.active && isCurrentlyPlaying\">\n" +
-    "                        <i class=\"icon-play\" ng-show=\"!player.speed\"></i>\n" +
-    "                        <i class=\"icon-pause\" ng-show=\"player.speed\"></i>\n" +
+    "                        <i class=\"fa fa-play\" ng-show=\"!player.speed\"></i>\n" +
+    "                        <i class=\"fa fa-pause\" ng-show=\"player.speed\"></i>\n" +
     "                        <span ng-show=\"!player.speed\">Resume</span>\n" +
     "                        <span ng-show=\"player.speed\">Pause</span>\n" +
     "                    </button>\n" +
     "                </div>\n" +
     "                <div ng-if=\"!hasAdditionalInfo()\">\n" +
-    "                    <button class=\"recommend\" class=\"md-action md-action-primary\"\n" +
+    "                    <button class=\"recommend\"\n" +
     "                         ng-click=\"play(movie)\">\n" +
-    "                        <i class=\"icon-play\"></i> Play\n" +
+    "                        <i class=\"fa fa-play\"></i> Play\n" +
     "                    </button>\n" +
     "                </div>\n" +
     "            </div>\n" +
@@ -3571,7 +3815,7 @@ angular.module("modules/movie/details.tpl.html", []).run(["$templateCache", func
     "                    <ul class=\"actors\" ng-class=\"{collapsed : !seeMoreActors}\">\n" +
     "                        <li class=\"actor\" ng-repeat=\"actor in getActors()\">\n" +
     "                            <img class=\"poster\" image image-source=\"getImage(actor.thumbnail)\"/>\n" +
-    "                            \n" +
+    "\n" +
     "                            <div class=\"name\">{{actor.name}}</div>\n" +
     "                            <div class=\"role\">{{actor.role}}</div>\n" +
     "                        </li>\n" +
@@ -3594,13 +3838,13 @@ angular.module("modules/movie/details.tpl.html", []).run(["$templateCache", func
     "                        </li>\n" +
     "                    </ul>\n" +
     "                </div>\n" +
-    "                \n" +
+    "\n" +
     "                <div class=\"details-section\" ng-if=\"similars.length\">\n" +
     "                    <h1>Similars</h1>\n" +
     "                    <ul class=\"similars collapsed\">\n" +
     "                        <li class=\"similar\" ng-repeat=\"similar in similars\">\n" +
     "                            <a href=\"#/movies/tmdb/{{similar.id}}\">\n" +
-    "                                <div class=\"poster\" image \n" +
+    "                                <div class=\"poster\" image\n" +
     "                                     image-source=\"similar.poster | tmdbImage:'w185' | fallback:'img/icons/awe-512.png'\">\n" +
     "                                </div>\n" +
     "                            </a>\n" +
@@ -3650,9 +3894,9 @@ angular.module("modules/movie/list.tpl.html", []).run(["$templateCache", functio
     "                        </div>\n" +
     "                        <div class=\"back\">\n" +
     "                            <div class=\"md-circle rating\">\n" +
-    "                                <i class=\"icon-play\" ng-click=\"helper.local.movies.play(movie); $event.preventDefault();\"\n" +
+    "                                <i class=\"fa fa-play\" ng-click=\"helper.local.movies.play(movie); $event.preventDefault();\"\n" +
     "                                   ng-show=\"!player.active\"></i>\n" +
-    "                                <i class=\"icon-plus\" ng-click=\"queue(movie); $event.preventDefault();\"\n" +
+    "                                <i class=\"fa fa-plus\" ng-click=\"queue(movie); $event.preventDefault();\"\n" +
     "                                   ng-show=\"player.active\"></i>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
@@ -3661,7 +3905,7 @@ angular.module("modules/movie/list.tpl.html", []).run(["$templateCache", functio
     "                        <div rating rating-value=\"movie.rating\" rating-max=\"10\"></div>\n" +
     "                    </div>\n" +
     "                    <div class=\"playcount\" ng-show=\"movie.playcount\">\n" +
-    "                         <i class=\"icon-ok\"></i>\n" +
+    "                         <i class=\"fa fa-check\"></i>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "                <div class=\"description\">\n" +
@@ -3675,10 +3919,10 @@ angular.module("modules/movie/list.tpl.html", []).run(["$templateCache", functio
     "                                 seekbar-read-only=\"true\">\n" +
     "                        </seekbar>\n" +
     "                        <div class=\"controls\">\n" +
-    "                            <i ng-class=\"{'icon-eye-open':!movie.playcount, 'icon-eye-close':movie.playcount}\"\n" +
+    "                            <i class=\"fa\" ng-class=\"{'fa-eye':!movie.playcount, 'fa-eye-slash':movie.playcount}\"\n" +
     "                               ng-click=\"toggleWatched(movie); $event.preventDefault();\"\n" +
     "                              ></i>\n" +
-    "                            <i class=\"icon-trash\"\n" +
+    "                            <i class=\"fa fa-trash\"\n" +
     "                               ng-click=\"remove($index, movie); $event.preventDefault();\"\n" +
     "                            ></i>\n" +
     "                        </div>\n" +
@@ -3699,11 +3943,11 @@ angular.module("modules/movie/movies.tpl.html", []).run(["$templateCache", funct
     "        <a class=\"span4 tab\" href=\"#/movies/recents\" ng-class=\"{selected :isSelected('movies.recents')}\">Recently added</a>\n" +
     "        <a class=\"span4 tab\" href=\"#/movies/all\"  ng-class=\"{selected :isSelected('movies.all')}\">All movies</a>\n" +
     "        <div class=\"scan\" ng-click=\"xbmc.scan('VideoLibrary')\">\n" +
-    "            <i class=\"icon-barcode\" title=\"Scan video library\"></i>\n" +
+    "            <i class=\"fa fa-barcode\" title=\"Scan video library\"></i>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "    <div ui-view class=\"content\">\n" +
-    "        \n" +
+    "\n" +
     "    </div>\n" +
     "</div>");
 }]);
@@ -3770,9 +4014,9 @@ angular.module("modules/music/artist.albums.tpl.html", []).run(["$templateCache"
     "                        </div>\n" +
     "                        <h1>{{album.label}}</h1>\n" +
     "                        <h3>{{album.year}}</h3>\n" +
-    "                        <div class=\"md-action md-action-primary\" \n" +
+    "                        <div class=\"md-action md-action-primary\"\n" +
     "                             ng-click=\"xbmc.open({albumid : album.albumid})\">\n" +
-    "                            <i class=\"icon-play\"></i>\n" +
+    "                            <i class=\"fa fa-play\"></i>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                    <ul data-type=\"list\">\n" +
@@ -3780,7 +4024,7 @@ angular.module("modules/music/artist.albums.tpl.html", []).run(["$templateCache"
     "                          ng-click=\"xbmc.open({songid : song.songid})\">\n" +
     "                            <div class=\"span4 track\">\n" +
     "                                <span class=\"thumbnail\" image image-source=\"song.thumbnail | asset:host | fallback:'img/backgrounds/album.png'\">\n" +
-    "                                    <i class=\"icon-play\"></i>\n" +
+    "                                    <i class=\"fa fa-play\"></i>\n" +
     "                                </span>\n" +
     "                                {{song.label}}\n" +
     "                                <img class=\"equalizer\" src=\"img/backgrounds/equalizer.gif\" ng-show=\"isPlaying(song.songid)\"/>\n" +
@@ -3789,10 +4033,10 @@ angular.module("modules/music/artist.albums.tpl.html", []).run(["$templateCache"
     "                            <div class=\"span3\">{{song.artist.join(', ')}}</div>\n" +
     "                            <div class=\"span1 duration\">{{song.duration | time | date :'mm:ss'}}</div>\n" +
     "                            <div class=\"span1 more\">\n" +
-    "                                <i class=\"icon icon-ellipsis-vertical\"></i>\n" +
+    "                                <i class=\"fa fa-ellipsis-v\"></i>\n" +
     "                                <ul class=\"dropdown-menu\">\n" +
     "                                    <li ng-click=\"xbmc.queue({'songid':song.songid});$event.stopPropagation();\">\n" +
-    "                                        <i class=\"icon-plus\"></i>\n" +
+    "                                        <i class=\"fa fa-plus\"></i>\n" +
     "                                        Queue\n" +
     "                                    </li>\n" +
     "                                </ul>\n" +
@@ -3840,11 +4084,11 @@ angular.module("modules/music/musics.tpl.html", []).run(["$templateCache", funct
     "        <a class=\"span4 tab\" href=\"#/musics/artists/all\" ng-class=\"{selected : isSelected('music.*artists$')}\">Artists</a>\n" +
     "        <a class=\"span4 tab\" href=\"#/musics/songs/all\" ng-class=\"{selected : isSelected('music.*songs')}\">Songs</a>\n" +
     "        <div class=\"scan\" ng-click=\"xbmc.scan('AudioLibrary')\">\n" +
-    "            <i class=\"icon-barcode\" title=\"Scan audio library\"></i>\n" +
+    "            <i class=\"fa fa-barcode\" title=\"Scan audio library\"></i>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "    <div ui-view class=\"content\">\n" +
-    "        \n" +
+    "\n" +
     "    </div>\n" +
     "</div>");
 }]);
@@ -3859,17 +4103,17 @@ angular.module("modules/music/songs.tpl.html", []).run(["$templateCache", functi
     "            <div class=\"md-action md-action-primary\"\n" +
     "               ng-click=\"xbmc.open({'file' : undefined})\"\n" +
     "               ng-show=\"!album\">\n" +
-    "                <i class=\"icon-random\"></i>\n" +
+    "                <i class=\"fa fa-random\"></i>\n" +
     "            </div>\n" +
     "            <div class=\"md-action md-action-primary\"\n" +
     "                 ng-click=\"xbmc.queue({'albumid': album.albumid})\"\n" +
     "                 ng-show=\"album && player.active\">\n" +
-    "                <i class=\"icon-plus\"></i>\n" +
+    "                <i class=\"fa fa-plus\"></i>\n" +
     "            </div>\n" +
     "            <div class=\"md-action md-action-primary\"\n" +
     "                 ng-click=\"xbmc.open({'albumid': album.albumid})\"\n" +
     "                 ng-show=\"album && !player.active\">\n" +
-    "                <i class=\"icon-play\"></i>\n" +
+    "                <i class=\"fa fa-play\"></i>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -3910,17 +4154,17 @@ angular.module("modules/music/songs.tpl.html", []).run(["$templateCache", functi
     "            <button class=\"recommend\" class=\"md-action md-action-primary\"\n" +
     "                    ng-click=\"xbmc.open({'file' : undefined})\"\n" +
     "                    ng-show=\"!album\">\n" +
-    "                <i class=\"icon-random\"></i> Shuffle\n" +
+    "                <i class=\"fa fa-random\"></i> Shuffle\n" +
     "            </button>\n" +
     "            <button class=\"recommend\"\n" +
     "                 ng-click=\"xbmc.queue({'albumid': album.albumid})\"\n" +
     "                 ng-show=\"album && player.active\">\n" +
-    "                <i class=\"icon-plus\"></i> Queue\n" +
+    "                <i class=\"fa fa-plus\"></i> Queue\n" +
     "            </button>\n" +
     "            <button class=\"recommend\"\n" +
     "                 ng-click=\"xbmc.open({'albumid': album.albumid})\"\n" +
     "                 ng-show=\"album && !player.active\">\n" +
-    "                <i class=\"icon-play\"></i> Play\n" +
+    "                <i class=\"fa fa-play\"></i> Play\n" +
     "            </button>\n" +
     "        </div>\n" +
     "        <div class=\"span7 content\">\n" +
@@ -3929,7 +4173,7 @@ angular.module("modules/music/songs.tpl.html", []).run(["$templateCache", functi
     "                    ng-click=\"xbmc.open({songid : song.songid})\">\n" +
     "                    <div class=\"span4 track\">\n" +
     "                        <span class=\"thumbnail\" image image-source=\"song.thumbnail | asset:host | fallback:'img/backgrounds/album.png'\">\n" +
-    "                            <i class=\"icon-play\"></i>\n" +
+    "                            <i class=\"fa fa-play\"></i>\n" +
     "                        </span>\n" +
     "                        {{song.label}}\n" +
     "                        <img class=\"equalizer\" src=\"img/backgrounds/equalizer.gif\" ng-show=\"isPlaying(song.songid)\"/>\n" +
@@ -3938,10 +4182,10 @@ angular.module("modules/music/songs.tpl.html", []).run(["$templateCache", functi
     "                    <div class=\"span3\">{{song.artist.join(', ') || '&nbsp;'}}</div>\n" +
     "                    <div class=\"span1 duration\">{{song.duration | time | date :'mm:ss'}}</div>\n" +
     "                    <div class=\"span1 more\">\n" +
-    "                        <i class=\"icon icon-ellipsis-vertical\"></i>\n" +
+    "                        <i class=\"fa fa-ellipsis-v\"></i>\n" +
     "                        <ul class=\"dropdown-menu\">\n" +
     "                            <li ng-click=\"xbmc.queue({'songid':song.songid});$event.stopPropagation();\">\n" +
-    "                                <i class=\"icon-plus\"></i>\n" +
+    "                                <i class=\"fa fa-plus\"></i>\n" +
     "                                Queue\n" +
     "                            </li>\n" +
     "                        </ul>\n" +
@@ -3960,18 +4204,18 @@ angular.module("modules/now/playing.tpl.html", []).run(["$templateCache", functi
     "    <div class=\"actions-wrapper row\">\n" +
     "        <div class=\"span4\">\n" +
     "            <div class=\"md-action\" ng-click=\"xbmc.previous()\" >\n" +
-    "                <i class=\"icon icon-fast-backward\"></i>\n" +
+    "                <i class=\"fa fa-fast-backward\"></i>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        \n" +
+    "\n" +
     "        <div class=\"span4\">\n" +
     "            <div class=\"md-action primary\" ng-click=\"xbmc.togglePlay()\">\n" +
-    "                <i ng-class=\"{'icon-play' : !player.speed, 'icon-pause' : player.speed}\"></i>\n" +
+    "                <i class=\"fa\" ng-class=\"{'fa-play' : !player.speed, 'fa-pause' : player.speed}\"></i>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"span4\">\n" +
     "            <div class=\"md-action\" ng-click=\"xbmc.next()\"  >\n" +
-    "                <i class=\"icon icon-fast-forward\"></i>\n" +
+    "                <i class=\"fa fa-fast-forward\"></i>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
@@ -3995,10 +4239,10 @@ angular.module("modules/now/playing.tpl.html", []).run(["$templateCache", functi
     "                    [-{{(player.seek.totaltime - player.seek.time)  | time | date:'HH:mm:ss'}}]\n" +
     "                </div>\n" +
     "                <div class=\"md-action stop\" ng-click=\"xbmc.stop()\">\n" +
-    "                    <i class=\"icon icon-stop\"></i>\n" +
+    "                    <i class=\"fa fa-stop\"></i>\n" +
     "                </div>\n" +
     "                <div class=\"md-action more\">\n" +
-    "                    <i class=\"icon icon-ellipsis-vertical\"></i>\n" +
+    "                    <i class=\"fa fa-ellipsis-v\"></i>\n" +
     "                    <ul class=\"dropdown-menu\">\n" +
     "                        <li ng-click=\"xbmc.showOSD()\">OSD</li>\n" +
     "                        <li ng-click=\"toggleAudioStreams()\" ng-show=\"isTypeVideo()\">Switch audio</li>\n" +
@@ -4011,18 +4255,18 @@ angular.module("modules/now/playing.tpl.html", []).run(["$templateCache", functi
     "    <div class=\"actions-wrapper\">\n" +
     "       <div class=\"span3\">\n" +
     "           <div class=\"md-action\" ng-click=\"xbmc.home()\" >\n" +
-    "                <i class=\"icon-home\"></i>\n" +
+    "                <i class=\"fa fa-home\"></i>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"span3\">\n" +
     "            <div class=\"md-action\"  ng-click=\"xbmc.open({'file' : undefined})\">\n" +
-    "                <i class=\"icon-headphones\"></i>\n" +
+    "                <i class=\"fa fa-headphones\"></i>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"span3\">\n" +
     "            <div class=\"md-action\">\n" +
-    "                <i class=\"icon-volume-up\" ng-show=\"application.muted\" ng-click=\"xbmc.mute()\"></i>\n" +
-    "                <i class=\"icon-volume-off\" ng-show=\"!application.muted\" ng-click=\"xbmc.mute()\"></i>\n" +
+    "                <i class=\"fa fa-volume-up\" ng-show=\"application.muted\" ng-click=\"xbmc.mute()\"></i>\n" +
+    "                <i class=\"fa fa-volume-off\" ng-show=\"!application.muted\" ng-click=\"xbmc.mute()\"></i>\n" +
     "                <div class=\"volume-wrapper\">\n" +
     "                    <seekbar seekbar-value=\"application.volume\" seekbar-max=\"100\"\n" +
     "                    on-seekbar-changed=\"onVolumeChanged(newValue)\"\n" +
@@ -4034,7 +4278,7 @@ angular.module("modules/now/playing.tpl.html", []).run(["$templateCache", functi
     "\n" +
     "        <div class=\"span3\">\n" +
     "            <div class=\"md-action more\">\n" +
-    "                <i class=\"icon icon-ellipsis-vertical\"></i>\n" +
+    "                <i class=\"fa fa-ellipsis-v\"></i>\n" +
     "                <div class=\"remote-menu\">\n" +
     "                    <div class=\"buttons\" ng-if=\"view==='remote'\"\n" +
     "                        ng-include src=\"'modules/remote/remote.tpl.html'\"></div>\n" +
@@ -4145,7 +4389,7 @@ angular.module("modules/now/playlist.tpl.html", []).run(["$templateCache", funct
     "        <seekbar seekbar-value=\"player.seek.percentage\" seekbar-max=\"100\" seekbar-read-only=\"true\"></seekbar>\n" +
     "        <div class=\"label\">{{player.item.label}}</div>\n" +
     "        <div class=\"md-action md-action-primary\" ng-click=\"xbmc.next()\">\n" +
-    "                <i class=\"icon-fast-forward\"></i>\n" +
+    "                <i class=\"fa fa-fast-forward\"></i>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"playlist\">\n" +
@@ -4179,13 +4423,13 @@ angular.module("modules/remote/remote.tpl.html", []).run(["$templateCache", func
     "                <seekbar seekbar-value=\"player.seek.percentage\" seekbar-max=\"100\" seekbar-read-only=\"true\"></seekbar>\n" +
     "                <div class=\"label\">{{player.item.label}}</div>\n" +
     "                <div class=\"md-action md-action-primary\" ng-click=\"toggleShutdownOptions()\">\n" +
-    "                    <i class=\"icon icon-power-off\"></i>\n" +
+    "                    <i class=\"fa fa-power-off\"></i>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "            <div ng-switch-when=\"false\">\n" +
     "                <div class=\"banner\"></div>\n" +
     "                <div class=\"md-action md-action-primary\" ng-click=\"toggleShutdownOptions()\">\n" +
-    "                    <i class=\"icon icon-power-off\"></i>\n" +
+    "                    <i class=\"fa fa-power-off\"></i>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -4194,51 +4438,51 @@ angular.module("modules/remote/remote.tpl.html", []).run(["$templateCache", func
     "        <div class=\"row\">\n" +
     "            <div class=\"action\">\n" +
     "                <div class=\"md-action\"  ng-click=\"xbmc.info()\">\n" +
-    "                    <i class=\"icon icon-info-sign\"></i>\n" +
+    "                    <i class=\"fa fa-info\"></i>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "            <div class=\"action\">\n" +
     "                <div class=\"md-action direction\"  ng-click=\"xbmc.up()\">\n" +
-    "                    <i class=\"icon icon-chevron-up\"></i>\n" +
+    "                    <i class=\"fa fa-chevron-up\"></i>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "            <div class=\"action\">\n" +
     "                <div class=\"md-action\"  ng-click=\"xbmc.contextmenu()\">\n" +
-    "                    <i class=\"icon icon-list-ul\"></i>\n" +
+    "                    <i class=\"fa fa-list-ul\"></i>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"row\">\n" +
     "            <div class=\"action\">\n" +
     "                <div class=\"md-action direction\" ng-click=\"xbmc.left()\">\n" +
-    "                    <i class=\"icon icon-chevron-left\"></i>\n" +
+    "                    <i class=\"fa fa-chevron-left\"></i>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "            <div class=\"action\">\n" +
     "                <div class=\"md-action select\" ng-click=\"xbmc.select()\">\n" +
-    "                    <i class=\"icon icon-circle\"></i>\n" +
+    "                    <i class=\"fa fa-circle\"></i>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "            <div class=\"action\">\n" +
     "                <div class=\"md-action direction\" ng-click=\"xbmc.right()\">\n" +
-    "                    <i class=\"icon icon-chevron-right\"></i>\n" +
+    "                    <i class=\"fa fa-chevron-right\"></i>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"row\">\n" +
     "            <div class=\"action\">\n" +
     "                <div class=\"md-action\" ng-click=\"xbmc.back()\">\n" +
-    "                    <i class=\"icon icon-mail-reply\"></i>\n" +
+    "                    <i class=\"fa fa-mail-reply\"></i>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "            <div class=\"action\">\n" +
     "                <div class=\"md-action direction\" ng-click=\"xbmc.down()\">\n" +
-    "                    <i class=\"icon icon-chevron-down\"></i>\n" +
+    "                    <i class=\"fa fa-chevron-down\"></i>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "            <div class=\"action\">\n" +
     "               <div class=\"md-action\" ng-click=\"toggleKeyboard()\">\n" +
-    "                    <i class=\"icon icon-keyboard\"></i>\n" +
+    "                    <i class=\"fa fa-keyboard-o\"></i>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
@@ -4294,13 +4538,13 @@ angular.module("modules/settings/wizard.tpl.html", []).run(["$templateCache", fu
     "    <div class=\"arts\">\n" +
     "        <div class=\"banner\"></div>\n" +
     "        <div class=\"md-action md-action-primary\" ng-click=\"save()\">\n" +
-    "            <i class=\"icon-save\"></i>\n" +
+    "            <i class=\"fa fa-save\"></i>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"settings\">\n" +
     "      <div data-type=\"list\">\n" +
     "        <div class=\"panel\">\n" +
-    "            <h1>  <i class=\"icon icon-info-sign\"></i> General information</h1>\n" +
+    "            <h1>  <i class=\"fa fa-info-sign\"></i> General information</h1>\n" +
     "            <p class=\"host row\">\n" +
     "                <label class=\"span4\">Host IP</label>\n" +
     "                <input class=\"span5\" name=\"ip\" type=\"text\" placeholder=\"Ex : 192.16.0.1, hostname\" required=\"\" ng-model=\"host.ip\" tabindex=\"2\"/>\n" +
@@ -4315,7 +4559,7 @@ angular.module("modules/settings/wizard.tpl.html", []).run(["$templateCache", fu
     "            </p>\n" +
     "        </div>\n" +
     "        <div class=\"panel\">\n" +
-    "            <h1>  <i class=\"icon icon-globe\"></i> Discover</h1>\n" +
+    "            <h1>  <i class=\"fa fa-globe\"></i> Discover</h1>\n" +
     "            <p>\n" +
     "               Discover functionnality relies on external video add-on to be able to play content. Sepcify below which add-on you want to use.\n" +
     "            </p>\n" +
@@ -4325,7 +4569,7 @@ angular.module("modules/settings/wizard.tpl.html", []).run(["$templateCache", fu
     "            </p>\n" +
     "        </div>\n" +
     "        <div class=\"panel\">\n" +
-    "            <h1>  <i class=\"icon icon-trakt\"></i> Trakt</h1>\n" +
+    "            <h1>  <i class=\"fa fa-trakt\"></i> Trakt</h1>\n" +
     "            <p class=\"row\">\n" +
     "                <label class=\"span4\"> Auto scrobble</label>\n" +
     "                <input class=\"span5\" type=\"checkbox\" ng-model=\"autoScrobble\"/>\n" +
@@ -4344,7 +4588,7 @@ angular.module("modules/settings/wizard.tpl.html", []).run(["$templateCache", fu
     "                <label class=\"span4\">Pin code from Trakt</label>\n" +
     "                <input class=\"span5\" type=\"text\" placeholder=\"Ex : 73F75D39\" ng-model=\"pin\" tabindex=\"4\"/>\n" +
     "            </p>\n" +
-    "           \n" +
+    "\n" +
     "            <div class=\"row\" style=\"padding : .5rem 1rem;\">\n" +
     "                <div class=\"span4\">How do I get my PIN</div>\n" +
     "                <div class=\"span5 pin-instruction\">\n" +
@@ -4366,15 +4610,34 @@ angular.module("modules/settings/wizard.tpl.html", []).run(["$templateCache", fu
 angular.module("modules/tvshow/calendar.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("modules/tvshow/calendar.tpl.html",
     "<div class=\"cards fill-height\">\n" +
-    "    <div class=\"kodi\" ng-hide=\"dates.length\"></div>\n" +
-    "    <ul data-type=\"list\" class=\"cal-grid\" lr-infinite-scroll=\"loadMore\" scroll-threshold=\"200\">\n" +
-    "        <li ng-repeat=\"date in dates\" class=\" repeat-animation cal-day \" on-last-repeat>\n" +
+    "    <div class=\"kodi\" ng-show=\"!dates.length || fetching\" ng-class=\"{fetching : fetching}\"></div>\n" +
+    "    <div class=\"cal-summary detail\">\n" +
+    "        <h1>\n" +
+    "            <i class=\"previous\" ng-click=\"previousMonth()\">&#8592;</i>\n" +
+    "            <i class=\"next\" ng-click=\"nextMonth()\">&#8594;</i>\n" +
+    "            {{refDate.format('MMMM')}}\n" +
+    "        </h1>\n" +
+    "        <p ng-show=\"showsCount()\">\n" +
+    "            <b>{{getEpisodesFor(refDate, 'month').length}}</b> episodes from <b>{{showsCount()}}</b> shows airing this month.\n" +
+    "        </p>\n" +
+    "        <ul>\n" +
+    "            <li ng-repeat=\"(key, value) in shows\" class=\"repeat-animation\">\n" +
+    "                <a href=\"#/tvshows/tmdb/{{value.ids.tmdb}}\">\n" +
+    "                    <div class=\"banner\" image image-source=\"getBanner(value)\"></div>\n" +
+    "                    <div class=\"counter\">{{value.hit}}</div>\n" +
+    "                </a>\n" +
+    "            </li>\n" +
+    "            <li ng-show=\"!showsCount()\" class=\"empty list\">Oops! nothing here</li>\n" +
+    "        </ul>\n" +
+    "    </div>\n" +
+    "    <ul data-type=\"list\" class=\"cal-grid\">\n" +
+    "        <li ng-repeat=\"date in dates\" class=\"repeat-animation cal-day\" on-last-repeat>\n" +
     "            <header ng-class=\"{today : isToday(date), past: isPast(date), future: isFuture(date)}\">\n" +
     "                <div class=\"date\">{{date.format('D')}}</div>\n" +
     "                <div class=\"day\">{{date.format('ddd')}}</div>\n" +
     "                <div class=\"month\">{{date.format('MMM')}}</div>\n" +
     "            </header>\n" +
-    "            <div ng-repeat=\"show in getTVShowsFor(date)\" class=\"card\">\n" +
+    "            <div ng-repeat=\"show in getEpisodesFor(date) as episodes\" class=\"card\">\n" +
     "                <a href=\"#/tvshows/tmdb/{{show.show.ids.tmdb}}\">\n" +
     "                    <div class=\"poster\" image image-source=\"getPoster(show)\">\n" +
     "                        <flipper ng-if=\"!isFuture(date)\">\n" +
@@ -4383,7 +4646,7 @@ angular.module("modules/tvshow/calendar.tpl.html", []).run(["$templateCache", fu
     "                            </div>\n" +
     "                            <div class=\"back\">\n" +
     "                                <div class=\"md-circle rating\">\n" +
-    "                                    <i class=\"icon-play\" ng-click=\"play(show); $event.preventDefault();\"></i>\n" +
+    "                                    <i class=\"fa fa-play\" ng-click=\"play(show); $event.preventDefault();\"></i>\n" +
     "                                </div>\n" +
     "                            </div>\n" +
     "                        </flipper>\n" +
@@ -4395,9 +4658,18 @@ angular.module("modules/tvshow/calendar.tpl.html", []).run(["$templateCache", fu
     "                    <div class=\"description\">\n" +
     "                        <h3>{{show.episode.number | episode:show.episode.season}} - {{show.episode.title || 'TBA'}}</h3>\n" +
     "                        <div>{{show.show.title}}</div>\n" +
-    "                        \n" +
+    "\n" +
     "                    </div>\n" +
     "                </a>\n" +
+    "            </div>\n" +
+    "            <div ng-if=\"!episodes.length\" class=\"support\">\n" +
+    "                <img src=\"../img/backgrounds/support.png\" width=\"100%\"/>\n" +
+    "                <h3>\n" +
+    "                    Enjoying Arch ? Support us!\n" +
+    "                    <button class=\"recommend\" ng-click=\"showSupport()\">\n" +
+    "                        <i class=\"fa fa-paypal\"></i>Donate\n" +
+    "                    </button>\n" +
+    "                </h3>\n" +
     "            </div>\n" +
     "        </li>\n" +
     "    </ul>\n" +
@@ -4409,36 +4681,35 @@ angular.module("modules/tvshow/details.tpl.html", []).run(["$templateCache", fun
     "<div ng-switch on=\"loading\" class=\"tvshow detail fill-height\" ng-class=\"{loading : loading}\">\n" +
     "    <div ng-switch-when=\"true\" class=\"loading\"><div class=\"kodi\"></div></div>\n" +
     "    <div ng-switch-when=\"false\">\n" +
-    "        <i class=\"icon-chevron-left previous\"\n" +
+    "        <i class=\"fa fa-chevron-left previous\"\n" +
     "           ng-if=\"seasons.indexOf(season) > 0\"\n" +
     "           ng-click=\"previousSeason()\"></i>\n" +
-    "        <i class=\"icon-chevron-right next\"\n" +
+    "        <i class=\"fa fa-chevron-right next\"\n" +
     "           ng-if=\"seasons.indexOf(season) < seasons.length-1\"\n" +
     "           ng-click=\"nextSeason()\"></i>\n" +
     "        <div class=\"experimental row\" ng-show=\"!isExternalAddonAvailable && isUsingExternalAddon()\">\n" +
     "            <div class=\"offset2 span8\">\n" +
-    "                <i class=\"icon icon-beaker\"></i>\n" +
+    "                <i class=\"fa fa-flask\"></i>\n" +
     "                {{host.videoAddon}} needed to preview discoverable content.\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"row wrapper\">\n" +
-    "            \n" +
-    "            <div class=\"fanart\" image image-source=\"getImage(show.fanart)\"></div>\n" +
+    "            <tmdb-fanarts fanarts=\"fanarts\" delay=\"10000\" primary=\"show.fanart\"></tmdb-fanarts>\n" +
     "            <div class=\"title\">\n" +
     "                <h2>{{show.title || show.name}}</h2>\n" +
-    "                <h1>{{seasonName(season)}}</h1>\n" +
+    "                <h1 ng-if=\"season\">{{seasonName(season)}}</h1>\n" +
     "            </div>\n" +
     "            <trakt-stats stats=\"stats\"></trakt-stats>\n" +
     "        </div>\n" +
     "        <div class=\"description row\">\n" +
     "            <div class=\"offset1 span2 sidebar\">\n" +
     "                <div class=\"poster-wrapper\">\n" +
-    "                    <img class=\" poster\" image image-source=\"getImage(season.thumbnail || season.poster, 'w500')\"/>\n" +
+    "                    <img class=\" poster\" image image-source=\"getImage(season.thumbnail || season.poster || show.thumbnail, 'w500')\"/>\n" +
     "                </div>\n" +
-    "                \n" +
+    "\n" +
     "                <ul class=\"nav sections\">\n" +
     "                    <li style=\"text-align: center\">\n" +
-    "                        {{show.title || show.name}} \n" +
+    "                        {{show.title || show.name}}\n" +
     "                        <seekbar seekbar-value=\"show.watchedepisodes\" seekbar-max=\"show.episode\"\n" +
     "                                 seekbar-read-only=\"true\" class=\"progress-wrapper\"\n" +
     "                                 ng-if=\"show.watchedepisodes\">\n" +
@@ -4446,13 +4717,14 @@ angular.module("modules/tvshow/details.tpl.html", []).run(["$templateCache", fun
     "                    </li>\n" +
     "                    <li class=\"row\">\n" +
     "                        <div class=\"span6 label\">\n" +
+    "                            <i class=\"fa fa-television\"></i>\n" +
     "                            Season\n" +
     "                        </div>\n" +
     "                        <div class=\"span6 value\">{{season.season}}</div>\n" +
     "                    </li>\n" +
     "                    <li class=\"row\">\n" +
     "                        <div class=\"span6 label\">\n" +
-    "                             <i class=\"icon-star\"></i>\n" +
+    "                             <i class=\"fa fa-star\"></i>\n" +
     "                             Rating\n" +
     "                        </div>\n" +
     "                        <div class=\"span6 value\">{{show.rating| number : 1}}</div>\n" +
@@ -4466,14 +4738,14 @@ angular.module("modules/tvshow/details.tpl.html", []).run(["$templateCache", fun
     "                    </li>\n" +
     "                    <li class=\"row\">\n" +
     "                        <div class=\"span6 label\">\n" +
-    "                             <i class=\"icon-calendar\"></i>\n" +
+    "                             <i class=\"fa fa-calendar\"></i>\n" +
     "                             Released\n" +
     "                        </div>\n" +
-    "                        <div class=\"span6 value\">{{show.year+season.season-1}}</div>\n" +
+    "                        <div class=\"span6 value\">{{getYear(show, season)}}</div>\n" +
     "                    </li>\n" +
     "                    <li class=\"row\">\n" +
     "                        <div class=\"span6 label\">\n" +
-    "                             <i class=\"icon-trakt\"></i>\n" +
+    "                             <i class=\"fa fa-trakt\"></i>\n" +
     "                             Watching\n" +
     "                        </div>\n" +
     "                        <div class=\"span6 value\">{{watching.length}}</div>\n" +
@@ -4491,7 +4763,7 @@ angular.module("modules/tvshow/details.tpl.html", []).run(["$templateCache", fun
     "                </div>\n" +
     "                <div  class=\"details-section\" ng-if=\"nextAiringEpisode\">\n" +
     "                    <h1>\n" +
-    "                      <i class=\"icon-time\"></i>\n" +
+    "                      <i class=\"fa fa-clock-o\"></i>\n" +
     "                      Next Episode\n" +
     "                    </h1>\n" +
     "                    <div class=\"row next-episode\">\n" +
@@ -4506,14 +4778,14 @@ angular.module("modules/tvshow/details.tpl.html", []).run(["$templateCache", fun
     "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
-    "                <div  class=\"details-section\" ng-show=\"seasons.length\">\n" +
+    "                <div  class=\"details-section\" ng-if=\"seasons.length\">\n" +
     "                    <h1>\n" +
     "                        <span class=\"season\">\n" +
     "                            <span class=\"md-circle fanart\" image image-source=\"getImage(season.thumbnail || season.poster, 'w500')\">\n" +
     "                            </span>\n" +
     "                            {{seasonName(season)}}\n" +
     "                        </span>\n" +
-    "                        <i class=\"icon-chevron-right\"></i>\n" +
+    "                        <i class=\"fa fa-chevron-right\"></i>\n" +
     "                        Episodes\n" +
     "                    </h1>\n" +
     "                </div>\n" +
@@ -4522,10 +4794,10 @@ angular.module("modules/tvshow/details.tpl.html", []).run(["$templateCache", fun
     "                        ng-click=\"play(episode)\">\n" +
     "                        <div class=\"thumbnail span4\" image image-source=\"getImage(episode.thumbnail, 'w300')\">\n" +
     "                            <div class=\"md-action md-action-primary\">\n" +
-    "                                <i class=\"icon-play\"></i>\n" +
+    "                                <i class=\"fa fa-play\"></i>\n" +
     "                            </div>\n" +
     "                            <div class=\"playcount\" ng-show=\"episode.playcount\">\n" +
-    "                                 <i class=\"icon-ok\"></i>\n" +
+    "                                 <i class=\"fa fa-check\"></i>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                        <div class=\"span8\">\n" +
@@ -4539,19 +4811,19 @@ angular.module("modules/tvshow/details.tpl.html", []).run(["$templateCache", fun
     "                            </div>\n" +
     "                            <p>{{episode.plot}}</p>\n" +
     "                            <div class=\"more\" ng-show=\"hasControls()\">\n" +
-    "                                <i class=\"icon icon-ellipsis-vertical\"></i>\n" +
+    "                                <i class=\"fa fa-ellipsis-v\"></i>\n" +
     "                                <ul class=\"dropdown-menu\">\n" +
     "                                    <li ng-click=\"xbmc.queue({'episodeid' : episode.episodeid}); $event.stopPropagation();\"\n" +
     "                                        ng-show=\"player.active\">\n" +
-    "                                        <i class=\"icon-plus\"></i>\n" +
+    "                                        <i class=\"fa fa-plus\"></i>\n" +
     "                                        Queue\n" +
     "                                    </li>\n" +
     "                                    <li ng-click=\"toggleWatched(episode); $event.stopPropagation();\">\n" +
-    "                                        <i ng-class=\"{'icon-eye-open':!episode.playcount, 'icon-eye-close':episode.playcount}\"></i>\n" +
+    "                                        <i class=\"fa\" ng-class=\"{'fa-eye':!episode.playcount, 'fa-eye-slash':episode.playcount}\"></i>\n" +
     "                                        Toggle watch\n" +
     "                                    </li>\n" +
     "                                    <li ng-click=\"remove($index, episode); $event.stopPropagation();\">\n" +
-    "                                        <i class=\"icon-trash\"></i>\n" +
+    "                                        <i class=\"fa fa-trash\"></i>\n" +
     "                                        Remove\n" +
     "                                    </li>\n" +
     "                                </ul>\n" +
@@ -4585,15 +4857,15 @@ angular.module("modules/tvshow/episodes.tpl.html", []).run(["$templateCache", fu
     "                        </div>\n" +
     "                        <div class=\"back\">\n" +
     "                            <div class=\"md-circle rating\">\n" +
-    "                                <i class=\"icon-play\" ng-click=\"helper.local.shows.play(episode); $event.preventDefault();\"\n" +
+    "                                <i class=\"fa fa-play\" ng-click=\"helper.local.shows.play(episode); $event.preventDefault();\"\n" +
     "                                   ng-show=\"!player.active\"></i>\n" +
-    "                                <i class=\"icon-plus\" ng-click=\"xbmc.queue({'episodeid' : episode.episodeid}); $event.preventDefault();\"\n" +
+    "                                <i class=\"fa fa-plus\" ng-click=\"xbmc.queue({'episodeid' : episode.episodeid}); $event.preventDefault();\"\n" +
     "                                   ng-show=\"player.active\"></i>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </flipper>\n" +
     "                    <div class=\"playcount\" ng-show=\"episode.playcount\">\n" +
-    "                         <i class=\"icon-ok\"></i>\n" +
+    "                         <i class=\"fa fa-check\"></i>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "                <div class=\"description\">\n" +
@@ -4606,10 +4878,10 @@ angular.module("modules/tvshow/episodes.tpl.html", []).run(["$templateCache", fu
     "                             seekbar-read-only=\"true\">\n" +
     "                    </seekbar>\n" +
     "                    <div class=\"controls\">\n" +
-    "                        <i ng-class=\"{'icon-eye-open':!episode.playcount, 'icon-eye-close':episode.playcount}\"\n" +
+    "                        <i class=\"fa\" ng-class=\"{'fa-eye':!episode.playcount, 'fa-eye-slash':episode.playcount}\"\n" +
     "                           ng-click=\"toggleWatched(episode); $event.preventDefault();\"\n" +
     "                        ></i>\n" +
-    "                        <i class=\"icon-trash\"\n" +
+    "                        <i class=\"fa fa-trash\"\n" +
     "                           ng-click=\"remove($index, episode); $event.preventDefault();\"\n" +
     "                        ></i>\n" +
     "                    </div>\n" +
@@ -4641,7 +4913,7 @@ angular.module("modules/tvshow/list.tpl.html", []).run(["$templateCache", functi
     "                        </div>\n" +
     "                    </flipper>\n" +
     "                    <div class=\"playcount\" ng-show=\"show.playcount\">\n" +
-    "                         <i class=\"icon-ok\"></i>\n" +
+    "                         <i class=\"fa fa-check\"></i>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "                <div class=\"description\">\n" +
@@ -4653,10 +4925,10 @@ angular.module("modules/tvshow/list.tpl.html", []).run(["$templateCache", functi
     "                                 seekbar-read-only=\"true\">\n" +
     "                        </seekbar>\n" +
     "                        <div class=\"controls\">\n" +
-    "                            <i ng-class=\"{'icon-eye-open':!show.playcount, 'icon-eye-close':show.playcount}\"\n" +
+    "                            <i class=\"fa\" ng-class=\"{'fa-eye':!show.playcount, 'fa-eye-slash':show.playcount}\"\n" +
     "                               ng-click=\"toggleWatched(show); $event.preventDefault();\"\n" +
     "                            ></i>\n" +
-    "                            <i class=\"icon-trash\"\n" +
+    "                            <i class=\"fa fa-trash\"\n" +
     "                               ng-click=\"remove($index, show); $event.preventDefault();\"\n" +
     "                            ></i>\n" +
     "                        </div>\n" +
@@ -4679,7 +4951,7 @@ angular.module("modules/tvshow/shows.tpl.html", []).run(["$templateCache", funct
     "        </a>\n" +
     "        <a class=\"span3 tab\" href=\"#/tvshows/calendar\"\n" +
     "           ng-class=\"{selected :  isSelected('tvshows.calendar')}\">\n" +
-    "          \n" +
+    "          <i class=\"fa fa-trakt\"></i>\n" +
     "          Calendar\n" +
     "        </a>\n" +
     "        <a class=\"span3 tab\" href=\"#/tvshows/recents\"\n" +
@@ -4691,7 +4963,7 @@ angular.module("modules/tvshow/shows.tpl.html", []).run(["$templateCache", funct
     "           All shows\n" +
     "        </a>\n" +
     "        <div class=\"scan\" ng-click=\"xbmc.scan('VideoLibrary')\">\n" +
-    "            <i class=\"icon-barcode\" title=\"Scan video library\"></i>\n" +
+    "            <i class=\"fa fa-barcode\" title=\"Scan video library\"></i>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "    <div ui-view class=\"content\">\n" +
@@ -4723,11 +4995,21 @@ angular.module("template/comments/comments.tpl.html", []).run(["$templateCache",
     "</div> ");
 }]);
 
+angular.module("template/fanarts/fanarts.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("template/fanarts/fanarts.tpl.html",
+    "<div class=\"fanarts\">\n" +
+    "    <img image image-source=\"getImage(primary)\"\n" +
+    "         ng-if=\"!fanarts || !fanarts.length\"/>\n" +
+    "    <img ng-repeat=\"fanart in fanarts\" image image-source=\"getImage(fanart.file_path)|filter:wideEnough\"\n" +
+    "         ng-class=\"{fx : $index ===0}\"/>\n" +
+    "</div>");
+}]);
+
 angular.module("template/stats/stats.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/stats/stats.tpl.html",
     "<div class=\"stats row\">\n" +
     "    <div class=\"offset3 span7\">\n" +
-    "        <i class=\"icon icon-trakt\"></i>\n" +
+    "        <i class=\"fa fa-trakt\"></i>\n" +
     "        <span>\n" +
     "            {{stats.votes | unit}}\n" +
     "            <small>votes</small>\n" +

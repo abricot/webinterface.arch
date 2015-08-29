@@ -10,16 +10,16 @@ angular.module("template/rating/rating.tpl.html", []).run(["$templateCache", fun
   $templateCache.put("template/rating/rating.tpl.html",
     "<div class=\"md-circle rating\">\n" +
     "    <div class=\"value\">{{roundedValue}}</div>\n" +
-    "    <i class=\"star icon-star left\"></i>\n" +
-    "    <i class=\"star icon-star middle\"></i>\n" +
-    "    <i class=\"star icon-star right\"></i>\n" +
+    "    <i class=\"star fa fa-star left\"></i>\n" +
+    "    <i class=\"star fa fa-star middle\"></i>\n" +
+    "    <i class=\"star fa fa-star right\"></i>\n" +
     "</div>");
 }]);
 
 angular.module("template/seekbar/seekbar.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/seekbar/seekbar.tpl.html",
     "<div role=\"slider\" ng-class=\"{horizontal : !seekbarIsVertical, vertical : seekbarIsVertical}\">\n" +
-    "    <progress class=\"progress\" max=\"{{seekbarMax}}\"></progress>\n" +
+    "    <progress class=\"progress\" value=\"0\" max=\"{{seekbarMax}}\"></progress>\n" +
     "    <button class=\"thumb\"></button>\n" +
     "</div>");
 }]);
