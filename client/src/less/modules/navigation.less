@@ -114,3 +114,61 @@ nav .dropdown-menu .settings{
   overflow: auto;
 }
 
+form.donation {position:relative;}
+form.donation .arch{
+  position : absolute;
+  left : 50%;
+  top : 0;
+  transform : translateX(-50%) translateY(-50%);
+  width:8rem;
+  height:8rem;
+}
+form[role="dialog"][data-type="action"].donation .content .body header{height:3rem;}
+form[role="dialog"][data-type="action"].donation .content .body {
+  padding : 3rem 0 0 0;
+  max-height: none;
+}
+form[role="dialog"][data-type="action"].donation .content .body p {
+  font-size : 1.25rem;
+  text-align: justify;
+  padding : 1rem 0;
+}
+form.donation .fa-times{
+  position:absolute;
+  right : 1rem;
+  top : 1rem;
+  font-size: 2rem;
+  cursor : pointer;
+}
+
+form.donation .input-wrapper {position:relative;padding-bottom: .5rem;}
+form.donation .input-wrapper .fa-gift,
+form.donation .input-wrapper .fa-dollar,
+form.donation .input-wrapper .fa-eur,
+form.donation .input-wrapper .fa-jpy,
+form.donation .input-wrapper .fa-gbp {
+  position: absolute;
+  left: 0rem;
+  top: 0;
+  font-size: 1.75rem;
+  line-height: 3rem;
+  border-right: 1px solid @borderColor;
+  margin: 0.5rem;
+  text-align: center;
+  width: 2.5rem;
+}
+form.donation .input-wrapper select {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 4rem;
+  display: block;
+  height: 4rem;
+  -webkit-appearance: menulist-button;
+  opacity: 0;
+  z-index: 1;
+}
+form.donation input {
+  padding-left : 3.5rem;
+}
+form.donation button.recommend {margin-bottom: 0;}

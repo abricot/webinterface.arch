@@ -225,12 +225,16 @@
   font-weight: normal;
   font-family: "Roboto";
   transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
 }
 .support button.recommend {margin-top : 2rem;background:#0087D5;}
 .support button.recommend .fa{padding-right : 0.5rem;}
 
 .cal-grid {
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -webkit-flex;  
   display: flex;
+  -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
   overflow-x: hidden;
   position: relative;
@@ -242,7 +246,10 @@
   box-sizing: border-box;
   text-align: left;
   margin : 0;
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -webkit-flex;  
   display: flex;
+  -webkit-flex-direction: column;
   flex-direction: column;
   float : left;
   background: transparent url(../img/icons/loading.png) no-repeat center 5rem ;

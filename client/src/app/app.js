@@ -58,6 +58,7 @@ angular.module('app')
     $scope.connected = false;
     $scope.initialized = true;
     $scope.isMaximized = false;
+    $scope.isSupportVisible = false;
     $scope.application = {};
     $scope.player = {
       id: -1,
@@ -139,6 +140,13 @@ angular.module('app')
 
     $scope.showDrawer = function() {
       $scope.isMaximized = true;
+    };
+    
+    $scope.hideSupport = function() {
+      $scope.isSupportVisible = false;
+    };
+    $scope.showSupport = function() {
+      $scope.isSupportVisible = true;
     };
 
     function onApplicationPropertiesRetrieved(properties) {

@@ -1,0 +1,45 @@
+<form role="dialog" data-type="action" class="chooser donation" 
+      action="https://www.paypal.com/cgi-bin/webscr"
+      method="post" ng-show="isSupportVisible" target="_blank"
+      ng-submit="hideSupport()">
+    <div class="content">
+        <img class="arch" src="../img/icons/awe-512.png"/>
+        <i class="fa fa-times" ng-click="hideSupport()"></i>
+        <div class="body">
+            <input type="hidden" name="business" value="nicolas.abric@gmail.com"/>
+            <input type="hidden" name="cmd" value="_xclick"/>
+            <input type="hidden" name="item_number" value="DONATE"/>
+            <input type="hidden" name="item_name" value="One time donation"/>
+            <header>
+                One time donation
+            </header>
+            <p> 
+                You are enjoying Arch and want to show us your support? Please consider making a donation.
+            </p>
+            <div class="input-wrapper">
+                <i class="fa fa-gift"></i>
+                <input type="number" maxlength="30" name="amount" size="10"
+                       value="5"/>
+            </div>
+            <div class="input-wrapper">
+                <i class="fa" ng-class="{
+                    'fa-eur':donation.currency.value === 'EUR',
+                    'fa-gbp':donation.currency.value === 'GBP',
+                    'fa-jpy':donation.currency.value === 'JPY',
+                    'fa-dollar':donation.currency.value === 'USD' || donation.currency.value === 'CAD' || donation.currency.value === 'AUD'
+                }"></i>
+                <input type="text" ng-model="donation.currency.label" readonly="true"/>
+                <select name="currency_code" ng-options="currency.label for currency in donation.currencies track by currency.value" ng-model="donation.currency"></select>
+            </div>
+            
+            <button class="recommend" type="submit">
+                <i class="fa fa-paypal"></i> Donate
+            </button>
+            <p style="padding:2rem 0 0 0;">
+                <i class="fa fa-info-circle"></i>
+                Your donation will solely be used to maintain and improve Arch. 
+                We remind you that features can be requested at any time on the <a href="https://github.com/abricot/webinterface.arch/issues" traget="_blank">Arch github</a>
+            </p>
+        </div>
+    </div>
+</form>

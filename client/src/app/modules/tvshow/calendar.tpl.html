@@ -51,21 +51,15 @@
                     </div>
                 </a>
             </div>
-            <form action="https://www.paypal.com/cgi-bin/webscr"
-                  method="post" target="blank"
-                  ng-if="!episodes.length"
-                  class="support">
-                <input type="hidden" name="cmd" value="_s-xclick">
-                <input type="hidden" name="hosted_button_id" value="55CCWP2R8WCNU">
+            <div ng-if="!episodes.length" class="support">
                 <img src="../img/backgrounds/support.png" width="100%"/>
-                <img alt="" border="0" src="https://www.paypalobjects.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
                 <h3>
                     Enjoying Arch ? Support us!
-                    <button type="submit" class="recommend">
+                    <button class="recommend" ng-click="showSupport()">
                         <i class="fa fa-paypal"></i>Donate
                     </button>
                 </h3>
-            </form>
+            </div>
         </li>
     </ul>
 </div>

@@ -9,6 +9,7 @@
   top:20%;
   left:50%;
   transform: translateX(-50%) translateY(-20%);
+  -webkit-transform: translateX(-50%) translateY(-20%);
   opacity:0;
   transition-property: opacity, transform;
   transition-duration: 3s, 8s;
@@ -20,15 +21,19 @@
 }
 .fanarts img  {
     transform-origin: center center;
+    -webkit-transform-origin: center center;
 }
 .fanarts :nth-child(2n+1) {
     transform-origin: 25% 75%;
+    -webkit-transform-origin: 25% 75%;
 }
 .fanarts :nth-child(3n+1) {
     transform-origin: 25% 25%;
+    -webkit-transform-origin: 25% 25%;
 }
 .fanarts :nth-child(4n+1) {
     transform-origin: 75% 75%;
+    -webkit-transform-origin: 75% 75%;
 }
 
 .fanarts .fx:first-child + img ~ img  {
