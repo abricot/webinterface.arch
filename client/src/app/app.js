@@ -18,6 +18,7 @@ angular.module('app', [
   'directives.tmdbFanarts',
   'directives.traktComments',
   'directives.traktStats',
+  'directives.traktActions',
   'filters.xbmc',
   'filters.tmdb',
   'filters.fallback',
@@ -141,7 +142,7 @@ angular.module('app')
     $scope.showDrawer = function() {
       $scope.isMaximized = true;
     };
-    
+
     $scope.hideSupport = function() {
       $scope.isSupportVisible = false;
     };

@@ -8,7 +8,8 @@ angular.module('services.trakt', [])
       episodes : {},
       movies : {},
       scrobble : {},
-      seasons : {}
+      seasons : {},
+      sync : {}
     };
     var authentication = null;
     var autoscrobble = true;
@@ -38,7 +39,7 @@ angular.module('services.trakt', [])
       }
       return config;
     }
-    
+
     factory.autoScrobble = function(value) {
       if(typeof value !== 'undefined') {
         storage.setItem('trakt-autoscrobble', value);
@@ -107,7 +108,7 @@ angular.module('services.trakt', [])
       });
       return $http(getConfig(url, 'GET'));
     };
-    
+
     factory.movies.comments = function(id) {
       var action = 'movies/'+id+'/comments';
       var url = interpolateFn({
@@ -183,6 +184,33 @@ angular.module('services.trakt', [])
       return $http(config);
     };
 
+    factory.sync.get = function (method, mediaType) {
+      var action = '/sync/'+method+'/'+mediaType;
+      var url = interpolateFn({
+        action : action
+      });
+      return $http(getConfig(url, 'GET'));
+    };
+
+    factory.sync.add = function (method, mediaType, obj) {
+      var action = '/sync/'+method;
+      return factory.sync._action(action, mediaType, obj);
+    };
+
+    factory.sync.remove = function (method, mediaType, obj) {
+      var action = '/sync/'+method+'/remove';
+      return factory.sync._action(action, mediaType, obj);
+    };
+
+    factory.sync._action = function (action, mediaType, obj) {
+      var data = {};
+      data[mediaType] = obj;
+      var url = interpolateFn({
+        action : action
+      });
+      return $http(getConfig(url, 'POST', data));
+    };
+
     factory.connect = function() {
       var defer = $q.defer();
       storage.getItem('trakt-authentication').then(function(data) {
@@ -210,7 +238,7 @@ angular.module('services.trakt', [])
       });
       return defer.promise;
     };
-    
+
     factory.connect();
 
     return factory;
