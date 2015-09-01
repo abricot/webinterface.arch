@@ -1,18 +1,25 @@
 <div class="trakt-actions">
-  <button class="check-in">
-    <i class="fa fa-check"></i>
-    Check-in
-  </button>
-  <button class="history" ng-click="toggleHistory()">
-    <i class="fa fa-eye"></i>
-    Add to history
-  </button>
-  <button class="collection">
-    <i class="fa fa-bookmark-o"></i>
-    Add to collection
-  </button>
-  <button class="list">
-    <i class="fa fa-align-left"></i>
-    Add to list
-  </button>
+    <div class="button check-in">
+        <i class="fa fa-check"></i>
+        Check-in
+    </div>
+    <div class="button history" ng-class="{selected : historyMatch.length}"
+            ng-click="toggleHistory()">
+        <i class="fa" ng-class="{'fa-play-circle-o': !historyMatch.length, 'fa-play-circle': historyMatch.length}"></i>
+        <span ng-if="!historyMatch.length">Add to history</span>
+        <span ng-if="historyMatch.length">{{historyMatch[0].plays}} play(s)</span>
+        <small>{{historyMatch[0].last_watched_at | date : 'dd MMM'}}</small>
+    </div>
+    <div class="button collection"  ng-class="{selected : collectionMatch.length}">
+        <i class="fa" ng-class="{'fa-bookmark-o': !collectionMatch.length, 'fa-bookmark': collectionMatch.length}"></i>
+        <span ng-if="!collectionMatch.length">Add to collection</span>
+        <span ng-if="collectionMatch.length">Collected</span>
+        <small>{{collectionMatch[0].collected_at | date : 'dd MMM'}}</small>
+    </div>
+    <div class="button watchlist"  ng-class="{selected : watchlistMatch.length}">
+        <i class="fa fa-align-left"></i>
+        <span ng-if="!watchlistMatch.length">Add to watchlist</span>
+        <span ng-if="watchlistMatch.length">Listed</span>
+        <small>{{watchlistMatch[0].listed_at | date : 'dd MMM'}}</small>
+    </div>
 </div>

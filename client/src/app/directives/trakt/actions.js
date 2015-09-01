@@ -1,6 +1,6 @@
 "use strict";
 angular.module('directives.traktActions', ['services.trakt'])
-.directive('traktActions', ['$filter', 'trakt', function ($filter, trakt) {
+.directive('traktActions', ['$q', '$filter', 'trakt', function ($q, $filter, trakt) {
   return {
     restrict: 'E',
     replace : true,
@@ -14,16 +14,27 @@ angular.module('directives.traktActions', ['services.trakt'])
       var entity = scope.mediaType === 'movies' ? 'movie' : 'show';
       var item = null;
       var history = [];
-      scope.isInHistory = false;
+      scope.historyMatch = [];
+      scope.collectionMatch = [];
+      scope.watchlistMatch = [];
 
-
-      trakt[scope.mediaType].summary(scope.imdb).then(function(result){
-        item = result.data;
-        trakt.sync.get('history', scope.mediaType).then(function(result){
-          history = result.data;
-          arrFilter(history, {})
-        })
-      });
+      $q.all([
+          trakt[scope.mediaType].summary(scope.imdb),
+          trakt.sync.get('watched', scope.mediaType),
+          trakt.sync.get('collection', scope.mediaType),
+          trakt.sync.get('watchlist', scope.mediaType)
+        ]).then(function(results){
+          item = results[0].data;
+          history = results[1].data;
+          collection = results[2].data;
+          watchlist = results[3].data;
+          var searchCriteria = {};
+          searchCriteria[entity] = {ids : {trakt : item.ids.trakt}};
+          scope.historyMatch = arrFilter(history, searchCriteria);
+          scope.collectionMatch = arrFilter(collection, searchCriteria);
+          scope.watchlistMatch = arrFilter(watchlist, searchCriteria);
+          console.log(results);
+        });
     }
   };
 }]);
