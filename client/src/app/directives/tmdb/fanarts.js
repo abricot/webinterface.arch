@@ -21,15 +21,11 @@ angular.module('directives.tmdbFanarts', [
         return $filter('fallback')(url, 'img/icons/awe-512.png');
       };
 
-      var index = 1;
+      scope.index = 0;
       var kenBurns = function(){
-        var images = elem[0].querySelectorAll('img');
-        var length =images.length;
-        if(length) {
-          images[index-1].className = '';
-          if(index===length){ index = 0;}
-          images[index].className = 'fx';
-          index++;
+        if(scope.fanarts.length) {
+          scope.index++;
+          if(scope.index>=scope.fanarts.length){ scope.index = 0;}
         }
       };
 

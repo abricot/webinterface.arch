@@ -1,25 +1,35 @@
 <div class="trakt-actions">
-    <div class="button check-in">
-        <i class="fa fa-check"></i>
-        Check-in
-    </div>
-    <div class="button history" ng-class="{selected : historyMatch.length}"
-            ng-click="toggleHistory()">
-        <i class="fa" ng-class="{'fa-play-circle-o': !historyMatch.length, 'fa-play-circle': historyMatch.length}"></i>
-        <span ng-if="!historyMatch.length">Add to history</span>
-        <span ng-if="historyMatch.length">{{historyMatch[0].plays}} play(s)</span>
-        <small>{{historyMatch[0].last_watched_at | date : 'dd MMM'}}</small>
-    </div>
-    <div class="button collection"  ng-class="{selected : collectionMatch.length}">
-        <i class="fa" ng-class="{'fa-bookmark-o': !collectionMatch.length, 'fa-bookmark': collectionMatch.length}"></i>
-        <span ng-if="!collectionMatch.length">Add to collection</span>
-        <span ng-if="collectionMatch.length">Collected</span>
-        <small>{{collectionMatch[0].collected_at | date : 'dd MMM'}}</small>
-    </div>
-    <div class="button watchlist"  ng-class="{selected : watchlistMatch.length}">
-        <i class="fa fa-align-left"></i>
-        <span ng-if="!watchlistMatch.length">Add to watchlist</span>
-        <span ng-if="watchlistMatch.length">Listed</span>
-        <small>{{watchlistMatch[0].listed_at | date : 'dd MMM'}}</small>
+    <i class="fa fa-trakt" ng-show="loading"></i>
+    <div class="hidden" ng-class="{hidden : loading}">
+        <div class="button history" ng-class="{selected : historyMatch.length}"
+             ng-click="toggleHistory()">
+            <i class="fa" ng-class="{'fa-play-circle-o': !historyMatch.length, 'fa-play-circle': historyMatch.length}"></i>
+            <span ng-if="!historyMatch.length">Add to history</span>
+            <span ng-if="historyMatch.length">Played</span>
+            <small>{{historyMatch[0].last_watched_at | date : 'dd MMM'}}</small>
+            <div class="loading" ng-show="loadings.history">
+                <i class="fa fa-spinner fa-pulse"></i>
+            </div>
+        </div>
+        <div class="button collection"  ng-class="{selected : collectionMatch.length}"
+             ng-click="toggleCollection()">
+            <i class="fa" ng-class="{'fa-bookmark-o': !collectionMatch.length, 'fa-bookmark': collectionMatch.length}"></i>
+            <span ng-if="!collectionMatch.length">Add to collection</span>
+            <span ng-if="collectionMatch.length">Collected</span>
+            <small>{{collectionMatch[0].collected_at | date : 'dd MMM'}}</small>
+            <div class="loading" ng-show="loadings.collection">
+                <i class="fa fa-spinner fa-pulse"></i>
+            </div>
+        </div>
+        <div class="button watchlist"  ng-class="{selected : watchlistMatch.length}"
+             ng-click="toggleWatchlist()">
+            <i class="fa fa-align-left"></i>
+            <span ng-if="!watchlistMatch.length">Add to watchlist</span>
+            <span ng-if="watchlistMatch.length">Listed</span>
+            <small>{{watchlistMatch[0].listed_at | date : 'dd MMM'}}</small>
+            <div class="loading" ng-show="loadings.watchlist">
+                <i class="fa fa-spinner fa-pulse"></i>
+            </div>
+        </div>
     </div>
 </div>

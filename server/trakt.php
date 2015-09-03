@@ -125,6 +125,7 @@ $ch = curl_init( $request_url );
 curl_setopt( $ch, CURLOPT_HTTPHEADER, $request_headers );   // (re-)send headers
 curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );  // return response
 curl_setopt( $ch, CURLOPT_HEADER, true );    // enabled response headers
+curl_setopt( $ch, CURLOPT_VERBOSE, 1);
 // add data for POST, PUT or DELETE requests
 if ( 'POST' == $request_method ) {
   $post_data = is_array( $request_params ) ? http_build_query( $request_params ) : $request_params;
@@ -137,26 +138,13 @@ if ( 'POST' == $request_method ) {
 
 // retrieve response (headers and content)
 $response = curl_exec( $ch );
+$header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+$header = substr($response, 0, $header_size);
+$body = substr($response, $header_size);
 curl_close( $ch );
 
-// split response to header and content
-list($response_headers, $response_content) = preg_split( '/(\r\n){2}/', $response, 2 );
-
-// (re-)send the headers
-$response_headers = preg_split( '/(\r\n){1}/', $response_headers );
-foreach ( $response_headers as $key => $response_header ) {
-  // Rewrite the `Location` header, so clients will also use the proxy for redirects.
-  if ( preg_match( '/^Location:/', $response_header ) ) {
-    list($header, $value) = preg_split( '/: /', $response_header, 2 );
-    $response_header = 'Location: ' . $_SERVER['REQUEST_URI'] . '?csurl=' . $value;
-  }
-  if ( !preg_match( '/^(Transfer-Encoding):/', $response_header ) ) {
-    header( $response_header, false );
-  }
-}
-
 // finally, output the content
-print( $response_content );
+print( $body );
 
 function csajax_debug_message( $message )
 {

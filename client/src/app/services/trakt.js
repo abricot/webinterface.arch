@@ -9,6 +9,7 @@ angular.module('services.trakt', [])
       movies : {},
       scrobble : {},
       seasons : {},
+      shows : {},
       sync : {}
     };
     var authentication = null;
@@ -184,8 +185,16 @@ angular.module('services.trakt', [])
       return $http(config);
     };
 
+    factory.shows.summary = function(id) {
+      var action = 'shows/'+id;
+      var url = interpolateFn({
+        action : action
+      });
+      return $http(getConfig(url, 'GET'));
+    };
+
     factory.sync.get = function (method, mediaType) {
-      var action = '/sync/'+method+'/'+mediaType;
+      var action = 'sync/'+method+'/'+mediaType;
       var url = interpolateFn({
         action : action
       });
@@ -193,18 +202,18 @@ angular.module('services.trakt', [])
     };
 
     factory.sync.add = function (method, mediaType, obj) {
-      var action = '/sync/'+method;
+      var action = 'sync/'+method;
       return factory.sync._action(action, mediaType, obj);
     };
 
     factory.sync.remove = function (method, mediaType, obj) {
-      var action = '/sync/'+method+'/remove';
+      var action = 'sync/'+method+'/remove';
       return factory.sync._action(action, mediaType, obj);
     };
 
     factory.sync._action = function (action, mediaType, obj) {
       var data = {};
-      data[mediaType] = obj;
+      data[mediaType] = [obj];
       var url = interpolateFn({
         action : action
       });

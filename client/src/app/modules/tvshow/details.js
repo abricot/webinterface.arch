@@ -36,15 +36,13 @@ var BaseTVShowDetailsCtrl = function ($scope, $stateParams) {
   $scope.getTraktAdditionalInfo = function (season) {
     if($scope.show) {
       $scope.comments =[];
-      var name = $scope.show.name || $scope.show.title;
-      var traktSlug = name.replace(/ /gi, '-').replace(/\./gi, '').toLowerCase();
-      $scope.trakt.seasons.stats(traktSlug, season.season).then(function(result){
+      $scope.trakt.seasons.stats($scope.show.traktSlug, season.season).then(function(result){
         $scope.stats = result.data;
       });
-      $scope.trakt.seasons.watching(traktSlug, season.season).then(function(result){
+      $scope.trakt.seasons.watching($scope.show.traktSlug, season.season).then(function(result){
         $scope.watching = result.data;
       });
-      $scope.trakt.seasons.comments(traktSlug, season.season).then(function(result){
+      $scope.trakt.seasons.comments($scope.show.traktSlug, season.season).then(function(result){
         var sortFn = function(o1, o2) {
           if(o1.likes > o2.likes) {
             return -1;
@@ -167,6 +165,8 @@ angular.module('app')
 
     function onTvShowRetrieved(show) {
       $scope.show = show;
+      var name = $scope.show.name || $scope.show.title;
+      $scope.show.traktSlug = name.replace(/ /gi, '-').replace(/\./gi, '').toLowerCase();
       $scope.xbmc.getSeasons($scope.tvshowid, onSeasonsRetrieved);
     };
 
@@ -252,6 +252,8 @@ angular.module('app')
 
     function onTvShowRetrieved(result) {
       $scope.show = result.data;
+      var name = $scope.show.name || $scope.show.title;
+      $scope.show.traktSlug = name.replace(/ /gi, '-').replace(/\./gi, '').toLowerCase();
       $scope.show.year = moment($scope.show.firstaired).format('YYYY');
       if($scope.show.seasons.length > 0) {
         $scope.seasons = $scope.show.seasons;

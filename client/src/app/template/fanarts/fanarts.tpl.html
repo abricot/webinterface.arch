@@ -1,6 +1,6 @@
 <div class="fanarts">
-    <img image image-source="getImage(primary)"
+    <img image image-source="primary"
          ng-if="!fanarts || !fanarts.length"/>
     <img ng-repeat="fanart in fanarts" image image-source="getImage(fanart.file_path)|filter:wideEnough"
-         ng-class="{fx : $index ===0}"/>
+         ng-class="{fx : $index === index}"/>
 </div>
