@@ -1,7 +1,7 @@
 <div class="cards fill-height">
     <div class="kodi" ng-hide="tvshows.length"></div>
     <ul data-type="list" lr-infinite-scroll="loadMore">
-        <li class="card tvshow repeat-animation" ng-repeat="show in tvshows">
+        <li class="card tvshow repeat-animation" ng-repeat-start="show in tvshows">
             <a href="{{getEpisodesPath(show)}}">
                 <div class="poster" image image-source="getPoster(show)">
                     <flipper ng-show="hasControls()">
@@ -38,6 +38,27 @@
                                ng-click="remove($index, show); $event.preventDefault();"
                             ></i>
                         </div>
+                    </div>
+                </div>
+            </a>
+        </li>
+        <li class="card tvshow" ng-repeat-end ng-if="$index===supportIndex" ng-click="showSupport();">
+            <a href="javascript:void:0;">
+                <div class="poster" image image-source="'img/backgrounds/support.png'">
+                    <img src="../img/icons/loading.png" class="arch" width="75%"/>
+                    <div class="rating-wrapper">
+                        <div class="md-circle rating">
+                            <i class="fa fa-paypal"></i>
+                        </div>
+                    </div>
+                </div>
+                 <div class="description">
+                    <h3>Enjoying Arch ?</h3>
+                    <p>Support us!</p>
+                    <div ng-show="hasControls()">
+                        <seekbar seekbar-value="0" seekbar-max="1"
+                                 seekbar-read-only="true">
+                        </seekbar>
                     </div>
                 </div>
             </a>

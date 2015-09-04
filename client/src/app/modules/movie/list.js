@@ -7,6 +7,7 @@ angular.module('app')
     $scope.requestItemsBy = 50;
     $scope.total = Infinity;
     $scope.movies = [];
+    $scope.supportIndex = -1;
     var method = $state.current.data.methodName;
 
     function onMoviesFromSource(result) {

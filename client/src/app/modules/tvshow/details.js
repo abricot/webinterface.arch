@@ -166,7 +166,7 @@ angular.module('app')
     function onTvShowRetrieved(show) {
       $scope.show = show;
       var name = $scope.show.name || $scope.show.title;
-      $scope.show.traktSlug = name.replace(/ /gi, '-').replace(/\./gi, '').toLowerCase();
+      $scope.show.traktSlug = name.replace(/ |\.|\'/gi, '-').toLowerCase();
       $scope.xbmc.getSeasons($scope.tvshowid, onSeasonsRetrieved);
     };
 
@@ -253,7 +253,7 @@ angular.module('app')
     function onTvShowRetrieved(result) {
       $scope.show = result.data;
       var name = $scope.show.name || $scope.show.title;
-      $scope.show.traktSlug = name.replace(/ /gi, '-').replace(/\./gi, '').toLowerCase();
+      $scope.show.traktSlug = name.replace(/ |\.|\'/gi, '-').toLowerCase();
       $scope.show.year = moment($scope.show.firstaired).format('YYYY');
       if($scope.show.seasons.length > 0) {
         $scope.seasons = $scope.show.seasons;

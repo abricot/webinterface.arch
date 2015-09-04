@@ -7,7 +7,7 @@ angular.module('app')
     $scope.requestItemsBy = 50;
     $scope.total = Infinity;
     $scope.tvshows = [];
-
+    $scope.supportIndex = -1;
     function onTvShowsFromSource(result) {
       var tvshows = result ? result.tvshows : [];
       $scope.total = result ? result.limits.total : Infinity;

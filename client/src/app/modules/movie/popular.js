@@ -7,6 +7,7 @@ angular.module('app')
     $scope.pages = 1;
     $scope.total = Infinity;
     $scope.movies = [];
+    $scope.supportIndex = -1;
 
     var now = new Date();
     var firstReleaseDate = (now.getFullYear()-2)+'-01-01';
@@ -17,6 +18,9 @@ angular.module('app')
     function onMoviesFromSource(response) {
       $scope.total = response.data.totalPages;
       $scope.movies = $scope.movies.concat(cleanUpResults(response.data.results));
+      if($scope.supportIndex === -1) {
+        $scope.supportIndex = 5+Math.floor(Math.random()*($scope.movies.length-5));
+      }
       $scope.fetching = false;
       $scope.loading = false;
     };

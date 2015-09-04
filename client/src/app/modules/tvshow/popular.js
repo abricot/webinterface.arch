@@ -6,6 +6,8 @@ angular.module('app')
     $scope.tvshows = [];
     $scope.pages = 1;
     $scope.total = Infinity;
+    $scope.supportIndex = -1;
+
     var now = new Date();
     var firstAirDate = (now.getFullYear()-5)+'-01-01';
     var cleanUpResults = function(results) {
@@ -17,6 +19,9 @@ angular.module('app')
     function onTvShowsFromSource(response) {
       $scope.total = response.data.totalPages;
       $scope.tvshows = $scope.tvshows.concat(cleanUpResults(response.data.results));
+      if($scope.supportIndex === -1) {
+        $scope.supportIndex = 5 + Math.floor(Math.random()*($scope.tvshows.length-5));
+      }
       $scope.fetching = false;
       $scope.loading = false;
     };
