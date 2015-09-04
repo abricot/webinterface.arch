@@ -1027,10 +1027,6 @@ section[role="region"] header h2.disconnected {
   position: relative;
   top: 0.25rem;
 }
-.wizard input[type="checkbox"] {
-  position: relative;
-  top: 1rem;
-}
 .wizard p {
   padding: .5rem 1rem;
 }
@@ -1908,6 +1904,11 @@ form.donation button.recommend {
   border-radius: .2rem;
   transition: all 0.1s ease-in;
 }
+[data-type="list"] .card .arch {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
 [data-type="list"] .playcount {
   background-color: #648f00;
   top: 0;
@@ -2444,6 +2445,81 @@ form.donation button.recommend {
   left: 5rem;
   top: 1rem;
 }
+.detail .trakt-actions {
+  position: relative;
+}
+.detail .trakt-actions .fa-trakt:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 8rem;
+  height: 8rem;
+}
+.detail .trakt-actions .hidden {
+  visibility: hidden;
+}
+.detail .trakt-actions .button {
+  text-align: left;
+  position: relative;
+  transition: all 0.25s ease;
+  -ms-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.detail .trakt-actions .button > i {
+  padding-right: 0.5rem;
+}
+.detail .trakt-actions .button small {
+  float: right;
+}
+.detail .trakt-actions .button .loading {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+}
+.detail .trakt-actions .button.check-in {
+  background: #ed1c24;
+  border-color: #ed1c24;
+  color: white;
+}
+.detail .trakt-actions .button.history {
+  color: #8e44ad;
+  background: white;
+  border-color: #8e44ad;
+}
+.detail .trakt-actions .button.history:hover,
+.detail .trakt-actions .button.history.selected,
+.detail .trakt-actions .button.history .loading {
+  color: white;
+  background: #8e44ad;
+}
+.detail .trakt-actions .button.collection {
+  color: #16a085;
+  background: white;
+  border-color: #16a085;
+}
+.detail .trakt-actions .button.collection:hover,
+.detail .trakt-actions .button.collection.selected,
+.detail .trakt-actions .button.collection .loading {
+  color: white;
+  background: #16a085;
+}
+.detail .trakt-actions .button.watchlist {
+  color: #009edf;
+  background: white;
+  border-color: #009edf;
+}
+.detail .trakt-actions .button.watchlist:hover,
+.detail .trakt-actions .button.watchlist.selected,
+.detail .trakt-actions .button.watchlist .loading {
+  color: white;
+  background: #009edf;
+}
 @media screen and (max-width: 820px) {
   .detail .poster-wrapper {
     width: 12rem;
@@ -2797,7 +2873,7 @@ form.donation button.recommend {
 .cal-grid .cal-day .poster {
   height: 9.5rem;
   width: 100%;
-  background-size: auto 100%;
+  background-size: 100% auto;
 }
 .cal-grid .cal-day .description {
   text-align: center;

@@ -1,9 +1,14 @@
-v2.0.1
+v1.2.2
+- Deeper trakt integration on details view
+  - Add to history
+  - Add to collection
+  - Add to watchlist
+v1.2.1
 - Enhanced TV show calendar, navigation between months
 - Animated movies/ tv shows fanarts
 - Full compatibility IE11/Firefox
 - Various bug fixes
-v1.2.0/v2.0.0
+v1.2.0
 - Add search functionnality for movies and shows 
 - Add scan button
 - Add list of queued items
