@@ -36,7 +36,10 @@
             <h1>  <i class="fa fa-trakt"></i> Trakt</h1>
             <p class="row">
                 <label class="span4"> Auto scrobble</label>
-                <input class="span5" type="checkbox" ng-model="autoScrobble"/>
+                <span class="span5">
+                  <input type="checkbox" ng-model="autoScrobble"/>
+                  <label>do not activate if trakt plugin is enabled</label>
+                </span>
             </p>
             <div class="row trakt-status" style="padding : .5rem 1rem;">
                 <div class="span4">Authentication status</div>

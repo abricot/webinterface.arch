@@ -1,6 +1,28 @@
 <div class="cards fill-height">
     <div class="kodi" ng-hide="movies.length"></div>
     <ul data-type="list" lr-infinite-scroll="loadMore" scroll-threshold="200">
+        <li class="card movie">
+            <a href="javascript:void:0;">
+                <div class="poster" image image-source="'img/backgrounds/support.png'">
+                    <img src="../img/icons/loading.png" width="75%" style="position:relative; top:50%; transform:translateY(-50%);"/>
+                    <div class="rating-wrapper">
+                        <div class="md-circle rating">
+                            <i class="fa fa-paypal" ng-click="showSupport();"></i>
+                        </div>
+                    </div>
+                </div>
+                 <div class="description">
+                    <h3>Enjoying Arch ?</h3>
+                    <h4>Support us!</h4>
+                    <p class="clock">&nbsp;</p>
+                    <div>
+                        <seekbar seekbar-value="0" seekbar-max="1"
+                                 seekbar-read-only="true">
+                        </seekbar>
+                    </div>
+                </div>
+            </a>
+        </li>
         <li class="card movie repeat-animation" ng-repeat="movie in movies">
             <a href="{{getMoviesPath(movie)}}">
                 <div class="poster" image image-source="getPoster(movie)">

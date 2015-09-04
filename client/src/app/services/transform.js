@@ -125,7 +125,8 @@
         'job' : 'job',
         'total_pages' : 'totalPages',
         'key' : 'key',
-        'media_type' : 'mediaType'
+        'media_type' : 'mediaType',
+        'tagline' : 'tagline'
       };
       return factory;
     }

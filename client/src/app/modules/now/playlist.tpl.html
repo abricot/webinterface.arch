@@ -1,10 +1,20 @@
 <div class="now">
     <div class="arts">
-        <div class="banner" image image-source="player.item.fanart | asset:host | fallback:'img/backgrounds/banner.png'"></div>
-        <seekbar seekbar-value="player.seek.percentage" seekbar-max="100" seekbar-read-only="true"></seekbar>
-        <div class="label">{{player.item.label}}</div>
-        <div class="md-action md-action-primary" ng-click="xbmc.next()">
-                <i class="fa fa-fast-forward"></i>
+        <div ng-switch on="player.active">
+            <div ng-switch-when="true">
+                <div class="banner" image image-source="player.item.fanart | asset:host"></div>
+                <seekbar seekbar-value="player.seek.percentage" seekbar-max="100" seekbar-read-only="true"></seekbar>
+                <div class="label">{{player.item.label}}</div>
+                <div class="md-action md-action-primary" ng-click="xbmc.next()">
+                    <i class="fa fa-fast-forward"></i>
+                </div>
+            </div>
+            <div ng-switch-when="false">
+                <div class="banner"></div>
+                <div class="md-action md-action-primary" ng-click="xbmc.next()">
+                    <i class="fa fa-fast-forward"></i>
+                </div>
+            </div>
         </div>
     </div>
     <div class="playlist">

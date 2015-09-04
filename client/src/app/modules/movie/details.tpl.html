@@ -32,10 +32,11 @@
             </div>
             <div class="title">
                 <h1>{{movie.title}}</h1>
+                <h2>{{movie.tagline}}</h2>
             </div>
             <trakt-stats stats="stats"></trakt-stats>
         </div>
-        
+
         <div class="description row">
             <div class="offset1 span2 sidebar">
                 <div class="poster-wrapper">
@@ -106,15 +107,13 @@
                 </div>
             </div>
             <div class="span7 content">
-                <div class="details-section">
-                    <h1>Synopsis</h1>
-                    <div class="row">
-                        <div class="span9">
-                            <p class="plot">{{movie.plot}}</p>
-                        </div>
-                        <trakt-actions class="span3" media-type="'movies'" imdb="movie.imdbnumber">
-                        </trakt-actions>
+                <div class="details-section row">
+                    <div class="span9">
+                        <h1>Synopsis</h1>
+                        <p class="plot">{{movie.plot}}</p>
                     </div>
+                    <trakt-actions class="span3" media-type="'movies'" imdb="movie.imdbnumber">
+                    </trakt-actions>
                 </div>
                 <div class="details-section">
                     <h1>

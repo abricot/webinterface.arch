@@ -4,7 +4,7 @@
         <li class="card tvshow repeat-animation" ng-repeat="show in tvshows">
             <a href="{{getEpisodesPath(show)}}">
                 <div class="poster" image image-source="getPoster(show)">
-                    <flipper>
+                    <flipper ng-show="hasControls()">
                         <div class="front">
                             <div rating rating-value="show.rating" rating-max="10"></div>
                         </div>
@@ -15,6 +15,9 @@
                             </div>
                         </div>
                     </flipper>
+                    <div class="rating-wrapper" ng-show="!hasControls()">
+                        <div rating rating-value="show.rating" rating-max="10"></div>
+                    </div>
                     <div class="playcount" ng-show="show.playcount">
                          <i class="fa fa-check"></i>
                     </div>
