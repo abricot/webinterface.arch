@@ -1,3 +1,8 @@
+v2.0.2
+- Deeper trakt integration on details view
+  - Add to history
+  - Add to collection
+  - Add to watchlist
 v2.0.1
 - Enhanced TV show calendar, navigation between months
 - Animated movies/ tv shows fanarts
