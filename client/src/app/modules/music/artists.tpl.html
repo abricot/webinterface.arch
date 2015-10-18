@@ -1,5 +1,6 @@
 <div class="fill-height">
-    <div class="kodi" ng-hide="artists.length"></div>
+    <div class="kodi" ng-show="loading"></div>
+    <no-source source="'musics'" ng-if="empty"></no-source>
     <div class="cards artists">
         <ul data-type="list" lr-infinite-scroll="loadMore">
             <li class="row card artist repeat-animation" ng-repeat="artist in artists">
@@ -13,7 +14,6 @@
                 </a>
             </li>
         </ul>
-        <div ng-show="!artists.length" class="empty list">Oops! nothing here</div>
     </div>
 </div>
 

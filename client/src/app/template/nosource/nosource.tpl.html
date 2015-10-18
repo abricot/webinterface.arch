@@ -1,0 +1,18 @@
+<div class="no source" style="background-image:url('{{getBackgroundImg()}}')">
+    <div class="message">
+        <div class="md-circle robot">
+            <i class="genre-family"></i>
+        </div>
+        <h1>We looked everywhere</h1>
+        <div>But it seems that you do not have any content yet.</div>
+        <h2>What's next?</h2>
+        <a href="{{getWikiPage()}}" target="_blank">Add a source</a>
+        <div ng-if="hasPopular()">
+          <div class="separator-with-text">or</div>
+          <a href="#/{{source}}/popular" >Discover something new</a>
+        </div>
+        <div class="genres">
+          <i class="genre-{{getIcon()}}"></i>
+        </div>
+    </div>
+</div>

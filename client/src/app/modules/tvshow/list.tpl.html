@@ -1,5 +1,6 @@
 <div class="cards fill-height">
-    <div class="kodi" ng-hide="tvshows.length"></div>
+    <div class="kodi" ng-show="loading"></div>
+    <no-source source="'tvshows'" ng-if="empty"></no-source>
     <ul data-type="list" lr-infinite-scroll="loadMore">
         <li class="card tvshow repeat-animation" ng-repeat-start="show in tvshows">
             <a href="{{getEpisodesPath(show)}}">
@@ -64,5 +65,4 @@
             </a>
         </li>
     </ul>
-    <div ng-show="!tvshows.length" class="empty list">Oops! nothing here</div>
 </div>

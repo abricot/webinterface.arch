@@ -3,6 +3,7 @@ angular.module('app')
   function MusicSongsCtrl($scope, $rootScope, $stateParams, $filter, storage) {
     $scope.loading = true;
     $scope.fetching = false;
+    $scope.empty = false;
 
     $scope.requestItemsBy = 75;
     $scope.total = Infinity;
@@ -17,9 +18,11 @@ angular.module('app')
     }
 
     function onSongsFromSource (result) {
-      var songs = result ? result.songs : [];
+      var songs = result && result.songs ? result.songs : [];
       $scope.total = result ? result.limits.total : Infinity;
       $scope.songs = $scope.songs.concat(songs);
+      $scope.empty = !$scope.songs.length;
+
       if(filter !== null) {
         $scope.xbmc.getAlbumDetails(filter.value, onAlbumRetrieved);
       } else {

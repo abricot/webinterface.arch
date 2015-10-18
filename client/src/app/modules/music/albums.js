@@ -3,6 +3,7 @@ angular.module('app')
   function MusicAlbumsCtrl($scope, $stateParams, storage) {
     $scope.loading = true;
     $scope.fetching = false;
+    $scope.empty = false;
 
     $scope.requestItemsBy = 50;
     $scope.total = Infinity;
@@ -23,7 +24,7 @@ angular.module('app')
       $scope.songs = result.songs;
       $scope.loading = false;
     }
-    
+
     function onArtistFromSource (artist) {
       $scope.artist = artist;
       var songFilter = {
@@ -34,10 +35,10 @@ angular.module('app')
     };
 
     function onAlbumsFromSource(result) {
-      var albums = result ? result.albums : [];
+      var albums = result && result.albums ? result.albums : [];
       $scope.total = result ? result.limits.total : Infinity;
       $scope.albums = $scope.albums.concat(albums);
-
+      $scope.empty = !$scope.albums.length;
       if ($scope.filter) {
         $scope.xbmc.getArtistDetails(albums[0].artistid[0], onArtistFromSource);
       } else {

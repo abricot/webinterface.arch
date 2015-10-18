@@ -3,17 +3,19 @@ angular.module('app')
   function EpisodesCtrl($scope) {
     $scope.loading = true;
     $scope.fetching = false;
+    $scope.empty = false;
 
     $scope.requestItemsBy = 50;
     $scope.total = Infinity;
     $scope.episodes = [];
 
     function onEpiosdesFromSource(result) {
-      var episodes = result ? result.episodes : [];
+      var episodes = result && result.episodes ? result.episodes : [];
       $scope.total = result ? result.limits.total : Infinity;
       $scope.episodes = $scope.episodes.concat(episodes);
       $scope.loading = false;
       $scope.fetching = false;
+      $scope.empty = !$scope.episodes.length;
     };
 
     function onLoad() {

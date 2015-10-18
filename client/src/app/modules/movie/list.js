@@ -3,6 +3,7 @@ angular.module('app')
   function MoviesCtrl($scope, $state, $filter) {
     $scope.loading = true;
     $scope.fetching = false;
+    $scope.empty = false;
 
     $scope.requestItemsBy = 50;
     $scope.total = Infinity;
@@ -11,11 +12,12 @@ angular.module('app')
     var method = $state.current.data.methodName;
 
     function onMoviesFromSource(result) {
-      var movies = result ? result.movies : [];
-      $scope.total = result ? result.limits.total : Infinity;
+      var movies = result && result.movies ? result.movies : [];
+      $scope.total = result && result.limits ? result.limits.total : Infinity;
       $scope.movies = $scope.movies.concat(movies);
       $scope.loading = false;
       $scope.fetching = false
+      $scope.empty = !$scope.movies.length;
     };
 
     function onLoad() {

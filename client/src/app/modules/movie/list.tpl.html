@@ -1,5 +1,6 @@
 <div class="cards fill-height">
-    <div class="kodi" ng-hide="movies.length"></div>
+    <div class="kodi" ng-show="loading"></div>
+    <no-source source="'movies'" ng-if="empty"></no-source>
     <ul data-type="list" lr-infinite-scroll="loadMore" scroll-threshold="200">
         <li class="card movie repeat-animation" ng-repeat-start="movie in movies">
             <a href="{{getMoviesPath(movie)}}">
@@ -69,5 +70,4 @@
             </a>
         </li>
     </ul>
-    <div ng-show="!movies.length" class="empty list">Oops! nothing here</div>
 </div>

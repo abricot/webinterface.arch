@@ -3,17 +3,20 @@ angular.module('app')
   function ShowsCtrl($scope, $filter) {
     $scope.loading = true;
     $scope.fetching = false;
+    $scope.empty = false;
 
     $scope.requestItemsBy = 50;
     $scope.total = Infinity;
     $scope.tvshows = [];
     $scope.supportIndex = -1;
+
     function onTvShowsFromSource(result) {
-      var tvshows = result ? result.tvshows : [];
+      var tvshows = result && result.tvshows ? result.tvshows : [];
       $scope.total = result ? result.limits.total : Infinity;
       $scope.tvshows = $scope.tvshows.concat(tvshows);
       $scope.loading = false;
       $scope.fetching = false;
+      $scope.empty = !$scope.tvshows.length;
     };
 
     function onLoad() {
@@ -68,7 +71,7 @@ angular.module('app')
     $scope.getRating = function(show){
       return show.rating;
     };
-    
+
     $scope.getStudio = function(show) {
       return $scope.studioFn({studio : show.studio[0]});
     };

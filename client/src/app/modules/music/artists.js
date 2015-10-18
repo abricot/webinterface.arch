@@ -3,18 +3,21 @@ angular.module('app')
   function MusicArtistsCtrl($scope, storage) {
     $scope.loading = true;
     $scope.fetching = false;
+    $scope.empty = false;
 
     $scope.requestItemsBy = 50;
     $scope.total = Infinity;
     $scope.artists = [];
 
     function onArtistsFromSource(result) {
-       var artists = result ? result.artists : [];
+       var artists = result && result.artists ? result.artists : [];
       $scope.total = result ? result.limits.total : Infinity;
       $scope.artists = $scope.artists.concat(artists);
       $scope.loading = false;
       $scope.fetching = false;
+      $scope.empty = !$scope.artists.length;
     };
+
 
     function onLoad () {
       $scope.loading = true;

@@ -15,6 +15,7 @@ angular.module('app', [
   'directives.streamdetails',
   'directives.spinner',
   'directives.onlastrepeat',
+  'directives.noSource',
   'directives.tmdbFanarts',
   'directives.traktComments',
   'directives.traktStats',
