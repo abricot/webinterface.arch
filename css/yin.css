@@ -685,7 +685,6 @@ section[role="region"] header h2.disconnected {
 }
 .empty.list {
   padding-top: 2rem;
-  font-size: 2rem;
   color: white;
   text-align: center;
   color: #b2b2b2;
@@ -898,7 +897,7 @@ section[role="region"] header h2.disconnected {
   z-index: 9;
 }
 .fa-trakt:before {
-  background: transparent url(https://trakt.tv/assets/logos/header@2x-7eadb5555cf21dbe5f791e9638b175f7.png) no-repeat center;
+  background: transparent url(../img/icons/trakt.png) no-repeat center;
   background-size: auto 100%;
   content: "";
   display: inline-block;
@@ -906,6 +905,77 @@ section[role="region"] header h2.disconnected {
   height: 2rem;
   position: relative;
   top: 0.25rem;
+}
+.separator-with-text {
+  font-weight: bold;
+  padding: 1rem 0;
+  overflow: hidden;
+}
+.separator-with-text:before,
+.separator-with-text:after {
+  content: '';
+  display: inline-block;
+  position: relative;
+  height: 1px;
+  width: 50%;
+  background-color: #121314;
+  vertical-align: middle;
+}
+.separator-with-text:before {
+  right: 0.5em;
+  margin-left: -50%;
+}
+.separator-with-text:after {
+  left: 0.5em;
+  margin-right: -50%;
+}
+.no.source {
+  background: transparent no-repeat center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  font-size: 1.5rem;
+  text-align: center;
+}
+.no.source .message {
+  width: 30rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 10rem;
+  background: white;
+  padding: 5rem 1rem 1rem 1rem;
+}
+.no.source h1,
+.no.source h2 {
+  font-family: Roboto;
+  text-align: center;
+}
+.no.source h2 {
+  background: #0087D5;
+  color: white;
+  padding: 0.5rem;
+}
+.no.source .robot {
+  width: 10rem;
+  height: 10rem;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background: #222326 !important;
+  border-color: #222326 !important;
+}
+.no.source .robot i {
+  line-height: 10rem;
+  font-size: 6rem;
+}
+.no.source .genres {
+  font-size: 3rem;
+  padding-top: 1rem;
 }
 [class^="genre-"],
 [class*=" genre-"] {
@@ -1018,7 +1088,7 @@ section[role="region"] header h2.disconnected {
   padding: 0 0.5rem;
 }
 .wizard .fa-trakt:before {
-  background: transparent url(https://trakt.tv/assets/logos/header@2x-7eadb5555cf21dbe5f791e9638b175f7.png) no-repeat center;
+  background: transparent url(../img/icons/trakt.png) no-repeat center;
   background-size: auto 100%;
   content: "";
   display: inline-block;
@@ -1059,28 +1129,6 @@ section[role="region"] header h2.disconnected {
   width: 128px;
   height: 128px;
   border: solid 1px #121314;
-}
-.wizard .separator-with-text {
-  font-weight: bold;
-  padding: 1rem 0;
-}
-.wizard .separator-with-text:before,
-.wizard .separator-with-text:after {
-  content: '';
-  display: inline-block;
-  position: relative;
-  height: 1px;
-  width: 50%;
-  background-color: #121314;
-  vertical-align: middle;
-}
-.wizard .separator-with-text:before {
-  right: 0.5em;
-  margin-left: -50%;
-}
-.wizard .separator-with-text:after {
-  left: 0.5em;
-  margin-right: -50%;
 }
 .wizard .settings {
   overflow: auto;
@@ -1483,7 +1531,6 @@ form.donation button.recommend {
   right: 0;
   left: 0;
   background: #31474f;
-  border-top: 1px solid #121314;
   z-index: 4;
 }
 .playing .actions-wrapper {
@@ -2535,6 +2582,17 @@ form.donation button.recommend {
     margin-right: 1.5rem;
   }
 }
+@media screen and (max-width: 960px) {
+  .detail .sidebar {
+    display: none;
+  }
+  .detail .content {
+    width: 95%;
+  }
+  .detail.affixable .description .content {
+    margin-left: 2.12765957%;
+  }
+}
 .movies > .content {
   position: absolute;
   top: 4rem;
@@ -2894,6 +2952,14 @@ form.donation button.recommend {
   top: 0rem;
   right: 0rem;
   opacity: 0.75;
+}
+@media screen and (max-width: 960px) {
+  .cal-summary {
+    display: none;
+  }
+  .cal-grid {
+    margin-left: 0;
+  }
 }
 .music .kodi {
   position: absolute;

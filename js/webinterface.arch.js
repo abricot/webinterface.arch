@@ -1,4 +1,4 @@
-/*! webinterface.arch - v2.0.2 - 2015-09-04
+/*! webinterface.arch - v2.0.3 - 2015-10-18
  * Copyright (c) 2015 Nicolas ABRIC;
  * Licensed MIT
  */
@@ -680,6 +680,7 @@ angular.module('app', [
   'directives.streamdetails',
   'directives.spinner',
   'directives.onlastrepeat',
+  'directives.noSource',
   'directives.tmdbFanarts',
   'directives.traktComments',
   'directives.traktStats',
@@ -1042,6 +1043,54 @@ angular.module('directives.onlastrepeat', [])
       setTimeout(function(){
         scope.$emit('onRepeatLast', element, attrs);
       }, 1);
+    }
+  };
+});
+"use strict";
+angular.module('directives.noSource', [])
+.directive('noSource', function () {
+  return {
+    restrict: 'E',
+    replace : true,
+    templateUrl: 'template/nosource/nosource.tpl.html',
+    scope: {
+      source: '='
+    },
+    link: function (scope, elem, attrs) {
+      scope.getBackgroundImg = function () {
+        if(scope.source === 'movies') {
+          return '../img/interstellar-blur.jpg';
+        } else if (scope.source === 'tvshows') {
+          return '../img/twd-blur.jpg';
+        } else if (scope.source === 'musics') {
+          return '../img/acdc-blur.jpg';
+        }
+        return '../img/blank.gif';
+      };
+
+      scope.getWikiPage = function () {
+        if(scope.source === 'movies' || scope.source === 'tvshows') {
+          return 'http://kodi.wiki/view/Adding_video_sources';
+        } else if (scope.source === 'musics') {
+          return 'http://kodi.wiki/view/Adding_music_to_the_library';
+        }
+        return 'about:blank';
+      };
+
+      scope.getIcon = function(){
+        if(scope.source === 'movies') {
+          return 'adventure';
+        } else if (scope.source === 'tvshows') {
+          return 'horror';
+        } else if (scope.source === 'musics') {
+          return 'music';
+        }
+        return '';
+      };
+
+      scope.hasPopular = function () {
+        return scope.source === 'movies' || scope.source === 'tvshows';
+      };
     }
   };
 });
@@ -1551,6 +1600,7 @@ angular.module('app')
   function MoviesCtrl($scope, $state, $filter) {
     $scope.loading = true;
     $scope.fetching = false;
+    $scope.empty = false;
 
     $scope.requestItemsBy = 50;
     $scope.total = Infinity;
@@ -1559,11 +1609,12 @@ angular.module('app')
     var method = $state.current.data.methodName;
 
     function onMoviesFromSource(result) {
-      var movies = result ? result.movies : [];
-      $scope.total = result ? result.limits.total : Infinity;
+      var movies = result && result.movies ? result.movies : [];
+      $scope.total = result && result.limits ? result.limits.total : Infinity;
       $scope.movies = $scope.movies.concat(movies);
       $scope.loading = false;
       $scope.fetching = false
+      $scope.empty = !$scope.movies.length;
     };
 
     function onLoad() {
@@ -1732,6 +1783,7 @@ angular.module('app')
   function MusicAlbumsCtrl($scope, $stateParams, storage) {
     $scope.loading = true;
     $scope.fetching = false;
+    $scope.empty = false;
 
     $scope.requestItemsBy = 50;
     $scope.total = Infinity;
@@ -1752,7 +1804,7 @@ angular.module('app')
       $scope.songs = result.songs;
       $scope.loading = false;
     }
-    
+
     function onArtistFromSource (artist) {
       $scope.artist = artist;
       var songFilter = {
@@ -1763,10 +1815,10 @@ angular.module('app')
     };
 
     function onAlbumsFromSource(result) {
-      var albums = result ? result.albums : [];
+      var albums = result && result.albums ? result.albums : [];
       $scope.total = result ? result.limits.total : Infinity;
       $scope.albums = $scope.albums.concat(albums);
-
+      $scope.empty = !$scope.albums.length;
       if ($scope.filter) {
         $scope.xbmc.getArtistDetails(albums[0].artistid[0], onArtistFromSource);
       } else {
@@ -1833,18 +1885,21 @@ angular.module('app')
   function MusicArtistsCtrl($scope, storage) {
     $scope.loading = true;
     $scope.fetching = false;
+    $scope.empty = false;
 
     $scope.requestItemsBy = 50;
     $scope.total = Infinity;
     $scope.artists = [];
 
     function onArtistsFromSource(result) {
-       var artists = result ? result.artists : [];
+       var artists = result && result.artists ? result.artists : [];
       $scope.total = result ? result.limits.total : Infinity;
       $scope.artists = $scope.artists.concat(artists);
       $scope.loading = false;
       $scope.fetching = false;
+      $scope.empty = !$scope.artists.length;
     };
+
 
     function onLoad () {
       $scope.loading = true;
@@ -1922,6 +1977,7 @@ angular.module('app')
   function MusicSongsCtrl($scope, $rootScope, $stateParams, $filter, storage) {
     $scope.loading = true;
     $scope.fetching = false;
+    $scope.empty = false;
 
     $scope.requestItemsBy = 75;
     $scope.total = Infinity;
@@ -1936,9 +1992,11 @@ angular.module('app')
     }
 
     function onSongsFromSource (result) {
-      var songs = result ? result.songs : [];
+      var songs = result && result.songs ? result.songs : [];
       $scope.total = result ? result.limits.total : Infinity;
       $scope.songs = $scope.songs.concat(songs);
+      $scope.empty = !$scope.songs.length;
+
       if(filter !== null) {
         $scope.xbmc.getAlbumDetails(filter.value, onAlbumRetrieved);
       } else {
@@ -2757,17 +2815,19 @@ angular.module('app')
   function EpisodesCtrl($scope) {
     $scope.loading = true;
     $scope.fetching = false;
+    $scope.empty = false;
 
     $scope.requestItemsBy = 50;
     $scope.total = Infinity;
     $scope.episodes = [];
 
     function onEpiosdesFromSource(result) {
-      var episodes = result ? result.episodes : [];
+      var episodes = result && result.episodes ? result.episodes : [];
       $scope.total = result ? result.limits.total : Infinity;
       $scope.episodes = $scope.episodes.concat(episodes);
       $scope.loading = false;
       $scope.fetching = false;
+      $scope.empty = !$scope.episodes.length;
     };
 
     function onLoad() {
@@ -2823,17 +2883,20 @@ angular.module('app')
   function ShowsCtrl($scope, $filter) {
     $scope.loading = true;
     $scope.fetching = false;
+    $scope.empty = false;
 
     $scope.requestItemsBy = 50;
     $scope.total = Infinity;
     $scope.tvshows = [];
     $scope.supportIndex = -1;
+
     function onTvShowsFromSource(result) {
-      var tvshows = result ? result.tvshows : [];
+      var tvshows = result && result.tvshows ? result.tvshows : [];
       $scope.total = result ? result.limits.total : Infinity;
       $scope.tvshows = $scope.tvshows.concat(tvshows);
       $scope.loading = false;
       $scope.fetching = false;
+      $scope.empty = !$scope.tvshows.length;
     };
 
     function onLoad() {
@@ -2888,7 +2951,7 @@ angular.module('app')
     $scope.getRating = function(show){
       return show.rating;
     };
-    
+
     $scope.getStudio = function(show) {
       return $scope.studioFn({studio : show.studio[0]});
     };
@@ -3749,7 +3812,7 @@ angular.module('services.trakt', [])
       return factory;
     }
   ]);
-angular.module('templates.app', ['modules/common/navigation.tpl.html', 'modules/donation/form.tpl.html', 'modules/movie/details.tpl.html', 'modules/movie/list.tpl.html', 'modules/movie/movies.tpl.html', 'modules/music/albums.tpl.html', 'modules/music/artist.albums.tpl.html', 'modules/music/artists.tpl.html', 'modules/music/musics.tpl.html', 'modules/music/songs.tpl.html', 'modules/now/playing.tpl.html', 'modules/now/playlist.tpl.html', 'modules/remote/remote.tpl.html', 'modules/search/list.tpl.html', 'modules/settings/wizard.tpl.html', 'modules/tvshow/calendar.tpl.html', 'modules/tvshow/details.tpl.html', 'modules/tvshow/episodes.tpl.html', 'modules/tvshow/list.tpl.html', 'modules/tvshow/shows.tpl.html', 'template/actions/actions.tpl.html', 'template/comments/comments.tpl.html', 'template/fanarts/fanarts.tpl.html', 'template/stats/stats.tpl.html']);
+angular.module('templates.app', ['modules/common/navigation.tpl.html', 'modules/donation/form.tpl.html', 'modules/movie/details.tpl.html', 'modules/movie/list.tpl.html', 'modules/movie/movies.tpl.html', 'modules/music/albums.tpl.html', 'modules/music/artist.albums.tpl.html', 'modules/music/artists.tpl.html', 'modules/music/musics.tpl.html', 'modules/music/songs.tpl.html', 'modules/now/playing.tpl.html', 'modules/now/playlist.tpl.html', 'modules/remote/remote.tpl.html', 'modules/search/list.tpl.html', 'modules/settings/wizard.tpl.html', 'modules/tvshow/calendar.tpl.html', 'modules/tvshow/details.tpl.html', 'modules/tvshow/episodes.tpl.html', 'modules/tvshow/list.tpl.html', 'modules/tvshow/shows.tpl.html', 'template/actions/actions.tpl.html', 'template/comments/comments.tpl.html', 'template/fanarts/fanarts.tpl.html', 'template/nosource/nosource.tpl.html', 'template/stats/stats.tpl.html']);
 
 angular.module("modules/common/navigation.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("modules/common/navigation.tpl.html",
@@ -4023,7 +4086,8 @@ angular.module("modules/movie/details.tpl.html", []).run(["$templateCache", func
 angular.module("modules/movie/list.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("modules/movie/list.tpl.html",
     "<div class=\"cards fill-height\">\n" +
-    "    <div class=\"kodi\" ng-hide=\"movies.length\"></div>\n" +
+    "    <div class=\"kodi\" ng-show=\"loading\"></div>\n" +
+    "    <no-source source=\"'movies'\" ng-if=\"empty\"></no-source>\n" +
     "    <ul data-type=\"list\" lr-infinite-scroll=\"loadMore\" scroll-threshold=\"200\">\n" +
     "        <li class=\"card movie repeat-animation\" ng-repeat-start=\"movie in movies\">\n" +
     "            <a href=\"{{getMoviesPath(movie)}}\">\n" +
@@ -4093,7 +4157,6 @@ angular.module("modules/movie/list.tpl.html", []).run(["$templateCache", functio
     "            </a>\n" +
     "        </li>\n" +
     "    </ul>\n" +
-    "    <div ng-show=\"!movies.length\" class=\"empty list\">Oops! nothing here</div>\n" +
     "</div>");
 }]);
 
@@ -4117,7 +4180,8 @@ angular.module("modules/movie/movies.tpl.html", []).run(["$templateCache", funct
 angular.module("modules/music/albums.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("modules/music/albums.tpl.html",
     "<div class=\"fill-height\">\n" +
-    "    <div class=\"kodi\" ng-hide=\"albums.length\"></div>\n" +
+    "    <div class=\"kodi\" ng-show=\"loading\"></div>\n" +
+    "    <no-source source=\"'musics'\" ng-if=\"empty\"></no-source>\n" +
     "    <div class=\"cards albums\">\n" +
     "        <ul data-type=\"list\" lr-infinite-scroll=\"loadMore\">\n" +
     "            <li class=\"row album card repeat-animation\" ng-repeat=\"album in albums\">\n" +
@@ -4131,7 +4195,6 @@ angular.module("modules/music/albums.tpl.html", []).run(["$templateCache", funct
     "                </a>\n" +
     "            </li>\n" +
     "        </ul>\n" +
-    "        <div ng-show=\"!albums.length\" class=\"empty list\">Oops! nothing here</div>\n" +
     "    </div>\n" +
     "</div>\n" +
     "\n" +
@@ -4216,7 +4279,8 @@ angular.module("modules/music/artist.albums.tpl.html", []).run(["$templateCache"
 angular.module("modules/music/artists.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("modules/music/artists.tpl.html",
     "<div class=\"fill-height\">\n" +
-    "    <div class=\"kodi\" ng-hide=\"artists.length\"></div>\n" +
+    "    <div class=\"kodi\" ng-show=\"loading\"></div>\n" +
+    "    <no-source source=\"'musics'\" ng-if=\"empty\"></no-source>\n" +
     "    <div class=\"cards artists\">\n" +
     "        <ul data-type=\"list\" lr-infinite-scroll=\"loadMore\">\n" +
     "            <li class=\"row card artist repeat-animation\" ng-repeat=\"artist in artists\">\n" +
@@ -4230,7 +4294,6 @@ angular.module("modules/music/artists.tpl.html", []).run(["$templateCache", func
     "                </a>\n" +
     "            </li>\n" +
     "        </ul>\n" +
-    "        <div ng-show=\"!artists.length\" class=\"empty list\">Oops! nothing here</div>\n" +
     "    </div>\n" +
     "</div>\n" +
     "\n" +
@@ -4258,7 +4321,8 @@ angular.module("modules/music/musics.tpl.html", []).run(["$templateCache", funct
 angular.module("modules/music/songs.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("modules/music/songs.tpl.html",
     "<div class=\"fill-height songs-wrapper detail\" lr-infinite-scroll=\"loadMore\">\n" +
-    "    <div class=\"kodi\" ng-hide=\"songs.length\"></div>\n" +
+    "    <div class=\"kodi\" ng-show=\"loading\"></div>\n" +
+    "    <no-source source=\"'musics'\" ng-if=\"empty\"></no-source>\n" +
     "    <div class=\"wrapper row\">\n" +
     "        <div class=\"fanart\" image image-source=\"album.fanart | asset:host | fallback:'img/backgrounds/vinyls.jpg'\"></div>\n" +
     "        <div class=\"actions\">\n" +
@@ -4354,7 +4418,6 @@ angular.module("modules/music/songs.tpl.html", []).run(["$templateCache", functi
     "                    </div>\n" +
     "                </li>\n" +
     "            </ul>\n" +
-    "            <div ng-show=\"!songs.length\" class=\"empty list\">Oops! nothing here</div>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "</div>");
@@ -4802,7 +4865,7 @@ angular.module("modules/tvshow/calendar.tpl.html", []).run(["$templateCache", fu
     "                    <div class=\"counter\">{{value.hit}}</div>\n" +
     "                </a>\n" +
     "            </li>\n" +
-    "            <li ng-show=\"!showsCount()\" class=\"empty list\">Oops! nothing here</li>\n" +
+    "            <li ng-show=\"!showsCount()\">Oops! nothing here</li>\n" +
     "        </ul>\n" +
     "    </div>\n" +
     "    <ul data-type=\"list\" class=\"cal-grid\">\n" +
@@ -5025,7 +5088,8 @@ angular.module("modules/tvshow/details.tpl.html", []).run(["$templateCache", fun
 angular.module("modules/tvshow/episodes.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("modules/tvshow/episodes.tpl.html",
     "<div class=\"cards fill-height\">\n" +
-    "    <div class=\"kodi\" ng-hide=\"episodes.length\"></div>\n" +
+    "    <div class=\"kodi\" ng-show=\"loading\"></div>\n" +
+    "    <no-source source=\"'tvshows'\" ng-if=\"empty\"></no-source>\n" +
     "    <ul data-type=\"list\" lr-infinite-scroll=\"loadMore\">\n" +
     "        <li class=\"card tvshow repeat-animation\" ng-repeat=\"episode in episodes\">\n" +
     "            <a href=\"#/tvshows/{{episode.tvshowid}}\">\n" +
@@ -5068,14 +5132,14 @@ angular.module("modules/tvshow/episodes.tpl.html", []).run(["$templateCache", fu
     "            </a>\n" +
     "        </li>\n" +
     "    </ul>\n" +
-    "    <div ng-show=\"!episodes.length\" class=\"empty list\">Oops! nothing here</div>\n" +
     "</div>");
 }]);
 
 angular.module("modules/tvshow/list.tpl.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("modules/tvshow/list.tpl.html",
     "<div class=\"cards fill-height\">\n" +
-    "    <div class=\"kodi\" ng-hide=\"tvshows.length\"></div>\n" +
+    "    <div class=\"kodi\" ng-show=\"loading\"></div>\n" +
+    "    <no-source source=\"'tvshows'\" ng-if=\"empty\"></no-source>\n" +
     "    <ul data-type=\"list\" lr-infinite-scroll=\"loadMore\">\n" +
     "        <li class=\"card tvshow repeat-animation\" ng-repeat-start=\"show in tvshows\">\n" +
     "            <a href=\"{{getEpisodesPath(show)}}\">\n" +
@@ -5140,7 +5204,6 @@ angular.module("modules/tvshow/list.tpl.html", []).run(["$templateCache", functi
     "            </a>\n" +
     "        </li>\n" +
     "    </ul>\n" +
-    "    <div ng-show=\"!tvshows.length\" class=\"empty list\">Oops! nothing here</div>\n" +
     "</div>");
 }]);
 
@@ -5230,7 +5293,7 @@ angular.module("template/comments/comments.tpl.html", []).run(["$templateCache",
     "    </div>\n" +
     "    <div class=\"user\">\n" +
     "        <a href=\"https://trakt.tv/users/{{comment.user.username}}\" target=\"_blank\">\n" +
-    "            <img class=\"md-circle\" image image-source=\"comment.user.images.avatar.full | fallback:'https://trakt.tv/assets/logos/header@2x-7eadb5555cf21dbe5f791e9638b175f7.png'\"/>\n" +
+    "            <img class=\"md-circle\" image image-source=\"comment.user.images.avatar.full | fallback:'img/icons/trakt.png'\"/>\n" +
     "        </a>\n" +
     "        <div class=\"name\">{{comment.user.username}}</div>\n" +
     "    </div>\n" +
@@ -5244,6 +5307,28 @@ angular.module("template/fanarts/fanarts.tpl.html", []).run(["$templateCache", f
     "         ng-if=\"!fanarts || !fanarts.length\"/>\n" +
     "    <img ng-repeat=\"fanart in fanarts\" image image-source=\"getImage(fanart.file_path)|filter:wideEnough\"\n" +
     "         ng-class=\"{fx : $index === index}\"/>\n" +
+    "</div>");
+}]);
+
+angular.module("template/nosource/nosource.tpl.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("template/nosource/nosource.tpl.html",
+    "<div class=\"no source\" style=\"background-image:url('{{getBackgroundImg()}}')\">\n" +
+    "    <div class=\"message\">\n" +
+    "        <div class=\"md-circle robot\">\n" +
+    "            <i class=\"genre-family\"></i>\n" +
+    "        </div>\n" +
+    "        <h1>We looked everywhere</h1>\n" +
+    "        <div>But it seems that you do not have any content yet.</div>\n" +
+    "        <h2>What's next?</h2>\n" +
+    "        <a href=\"{{getWikiPage()}}\" target=\"_blank\">Add a source</a>\n" +
+    "        <div ng-if=\"hasPopular()\">\n" +
+    "          <div class=\"separator-with-text\">or</div>\n" +
+    "          <a href=\"#/{{source}}/popular\" >Discover something new</a>\n" +
+    "        </div>\n" +
+    "        <div class=\"genres\">\n" +
+    "          <i class=\"genre-{{getIcon()}}\"></i>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
     "</div>");
 }]);
 

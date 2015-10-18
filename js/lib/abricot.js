@@ -92,7 +92,7 @@ angular.module('directives.image', [])
           if(element.tagName.toLowerCase() === 'img') {
             element.src = scope.imageSource 
           } else {
-            element.style.backgroundImage = 'url(' + scope.imageSource + ')';
+            element.style.backgroundImage = 'url(\'' + scope.imageSource + '\')';
           } 
           
         }
