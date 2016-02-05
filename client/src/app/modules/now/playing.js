@@ -9,7 +9,7 @@ angular.module('app')
     $scope.showTimePicker = false;
     $scope.showShutdownOptions = false;
     $scope.showRemote = false;
-    $scope.textToSend = '';
+    $scope.text = {toSend : ''};
     $scope.showKeyboard = false;
     $scope.showShutdownOptions = false;
 
@@ -26,7 +26,7 @@ angular.module('app')
         }
       }
     });
-    
+
     $scope.$watch('playlist', function (newVal, oldVal) {
       if(newVal > -1) {
         getItems();
@@ -103,11 +103,11 @@ angular.module('app')
     };
 
     $scope.onValidateText = function() {
-      $scope.xbmc.sendText($scope.textToSend);
+      $scope.xbmc.sendText($scope.text.toSend);
       $scope.showKeyboard = false;
-      $scope.textToSend = '';
+      $scope.text.toSend = '';
     };
-    
+
 
     $scope.onValidateSubtitles = function() {
       $scope.showSubtitleSelect = false;
@@ -160,7 +160,7 @@ angular.module('app')
         $scope.loading = false;
       });
     };
-    
+
     var onPlaylistAdd = function (obj) {
       getItems();
     };
