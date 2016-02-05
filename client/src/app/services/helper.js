@@ -2,7 +2,7 @@ angular.module('services.helper', ['services.storage'])
 .factory('helper', ['$http', '$interpolate', 'storage',
   function($http, $interpolate, storage) {
     var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
-    
+
     var xbmc, tmdb;
     var factory = {
       local : {
@@ -15,7 +15,7 @@ angular.module('services.helper', ['services.storage'])
         shows : {}
       }
     };
-    
+
     factory.setProviders = function (providers) {
       xbmc = providers.xbmc || null;
       tmdb = providers.tmdb || null;
@@ -45,7 +45,8 @@ angular.module('services.helper', ['services.storage'])
           params : 'action=movieSearch'+
                    '&query='+title.replace(/:/gi, ' ')
         });
-      } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1) {
+      } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1 ||
+                host.videoAddon.toLowerCase().indexOf('quasar') > -1 ) {
         var path = '/movie/'+movie.imdbnumber+'/play';
         var url = playFn({
           ip : host.ip,
@@ -84,12 +85,13 @@ angular.module('services.helper', ['services.storage'])
                    '&tvshowtitle='+title+
                    '&year='+year
         });
-      } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1) {
+      } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1 ||
+                host.videoAddon.toLowerCase().indexOf('quasar') > -1 ) {
         var path = '/show/'+tvdb+'/season/'+season+'/episode/'+number+'/play';
         var url = playFn({
           ip : host.ip,
           port : host.httpPort,
-          path : 'plugin://plugin.video.pulsar' + path,
+          path : 'plugin://'+ host.videoAddon + path,
           uid : Date.now()
         })
         $http.get(url);
