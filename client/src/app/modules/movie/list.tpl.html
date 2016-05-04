@@ -28,8 +28,11 @@
                 <div class="description">
                     <h3>{{movie.label || movie.title}}</h3>
                     <h4>{{movie.year}}</h4>
-                    <p class="clock" ng-if="movie.runtime">
+                    <p class="clock">
+                      <span ng-if="movie.runtime">
                         {{movie.runtime | time | date:'HH:mm'}}
+                      </span>
+                      <span ng-if="!movie.runtime">N/A</span>
                     </p>
                     <div ng-show="hasControls()">
                         <seekbar seekbar-value="movie.resume.position" seekbar-max="movie.resume.total"

@@ -1,7 +1,6 @@
 angular.module('app')
 .controller('ShowsCalendarCtrl', ['$scope', '$filter', '$interpolate', '$anchorScroll', '$http',
   function ShowsCalendarCtrl($scope, $filter, $interpolate, $anchorScroll, $http) {
-    var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
     var autoscroll = true;
     $scope.fetching = false;
     $scope.tvshows = [];
