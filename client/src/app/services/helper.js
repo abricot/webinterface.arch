@@ -39,9 +39,10 @@ angular.module('services.helper', ['services.storage'])
       var title = movie.name || movie.title;
       if(host.videoAddon.toLowerCase().indexOf('youtube')>-1) {
         xbmc.open({'file': movie.trailer});
-      } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1) {
+      } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1 ||
+                host.videoAddon.toLowerCase().indexOf('exodus') > -1) {
         xbmc.executeAddon({
-          addonid : 'plugin.video.genesis',
+          addonid : host.videoAddon,
           params : 'action=movieSearch'+
                    '&query='+title.replace(/:/gi, ' ')
         });
@@ -74,9 +75,11 @@ angular.module('services.helper', ['services.storage'])
             var pluginURL = 'plugin://'+host.videoAddon+'/?action=play_video&videoid='+videos[0].key;
             xbmc.open({file: pluginURL});
         });
-      } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1) {
+      } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1 ||
+                host.videoAddon.toLowerCase().indexOf('exodus') > -1 ) {
+
         xbmc.executeAddon({
-          addonid : 'plugin.video.genesis',
+          addonid : host.videoAddon,
           params : 'action=episodes'+
                    '&imdb='+ imdb.replace('tt', '')+
                    '&season='+season+
