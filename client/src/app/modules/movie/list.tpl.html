@@ -32,7 +32,7 @@
                       <span ng-if="movie.runtime">
                         {{movie.runtime | time | date:'HH:mm'}}
                       </span>
-                      <span ng-if="!movie.runtime">N/A</span>
+                      <span ng-if="!movie.runtime">&nbsp;</span>
                     </p>
                     <div ng-show="hasControls()">
                         <seekbar seekbar-value="movie.resume.position" seekbar-max="movie.resume.total"
@@ -63,7 +63,9 @@
                  <div class="description">
                     <h3>Enjoying Arch ?</h3>
                     <h4>Support us!</h4>
-                    <p class="clock" ng-show="hasControls()">&nbsp;</p>
+                    <p class="clock">
+                      <span>&nbsp;</span>
+                    </p>
                     <div ng-show="hasControls()">
                         <seekbar seekbar-value="0" seekbar-max="1"
                                  seekbar-read-only="true">
