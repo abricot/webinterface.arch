@@ -12,7 +12,7 @@
         <ul>
             <li ng-repeat="(key, value) in shows" class="repeat-animation">
                 <a href="#/tvshows/tmdb/{{value.ids.tmdb}}">
-                    <div class="banner" image image-source="getBanner(value)"></div>
+                    <div class="banner" image image-source="getBanner(value)" alt="value.title"></div>
                     <div class="counter">{{value.hit}}</div>
                 </a>
             </li>

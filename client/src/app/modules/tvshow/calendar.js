@@ -52,12 +52,14 @@ angular.module('app')
       });
     }
 
-    $scope.getPoster = function (show) {
-      return show.episode.images.screenshot.thumb || show.show.images.fanart.thumb;
+    $scope.getPoster = function (value) {
+      var show = $scope.shows[value.show.ids.trakt]
+      var url = $filter('tmdbImage')(show.fanart, 'w300');
+      return $filter('fallback')(url, 'img/icons/awe-512.png');
     };
 
     $scope.getBanner = function (show) {
-      return show.images.banner.full || show.images.thumb.full;
+      return show.banner
     };
 
     $scope.getRandomImage = function () {
@@ -72,6 +74,12 @@ angular.module('app')
           shows[showIds.trakt] = angular.copy(tvshow.show);
         }
         shows[showIds.trakt].hit = shows[showIds.trakt].hit ? shows[showIds.trakt].hit+1 : 1;
+        $scope.tmdb.tv.details(showIds.tmdb).then(function(result){
+          var show = result.data
+          shows[showIds.trakt].fanart = show.fanart
+          shows[showIds.trakt].poster = show.poster
+          shows[showIds.trakt].banner = "http://thetvdb.com/banners/graphical/"+showIds.tvdb+"-g2.jpg"
+        })
       });
       return shows;
     };
