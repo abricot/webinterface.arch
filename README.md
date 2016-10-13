@@ -59,10 +59,10 @@ Our client application is a straight HTML/Javascript application but our develop
 The application made up of a number of javascript, css and html files that need to be merged into a final distribution for running.  We use the Grunt build tool to do this.
 Build client application with:
 
-    ```
-    cd client
-    grunt build
-    ```
+```
+cd client
+grunt build
+```
 
 *Note : It is important to build again if you change files in under client directory.
  You can avoid this painful process by using continuous building see dedicated section.*
@@ -71,10 +71,10 @@ Build client application with:
 ### Start the Server
 Run the server with :
 
-    ```
-    cd server
-    node server.js
-    ```
+```
+cd server
+node server.js
+```
 
 Your browser should automatically open at the following URL [http://localhost:8082] letting you use the application. Of course you can manually navigate to this URL at any time.*
 
@@ -89,23 +89,23 @@ Within the client folder you have the following structure:
 ### Default Build
 The default grunt task will build the application.
 
-    ```
-    cd client
-    grunt
-    ```
+```
+cd client
+grunt
+```
 
 ### Continuous Building
 The watch grunt task will monitor the source files and run the default build task every time a file changes.
 
-    ```
-    cd client
-    grunt watch
-    ```
+```
+cd client
+grunt watch
+```
 
 ### Building release code, aka create a zip file ready for KODI marketplace upload
 You can build a zipped release version of the app, with minified files using a dedicated grunt task.
 
-    ```
-    cd client
-    grunt release
-    ```
+```
+cd client
+grunt release
+```
