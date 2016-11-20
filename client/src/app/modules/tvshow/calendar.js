@@ -1,12 +1,13 @@
 angular.module('app')
-.controller('ShowsCalendarCtrl', ['$scope', '$filter', '$interpolate', '$anchorScroll', '$http',
-  function ShowsCalendarCtrl($scope, $filter, $interpolate, $anchorScroll, $http) {
+.controller('ShowsCalendarCtrl', ['$scope', '$q', '$filter', '$interpolate', '$anchorScroll', '$http',
+  function ShowsCalendarCtrl($scope, $q, $filter, $interpolate, $anchorScroll, $http) {
     var autoscroll = true;
     $scope.fetching = false;
     $scope.tvshows = [];
     $scope.refDate = moment();
     $scope.tvshows = [];
     $scope.shows = {};
+    $scope.tmdbShows = {};
     var hasAds = false;
 
     function getDates(date, ref) {
@@ -28,9 +29,15 @@ angular.module('app')
     function onTvShowsFromSource(result) {
       var tvshows = result ? result.data : [];
       $scope.tvshows = tvshows;
-      $scope.shows = $scope.getShows();
-      $scope.dates = dates;
-      $scope.fetching = false;
+      $scope.getShows().then(function(results){
+        results.forEach(function(result){
+          var tmdb = result.data;
+          $scope.tmdbShows[tmdb.id] = tmdb
+        })
+        $scope.dates = dates;
+        $scope.fetching = false;
+      });
+
     };
 
     function load(date, ref) {
@@ -53,13 +60,13 @@ angular.module('app')
     }
 
     $scope.getPoster = function (value) {
-      var show = $scope.shows[value.show.ids.trakt]
+      var show = $scope.tmdbShows[value.show.ids.tmdb]
       var url = $filter('tmdbImage')(show.fanart, 'w300');
       return $filter('fallback')(url, 'img/icons/awe-512.png');
     };
 
     $scope.getBanner = function (show) {
-      return show.banner
+      return 'http://thetvdb.com/banners/graphical/'+show.ids.tvdb+'-g2.jpg'
     };
 
     $scope.getRandomImage = function () {
@@ -67,21 +74,17 @@ angular.module('app')
     }
 
     $scope.getShows = function () {
-      var shows = {};
+      var promises = []
+      $scope.shows = {};
       $scope.tvshows.forEach(function(tvshow){
         var showIds = tvshow.show.ids;
-        if(!shows.hasOwnProperty(showIds.trakt)){
-          shows[showIds.trakt] = angular.copy(tvshow.show);
+        if(!$scope.shows.hasOwnProperty(showIds.trakt)){
+          $scope.shows[showIds.trakt] = angular.copy(tvshow.show);
+          promises.push($scope.tmdb.tv.details(showIds.tmdb))
         }
-        shows[showIds.trakt].hit = shows[showIds.trakt].hit ? shows[showIds.trakt].hit+1 : 1;
-        $scope.tmdb.tv.details(showIds.tmdb).then(function(result){
-          var show = result.data
-          shows[showIds.trakt].fanart = show.fanart
-          shows[showIds.trakt].poster = show.poster
-          shows[showIds.trakt].banner = "http://thetvdb.com/banners/graphical/"+showIds.tvdb+"-g2.jpg"
-        })
+        $scope.shows[showIds.trakt].hit = $scope.shows[showIds.trakt].hit ? $scope.shows[showIds.trakt].hit+1 : 1;
       });
-      return shows;
+      return $q.all(promises);
     };
 
     $scope.highlight = function (show) {

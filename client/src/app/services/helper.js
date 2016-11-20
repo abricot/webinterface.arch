@@ -41,10 +41,15 @@ angular.module('services.helper', ['services.storage'])
         xbmc.open({'file': movie.trailer});
       } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1 ||
                 host.videoAddon.toLowerCase().indexOf('exodus') > -1) {
+        //Mimic exodus logic for movies search, movies.py def search
+        var quote_plus = function(str) {return encodeURIComponent(str).replace(/%20/gi,'+');}
+        var search_link = 'http://api-v2launch.trakt.tv/search?type=movie&limit=20&page=1&query=';
+        var exodusQuotedTitle = quote_plus(title);
+        var params = 'action=moviePage&url='+quote_plus(search_link+exodusQuotedTitle)
+
         xbmc.executeAddon({
           addonid : host.videoAddon,
-          params : 'action=movieSearch'+
-                   '&query='+title.replace(/:/gi, ' ')
+          params : params
         });
       } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1 ||
                 host.videoAddon.toLowerCase().indexOf('quasar') > -1 ) {
