@@ -1,3 +1,9 @@
+v2.0.5
+- Change images provider for calendar view
+v2.0.4
+- Various bug fixes
+v2.0.3
+- Various bug fixes
 v2.0.2
 - Deeper trakt integration on details view
   - Add to history
@@ -9,7 +15,7 @@ v2.0.1
 - Full compatibility IE11/Firefox
 - Various bug fixes
 v1.2.0/v2.0.0
-- Add search functionnality for movies and shows 
+- Add search functionnality for movies and shows
 - Add scan button
 - Add list of queued items
 - Add queue option for single song
