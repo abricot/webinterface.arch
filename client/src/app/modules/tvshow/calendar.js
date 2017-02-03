@@ -66,7 +66,7 @@ angular.module('app')
     };
 
     $scope.getBanner = function (show) {
-      return 'http://thetvdb.com/banners/graphical/'+show.ids.tvdb+'-g2.jpg'
+      return 'http://thetvdb.com/banners/graphical/'+show.ids.tvdb+'-g3.jpg'
     };
 
     $scope.getRandomImage = function () {

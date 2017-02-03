@@ -112,7 +112,7 @@ angular.module('app')
       if($scope.xbmc.isConnected()) {
         $scope.xbmc.disconnect();
       }
-      $scope.xbmc.connect(host.ip, host.port);
+      $scope.xbmc.connect(host);
       $scope.initialized = true;
       var hash = window.location.hash;
       var path = hash.replace('#', '');
