@@ -301,8 +301,11 @@ angular.module("modules/movie/list.tpl.html", []).run(["$templateCache", functio
     "                <div class=\"description\">\n" +
     "                    <h3>{{movie.label || movie.title}}</h3>\n" +
     "                    <h4>{{movie.year}}</h4>\n" +
-    "                    <p class=\"clock\" ng-if=\"movie.runtime\">\n" +
+    "                    <p class=\"clock\">\n" +
+    "                      <span ng-if=\"movie.runtime\">\n" +
     "                        {{movie.runtime | time | date:'HH:mm'}}\n" +
+    "                      </span>\n" +
+    "                      <span ng-if=\"!movie.runtime\">&nbsp;</span>\n" +
     "                    </p>\n" +
     "                    <div ng-show=\"hasControls()\">\n" +
     "                        <seekbar seekbar-value=\"movie.resume.position\" seekbar-max=\"movie.resume.total\"\n" +
@@ -333,7 +336,9 @@ angular.module("modules/movie/list.tpl.html", []).run(["$templateCache", functio
     "                 <div class=\"description\">\n" +
     "                    <h3>Enjoying Arch ?</h3>\n" +
     "                    <h4>Support us!</h4>\n" +
-    "                    <p class=\"clock\" ng-show=\"hasControls()\">&nbsp;</p>\n" +
+    "                    <p class=\"clock\">\n" +
+    "                      <span>&nbsp;</span>\n" +
+    "                    </p>\n" +
     "                    <div ng-show=\"hasControls()\">\n" +
     "                        <seekbar seekbar-value=\"0\" seekbar-max=\"1\"\n" +
     "                                 seekbar-read-only=\"true\">\n" +
@@ -765,7 +770,7 @@ angular.module("modules/now/playing.tpl.html", []).run(["$templateCache", functi
     "    <div class=\"content\">\n" +
     "        <header>Send text</header>\n" +
     "        <div class=\"body\">\n" +
-    "            <textarea class=\"offset1 span10\" ng-model=\"textToSend\"\n" +
+    "            <textarea class=\"offset1 span10\" ng-model=\"text.toSend\"\n" +
     "                          placeholder=\"Text to send\"></textarea>\n" +
     "        </div>\n" +
     "        <div class=\"actions\">\n" +
@@ -982,7 +987,7 @@ angular.module("modules/settings/wizard.tpl.html", []).run(["$templateCache", fu
     "        <div class=\"panel\">\n" +
     "            <h1>  <i class=\"fa fa-globe\"></i> Discover</h1>\n" +
     "            <p>\n" +
-    "               Discover functionnality relies on external video add-on to be able to play content. Sepcify below which add-on you want to use.\n" +
+    "               Discover functionnality relies on external video add-on to be able to play content. Specify below which add-on you want to use.\n" +
     "            </p>\n" +
     "            <p class=\"row\">\n" +
     "                <label class=\"span4\">External video add-on</label>\n" +
@@ -1047,7 +1052,7 @@ angular.module("modules/tvshow/calendar.tpl.html", []).run(["$templateCache", fu
     "        <ul>\n" +
     "            <li ng-repeat=\"(key, value) in shows\" class=\"repeat-animation\">\n" +
     "                <a href=\"#/tvshows/tmdb/{{value.ids.tmdb}}\">\n" +
-    "                    <div class=\"banner\" image image-source=\"getBanner(value)\"></div>\n" +
+    "                    <div class=\"banner\" image image-source=\"getBanner(value)\" alt=\"value.title\"></div>\n" +
     "                    <div class=\"counter\">{{value.hit}}</div>\n" +
     "                </a>\n" +
     "            </li>\n" +
@@ -1479,11 +1484,11 @@ angular.module("template/comments/comments.tpl.html", []).run(["$templateCache",
     "    </div>\n" +
     "    <div class=\"user\">\n" +
     "        <a href=\"https://trakt.tv/users/{{comment.user.username}}\" target=\"_blank\">\n" +
-    "            <img class=\"md-circle\" image image-source=\"comment.user.images.avatar.full | fallback:'img/icons/trakt.png'\"/>\n" +
+    "            <img class=\"md-circle\" src=\"img/icons/trakt.png\"/>\n" +
     "        </a>\n" +
     "        <div class=\"name\">{{comment.user.username}}</div>\n" +
     "    </div>\n" +
-    "</div> ");
+    "</div>");
 }]);
 
 angular.module("template/fanarts/fanarts.tpl.html", []).run(["$templateCache", function($templateCache) {

@@ -1,7 +1,9 @@
+v2.0.5
+- Change images provider for calendar view
+v2.0.4
+- Various bug fixes
 v2.0.3
-- Bug fix: Proper screen is displayed whenlibrary contains no element.
-- Bug fix: Movies/Shows images not displayed when name contains some specials characters
-- Bug fix: Missing trakt logo
+- Various bug fixes
 v2.0.2
 - Deeper trakt integration on details view
   - Add to history

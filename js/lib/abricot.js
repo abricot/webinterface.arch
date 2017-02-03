@@ -497,7 +497,6 @@ angular.module('services.io', ['services.websocket'])
             var getter = $parse(cb.parseExpr);
             obj = getter(data);
           }
-          console.log(data);
           if(!$rootScope.$$phase) {
             $rootScope.$apply(callbacks[data.id].cb.resolve(obj));
           } else {
@@ -561,6 +560,7 @@ angular.module('services.io', ['services.websocket'])
     return factory;
   }
 ]);
+
 "use strict";
 angular.module('services.jsonp', [])
 .factory('jsonp', ['$rootScope', '$q', '$http', '$parse', '$interpolate',
@@ -731,17 +731,19 @@ angular.module('services.websocket', [])
   return factory;
 });
 angular.module('services.xbmc', ['services.io'])
-.factory('xbmc', [ 'io',
-  function(io) {
+.factory('xbmc', [ 'io', '$interpolate', '$http',
+  function(io, $interpolate, $http) {
     // We return this object to anything injecting our service
     var factory = {};
     var activePlayer = -1;
     var activePlaylist = -1;
     var volume = 0;
+    var _host = '';
+    var jsonRpcFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "{{method}}", "params" : {{params}}}');
 
-
-    factory.connect = function(url, port) {
-      io.connect(url, port);
+    factory.connect = function(host) {
+      _host = host;
+      io.connect(host.ip, host.port);
     };
 
     factory.disconnect = function(){
@@ -797,7 +799,14 @@ angular.module('services.xbmc', ['services.io'])
     };
 
     factory.sendText = function (textToSend) {
-      io.send('Input.sendText', {'text' : textToSend});
+      //For some reaso sendText does not work thorugh websocket, fallbacking to jsonRPC
+      var url = jsonRpcFn({
+          ip : _host.ip,
+          port : _host.httpPort,
+          method : 'Input.SendText',
+          params : JSON.stringify({'text' : textToSend})
+        });
+        $http.get(url);
     };
 
     factory.showOSD = function () {
@@ -895,10 +904,16 @@ angular.module('services.xbmc', ['services.io'])
     };
 
     factory.setAudioStream = function(audioStream) {
-      io.send('Player.SetAudioStream', {
-        'playerid': activePlayer,
-        'stream': audioStream
+      var url = jsonRpcFn({
+          ip : _host.ip,
+          port : _host.httpPort,
+          method : 'Player.SetAudioStream',
+          params : JSON.stringify({
+            'playerid': activePlayer,
+            'stream': audioStream
+          })
       });
+      $http.get(url);
     };
 
     var subtitleState = null;
@@ -1097,8 +1112,8 @@ angular.module('services.xbmc', ['services.io'])
     factory.getArtistDetails = function(artistid, cb) {
       io.send('AudioLibrary.GetArtistDetails', {
         'artistid' : artistid,
-        'properties': ['instrument', 'style', 'mood', 'born', 'formed', 
-                       'description', 'genre', 'died', 'disbanded', 
+        'properties': ['instrument', 'style', 'mood', 'born', 'formed',
+                       'description', 'genre', 'died', 'disbanded',
                        'yearsactive', 'musicbrainzartistid', 'fanart', 'thumbnail']
       }, true, 'result.artistdetails').then(cb);
 

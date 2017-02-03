@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="webinterface.arch"
-  version="2.0.3"
+  version="2.0.5"
   name="Arch"
   provider-name="icolala">
   <requires>
@@ -14,5 +14,8 @@
     <description lang="en">A modern web interface for KODI. Browse all your movies, tv shows and musics. See what's currently playing. Discover new movies and tv shows. All from your browser, desktop or tablets.</description>
     <platform>all</platform>
     <language>en</language>
+    <license>The MIT License (MIT)</license>
+    <forum>http://forum.kodi.tv/showthread.php?tid=224515</forum>
+    <source>https://github.com/abricot/webinterface.arch</source>
   </extension>
 </addon>

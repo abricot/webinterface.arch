@@ -1,5 +1,5 @@
-/*! webinterface.arch - v2.0.3 - 2015-10-18
- * Copyright (c) 2015 Nicolas ABRIC;
+/*! webinterface.arch - v2.0.5 - 2017-02-03
+ * Copyright (c) 2017 Nicolas ABRIC;
  * Licensed MIT
  */
 var RAL = {
@@ -777,7 +777,7 @@ angular.module('app')
       if($scope.xbmc.isConnected()) {
         $scope.xbmc.disconnect();
       }
-      $scope.xbmc.connect(host.ip, host.port);
+      $scope.xbmc.connect(host);
       $scope.initialized = true;
       var hash = window.location.hash;
       var path = hash.replace('#', '');
@@ -1544,7 +1544,6 @@ angular.module('app')
 .controller('TMDBMovieDetailsCtrl', ['$scope', '$stateParams', '$injector', '$filter', '$http', '$interpolate',
   function TMDBMovieDetailsCtrl($scope, $stateParams, $injector, $filter, $http, $interpolate) {
     $injector.invoke(BaseMovieDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
-    var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
 
     $scope.tmdb.movies.details($scope.movieid).then(function(result) {
       $scope.movie = result.data;
@@ -2072,7 +2071,7 @@ angular.module('app')
     $scope.showTimePicker = false;
     $scope.showShutdownOptions = false;
     $scope.showRemote = false;
-    $scope.textToSend = '';
+    $scope.text = {toSend : ''};
     $scope.showKeyboard = false;
     $scope.showShutdownOptions = false;
 
@@ -2089,7 +2088,7 @@ angular.module('app')
         }
       }
     });
-    
+
     $scope.$watch('playlist', function (newVal, oldVal) {
       if(newVal > -1) {
         getItems();
@@ -2166,11 +2165,11 @@ angular.module('app')
     };
 
     $scope.onValidateText = function() {
-      $scope.xbmc.sendText($scope.textToSend);
+      $scope.xbmc.sendText($scope.text.toSend);
       $scope.showKeyboard = false;
-      $scope.textToSend = '';
+      $scope.text.toSend = '';
     };
-    
+
 
     $scope.onValidateSubtitles = function() {
       $scope.showSubtitleSelect = false;
@@ -2223,7 +2222,7 @@ angular.module('app')
         $scope.loading = false;
       });
     };
-    
+
     var onPlaylistAdd = function (obj) {
       getItems();
     };
@@ -2366,15 +2365,15 @@ angular.module('app')
   }
 ]);
 angular.module('app')
-.controller('ShowsCalendarCtrl', ['$scope', '$filter', '$interpolate', '$anchorScroll', '$http',
-  function ShowsCalendarCtrl($scope, $filter, $interpolate, $anchorScroll, $http) {
-    var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
+.controller('ShowsCalendarCtrl', ['$scope', '$q', '$filter', '$interpolate', '$anchorScroll', '$http',
+  function ShowsCalendarCtrl($scope, $q, $filter, $interpolate, $anchorScroll, $http) {
     var autoscroll = true;
     $scope.fetching = false;
     $scope.tvshows = [];
     $scope.refDate = moment();
     $scope.tvshows = [];
     $scope.shows = {};
+    $scope.tmdbShows = {};
     var hasAds = false;
 
     function getDates(date, ref) {
@@ -2396,9 +2395,15 @@ angular.module('app')
     function onTvShowsFromSource(result) {
       var tvshows = result ? result.data : [];
       $scope.tvshows = tvshows;
-      $scope.shows = $scope.getShows();
-      $scope.dates = dates;
-      $scope.fetching = false;
+      $scope.getShows().then(function(results){
+        results.forEach(function(result){
+          var tmdb = result.data;
+          $scope.tmdbShows[tmdb.id] = tmdb
+        })
+        $scope.dates = dates;
+        $scope.fetching = false;
+      });
+
     };
 
     function load(date, ref) {
@@ -2420,12 +2425,14 @@ angular.module('app')
       });
     }
 
-    $scope.getPoster = function (show) {
-      return show.episode.images.screenshot.thumb || show.show.images.fanart.thumb;
+    $scope.getPoster = function (value) {
+      var show = $scope.tmdbShows[value.show.ids.tmdb]
+      var url = $filter('tmdbImage')(show.fanart, 'w300');
+      return $filter('fallback')(url, 'img/icons/awe-512.png');
     };
 
     $scope.getBanner = function (show) {
-      return show.images.banner.full || show.images.thumb.full;
+      return 'http://thetvdb.com/banners/graphical/'+show.ids.tvdb+'-g3.jpg'
     };
 
     $scope.getRandomImage = function () {
@@ -2433,15 +2440,17 @@ angular.module('app')
     }
 
     $scope.getShows = function () {
-      var shows = {};
+      var promises = []
+      $scope.shows = {};
       $scope.tvshows.forEach(function(tvshow){
         var showIds = tvshow.show.ids;
-        if(!shows.hasOwnProperty(showIds.trakt)){
-          shows[showIds.trakt] = angular.copy(tvshow.show);
+        if(!$scope.shows.hasOwnProperty(showIds.trakt)){
+          $scope.shows[showIds.trakt] = angular.copy(tvshow.show);
+          promises.push($scope.tmdb.tv.details(showIds.tmdb))
         }
-        shows[showIds.trakt].hit = shows[showIds.trakt].hit ? shows[showIds.trakt].hit+1 : 1;
+        $scope.shows[showIds.trakt].hit = $scope.shows[showIds.trakt].hit ? $scope.shows[showIds.trakt].hit+1 : 1;
       });
-      return shows;
+      return $q.all(promises);
     };
 
     $scope.highlight = function (show) {
@@ -2754,7 +2763,6 @@ angular.module('app')
   function TMDBShowDetailsCtrl($scope, $injector, $stateParams, $location, $filter, $http, $interpolate) {
     $injector.invoke(BaseTVShowDetailsCtrl, this, {$scope: $scope, $stateParams: $stateParams});
     $scope.tvdbid = null;
-    var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
     function onEpisodesRetrieved(result) {
       $scope.loading = false;
       var now = new Date();
@@ -3084,7 +3092,7 @@ angular.module('services.helper', ['services.storage'])
 .factory('helper', ['$http', '$interpolate', 'storage',
   function($http, $interpolate, storage) {
     var playFn = $interpolate('http://{{ip}}:{{port}}/jsonrpc?request={ "jsonrpc": "2.0", "method": "Player.Open", "params" : {"item": { "file": "{{path}}" }}, "id": {{uid}}}');
-    
+
     var xbmc, tmdb;
     var factory = {
       local : {
@@ -3097,7 +3105,7 @@ angular.module('services.helper', ['services.storage'])
         shows : {}
       }
     };
-    
+
     factory.setProviders = function (providers) {
       xbmc = providers.xbmc || null;
       tmdb = providers.tmdb || null;
@@ -3121,13 +3129,20 @@ angular.module('services.helper', ['services.storage'])
       var title = movie.name || movie.title;
       if(host.videoAddon.toLowerCase().indexOf('youtube')>-1) {
         xbmc.open({'file': movie.trailer});
-      } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1) {
+      } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1 ||
+                host.videoAddon.toLowerCase().indexOf('exodus') > -1) {
+        //Mimic exodus logic for movies search, movies.py def search
+        var quote_plus = function(str) {return encodeURIComponent(str).replace(/%20/gi,'+');}
+        var search_link = 'http://api-v2launch.trakt.tv/search?type=movie&limit=20&page=1&query=';
+        var exodusQuotedTitle = quote_plus(title);
+        var params = 'action=moviePage&url='+quote_plus(search_link+exodusQuotedTitle)
+
         xbmc.executeAddon({
-          addonid : 'plugin.video.genesis',
-          params : 'action=movieSearch'+
-                   '&query='+title.replace(/:/gi, ' ')
+          addonid : host.videoAddon,
+          params : params
         });
-      } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1) {
+      } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1 ||
+                host.videoAddon.toLowerCase().indexOf('quasar') > -1 ) {
         var path = '/movie/'+movie.imdbnumber+'/play';
         var url = playFn({
           ip : host.ip,
@@ -3155,9 +3170,11 @@ angular.module('services.helper', ['services.storage'])
             var pluginURL = 'plugin://'+host.videoAddon+'/?action=play_video&videoid='+videos[0].key;
             xbmc.open({file: pluginURL});
         });
-      } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1) {
+      } else if(host.videoAddon.toLowerCase().indexOf('genesis') > -1 ||
+                host.videoAddon.toLowerCase().indexOf('exodus') > -1 ) {
+
         xbmc.executeAddon({
-          addonid : 'plugin.video.genesis',
+          addonid : host.videoAddon,
           params : 'action=episodes'+
                    '&imdb='+ imdb.replace('tt', '')+
                    '&season='+season+
@@ -3166,12 +3183,13 @@ angular.module('services.helper', ['services.storage'])
                    '&tvshowtitle='+title+
                    '&year='+year
         });
-      } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1) {
+      } else if(host.videoAddon.toLowerCase().indexOf('pulsar') > -1 ||
+                host.videoAddon.toLowerCase().indexOf('quasar') > -1 ) {
         var path = '/show/'+tvdb+'/season/'+season+'/episode/'+number+'/play';
         var url = playFn({
           ip : host.ip,
           port : host.httpPort,
-          path : 'plugin://plugin.video.pulsar' + path,
+          path : 'plugin://'+ host.videoAddon + path,
           uid : Date.now()
         })
         $http.get(url);
@@ -4115,8 +4133,11 @@ angular.module("modules/movie/list.tpl.html", []).run(["$templateCache", functio
     "                <div class=\"description\">\n" +
     "                    <h3>{{movie.label || movie.title}}</h3>\n" +
     "                    <h4>{{movie.year}}</h4>\n" +
-    "                    <p class=\"clock\" ng-if=\"movie.runtime\">\n" +
+    "                    <p class=\"clock\">\n" +
+    "                      <span ng-if=\"movie.runtime\">\n" +
     "                        {{movie.runtime | time | date:'HH:mm'}}\n" +
+    "                      </span>\n" +
+    "                      <span ng-if=\"!movie.runtime\">&nbsp;</span>\n" +
     "                    </p>\n" +
     "                    <div ng-show=\"hasControls()\">\n" +
     "                        <seekbar seekbar-value=\"movie.resume.position\" seekbar-max=\"movie.resume.total\"\n" +
@@ -4147,7 +4168,9 @@ angular.module("modules/movie/list.tpl.html", []).run(["$templateCache", functio
     "                 <div class=\"description\">\n" +
     "                    <h3>Enjoying Arch ?</h3>\n" +
     "                    <h4>Support us!</h4>\n" +
-    "                    <p class=\"clock\" ng-show=\"hasControls()\">&nbsp;</p>\n" +
+    "                    <p class=\"clock\">\n" +
+    "                      <span>&nbsp;</span>\n" +
+    "                    </p>\n" +
     "                    <div ng-show=\"hasControls()\">\n" +
     "                        <seekbar seekbar-value=\"0\" seekbar-max=\"1\"\n" +
     "                                 seekbar-read-only=\"true\">\n" +
@@ -4579,7 +4602,7 @@ angular.module("modules/now/playing.tpl.html", []).run(["$templateCache", functi
     "    <div class=\"content\">\n" +
     "        <header>Send text</header>\n" +
     "        <div class=\"body\">\n" +
-    "            <textarea class=\"offset1 span10\" ng-model=\"textToSend\"\n" +
+    "            <textarea class=\"offset1 span10\" ng-model=\"text.toSend\"\n" +
     "                          placeholder=\"Text to send\"></textarea>\n" +
     "        </div>\n" +
     "        <div class=\"actions\">\n" +
@@ -4796,7 +4819,7 @@ angular.module("modules/settings/wizard.tpl.html", []).run(["$templateCache", fu
     "        <div class=\"panel\">\n" +
     "            <h1>  <i class=\"fa fa-globe\"></i> Discover</h1>\n" +
     "            <p>\n" +
-    "               Discover functionnality relies on external video add-on to be able to play content. Sepcify below which add-on you want to use.\n" +
+    "               Discover functionnality relies on external video add-on to be able to play content. Specify below which add-on you want to use.\n" +
     "            </p>\n" +
     "            <p class=\"row\">\n" +
     "                <label class=\"span4\">External video add-on</label>\n" +
@@ -4861,7 +4884,7 @@ angular.module("modules/tvshow/calendar.tpl.html", []).run(["$templateCache", fu
     "        <ul>\n" +
     "            <li ng-repeat=\"(key, value) in shows\" class=\"repeat-animation\">\n" +
     "                <a href=\"#/tvshows/tmdb/{{value.ids.tmdb}}\">\n" +
-    "                    <div class=\"banner\" image image-source=\"getBanner(value)\"></div>\n" +
+    "                    <div class=\"banner\" image image-source=\"getBanner(value)\" alt=\"value.title\"></div>\n" +
     "                    <div class=\"counter\">{{value.hit}}</div>\n" +
     "                </a>\n" +
     "            </li>\n" +
@@ -5293,11 +5316,11 @@ angular.module("template/comments/comments.tpl.html", []).run(["$templateCache",
     "    </div>\n" +
     "    <div class=\"user\">\n" +
     "        <a href=\"https://trakt.tv/users/{{comment.user.username}}\" target=\"_blank\">\n" +
-    "            <img class=\"md-circle\" image image-source=\"comment.user.images.avatar.full | fallback:'img/icons/trakt.png'\"/>\n" +
+    "            <img class=\"md-circle\" src=\"img/icons/trakt.png\"/>\n" +
     "        </a>\n" +
     "        <div class=\"name\">{{comment.user.username}}</div>\n" +
     "    </div>\n" +
-    "</div> ");
+    "</div>");
 }]);
 
 angular.module("template/fanarts/fanarts.tpl.html", []).run(["$templateCache", function($templateCache) {
