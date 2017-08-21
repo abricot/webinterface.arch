@@ -43,7 +43,7 @@ angular.module('services.helper', ['services.storage'])
                 host.videoAddon.toLowerCase().indexOf('exodus') > -1) {
         //Mimic exodus logic for movies search, movies.py def search
         var quote_plus = function(str) {return encodeURIComponent(str).replace(/%20/gi,'+');}
-        var search_link = 'http://api-v2launch.trakt.tv/search?type=movie&limit=20&page=1&query=';
+        var search_link = 'http://api.trakt.tv/search/movie?limit=20&page=1&query=';
         var exodusQuotedTitle = quote_plus(title);
         var params = 'action=moviePage&url='+quote_plus(search_link+exodusQuotedTitle)
 
