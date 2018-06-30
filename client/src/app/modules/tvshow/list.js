@@ -56,7 +56,7 @@ angular.module('app')
     };
 
     $scope.getExtra = function (show) {
-      return show.episode + ' espisodes';
+      return show.episode + ' episodes';
     };
 
     $scope.getName = function (show) {
